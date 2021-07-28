@@ -60,7 +60,7 @@ class _ListNotePageState extends State<ListNotePage> {
                     fontFamily: "Roboto",
                     fontSize: 16.0,
                     letterSpacing: 0.15,
-                    color: Colors.black.withOpacity(0.54),
+                    color: AppColors.ciano,
                   ),
                   labelStyle: TextStyle(
                     fontFamily: "Roboto",
