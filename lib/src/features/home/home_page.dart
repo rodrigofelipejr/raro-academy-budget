@@ -19,6 +19,10 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             GeneralBalanceWidget(),
+            SizedBox(
+              height: 23.0,
+            ),
+            DayByDayWidget(),
           ],
         ),
       ),
