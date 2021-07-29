@@ -50,7 +50,7 @@ class _SplashPageState extends State<SplashPage> {
                     child: Hero(
                       tag: "notes_logo",
                       child: Image.asset(
-                        "assets/images/notes_logo.png",
+                        "assets/images/logo_splash.png",
                       ),
                     ),
                   ),

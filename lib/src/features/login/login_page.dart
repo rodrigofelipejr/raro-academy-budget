@@ -1,11 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter_finance_controller/src/features/list_note/list_note_page.dart';
 import 'package:flutter_finance_controller/src/shared/constants/app_colors.dart';
-import 'package:flutter_finance_controller/src/shared/constants/text_styles.dart';
 import 'package:flutter_finance_controller/src/shared/validators/text_validator.dart';
 import 'package:flutter_finance_controller/src/shared/widget/custom_text_field.dart';
-import 'package:flutter_finance_controller/src/shared/widget/visible_widget.dart';
+import 'package:flutter_finance_controller/src/shared/widget/header_widget.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -28,20 +26,9 @@ class _LoginPageState extends State<LoginPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 144,
-              ),
-              Text(
-                'Vamos começar!',
-                style: TextStyle(
-                  fontFamily: "Roboto",
-                  fontSize: 48,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.ciano,
-                ),
-              ),
-              SizedBox(
-                height: 8,
+              HeaderWidget(
+                title: 'Vamos começar!',
+                subtitle: "Por favor insira seus dados no campos abaixo.",
               ),
               Text(
                 'Novo usuário? Crie uma conta',
@@ -96,13 +83,98 @@ class _LoginPageState extends State<LoginPage> {
                     "CONTINUAR",
                     style: TextStyle(
                       color: Colors.white,
-                      fontFamily: 'Quicksand',
+                      fontFamily: 'Roboto',
                       fontSize: 14,
                       letterSpacing: 0.4,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
                 ),
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              Center(
+                child: Text(
+                  "Ou",
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontFamily: 'Roboto',
+                    fontSize: 16,
+                    letterSpacing: 0.4,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+              Flex(
+                direction: Axis.horizontal,
+                children: [
+                  Expanded(
+                    child: SafeArea(
+                      bottom: true,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50.0),
+                            ),
+                          ),
+                        ),
+                        onPressed: () {},
+                        child: Row(
+                          children: [
+                            Align(
+                                alignment: Alignment.centerLeft,
+                                child: Icon(Icons.android)),
+                            Container(
+                              margin: const EdgeInsets.only(left: 10.0),
+                              child: Text(
+                                "continuar com o google",
+                                style: TextStyle(fontSize: 20.0),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Flex(
+                direction: Axis.horizontal,
+                children: [
+                  Expanded(
+                    child: SafeArea(
+                      bottom: true,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50.0),
+                            ),
+                          ),
+                        ),
+                        onPressed: () {},
+                        child: Row(
+                          children: [
+                            Align(
+                                alignment: Alignment.centerLeft,
+                                child: Icon(Icons.facebook)),
+                            Container(
+                              margin: const EdgeInsets.only(left: 10.0),
+                              child: Text(
+                                "continuar com o facebook",
+                                style: TextStyle(fontSize: 20.0),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
