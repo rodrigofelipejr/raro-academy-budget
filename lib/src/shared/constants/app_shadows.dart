@@ -31,4 +31,23 @@ class AppShadows {
           blurRadius: 28.0,
         ),
       ];
+
+  static List<BoxShadow> get shadowsCard => [
+        BoxShadow(
+          color: AppColors.black.withOpacity(0.12),
+          offset: Offset(0.0, 1.0),
+          blurRadius: 8.0,
+        ),
+        BoxShadow(
+          color: AppColors.black.withOpacity(0.14),
+          offset: Offset(0.0, 3.0),
+          blurRadius: 4.0,
+        ),
+        BoxShadow(
+          color: AppColors.black.withOpacity(0.20),
+          offset: Offset(0.0, 3.0),
+          blurRadius: 3.0,
+          spreadRadius: -2.0,
+        ),
+      ];
 }

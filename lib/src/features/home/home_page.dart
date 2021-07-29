@@ -14,7 +14,14 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWidget(title: 'Olá José'),
-      body: Container(),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            GeneralBalanceWidget(),
+          ],
+        ),
+      ),
     );
   }
 }
