@@ -89,7 +89,7 @@ class CustomTextField extends StatelessWidget {
         helperText: helperText,
         errorBorder: UnderlineInputBorder(
           borderSide: BorderSide(
-            color: Colors.grey,
+            color: Colors.red,
           ),
         ),
         errorText: errorMessage,
