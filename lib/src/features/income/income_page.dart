@@ -10,6 +10,10 @@ class IncomePage extends StatefulWidget {
 }
 
 class _IncomePageState extends State<IncomePage> {
+  FocusNode _incomeFocusNode = FocusNode();
+  FocusNode _inputTypeFocusNode = FocusNode();
+  FocusNode _inputNameFocusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,14 +79,17 @@ class _IncomePageState extends State<IncomePage> {
                 CustomTextField(
                   hintText: "Valor em R\$",
                   labelText: "Valor",
+                  focusNode: _incomeFocusNode,
                 ),
                 CustomTextField(
                   hintText: "Tipo de entrada",
                   labelText: "Tipo de entrada",
+                  focusNode: _inputTypeFocusNode,
                 ),
                 CustomTextField(
                   hintText: "Nome da entrada",
                   labelText: "Nome da entrada",
+                  focusNode: _inputNameFocusNode,
                 ),
                 TextButton(
                   onPressed: () => showDatePicker(
