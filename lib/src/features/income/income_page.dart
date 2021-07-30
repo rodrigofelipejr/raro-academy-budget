@@ -74,12 +74,15 @@ class _IncomePageState extends State<IncomePage> {
               children: [
                 CustomTextField(
                   hintText: "Valor em R\$",
+                  labelText: "Valor",
                 ),
                 CustomTextField(
                   hintText: "Tipo de entrada",
+                  labelText: "Tipo de entrada",
                 ),
                 CustomTextField(
                   hintText: "Nome da entrada",
+                  labelText: "Nome da entrada",
                 ),
                 TextButton(
                   onPressed: () => showDatePicker(
