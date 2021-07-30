@@ -70,6 +70,11 @@ class _IncomePageState extends State<IncomePage> {
         ),
         child: Card(
           color: Colors.yellow,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(7.0),
+            ),
+          ),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
