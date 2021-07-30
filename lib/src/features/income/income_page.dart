@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class IncomePage extends StatefulWidget {
   const IncomePage({Key? key}) : super(key: key);
@@ -47,7 +48,6 @@ class _IncomePageState extends State<IncomePage> {
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w700,
                       letterSpacing: 0.25,
-                      // height: 32,
                     ),
                   ),
                 ),
@@ -56,8 +56,82 @@ class _IncomePageState extends State<IncomePage> {
           ),
         ),
       ),
-      body: Center(
-        child: Text("Income"),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.only(
+          top: 16,
+          left: 16,
+          right: 16,
+          bottom: 40,
+        ),
+        child: Card(
+          color: Colors.yellow,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextField(
+                  cursorHeight: 16.0,
+                  decoration: InputDecoration(
+                    border: UnderlineInputBorder(),
+                    hintText: "Valor em R\$",
+                    hintStyle: TextStyle(
+                      fontFamily: "Roboto",
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16.0,
+                      letterSpacing: 0.15,
+                      color: Colors.black.withOpacity(0.54),
+                    ),
+                  ),
+                ),
+                TextField(
+                  cursorHeight: 16.0,
+                  decoration: InputDecoration(
+                    border: UnderlineInputBorder(),
+                    hintText: "Tipo de entrada",
+                    hintStyle: TextStyle(
+                      fontFamily: "Roboto",
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16.0,
+                      letterSpacing: 0.15,
+                      color: Colors.black.withOpacity(0.54),
+                    ),
+                  ),
+                ),
+                TextField(
+                  cursorHeight: 16.0,
+                  decoration: InputDecoration(
+                    border: UnderlineInputBorder(),
+                    hintText: "Nome da entrada",
+                    hintStyle: TextStyle(
+                      fontFamily: "Roboto",
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16.0,
+                      letterSpacing: 0.15,
+                      color: Colors.black.withOpacity(0.54),
+                    ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    DateFormat("dd/MM/yyyy")
+                    .format(DateTime.now())
+                    .toString(),
+                    style: TextStyle(
+                      fontFamily: "Roboto",
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14.0,
+                      letterSpacing: 0.4,
+                      color: Colors.purple,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
