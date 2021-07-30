@@ -114,7 +114,12 @@ class _IncomePageState extends State<IncomePage> {
                   ),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () => showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(1900),
+                    lastDate: DateTime(2050),
+                  ),
                   child: Text(
                     DateFormat("dd/MM/yyyy")
                     .format(DateTime.now())
