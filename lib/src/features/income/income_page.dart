@@ -69,7 +69,8 @@ class _IncomePageState extends State<IncomePage> {
           bottom: 40,
         ),
         child: Card(
-          color: Colors.yellow,
+          color: Colors.white,
+          elevation: 3.0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(7.0),
