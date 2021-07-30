@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../shared/utils/utils.dart';
-import '../../../shared/constants/app_text_styles.dart';
+import '../../../shared/constants/constants.dart';
+import 'bar_indicators_widget.dart';
 
 class IndicatorsWidget extends StatelessWidget {
   final String label;
@@ -20,10 +21,10 @@ class IndicatorsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width * 0.85;
-    final indicatorWidth = (currentValue / referenceValue) * screenWidth;
+    final _width = (currentValue / referenceValue) * screenWidth;
 
     return Container(
-      width: indicatorWidth,
+      width: _width,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,13 +45,9 @@ class IndicatorsWidget extends StatelessWidget {
           SizedBox(
             height: 6.0,
           ),
-          Container(
-            width: indicatorWidth,
-            height: 12.0,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(360.0),
-              color: color,
-            ),
+          BarIndicatorWidget(
+            color: color,
+            width: _width,
           ),
         ],
       ),
