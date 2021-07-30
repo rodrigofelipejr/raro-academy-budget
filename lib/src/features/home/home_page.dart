@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'widgets/widgets.dart';
+import '../../shared/widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -14,6 +15,11 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWidget(title: 'Olá José'),
+      floatingActionButton: FabWidget(
+        onTap: () {},
+        label: 'novo controle',
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: RefreshIndicator(
         onRefresh: () async {},
         child: SingleChildScrollView(
@@ -21,9 +27,9 @@ class _HomePageState extends State<HomePage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               GeneralBalanceWidget(),
-              SizedBox(height: 23.0),
+              SizedBox(height: 18.0),
               DayByDayWidget(),
-              SizedBox(height: 23.0),
+              SizedBox(height: 18.0),
               LatestTransactionsWidget(
                 transactions: List.generate(3, (index) => index),
               ),

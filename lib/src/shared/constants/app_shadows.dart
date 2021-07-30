@@ -51,7 +51,7 @@ class AppShadows {
         ),
       ];
 
-        static List<BoxShadow> get shadowsButtons => [
+  static List<BoxShadow> get shadowsButtons => [
         BoxShadow(
           color: AppColors.black.withOpacity(0.12),
           offset: Offset(0.0, 1.0),
@@ -67,6 +67,25 @@ class AppShadows {
           offset: Offset(0.0, 3.0),
           blurRadius: 1.0,
           spreadRadius: -2.0,
+        ),
+      ];
+
+  static List<BoxShadow> get shadowsFab => [
+        BoxShadow(
+          color: AppColors.black.withOpacity(0.12),
+          offset: Offset(0.0, 1.0),
+          blurRadius: 18.0,
+        ),
+        BoxShadow(
+          color: AppColors.black.withOpacity(0.14),
+          offset: Offset(0.0, 6.0),
+          blurRadius: 10.0,
+        ),
+        BoxShadow(
+          color: AppColors.black.withOpacity(0.20),
+          offset: Offset(0.0, 3.0),
+          blurRadius: 5.0,
+          spreadRadius: -1.0,
         ),
       ];
 }
