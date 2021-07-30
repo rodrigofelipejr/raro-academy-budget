@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_finance_controller/src/features/home/widgets/month_selector_widget.dart';
 
 import 'card_widget.dart';
 import 'indicators_widget.dart';
@@ -27,11 +28,7 @@ class _DayByDayStateWidget extends State<DayByDayWidget> {
                   'Dia a dia',
                   style: AppTextStyles.purple20w500Roboto,
                 ),
-                Container(
-                  color: AppColors.roxo,
-                  width: 70.0,
-                  height: 25.0,
-                )
+                MonthSelectorWidget(label: 'AGO')
               ],
             ),
             SizedBox(

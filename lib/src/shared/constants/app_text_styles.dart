@@ -10,6 +10,14 @@ class AppTextStyles {
     fontFamily: "Roboto",
   );
 
+  static const TextStyle white14w500Roboto = TextStyle(
+    color: AppColors.white,
+    fontWeight: FontWeight.w500,
+    fontSize: 14.0,
+    fontFamily: "Roboto",
+    letterSpacing: 0.4,
+  );
+
   static const TextStyle purple20w500Roboto = TextStyle(
     color: AppColors.roxo,
     fontWeight: FontWeight.w500,
