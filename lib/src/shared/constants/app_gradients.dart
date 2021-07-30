@@ -46,4 +46,14 @@ class AppGradients {
     ],
     transform: GradientRotation((60 * pi) / 180),
   );
+
+  static const LinearGradient purpleGradientScaffold = LinearGradient(
+    colors: <Color>[
+      AppColors.white,
+      AppColors.purpleLight,
+    ],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    stops: [0.5, 0.9],
+  );
 }

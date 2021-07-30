@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_finance_controller/src/shared/constants/app_gradients.dart';
 
 import 'widgets/widgets.dart';
 import '../../shared/widgets/widgets.dart';
@@ -20,20 +21,25 @@ class _HomePageState extends State<HomePage> {
         label: 'novo controle',
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: RefreshIndicator(
-        onRefresh: () async {},
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              GeneralBalanceWidget(),
-              SizedBox(height: 18.0),
-              DayByDayWidget(),
-              SizedBox(height: 18.0),
-              LatestTransactionsWidget(
-                transactions: List.generate(3, (index) => index),
-              ),
-            ],
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: AppGradients.purpleGradientScaffold,
+        ),
+        child: RefreshIndicator(
+          onRefresh: () async {},
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                GeneralBalanceWidget(),
+                SizedBox(height: 18.0),
+                DayByDayWidget(),
+                SizedBox(height: 18.0),
+                LatestTransactionsWidget(
+                  transactions: List.generate(3, (index) => index),
+                ),
+              ],
+            ),
           ),
         ),
       ),
