@@ -14,16 +14,21 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWidget(title: 'Olá José'),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            GeneralBalanceWidget(),
-            SizedBox(
-              height: 23.0,
-            ),
-            DayByDayWidget(),
-          ],
+      body: RefreshIndicator(
+        onRefresh: () async {},
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              GeneralBalanceWidget(),
+              SizedBox(height: 23.0),
+              DayByDayWidget(),
+              SizedBox(height: 23.0),
+              LatestTransactionsWidget(
+                transactions: List.generate(3, (index) => index),
+              ),
+            ],
+          ),
         ),
       ),
     );
