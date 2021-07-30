@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_finance_controller/src/shared/widget/custom_text_field.dart';
 
 class IncomePage extends StatefulWidget {
   const IncomePage({Key? key}) : super(key: key);
@@ -71,47 +72,14 @@ class _IncomePageState extends State<IncomePage> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TextField(
-                  cursorHeight: 16.0,
-                  decoration: InputDecoration(
-                    border: UnderlineInputBorder(),
-                    hintText: "Valor em R\$",
-                    hintStyle: TextStyle(
-                      fontFamily: "Roboto",
-                      fontWeight: FontWeight.w400,
-                      fontSize: 16.0,
-                      letterSpacing: 0.15,
-                      color: Colors.black.withOpacity(0.54),
-                    ),
-                  ),
+                CustomTextField(
+                  hintText: "Valor em R\$",
                 ),
-                TextField(
-                  cursorHeight: 16.0,
-                  decoration: InputDecoration(
-                    border: UnderlineInputBorder(),
-                    hintText: "Tipo de entrada",
-                    hintStyle: TextStyle(
-                      fontFamily: "Roboto",
-                      fontWeight: FontWeight.w400,
-                      fontSize: 16.0,
-                      letterSpacing: 0.15,
-                      color: Colors.black.withOpacity(0.54),
-                    ),
-                  ),
+                CustomTextField(
+                  hintText: "Tipo de entrada",
                 ),
-                TextField(
-                  cursorHeight: 16.0,
-                  decoration: InputDecoration(
-                    border: UnderlineInputBorder(),
-                    hintText: "Nome da entrada",
-                    hintStyle: TextStyle(
-                      fontFamily: "Roboto",
-                      fontWeight: FontWeight.w400,
-                      fontSize: 16.0,
-                      letterSpacing: 0.15,
-                      color: Colors.black.withOpacity(0.54),
-                    ),
-                  ),
+                CustomTextField(
+                  hintText: "Nome da entrada",
                 ),
                 TextButton(
                   onPressed: () => showDatePicker(
@@ -121,9 +89,7 @@ class _IncomePageState extends State<IncomePage> {
                     lastDate: DateTime(2050),
                   ),
                   child: Text(
-                    DateFormat("dd/MM/yyyy")
-                    .format(DateTime.now())
-                    .toString(),
+                    DateFormat("dd/MM/yyyy").format(DateTime.now()).toString(),
                     style: TextStyle(
                       fontFamily: "Roboto",
                       fontWeight: FontWeight.w500,
