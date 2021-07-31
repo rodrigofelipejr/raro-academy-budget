@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../shared/constants/constants.dart';
-import '../../../shared/utils/utils.dart';
-import '../../../shared/models/models.dart';
+import '../constants/constants.dart';
+import '../utils/utils.dart';
+import '../models/models.dart';
 
 class ItemCardWidget extends StatelessWidget {
   final TransactionModel transaction;

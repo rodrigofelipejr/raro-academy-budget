@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import 'card_widget.dart';
+import '../../../shared/widgets/widgets.dart';
 import '../../../shared/utils/utils.dart';
 import '../../../shared/constants/constants.dart';
 

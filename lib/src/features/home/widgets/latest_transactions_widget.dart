@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'item_card_widget.dart';
-import 'card_widget.dart';
+import '../../../shared/widgets/widgets.dart';
 import '../../../shared/models/models.dart';
 import '../../../shared/utils/utils.dart';
 import '../../../shared/constants/constants.dart';
