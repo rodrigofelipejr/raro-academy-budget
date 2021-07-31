@@ -93,8 +93,8 @@ class _IncomePageState extends State<IncomePage> {
                         bottom: 12,
                       ),
                       child: CustomTextField(
-                        hintText: "Valor em R\$",
-                        labelText: "Valor",
+                        hintText: "Valor",
+                        labelText: "Valor em R\$",
                         focusNode: _incomeFocusNode,
                       ),
                     ),
