@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_finance_controller/src/shared/constants/app_colors.dart';
+import 'package:flutter_finance_controller/src/shared/constants/app_gradients.dart';
 
 class DayPage extends StatefulWidget {
   const DayPage({Key? key}) : super(key: key);
@@ -39,7 +40,7 @@ class _DayPageState extends State<DayPage> {
           ),
         ],
         flexibleSpace: Container(
-          decoration: BoxDecoration(gradient: AppColors.blueGradientAppBar),
+          decoration: BoxDecoration(gradient: AppGradients.blueGradientAppBar),
           child: Column(
             children: [
               SizedBox(height: MediaQuery.of(context).size.height * 0.14),
