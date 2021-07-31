@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_finance_controller/src/features/splash/splash_page.dart';
+import 'package:flutter_finance_controller/app_widget.dart';
 
 class FirebaseWidget extends StatefulWidget {
   // Create the initialization Future outside of `build`:
@@ -31,7 +31,7 @@ class _FirebaseWidgetState extends State<FirebaseWidget> {
 
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
-          return SplashPage();
+          return AppWidget();
         }
 
         // Otherwise, show something whilst waiting for initialization to complete
