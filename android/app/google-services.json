@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "724109557480",
+    "project_id": "raro-academy-budget",
+    "storage_bucket": "raro-academy-budget.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:724109557480:android:acb7a83c4db699be35935d",
+        "android_client_info": {
+          "package_name": "com.budget"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "724109557480-25eiogalcnuog5ng6cna2b7je7ok83hv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABlyCeUjQ5wAwQONdl-pu0zQefo_zft0g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "724109557480-25eiogalcnuog5ng6cna2b7je7ok83hv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:724109557480:android:c9c783f3dbb4569335935d",
+        "android_client_info": {
+          "package_name": "com.example.flutter_firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "724109557480-25eiogalcnuog5ng6cna2b7je7ok83hv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABlyCeUjQ5wAwQONdl-pu0zQefo_zft0g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "724109557480-25eiogalcnuog5ng6cna2b7je7ok83hv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
