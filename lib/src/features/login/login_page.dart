@@ -1,10 +1,9 @@
-import 'dart:developer';
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_finance_controller/src/shared/validators/text_validator.dart';
-import 'package:flutter_finance_controller/src/shared/widget/custom_text_field.dart';
-import 'package:flutter_finance_controller/src/shared/widget/header_widget.dart';
-import 'package:flutter_finance_controller/src/shared/widget/visible_widget.dart';
+
+import '../../shared/validators/text_validator.dart';
+import '../../shared/widgets/widgets.dart';
 
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'login_controller.dart';
@@ -85,8 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                               visible: controller.passwordVisible,
                               onPressed: () {
                                 setState(() {
-                                  controller.passwordVisible =
-                                      !controller.passwordVisible;
+                                  controller.passwordVisible = !controller.passwordVisible;
                                 });
                               },
                             ),
@@ -102,8 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                           controller.login().then((value) => {});
                         },
                         style: ButtonStyle(
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50.0),
                             ),
@@ -149,8 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                           bottom: true,
                           child: ElevatedButton(
                             style: ButtonStyle(
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50.0),
                                 ),
@@ -159,9 +155,7 @@ class _LoginPageState extends State<LoginPage> {
                             onPressed: () {},
                             child: Row(
                               children: [
-                                Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Icon(Icons.android)),
+                                Align(alignment: Alignment.centerLeft, child: Icon(Icons.android)),
                                 Container(
                                   margin: const EdgeInsets.only(left: 10.0),
                                   child: Text(
@@ -184,8 +178,7 @@ class _LoginPageState extends State<LoginPage> {
                           bottom: true,
                           child: ElevatedButton(
                             style: ButtonStyle(
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50.0),
                                 ),
@@ -194,9 +187,7 @@ class _LoginPageState extends State<LoginPage> {
                             onPressed: () {},
                             child: Row(
                               children: [
-                                Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Icon(Icons.facebook)),
+                                Align(alignment: Alignment.centerLeft, child: Icon(Icons.facebook)),
                                 Container(
                                   margin: const EdgeInsets.only(left: 10.0),
                                   child: Text(
