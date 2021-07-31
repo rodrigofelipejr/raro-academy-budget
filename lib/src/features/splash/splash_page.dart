@@ -1,8 +1,9 @@
-import 'package:animated_card/animated_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:animated_card/animated_card.dart';
+
 import 'package:flutter_finance_controller/src/features/login/login_page.dart';
-import 'package:flutter_finance_controller/src/shared/constants/app_colors.dart';
+import 'package:flutter_finance_controller/src/shared/constants/constants.dart';
 import 'package:flutter_finance_controller/src/shared/constants/text_styles.dart';
 
 class SplashPage extends StatefulWidget {
@@ -34,7 +35,7 @@ class _SplashPageState extends State<SplashPage> {
         height: double.infinity,
         width: double.infinity,
         decoration: BoxDecoration(
-          gradient: AppColors.blueGradient,
+          gradient: AppGradients.blueGradient,
         ),
         child: Stack(
           alignment: Alignment.center,
@@ -50,7 +51,7 @@ class _SplashPageState extends State<SplashPage> {
                     child: Hero(
                       tag: "notes_logo",
                       child: Image.asset(
-                        "assets/images/notes_logo.png",
+                        "assets/images/logo_splash.png",
                       ),
                     ),
                   ),

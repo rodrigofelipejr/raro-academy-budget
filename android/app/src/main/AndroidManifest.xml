@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.flutter_finance_controller">
+    package="com.budget">
    <application
         android:label="flutter_finance_controller"
         android:icon="@mipmap/ic_launcher">
