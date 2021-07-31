@@ -9,7 +9,13 @@ class DayPage extends StatefulWidget {
 }
 
 class _DayPageState extends State<DayPage> {
+  final PageController _pageController = PageController();
   int? tela;
+  String get label => tela == 1
+      ? 'Total entradas'
+      : tela == 2
+          ? 'TOTAL'
+          : 'totaaskdask';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,10 +57,14 @@ class _DayPageState extends State<DayPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () => tela = 1,
                       child: Text(
                         'Entradas',
-                        style: TextStyle(fontSize: 16, color: Colors.white),
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: tela == 1
+                                ? Colors.white
+                                : Color.fromARGB(60, 255, 255, 255)),
                       ),
                     ),
                     Container(
@@ -68,10 +78,14 @@ class _DayPageState extends State<DayPage> {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () => tela = 2,
                       child: Text(
                         'Saídas',
-                        style: TextStyle(fontSize: 16, color: Colors.white),
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: tela == 2
+                                ? Colors.white
+                                : Color.fromARGB(60, 255, 255, 255)),
                       ),
                     ),
                     Container(
@@ -85,10 +99,14 @@ class _DayPageState extends State<DayPage> {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () => tela = 3,
                       child: Text(
                         'Todos',
-                        style: TextStyle(fontSize: 16, color: Colors.white),
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: tela == 3
+                                ? Colors.white
+                                : Color.fromARGB(60, 255, 255, 255)),
                       ),
                     ),
                   ],
@@ -112,7 +130,27 @@ class _DayPageState extends State<DayPage> {
                     child: ListView(
                       children: [
                         ListTile(
-                          title: Text('aloca'),
+                          contentPadding:
+                              const EdgeInsets.symmetric(horizontal: 16),
+                          onTap: () {},
+                          leading: SizedBox(
+                            height: 40.0,
+                            child: CircleAvatar(
+                              backgroundColor: AppColors.amarelo,
+                              child: SizedBox(
+                                height: 20.0,
+                              ),
+                            ),
+                          ),
+                          title: Text(
+                            "alou",
+                          ),
+                          subtitle: Text(
+                            "alou",
+                          ),
+                          trailing: Text(
+                            'alou',
+                          ),
                         ),
                       ],
                     ),
@@ -129,7 +167,7 @@ class _DayPageState extends State<DayPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Total entradas',
+                              label,
                               style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
