@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_finance_controller/src/shared/constants/app_gradients.dart';
 
+import 'home_controller.dart';
 import 'widgets/widgets.dart';
+import '../../shared/constants/constants.dart';
 import '../../shared/widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,6 +13,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late final HomeController _controller;
+
+  @override
+  void initState() {
+    _controller = HomeController();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,12 +40,19 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                GeneralBalanceWidget(),
+                GeneralBalanceWidget(
+                  balance: _controller.generalBalance,
+                ),
                 SizedBox(height: 18.0),
-                DayByDayWidget(),
+                DayByDayWidget(
+                  balance: _controller.dayByDayBalance,
+                  inputs: _controller.inputs,
+                  outputs: _controller.outputs,
+                  month: _controller.selectedMonth,
+                ),
                 SizedBox(height: 18.0),
                 LatestTransactionsWidget(
-                  transactions: List.generate(3, (index) => index),
+                  transactions: _controller.transactions,
                 ),
               ],
             ),

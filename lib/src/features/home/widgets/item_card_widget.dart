@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_finance_controller/src/shared/constants/app_colors.dart';
-import 'package:flutter_finance_controller/src/shared/constants/constants.dart';
+
+import '../../../shared/constants/constants.dart';
+import '../../../shared/utils/utils.dart';
+import '../../../shared/models/models.dart';
 
 class ItemCardWidget extends StatelessWidget {
-  const ItemCardWidget({Key? key}) : super(key: key);
+  final TransactionModel transaction;
+
+  const ItemCardWidget({Key? key, required this.transaction}) : super(key: key);
+
+  String get prefix => transaction.type.index == 0 ? '+' : '-';
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 0),
-      onTap: () {}, 
+      onTap: () {},
       leading: SizedBox(
         height: 40.0,
         child: CircleAvatar(
@@ -24,15 +30,15 @@ class ItemCardWidget extends StatelessWidget {
         ),
       ),
       title: Text(
-        'Refeição',
+        transaction.description,
         style: AppTextStyles.purple16w500Roboto,
       ),
       subtitle: Text(
-        '04/08/2021',
+        Formatters.dateParsing(transaction.date),
         style: AppTextStyles.gray14w400Roboto,
       ),
       trailing: Text(
-        '-R\$ 25,00',
+        '${prefix}R\$ ${transaction.value}',
         style: AppTextStyles.black16w400Roboto,
       ),
     );

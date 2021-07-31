@@ -1,12 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_finance_controller/src/features/home/widgets/month_selector_widget.dart';
 
 import 'card_widget.dart';
 import 'indicators_widget.dart';
+import 'month_selector_widget.dart';
+import '../../../shared/utils/utils.dart';
 import '../../../shared/constants/constants.dart';
 
 class DayByDayWidget extends StatefulWidget {
-  const DayByDayWidget({Key? key}) : super(key: key);
+  final double balance;
+  final double inputs;
+  final double outputs;
+  final String month;
+
+  const DayByDayWidget({
+    Key? key,
+    required this.balance,
+    required this.inputs,
+    required this.outputs,
+    required this.month,
+  }) : super(key: key);
 
   @override
   _DayByDayStateWidget createState() => _DayByDayStateWidget();
@@ -28,14 +40,14 @@ class _DayByDayStateWidget extends State<DayByDayWidget> {
                   'Dia a dia',
                   style: AppTextStyles.purple20w500Roboto,
                 ),
-                MonthSelectorWidget(label: 'AGO')
+                MonthSelectorWidget(label: widget.month)
               ],
             ),
             SizedBox(
               height: 6.0,
             ),
             Text(
-              'R\$ 3.000,00',
+              'R\$ ${Formatters.formatMoney(widget.balance)}',
               style: AppTextStyles.black24w400Roboto,
             ),
             SizedBox(
@@ -43,17 +55,17 @@ class _DayByDayStateWidget extends State<DayByDayWidget> {
             ),
             IndicatorsWidget(
               label: 'Saídas',
-              currentValue: 5000,
-              referenceValue: 8000,
+              currentValue: widget.outputs,
+              referenceValue: widget.inputs,
               color: AppColors.ciano,
             ),
             SizedBox(
               height: 16.0,
             ),
             IndicatorsWidget(
-              label: 'Saídas',
-              currentValue: 8000,
-              referenceValue: 8000,
+              label: 'Entradas',
+              currentValue: widget.inputs,
+              referenceValue: widget.inputs,
               color: AppColors.amarelo,
             ),
           ],

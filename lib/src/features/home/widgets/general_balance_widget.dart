@@ -3,10 +3,13 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import 'card_widget.dart';
+import '../../../shared/utils/utils.dart';
 import '../../../shared/constants/constants.dart';
 
 class GeneralBalanceWidget extends StatefulWidget {
-  const GeneralBalanceWidget({Key? key}) : super(key: key);
+  final double balance;
+
+  const GeneralBalanceWidget({Key? key, required this.balance}) : super(key: key);
 
   @override
   GeneralBalanceStateWidget createState() => GeneralBalanceStateWidget();
@@ -50,7 +53,7 @@ class GeneralBalanceStateWidget extends State<GeneralBalanceWidget> {
               child: Stack(
                 children: <Widget>[
                   Text(
-                    'R\$ 3.000,00',
+                    'R\$ ${Formatters.formatMoney(widget.balance)}',
                     style: AppTextStyles.black24w400Roboto,
                   ),
                   if (_visibleBalance)

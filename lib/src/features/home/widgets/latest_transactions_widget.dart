@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_finance_controller/src/features/home/widgets/item_card_widget.dart';
 
+import 'item_card_widget.dart';
 import 'card_widget.dart';
+import '../../../shared/models/models.dart';
+import '../../../shared/utils/utils.dart';
 import '../../../shared/constants/constants.dart';
 
 class LatestTransactionsWidget extends StatefulWidget {
-  final List<dynamic> transactions; //FIXME - criar model
+  final List<TransactionModel> transactions;
 
   const LatestTransactionsWidget({Key? key, required this.transactions}) : super(key: key);
 
@@ -14,6 +16,8 @@ class LatestTransactionsWidget extends StatefulWidget {
 }
 
 class LatestTransactionsStateWidget extends State<LatestTransactionsWidget> {
+  double get totalValueTransactions => widget.transactions.map((e) => e.value).reduce((p, c) => p + c);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,7 +43,7 @@ class LatestTransactionsStateWidget extends State<LatestTransactionsWidget> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 3.0),
               child: Text(
-                'R\$ 398,30',
+                'R\$ ${Formatters.formatMoney(totalValueTransactions)}',
                 style: AppTextStyles.gray24w400Roboto,
               ),
             ),
@@ -50,7 +54,7 @@ class LatestTransactionsStateWidget extends State<LatestTransactionsWidget> {
             ),
             SizedBox(height: 14.0),
             Column(
-              children: widget.transactions.map((e) => ItemCardWidget()).toList(),
+              children: widget.transactions.map((transaction) => ItemCardWidget(transaction: transaction)).toList(),
             )
           ],
         ),

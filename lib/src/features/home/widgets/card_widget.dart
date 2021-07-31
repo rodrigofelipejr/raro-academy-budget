@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_finance_controller/src/shared/constants/constants.dart';
+
+import '../../../shared/constants/constants.dart';
 
 class CardWidget extends StatelessWidget {
   final Widget child;
