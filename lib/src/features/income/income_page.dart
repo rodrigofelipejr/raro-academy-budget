@@ -77,41 +77,68 @@ class _IncomePageState extends State<IncomePage> {
             ),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.only(
+              left: 54,
+              right: 54,
+            ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomTextField(
-                  hintText: "Valor em R\$",
-                  labelText: "Valor",
-                  focusNode: _incomeFocusNode,
-                ),
-                CustomTextField(
-                  hintText: "Tipo de entrada",
-                  labelText: "Tipo de entrada",
-                  focusNode: _inputTypeFocusNode,
-                ),
-                CustomTextField(
-                  hintText: "Nome da entrada",
-                  labelText: "Nome da entrada",
-                  focusNode: _inputNameFocusNode,
-                ),
-                TextButton(
-                  onPressed: () => showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(1900),
-                    lastDate: DateTime(2050),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 55,
+                    bottom: 12,
                   ),
-                  child: Text(
-                    DateFormat("dd/MM/yyyy").format(DateTime.now()).toString(),
-                    style: TextStyle(
-                      fontFamily: "Roboto",
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14.0,
-                      letterSpacing: 0.4,
-                      color: Colors.purple,
+                  child: CustomTextField(
+                    hintText: "Valor em R\$",
+                    labelText: "Valor",
+                    focusNode: _incomeFocusNode,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 12,
+                    bottom: 12,
+                  ),
+                  child: CustomTextField(
+                    hintText: "Tipo de entrada",
+                    labelText: "Tipo de entrada",
+                    focusNode: _inputTypeFocusNode,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 12,
+                    bottom: 12,
+                  ),
+                  child: CustomTextField(
+                    hintText: "Nome da entrada",
+                    labelText: "Nome da entrada",
+                    focusNode: _inputNameFocusNode,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 12,
+                    bottom: 97,
+                  ),
+                  child: TextButton(
+                    onPressed: () => showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1900),
+                      lastDate: DateTime(2050),
+                    ),
+                    child: Text(
+                      DateFormat("dd/MM/yyyy").format(DateTime.now()).toString(),
+                      style: TextStyle(
+                        fontFamily: "Roboto",
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14.0,
+                        letterSpacing: 0.4,
+                        color: Colors.purple,
+                      ),
                     ),
                   ),
                 ),
