@@ -14,11 +14,10 @@ class MonthSelectorWidget extends StatelessWidget {
     final String? date = await showDialog(
       barrierColor: Colors.black87,
       context: context,
-      builder: (context) {
-        return MonthYearCalendarWidget();
-      },
+      builder: (_) => MonthYearCalendarWidget(),
     );
 
+    //FIXME - remover
     print(date);
   }
 
