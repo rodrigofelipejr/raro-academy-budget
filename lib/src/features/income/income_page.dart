@@ -79,10 +79,7 @@ class _IncomePageState extends State<IncomePage> {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.only(
-                  left: 54,
-                  right: 54,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 54),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,10 +96,7 @@ class _IncomePageState extends State<IncomePage> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(
-                        top: 12,
-                        bottom: 12,
-                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 12),
                       child: CustomTextField(
                         hintText: "Tipo de entrada",
                         labelText: "Tipo de entrada",
@@ -110,10 +104,7 @@ class _IncomePageState extends State<IncomePage> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(
-                        top: 12,
-                        bottom: 12,
-                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 12),
                       child: CustomTextField(
                         hintText: "Nome da entrada",
                         labelText: "Nome da entrada",
