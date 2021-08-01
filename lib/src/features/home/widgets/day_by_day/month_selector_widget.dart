@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../shared/constants/constants.dart';
-import 'month_year_calendar/month_year_calendar_widget.dart';
+import '../../../../shared/constants/constants.dart';
+import '../month_year_calendar/month_year_calendar_widget.dart';
 
 class MonthSelectorWidget extends StatelessWidget {
   final String label;

@@ -6,3 +6,4 @@ export 'fab_widget.dart';
 export 'header_widget.dart';
 export 'item_card_widget.dart';
 export 'visible_widget.dart';
+export 'button_icon_widget.dart';

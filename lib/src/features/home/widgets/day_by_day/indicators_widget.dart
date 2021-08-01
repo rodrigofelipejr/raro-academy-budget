@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'bar_indicators_widget.dart';
-import '../../../shared/utils/utils.dart';
-import '../../../shared/constants/constants.dart';
+import '../../../../shared/utils/utils.dart';
+import '../../../../shared/constants/constants.dart';
 
 class IndicatorsWidget extends StatelessWidget {
   final String label;

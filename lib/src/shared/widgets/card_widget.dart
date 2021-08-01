@@ -21,7 +21,10 @@ class CardWidget extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(7.0)),
       ),
       padding: contentPadding,
-      child: child,
+      child: Material(
+        color: AppColors.transparent,
+        child: child,
+      ),
     );
   }
 }
