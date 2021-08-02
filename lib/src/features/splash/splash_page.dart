@@ -16,7 +16,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
-      Future.delayed(Duration(seconds: 3)).then(
+      Future.delayed(Duration(seconds: 1)).then(
         (value) => Navigator.of(context).push(
           CupertinoPageRoute(
             builder: (BuildContext context) => LoginPage(),

@@ -38,7 +38,7 @@ abstract class _LoginControllerBase with Store {
   Future<void> login() async {
     try {
       final response = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: "test@test.com", password: "123456");
+          email: "teste@teste.com", password: "qwerty");
       user = response.user;
       print(user);
     } catch (e) {
