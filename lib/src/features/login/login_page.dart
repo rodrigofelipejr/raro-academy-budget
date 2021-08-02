@@ -1,9 +1,9 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_finance_controller/src/shared/validators/text_validator.dart';
-import 'package:flutter_finance_controller/src/shared/widget/custom_text_field.dart';
-import 'package:flutter_finance_controller/src/shared/widget/header_widget.dart';
-import 'package:flutter_finance_controller/src/shared/widget/visible_widget.dart';
+
+import '../../shared/validators/text_validator.dart';
+import '../../shared/widgets/widgets.dart';
 
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'login_controller.dart';
