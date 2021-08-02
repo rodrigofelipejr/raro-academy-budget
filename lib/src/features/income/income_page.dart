@@ -14,6 +14,8 @@ class _IncomePageState extends State<IncomePage> {
   FocusNode _inputTypeFocusNode = FocusNode();
   FocusNode _inputNameFocusNode = FocusNode();
 
+  String? dropdownValue;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,10 +99,105 @@ class _IncomePageState extends State<IncomePage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 12),
-                      child: CustomTextField(
-                        hintText: "Tipo de entrada",
-                        labelText: "Tipo de entrada",
-                        focusNode: _inputTypeFocusNode,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Tipo de entrada",
+                            style: TextStyle(
+                              color: Colors.black.withOpacity(0.54),
+                              fontFamily: 'roboto',
+                              fontSize: 12,
+                              fontWeight: FontWeight.normal,
+                              letterSpacing: 0.15,
+                            ),
+                          ),
+                          DropdownButton<String>(
+                            isExpanded: true,
+                            hint: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 12.0),
+                              child: Text(
+                                "Escolha",
+                                style: TextStyle(
+                                  fontFamily: 'roboto',
+                                  color: Colors.black.withOpacity(0.54),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  letterSpacing: 0.15,
+                                ),
+                              ),
+                            ),
+                            value: dropdownValue,
+                            icon: const Icon(Icons.arrow_drop_down),
+                            iconSize: 24,
+                            elevation: 8,
+                            style: TextStyle(
+                              color: Colors.black.withOpacity(0.54),
+                              fontFamily: 'roboto',
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                              letterSpacing: 0.15,
+                            ),
+                            underline: Container(
+                              height: 1,
+                              color: Colors.black.withOpacity(0.42),
+                            ),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                  dropdownValue = newValue!;
+                              });
+                            },
+                            focusNode: _inputTypeFocusNode,
+                            selectedItemBuilder: (BuildContext context) {
+                              return ['Dinheiro', 'Pix', 'Doc', 'Ted', 'Boleto']
+                                .map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(
+                                      value,
+                                      style: TextStyle(
+                                        fontFamily: 'roboto',
+                                        color: Colors.black.withOpacity(0.54),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400,
+                                        letterSpacing: 0.15,
+                                      ),
+                                    ),
+                                  );
+                              }).toList();
+                            },
+                            items: <String>['Dinheiro', 'Pix', 'Doc', 'Ted', 'Boleto']
+                              .map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.only(right: 12.0),
+                                        height: 24.0,
+                                        width: 24.0,
+                                        decoration: BoxDecoration(
+                                          color: Colors.blue,
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
+                                      Text(
+                                        value,
+                                        style: TextStyle(
+                                          fontFamily: 'roboto',
+                                          color: Colors.black.withOpacity(0.87),
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w400,
+                                          letterSpacing: 0.15,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                            }).toList(),
+                          ),
+                        ],
                       ),
                     ),
                     Padding(
