@@ -14,12 +14,7 @@ class _IncomePageState extends State<IncomePage> {
   FocusNode _inputTypeFocusNode = FocusNode();
   FocusNode _inputNameFocusNode = FocusNode();
 
-  // DropDownItemData? dropdownValue;
-
-  DropDownItemData? dropdownValue = DropDownItemData(
-    color: Colors.blue,
-    value: "Pix",
-  );
+  DropDownItemData? dropdownValue;
 
   final List<DropDownItemData> list = [
     DropDownItemData(
@@ -140,7 +135,7 @@ class _IncomePageState extends State<IncomePage> {
                               letterSpacing: 0.15,
                             ),
                           ),
-                          DropdownButton<String>(
+                          DropdownButton(
                             isExpanded: true,
                             hint: Container(
                               padding:
@@ -156,7 +151,7 @@ class _IncomePageState extends State<IncomePage> {
                                 ),
                               ),
                             ),
-                            value: dropdownValue!.value,
+                            value: dropdownValue,
                             icon: const Icon(Icons.arrow_drop_down),
                             iconSize: 24,
                             elevation: 8,
@@ -178,10 +173,11 @@ class _IncomePageState extends State<IncomePage> {
                             },
                             focusNode: _inputTypeFocusNode,
                             selectedItemBuilder: (BuildContext context) {
-                              return list.map<DropdownMenuItem<String>>(
-                                  (DropDownItemData item) {
-                                return DropdownMenuItem<String>(
-                                  value: item.value,
+                              return list
+                                  .map<DropdownMenuItem<DropDownItemData>>(
+                                      (DropDownItemData item) {
+                                return DropdownMenuItem<DropDownItemData>(
+                                  value: item,
                                   child: Text(
                                     item.value,
                                     style: TextStyle(
@@ -195,10 +191,10 @@ class _IncomePageState extends State<IncomePage> {
                                 );
                               }).toList();
                             },
-                            items: list.map<DropdownMenuItem<String>>(
+                            items: list.map<DropdownMenuItem<DropDownItemData>>(
                                 (DropDownItemData item) {
-                              return DropdownMenuItem<String>(
-                                value: item.value,
+                              return DropdownMenuItem<DropDownItemData>(
+                                value: item,
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
