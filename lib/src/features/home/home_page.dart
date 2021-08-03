@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
                   month: _controller.selectedMonth,
                 ),
                 SizedBox(height: 18.0),
-                LatestTransactionsWidget(
+                LastTransactionsWidget(
                   transactions: _controller.transactions,
                 ),
               ],

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'indicators_widget.dart';
 import 'month_selector_widget.dart';
-import '../../../shared/widgets/widgets.dart';
-import '../../../shared/utils/utils.dart';
-import '../../../shared/constants/constants.dart';
+import '../../../../shared/widgets/widgets.dart';
+import '../../../../shared/utils/utils.dart';
+import '../../../../shared/constants/constants.dart';
 
 class DayByDayWidget extends StatefulWidget {
   final double balance;

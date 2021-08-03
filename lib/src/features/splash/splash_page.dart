@@ -4,7 +4,6 @@ import 'package:animated_card/animated_card.dart';
 
 import 'package:flutter_finance_controller/src/features/login/login_page.dart';
 import 'package:flutter_finance_controller/src/shared/constants/constants.dart';
-import 'package:flutter_finance_controller/src/shared/constants/text_styles.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -65,13 +64,13 @@ class _SplashPageState extends State<SplashPage> {
                             color: Colors.transparent,
                             child: Text(
                               "budget",
-                              style: TextStyles.white72w700Montserrat,
+                              style: AppTextStyles.white72w700Montserrat,
                             ),
                           ),
                         ),
                         Text(
                           "YOUR WALLET’S BEST FRIEND",
-                          style: TextStyles.white13w300Montserrat,
+                          style: AppTextStyles.white13w300Montserrat,
                           textAlign: TextAlign.end,
                         ),
                       ],
@@ -91,7 +90,7 @@ class _SplashPageState extends State<SplashPage> {
                   children: [
                     Text(
                       "powered by",
-                      style: TextStyles.white12w200Roboto,
+                      style: AppTextStyles.white12w200Roboto,
                     ),
                     SizedBox(
                       height: 8.0,
