@@ -14,7 +14,35 @@ class _IncomePageState extends State<IncomePage> {
   FocusNode _inputTypeFocusNode = FocusNode();
   FocusNode _inputNameFocusNode = FocusNode();
 
-  String? dropdownValue;
+  // DropDownItemData? dropdownValue;
+
+  DropDownItemData? dropdownValue = DropDownItemData(
+    color: Colors.blue,
+    value: "Pix",
+  );
+
+  final List<DropDownItemData> list = [
+    DropDownItemData(
+      color: Colors.blue,
+      value: "Dinheiro",
+    ),
+    DropDownItemData(
+      color: Colors.blue,
+      value: "Pix",
+    ),
+    DropDownItemData(
+      color: Colors.blue,
+      value: "Doc",
+    ),
+    DropDownItemData(
+      color: Colors.blue,
+      value: "Ted",
+    ),
+    DropDownItemData(
+      color: Colors.blue,
+      value: "Boleto",
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +133,7 @@ class _IncomePageState extends State<IncomePage> {
                           Text(
                             "Tipo de entrada",
                             style: TextStyle(
-                              color: Colors.black.withOpacity(0.54),
+                              color: Colors.blue.withOpacity(0.54),
                               fontFamily: 'roboto',
                               fontSize: 12,
                               fontWeight: FontWeight.normal,
@@ -115,24 +143,25 @@ class _IncomePageState extends State<IncomePage> {
                           DropdownButton<String>(
                             isExpanded: true,
                             hint: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 12.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 12.0),
                               child: Text(
                                 "Escolha",
                                 style: TextStyle(
                                   fontFamily: 'roboto',
-                                  color: Colors.black.withOpacity(0.54),
+                                  color: Colors.blue.withOpacity(0.54),
                                   fontSize: 16,
                                   fontWeight: FontWeight.w400,
                                   letterSpacing: 0.15,
                                 ),
                               ),
                             ),
-                            value: dropdownValue,
+                            value: dropdownValue!.value,
                             icon: const Icon(Icons.arrow_drop_down),
                             iconSize: 24,
                             elevation: 8,
                             style: TextStyle(
-                              color: Colors.black.withOpacity(0.54),
+                              color: Colors.blue.withOpacity(0.54),
                               fontFamily: 'roboto',
                               fontSize: 16,
                               fontWeight: FontWeight.normal,
@@ -140,61 +169,61 @@ class _IncomePageState extends State<IncomePage> {
                             ),
                             underline: Container(
                               height: 1,
-                              color: Colors.black.withOpacity(0.42),
+                              color: Colors.blue.withOpacity(0.42),
                             ),
-                            onChanged: (String? newValue) {
+                            onChanged: (newValue) {
                               setState(() {
-                                  dropdownValue = newValue!;
+                                dropdownValue = newValue as DropDownItemData;
                               });
                             },
                             focusNode: _inputTypeFocusNode,
                             selectedItemBuilder: (BuildContext context) {
-                              return ['Dinheiro', 'Pix', 'Doc', 'Ted', 'Boleto']
-                                .map<DropdownMenuItem<String>>((String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(
-                                      value,
+                              return list.map<DropdownMenuItem<String>>(
+                                  (DropDownItemData item) {
+                                return DropdownMenuItem<String>(
+                                  value: item.value,
+                                  child: Text(
+                                    item.value,
+                                    style: TextStyle(
+                                      fontFamily: 'roboto',
+                                      color: Colors.blue.withOpacity(0.54),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      letterSpacing: 0.15,
+                                    ),
+                                  ),
+                                );
+                              }).toList();
+                            },
+                            items: list.map<DropdownMenuItem<String>>(
+                                (DropDownItemData item) {
+                              return DropdownMenuItem<String>(
+                                value: item.value,
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(right: 12.0),
+                                      height: 24.0,
+                                      width: 24.0,
+                                      decoration: BoxDecoration(
+                                        color: Colors.blue,
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                    Text(
+                                      item.value,
                                       style: TextStyle(
                                         fontFamily: 'roboto',
-                                        color: Colors.black.withOpacity(0.54),
+                                        color: Colors.blue.withOpacity(0.87),
                                         fontSize: 16,
                                         fontWeight: FontWeight.w400,
                                         letterSpacing: 0.15,
                                       ),
                                     ),
-                                  );
-                              }).toList();
-                            },
-                            items: <String>['Dinheiro', 'Pix', 'Doc', 'Ted', 'Boleto']
-                              .map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Container(
-                                        margin: EdgeInsets.only(right: 12.0),
-                                        height: 24.0,
-                                        width: 24.0,
-                                        decoration: BoxDecoration(
-                                          color: Colors.blue,
-                                          shape: BoxShape.circle,
-                                        ),
-                                      ),
-                                      Text(
-                                        value,
-                                        style: TextStyle(
-                                          fontFamily: 'roboto',
-                                          color: Colors.black.withOpacity(0.87),
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w400,
-                                          letterSpacing: 0.15,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
+                                  ],
+                                ),
+                              );
                             }).toList(),
                           ),
                         ],
@@ -229,7 +258,7 @@ class _IncomePageState extends State<IncomePage> {
                             fontWeight: FontWeight.w500,
                             fontSize: 14.0,
                             letterSpacing: 0.4,
-                            color: Colors.purple,
+                            color: Colors.blue,
                           ),
                         ),
                       ),
@@ -283,4 +312,18 @@ class _IncomePageState extends State<IncomePage> {
       ),
     );
   }
+}
+
+class DropDownItemData {
+  final Color color;
+  final String value;
+
+  DropDownItemData({
+    required this.color,
+    required this.value,
+  });
+
+  set color(Color color) => color = color;
+
+  set value(String value) => value = value;
 }
