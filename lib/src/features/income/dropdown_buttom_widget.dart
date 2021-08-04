@@ -5,13 +5,13 @@ class DropdownButtomWidget extends StatelessWidget {
   const DropdownButtomWidget({
     Key? key,
     this.value,
-    this.list,
+    this.items,
     this.focusNode,
     this.onChanged,
   }) : super(key: key);
 
   final DropdownItemData? value;
-  final List<DropdownItemData>? list;
+  final List<DropdownItemData>? items;
   final FocusNode? focusNode;
   final ValueChanged<DropdownItemData?>? onChanged;
 
@@ -50,7 +50,7 @@ class DropdownButtomWidget extends StatelessWidget {
       onChanged: onChanged,
       focusNode: focusNode,
       selectedItemBuilder: (BuildContext context) {
-        return list!
+        return items!
         .map<DropdownMenuItem<DropdownItemData>>((DropdownItemData item) {
           return DropdownMenuItem<DropdownItemData>(
             value: item,
@@ -67,7 +67,7 @@ class DropdownButtomWidget extends StatelessWidget {
           );
         }).toList();
       },
-      items: list!
+      items: items!
       .map<DropdownMenuItem<DropdownItemData>>((DropdownItemData item) {
         return DropdownMenuItem<DropdownItemData>(
           value: item,

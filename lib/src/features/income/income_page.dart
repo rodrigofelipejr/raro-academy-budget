@@ -140,7 +140,7 @@ class _IncomePageState extends State<IncomePage> {
                           ),
                           DropdownButtomWidget(
                             value: dropdownValue,
-                            list: list,
+                            items: list,
                             focusNode: _inputTypeFocusNode,
                             onChanged: (newValue) {
                               setState(() {
