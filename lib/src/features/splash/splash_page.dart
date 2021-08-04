@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_card/animated_card.dart';
 
-import 'package:flutter_finance_controller/src/features/login/login_page.dart';
-import 'package:flutter_finance_controller/src/shared/constants/constants.dart';
+import 'package:budget/src/features/login/login_page.dart';
+import 'package:budget/src/shared/constants/constants.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);

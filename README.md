@@ -1,4 +1,4 @@
-# flutter_finance_controller
+# budget
 
 A new Flutter project.
 

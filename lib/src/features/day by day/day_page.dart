@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_finance_controller/src/shared/constants/app_colors.dart';
-import 'package:flutter_finance_controller/src/shared/constants/app_gradients.dart';
+import 'package:budget/src/shared/constants/app_colors.dart';
+import 'package:budget/src/shared/constants/app_gradients.dart';
 
 class DayPage extends StatefulWidget {
   const DayPage({Key? key}) : super(key: key);

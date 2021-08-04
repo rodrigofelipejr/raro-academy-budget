@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_finance_controller/app_widget.dart';
+import 'package:budget/app_widget.dart';
 
 class FirebaseWidget extends StatefulWidget {
   // Create the initialization Future outside of `build`:

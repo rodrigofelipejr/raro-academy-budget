@@ -1,6 +1,6 @@
 {
-    "name": "flutter_finance_controller",
-    "short_name": "flutter_finance_controller",
+    "name": "budget",
+    "short_name": "budget",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
