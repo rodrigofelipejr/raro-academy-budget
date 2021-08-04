@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_finance_controller/src/features/income/dropdown_buttom_widget.dart';
 import 'package:flutter_finance_controller/src/features/income/dropdown_item_data.dart';
+import 'package:flutter_finance_controller/src/features/income/text_styles.dart';
 import 'package:flutter_finance_controller/src/shared/widget/custom_text_field.dart';
 
 import 'package:intl/intl.dart';
@@ -75,13 +76,7 @@ class _IncomePageState extends State<IncomePage> {
                   alignment: Alignment.center,
                   child: Text(
                     "Entrada",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 26,
-                      fontFamily: 'Roboto',
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 0.25,
-                    ),
+                    style: TextStyles.white26w700Roboto,
                   ),
                 ),
               ),
@@ -130,13 +125,7 @@ class _IncomePageState extends State<IncomePage> {
                         children: [
                           Text(
                             "Tipo de entrada",
-                            style: TextStyle(
-                              color: Colors.blue.withOpacity(0.54),
-                              fontFamily: 'roboto',
-                              fontSize: 12,
-                              fontWeight: FontWeight.normal,
-                              letterSpacing: 0.15,
-                            ),
+                            style: TextStyles.blue12w400RobotoOp54,
                           ),
                           DropdownButtomWidget(
                             value: dropdownValue,
@@ -173,15 +162,9 @@ class _IncomePageState extends State<IncomePage> {
                         ),
                         child: Text(
                           DateFormat("dd/MM/yyyy")
-                              .format(DateTime.now())
-                              .toString(),
-                          style: TextStyle(
-                            fontFamily: "Roboto",
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14.0,
-                            letterSpacing: 0.4,
-                            color: Colors.blue,
-                          ),
+                            .format(DateTime.now())
+                            .toString(),
+                          style: TextStyles.blue14w500Roboto,
                         ),
                       ),
                     ),
@@ -216,12 +199,7 @@ class _IncomePageState extends State<IncomePage> {
                         ),
                         Text(
                           "INSERIR",
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 0.46,
-                            color: Colors.white,
-                          ),
+                          style: TextStyles.white15w500Roboto,
                         ),
                       ],
                     ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_finance_controller/src/features/income/dropdown_item_data.dart';
+import 'package:flutter_finance_controller/src/features/income/text_styles.dart';
 
 class DropdownButtomWidget extends StatelessWidget {
   const DropdownButtomWidget({
@@ -23,26 +24,14 @@ class DropdownButtomWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 12.0),
         child: Text(
           "Escolha",
-          style: TextStyle(
-            fontFamily: 'roboto',
-            color: Colors.blue.withOpacity(0.54),
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
-            letterSpacing: 0.15,
-          ),
+          style: TextStyles.blue16w400RobotoOp54,
         ),
       ),
       value: value,
       icon: const Icon(Icons.arrow_drop_down),
       iconSize: 24,
       elevation: 8,
-      style: TextStyle(
-        color: Colors.blue.withOpacity(0.54),
-        fontFamily: 'roboto',
-        fontSize: 16,
-        fontWeight: FontWeight.normal,
-        letterSpacing: 0.15,
-      ),
+      style: TextStyles.blue16w400RobotoOp54,
       underline: Container(
         height: 1,
         color: Colors.blue.withOpacity(0.42),
@@ -56,13 +45,7 @@ class DropdownButtomWidget extends StatelessWidget {
             value: item,
             child: Text(
               item.value,
-              style: TextStyle(
-                fontFamily: 'roboto',
-                color: Colors.blue.withOpacity(0.54),
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                letterSpacing: 0.15,
-              ),
+              style: TextStyles.blue16w400RobotoOp54,
             ),
           );
         }).toList();
@@ -85,13 +68,7 @@ class DropdownButtomWidget extends StatelessWidget {
               ),
               Text(
                 item.value,
-                style: TextStyle(
-                  fontFamily: 'roboto',
-                  color: Colors.blue.withOpacity(0.87),
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0.15,
-                ),
+                style: TextStyles.blue16w400RobotoOp87,
               ),
             ],
           ),
