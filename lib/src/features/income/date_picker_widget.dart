@@ -9,8 +9,8 @@ class DatePickerWidget extends StatelessWidget {
       onPressed: () => showDatePicker(
         context: context,
         initialDate: DateTime.now(),
-        firstDate: DateTime(1900),
-        lastDate: DateTime(2050),
+        firstDate: DateTime.now().subtract(Duration(days: 365 * 120)),
+        lastDate: DateTime.now().add(Duration(days: 365 * 120)),
       ),
       child: Text(
         DateFormat("dd/MM/yyyy").format(DateTime.now()).toString(),
