@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'home_controller.dart';
+import 'home_store.dart';
 import 'widgets/widgets.dart';
 import '../../shared/constants/constants.dart';
 import '../../shared/widgets/widgets.dart';
@@ -44,8 +44,8 @@ class _HomePageState extends State<HomePage> {
                   balance: _controller.generalBalance,
                 ),
                 SizedBox(height: 18.0),
-                DayByDayWidget(
-                  balance: _controller.dayByDayBalance,
+                DailyWidget(
+                  balance: _controller.dailyBalance,
                   inputs: _controller.inputs,
                   outputs: _controller.outputs,
                   month: _controller.selectedMonth,
