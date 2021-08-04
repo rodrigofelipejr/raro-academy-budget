@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_finance_controller/src/features/income/dropdown_buttom_widget.dart';
+import 'package:flutter_finance_controller/src/features/income/dropdown_item_data.dart';
 import 'package:flutter_finance_controller/src/shared/widget/custom_text_field.dart';
+
+import 'package:intl/intl.dart';
 
 class IncomePage extends StatefulWidget {
   const IncomePage({Key? key}) : super(key: key);
@@ -14,26 +17,26 @@ class _IncomePageState extends State<IncomePage> {
   FocusNode _inputTypeFocusNode = FocusNode();
   FocusNode _inputNameFocusNode = FocusNode();
 
-  DropDownItemData? dropdownValue;
+  DropdownItemData? dropdownValue;
 
-  final List<DropDownItemData> list = [
-    DropDownItemData(
+  final List<DropdownItemData> list = [
+    DropdownItemData(
       color: Colors.blue,
       value: "Dinheiro",
     ),
-    DropDownItemData(
+    DropdownItemData(
       color: Colors.blue,
       value: "Pix",
     ),
-    DropDownItemData(
+    DropdownItemData(
       color: Colors.blue,
       value: "Doc",
     ),
-    DropDownItemData(
+    DropdownItemData(
       color: Colors.blue,
       value: "Ted",
     ),
-    DropDownItemData(
+    DropdownItemData(
       color: Colors.blue,
       value: "Boleto",
     ),
@@ -135,92 +138,15 @@ class _IncomePageState extends State<IncomePage> {
                               letterSpacing: 0.15,
                             ),
                           ),
-                          DropdownButton(
-                            isExpanded: true,
-                            hint: Container(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 12.0),
-                              child: Text(
-                                "Escolha",
-                                style: TextStyle(
-                                  fontFamily: 'roboto',
-                                  color: Colors.blue.withOpacity(0.54),
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  letterSpacing: 0.15,
-                                ),
-                              ),
-                            ),
+                          DropdownButtomWidget(
                             value: dropdownValue,
-                            icon: const Icon(Icons.arrow_drop_down),
-                            iconSize: 24,
-                            elevation: 8,
-                            style: TextStyle(
-                              color: Colors.blue.withOpacity(0.54),
-                              fontFamily: 'roboto',
-                              fontSize: 16,
-                              fontWeight: FontWeight.normal,
-                              letterSpacing: 0.15,
-                            ),
-                            underline: Container(
-                              height: 1,
-                              color: Colors.blue.withOpacity(0.42),
-                            ),
+                            list: list,
+                            focusNode: _inputTypeFocusNode,
                             onChanged: (newValue) {
                               setState(() {
-                                dropdownValue = newValue as DropDownItemData;
+                                dropdownValue = newValue as DropdownItemData;
                               });
-                            },
-                            focusNode: _inputTypeFocusNode,
-                            selectedItemBuilder: (BuildContext context) {
-                              return list
-                                  .map<DropdownMenuItem<DropDownItemData>>(
-                                      (DropDownItemData item) {
-                                return DropdownMenuItem<DropDownItemData>(
-                                  value: item,
-                                  child: Text(
-                                    item.value,
-                                    style: TextStyle(
-                                      fontFamily: 'roboto',
-                                      color: Colors.blue.withOpacity(0.54),
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400,
-                                      letterSpacing: 0.15,
-                                    ),
-                                  ),
-                                );
-                              }).toList();
-                            },
-                            items: list.map<DropdownMenuItem<DropDownItemData>>(
-                                (DropDownItemData item) {
-                              return DropdownMenuItem<DropDownItemData>(
-                                value: item,
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.only(right: 12.0),
-                                      height: 24.0,
-                                      width: 24.0,
-                                      decoration: BoxDecoration(
-                                        color: Colors.blue,
-                                        shape: BoxShape.circle,
-                                      ),
-                                    ),
-                                    Text(
-                                      item.value,
-                                      style: TextStyle(
-                                        fontFamily: 'roboto',
-                                        color: Colors.blue.withOpacity(0.87),
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                        letterSpacing: 0.15,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            }).toList(),
+                            }
                           ),
                         ],
                       ),
@@ -310,16 +236,12 @@ class _IncomePageState extends State<IncomePage> {
   }
 }
 
-class DropDownItemData {
-  final Color color;
-  final String value;
+// class DropdownItemData {
+//   final Color color;
+//   final String value;
 
-  DropDownItemData({
-    required this.color,
-    required this.value,
-  });
-
-  set color(Color color) => color = color;
-
-  set value(String value) => value = value;
-}
+//   DropdownItemData({
+//     required this.color,
+//     required this.value,
+//   });
+// }
