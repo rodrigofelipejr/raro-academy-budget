@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_finance_controller/src/features/income/appbar_with_drawer.dart';
 import 'package:flutter_finance_controller/src/features/income/button_widget.dart';
+import 'package:flutter_finance_controller/src/features/income/date_picker_widget.dart';
 import 'package:flutter_finance_controller/src/features/income/dropdown_buttom_widget.dart';
 import 'package:flutter_finance_controller/src/features/income/dropdown_item_data.dart';
 import 'package:flutter_finance_controller/src/features/income/text_styles.dart';
 import 'package:flutter_finance_controller/src/shared/widget/custom_text_field.dart';
-
-import 'package:intl/intl.dart';
 
 class IncomePage extends StatefulWidget {
   const IncomePage({Key? key}) : super(key: key);
@@ -118,20 +117,7 @@ class _IncomePageState extends State<IncomePage> {
                         top: 12,
                         bottom: 97,
                       ),
-                      child: TextButton(
-                        onPressed: () => showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(1900),
-                          lastDate: DateTime(2050),
-                        ),
-                        child: Text(
-                          DateFormat("dd/MM/yyyy")
-                            .format(DateTime.now())
-                            .toString(),
-                          style: TextStyles.blue14w500Roboto,
-                        ),
-                      ),
+                      child: DatePickerWidget(),
                     ),
                   ],
                 ),
