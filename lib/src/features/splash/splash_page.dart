@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_card/animated_card.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
-import 'package:flutter_finance_controller/src/features/login/login_page.dart';
-import 'package:flutter_finance_controller/src/shared/constants/constants.dart';
+import '../../shared/constants/constants.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -16,12 +15,9 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
+      //FIXME - deve ser revisto, quando o usuário já está logado
       Future.delayed(Duration(seconds: 3)).then(
-        (value) => Navigator.of(context).push(
-          CupertinoPageRoute(
-            builder: (BuildContext context) => LoginPage(),
-          ),
-        ),
+        (value) => Modular.to.pushReplacementNamed(AppRoutes.login),
       );
     });
     super.initState();

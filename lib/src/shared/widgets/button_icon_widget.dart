@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_finance_controller/src/shared/constants/app_colors.dart';
+
+import '../constants/app_colors.dart';
 
 class ButtonIconWidget extends StatelessWidget {
   final void Function() onTap;

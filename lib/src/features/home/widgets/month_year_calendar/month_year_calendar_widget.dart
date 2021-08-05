@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import 'widgets/header_calendar_widget.dart';
 import 'widgets/body_calendar_widget.dart';
@@ -33,7 +34,7 @@ class _MonthYearCalendarWidgetState extends State<MonthYearCalendarWidget> {
   void updateMonth(int month) {
     _selected = DateTime(_selected.year, month, 15);
 
-    Navigator.of(context).pop(_selected.toString());
+    Modular.to.pop(_selected.toString());
   }
 
   @override
