@@ -33,6 +33,7 @@ class _AppFirebaseState extends State<AppFirebase> {
 
         return Center(
           child: CircularProgressIndicator(), //FIXME - criar Widget
+          //
         );
       },
     );
