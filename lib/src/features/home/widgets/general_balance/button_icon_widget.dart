@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../shared/constants/constants.dart';
+import '../../../../shared/constants/constants.dart';
 
-class ButtonPaginationCalendarWidget extends StatelessWidget {
-  final Function() onTap;
-  final bool next;
+class ButtonIconShowBalanceWidget extends StatelessWidget {
+  final void Function() onTap;
+  final bool showing;
 
-  const ButtonPaginationCalendarWidget({
+  const ButtonIconShowBalanceWidget({
     Key? key,
     required this.onTap,
-    required this.next,
+    required this.showing,
   }) : super(key: key);
 
-  IconData get icon => next ? Icons.expand_less : Icons.expand_more;
+  IconData get icon => showing ? Icons.visibility_off : Icons.visibility;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,10 @@ class ButtonPaginationCalendarWidget extends StatelessWidget {
         width: kMinInteractiveDimension,
         child: IconButton(
           onPressed: onTap,
-          icon: Icon(icon, color: AppColors.white),
+          icon: Icon(
+            icon,
+            color: AppColors.roxo,
+          ),
           splashRadius: kMinInteractiveDimension * 0.5,
         ),
       ),
