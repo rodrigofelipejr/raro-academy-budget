@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'firebase_app.dart';
+
+import 'src/app_firebase.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(FirebaseWidget());
+  runApp(AppFirebase());
 }

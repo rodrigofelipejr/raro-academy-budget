@@ -2,7 +2,7 @@ import '../../shared/models/models.dart';
 
 class HomeController {
   double generalBalance = 12233;
-  double dayByDayBalance = 5453;
+  double dailyBalance = 5453;
   double inputs = 9345;
   double outputs = 3892;
   String selectedMonth = 'ago';

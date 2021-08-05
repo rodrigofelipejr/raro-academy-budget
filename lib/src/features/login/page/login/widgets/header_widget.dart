@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_finance_controller/src/shared/constants/app_colors.dart';
+
+import '../../../../../shared/constants/app_colors.dart';
 
 class HeaderWidget extends StatelessWidget {
   const HeaderWidget({

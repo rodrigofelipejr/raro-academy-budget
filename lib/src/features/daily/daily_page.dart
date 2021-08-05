@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_finance_controller/src/shared/constants/app_colors.dart';
-import 'package:flutter_finance_controller/src/shared/constants/app_gradients.dart';
 
-class DayPage extends StatefulWidget {
-  const DayPage({Key? key}) : super(key: key);
+import '../../shared/constants/constants.dart';
+
+class DailyPage extends StatefulWidget {
+  const DailyPage({Key? key}) : super(key: key);
 
   @override
-  _DayPageState createState() => _DayPageState();
+  _DailyPageState createState() => _DailyPageState();
 }
 
-class _DayPageState extends State<DayPage> {
+class _DailyPageState extends State<DailyPage> {
   final PageController _pageController = PageController();
   int? tela;
   String get label => tela == 1
@@ -46,10 +46,7 @@ class _DayPageState extends State<DayPage> {
               SizedBox(height: MediaQuery.of(context).size.height * 0.14),
               Text(
                 'R\$ 1.104,53',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 26,
-                    fontWeight: FontWeight.w700),
+                style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.w700),
               ),
               SizedBox(height: 5),
               Padding(
@@ -62,10 +59,7 @@ class _DayPageState extends State<DayPage> {
                       child: Text(
                         'Entradas',
                         style: TextStyle(
-                            fontSize: 16,
-                            color: tela == 1
-                                ? Colors.white
-                                : Color.fromARGB(60, 255, 255, 255)),
+                            fontSize: 16, color: tela == 1 ? Colors.white : Color.fromARGB(60, 255, 255, 255)),
                       ),
                     ),
                     Container(
@@ -83,10 +77,7 @@ class _DayPageState extends State<DayPage> {
                       child: Text(
                         'Saídas',
                         style: TextStyle(
-                            fontSize: 16,
-                            color: tela == 2
-                                ? Colors.white
-                                : Color.fromARGB(60, 255, 255, 255)),
+                            fontSize: 16, color: tela == 2 ? Colors.white : Color.fromARGB(60, 255, 255, 255)),
                       ),
                     ),
                     Container(
@@ -104,10 +95,7 @@ class _DayPageState extends State<DayPage> {
                       child: Text(
                         'Todos',
                         style: TextStyle(
-                            fontSize: 16,
-                            color: tela == 3
-                                ? Colors.white
-                                : Color.fromARGB(60, 255, 255, 255)),
+                            fontSize: 16, color: tela == 3 ? Colors.white : Color.fromARGB(60, 255, 255, 255)),
                       ),
                     ),
                   ],
@@ -131,8 +119,7 @@ class _DayPageState extends State<DayPage> {
                     child: ListView(
                       children: [
                         ListTile(
-                          contentPadding:
-                              const EdgeInsets.symmetric(horizontal: 16),
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                           onTap: () {},
                           leading: SizedBox(
                             height: 40.0,
@@ -170,16 +157,12 @@ class _DayPageState extends State<DayPage> {
                             Text(
                               label,
                               style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color.fromARGB(255, 52, 48, 144)),
+                                  fontSize: 16, fontWeight: FontWeight.w500, color: Color.fromARGB(255, 52, 48, 144)),
                             ),
                             Text(
                               '+R\$ 2.415,00',
                               style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color.fromARGB(255, 88, 179, 104)),
+                                  fontSize: 16, fontWeight: FontWeight.w500, color: Color.fromARGB(255, 88, 179, 104)),
                             ),
                           ],
                         ),
