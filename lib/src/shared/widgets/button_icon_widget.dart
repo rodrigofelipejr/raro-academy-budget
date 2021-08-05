@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:budget/src/shared/constants/app_colors.dart';
+
+import '../constants/app_colors.dart';
 
 class ButtonIconWidget extends StatelessWidget {
   final void Function() onTap;

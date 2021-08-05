@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:budget/src/shared/constants/app_colors.dart';
-import 'package:budget/src/shared/constants/app_gradients.dart';
+
+import '../../shared/constants/constants.dart';
 
 class DailyPage extends StatefulWidget {
   const DailyPage({Key? key}) : super(key: key);

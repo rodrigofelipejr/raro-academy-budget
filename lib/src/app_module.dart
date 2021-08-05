@@ -1,7 +1,7 @@
-import 'package:budget/src/features/daily/daily_module.dart';
-import 'package:budget/src/features/home/home_module.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import 'features/daily/daily_module.dart';
+import 'features/home/home_module.dart';
 import 'features/splash/splash_module.dart';
 import 'features/login/login_module.dart';
 import 'shared/constants/constants.dart';

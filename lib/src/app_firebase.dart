@@ -1,11 +1,11 @@
 import 'dart:developer';
 
-import 'package:budget/src/app_module.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import 'package:budget/src/app_widget.dart';
+import 'app_module.dart';
+import 'app_widget.dart';
 
 class AppFirebase extends StatefulWidget {
   @override
