@@ -14,21 +14,14 @@ class DayPage extends StatefulWidget {
 class _DayPageState extends State<DayPage> {
   final PageController _pageController = PageController();
   int screen = 0;
-  dynamic get entrada => _pageController.animateToPage(
-        0,
-        duration: const Duration(milliseconds: 1000),
-        curve: Curves.easeInOut,
-      );
-  dynamic get saida => _pageController.animateToPage(
-        1,
-        duration: const Duration(milliseconds: 1000),
-        curve: Curves.easeInOut,
-      );
-  dynamic get todos => _pageController.animateToPage(
-        2,
-        duration: const Duration(milliseconds: 1000),
-        curve: Curves.easeInOut,
-      );
+  void navigator({required int pageindex}) {
+    _pageController.animateToPage(
+      pageindex,
+      duration: const Duration(milliseconds: 800),
+      curve: Curves.easeInOut,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,9 +37,9 @@ class _DayPageState extends State<DayPage> {
         bottomOpacity: 0.0,
         elevation: 0.0,
         flexibleSpace: ButtonsAppBarDay(
-          buttonin: () => entrada,
-          buttonout: () => saida,
-          buttonall: () => todos,
+          buttonin: () => navigator(pageindex: 0),
+          buttonout: () => navigator(pageindex: 1),
+          buttonall: () => navigator(pageindex: 2),
           tela: screen,
         ),
         toolbarHeight: MediaQuery.of(context).size.height * 0.22,
@@ -61,7 +54,10 @@ class _DayPageState extends State<DayPage> {
         ],
       ),
       body: PageView(
-        onPageChanged: (page) => screen = page,
+        onPageChanged: (page) {
+          screen = page;
+          setState(() {});
+        },
         controller: _pageController,
         children: [
           InputCard(),

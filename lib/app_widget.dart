@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_finance_controller/src/features/day_by_day/day_page.dart';
 import 'package:flutter_finance_controller/src/features/splash/splash_page.dart';
 
 class AppWidget extends StatelessWidget {
@@ -10,7 +11,7 @@ class AppWidget extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SplashPage(),
+      home: DayPage(),
     );
   }
 }

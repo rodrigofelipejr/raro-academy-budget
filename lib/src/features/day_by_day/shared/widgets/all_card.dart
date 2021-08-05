@@ -57,7 +57,7 @@ class AllCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Total entradas',
+                            'Total',
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
