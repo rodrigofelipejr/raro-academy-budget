@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_finance_controller/src/shared/constants/app_colors.dart';
+import '../../../shared/constants/constants.dart';
 
-class InputCard extends StatelessWidget {
-  const InputCard({Key? key}) : super(key: key);
+class OutCard extends StatelessWidget {
+  const OutCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -57,18 +57,18 @@ class InputCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Total entradas',
+                            'Total sáida',
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
                                 color: Color.fromARGB(255, 52, 48, 144)),
                           ),
                           Text(
-                            '+R\$ 2.415,00',
+                            '-R\$ 2.415,00',
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
-                                color: Color.fromARGB(255, 88, 179, 104)),
+                                color: Color.fromARGB(255, 244, 67, 54)),
                           ),
                         ],
                       ),

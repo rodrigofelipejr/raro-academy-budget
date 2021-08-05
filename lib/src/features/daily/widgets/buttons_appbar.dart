@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_finance_controller/src/shared/constants/app_gradients.dart';
+import '../../../shared/constants/constants.dart';
 
 class ButtonsAppBarDay extends StatelessWidget {
   final int? tela;
