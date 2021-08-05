@@ -1,8 +1,8 @@
 import 'dart:ui';
 
+import 'package:budget/src/shared/widgets/circular_button_gradient.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 import 'widgets/header_widget.dart';
 import 'login_controller.dart';
@@ -23,7 +23,9 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     controller.emailController.addListener(() {
-      controller.verifyDig();
+      if (!controller.showPasswordField) {
+        controller.verifyDig();
+      }
     });
     super.initState();
   }
@@ -33,10 +35,11 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: false,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 48),
         child: SingleChildScrollView(
@@ -71,66 +74,61 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                   Observer(builder: (_) {
-                    return Column(
-                      children: [
-                        CustomTextField(
-                          labelText: "E-mail",
-                          hintText: "E-mail",
-                          validator: (value) => Validators().email(value ?? ''),
-                          textInputAction: TextInputAction.next,
-                          controller: controller.emailController,
-                          keyboardType: TextInputType.emailAddress,
-                        ),
-                        SizedBox(height: 8.0),
-                        controller.showPasswordField
-                            ? CustomTextField(
-                                labelText: "Senha",
-                                hintText: "Senha",
-                                obscureText: controller.passwordVisible,
-                                suffixIcon: VisibleWidget(
-                                  visible: controller.passwordVisible,
-                                  onPressed: () {
-                                    setState(() {
-                                      controller.passwordVisible =
-                                          !controller.passwordVisible;
-                                    });
-                                  },
-                                ),
-                                textInputAction: TextInputAction.next,
-                                controller: controller.passwordController,
-                              )
-                            : Container(),
-                        SizedBox(height: 16.0),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              controller.login().then((value) => {});
-                            },
-                            style: ButtonStyle(
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50.0),
-                                ),
-                              ),
-                            ),
-                            child: Text(
-                              "CONTINUAR",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'Roboto',
-                                fontSize: 14,
-                                letterSpacing: 0.4,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
+                    return Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          CustomTextField(
+                            labelText: "E-mail",
+                            hintText: "Insira seu e-mail",
+                            errorMessage: null,
+                            validator: (value) =>
+                                Validators().email(value ?? ''),
+                            textInputAction: TextInputAction.next,
+                            controller: controller.emailController,
+                            focusNode: controller.emailFocusNode,
+                            keyboardType: TextInputType.emailAddress,
                           ),
-                        ),
-                        SizedBox(
-                          height: 50,
-                        ),
-                      ],
+                          SizedBox(height: 8.0),
+                          controller.showPasswordField
+                              ? CustomTextField(
+                                  labelText: "Senha",
+                                  hintText: "Senha",
+                                  obscureText: controller.passwordVisible,
+                                  suffixIcon: VisibleWidget(
+                                    visible: controller.passwordVisible,
+                                    onPressed: () {
+                                      setState(() {
+                                        controller.passwordVisible =
+                                            !controller.passwordVisible;
+                                      });
+                                    },
+                                  ),
+                                  textInputAction: TextInputAction.next,
+                                  focusNode: controller.passwordFocusNode,
+                                  controller: controller.passwordController,
+                                )
+                              : Container(),
+                          SizedBox(height: 16.0),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Recuperar senha',
+                                style: AppTextStyles.purple14w500Roboto,
+                              ),
+                              CircularButtonGradient(
+                                formKey: _formKey,
+                                controller: controller,
+                                text: 'Continuar',
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 50,
+                          ),
+                        ],
+                      ),
                     );
                   }),
                   Column(
@@ -150,69 +148,61 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-                      Flex(
-                        direction: Axis.horizontal,
-                        children: [
-                          Expanded(
-                            child: ElevatedButton(
-                              style: ButtonStyle(
-                                shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50.0),
-                                  ),
-                                ),
-                              ),
-                              onPressed: () {},
-                              child: Row(
-                                children: [
-                                  Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Icon(Icons.android)),
-                                  Container(
-                                    margin: const EdgeInsets.only(left: 10.0),
-                                    child: Text(
-                                      "continuar com o google",
-                                      style: TextStyle(fontSize: 20.0),
-                                    ),
-                                  )
-                                ],
-                              ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50.0),
                             ),
                           ),
-                        ],
+                        ),
+                        onPressed: () {},
+                        child: Flex(
+                          direction: Axis.horizontal,
+                          children: [
+                            Icon(Icons.android),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Flexible(
+                              child: Text(
+                                "continuar com o google",
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: TextStyle(fontSize: 20.0),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      Flex(
-                        direction: Axis.horizontal,
-                        children: [
-                          Expanded(
-                            child: ElevatedButton(
-                              style: ButtonStyle(
-                                shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50.0),
-                                  ),
-                                ),
-                              ),
-                              onPressed: () {},
-                              child: Row(
-                                children: [
-                                  Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Icon(Icons.facebook)),
-                                  Container(
-                                    margin: const EdgeInsets.only(left: 10.0),
-                                    child: Text(
-                                      "continuar com o facebook",
-                                      style: TextStyle(fontSize: 20.0),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50.0),
+                                side: BorderSide(color: Colors.red)),
                           ),
-                        ],
+                        ),
+                        onPressed: () {},
+                        child: Flex(
+                          direction: Axis.horizontal,
+                          children: [
+                            Icon(Icons.facebook),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Flexible(
+                              child: Text(
+                                "continuar com o facebook",
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: TextStyle(fontSize: 20.0),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ],
                   ),

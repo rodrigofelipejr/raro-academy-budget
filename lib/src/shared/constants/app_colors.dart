@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 
 class AppColors {
   static const Color rosa = Color.fromRGBO(245, 72, 127, 1);
+  static const Color vermelho = Color.fromRGBO(244, 67, 54, 1);
   static const Color verde = Color.fromRGBO(88, 179, 104, 1);
   static const Color roxo = Color.fromRGBO(52, 48, 144, 1);
   static const Color ciano = Color.fromRGBO(68, 194, 253, 1);

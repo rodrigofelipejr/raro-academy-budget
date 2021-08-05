@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -36,11 +38,16 @@ class AuthController {
 
   Future<void> init() async {
     _state = AuthState.loading;
-    await Future.delayed(Duration(seconds: 2));
-    _state = AuthState.unauthenticated;
-    //Verificar no shared preferences se existe um usuário logado
-    //IF(true) buscar o dado, e insere no _user
-    //IF(false) insere _user como nulo
+    await Future.delayed(Duration(milliseconds: 1400));
+
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user == null) {
+        _state = AuthState.unauthenticated;
+      } else {
+        _state = AuthState.authenticated;
+      }
+      _setUser(user);
+    });
   }
 
   Future<void> _setUser(User? user) async {

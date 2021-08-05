@@ -1,5 +1,4 @@
-import 'dart:developer';
-
+import 'package:budget/src/shared/auth/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,11 +9,9 @@ class LoginController = _LoginControllerBase with _$LoginController;
 
 abstract class _LoginControllerBase with Store {
   bool passwordVisible = true;
-  // FirebaseAuth auth = FirebaseAuth.instance;
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  User? user;
-
+  FirebaseAuth auth = FirebaseAuth.instance;
+  FocusNode emailFocusNode = new FocusNode();
+  FocusNode passwordFocusNode = new FocusNode();
   @observable
   bool showPasswordField = false;
 
@@ -23,24 +20,31 @@ abstract class _LoginControllerBase with Store {
   @observable
   String listLength = "0";
 
+  @observable
+  TextEditingController emailController = TextEditingController();
+
+  @observable
+  TextEditingController passwordController = TextEditingController();
+
   @action
   void verifyDig() {
     if (this.emailController.text != '') {
-      log(this.emailController.text);
       this.showPasswordField = true;
     } else {
-      log(this.emailController.text);
       this.showPasswordField = false;
     }
   }
 
   @action
-  Future<void> login() async {
+  Future<void> login(
+    String email,
+    String password,
+  ) async {
     try {
-      final response = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: "teste@teste.com", password: "qwerty");
-      user = response.user;
-      print(user);
+      final response = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      AuthController.instance.loginUser(response.user!);
+      print(response.user!);
     } catch (e) {
       print(e);
     }

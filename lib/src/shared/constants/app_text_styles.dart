@@ -55,6 +55,14 @@ class AppTextStyles {
     letterSpacing: 0.15,
   );
 
+  static const TextStyle purple14w500Roboto = TextStyle(
+    color: AppColors.roxo,
+    fontWeight: FontWeight.w500,
+    fontSize: 14.0,
+    fontFamily: "Roboto",
+    letterSpacing: 0.46,
+  );
+
   static const TextStyle black24w400Roboto = TextStyle(
     color: AppColors.black,
     fontWeight: FontWeight.w400,
