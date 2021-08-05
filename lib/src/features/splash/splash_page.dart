@@ -1,6 +1,7 @@
 import 'package:budget/src/shared/auth/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_card/animated_card.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../shared/constants/constants.dart';
 
@@ -15,13 +16,13 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     // FIXME - Verificar como implementar essa logica.
-    // WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
-    //   // FIXME - deve ser revisto, quando o usuário já está logado
-    //   Future.delayed(Duration(seconds: 3)).then(
-    //     (value) => Modular.to.pushReplacementNamed(AppRoutes.login),
-    //   );
-    // });
-    AuthController.instance.init();
+    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
+      // FIXME - deve ser revisto, quando o usuário já está logado
+      Future.delayed(Duration(seconds: 3)).then(
+        (value) => Modular.to.pushReplacementNamed(AppRoutes.login),
+      );
+    });
+    // AuthController.instance.init();
     super.initState();
   }
 

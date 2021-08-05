@@ -1,5 +1,7 @@
 import 'package:budget/src/shared/auth/auth_controller.dart';
+import 'package:budget/src/shared/constants/app_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -44,6 +46,7 @@ abstract class _LoginControllerBase with Store {
       final response = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       AuthController.instance.loginUser(response.user!);
+      Modular.to.pushReplacementNamed(AppRoutes.home);
       print(response.user!);
     } catch (e) {
       print(e);
