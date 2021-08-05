@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../shared/constants/constants.dart';
-import 'month_year_calendar/month_year_calendar_widget.dart';
+import '../../../../shared/constants/constants.dart';
+import '../month_year_calendar/month_year_calendar_widget.dart';
 
 class MonthSelectorWidget extends StatelessWidget {
   final String label;
@@ -14,11 +14,10 @@ class MonthSelectorWidget extends StatelessWidget {
     final String? date = await showDialog(
       barrierColor: Colors.black87,
       context: context,
-      builder: (context) {
-        return MonthYearCalendarWidget();
-      },
+      builder: (_) => MonthYearCalendarWidget(),
     );
 
+    //FIXME - remover
     print(date);
   }
 

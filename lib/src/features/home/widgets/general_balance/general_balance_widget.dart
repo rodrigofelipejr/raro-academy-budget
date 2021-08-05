@@ -2,9 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../../../shared/widgets/widgets.dart';
-import '../../../shared/utils/utils.dart';
-import '../../../shared/constants/constants.dart';
+import '../../../../shared/widgets/widgets.dart';
+import '../../../../shared/utils/utils.dart';
+import '../../../../shared/constants/constants.dart';
+import 'button_icon_widget.dart';
 
 class GeneralBalanceWidget extends StatefulWidget {
   final double balance;
@@ -35,16 +36,11 @@ class GeneralBalanceStateWidget extends State<GeneralBalanceWidget> {
                   'Saldo geral',
                   style: AppTextStyles.purple20w500Roboto,
                 ),
-                Container(
-                  child: IconButton(
-                    onPressed: () {
-                      setState(() => _visibleBalance = !_visibleBalance);
-                    },
-                    icon: Icon(
-                      Icons.visibility,
-                      color: AppColors.roxo,
-                    ),
-                  ),
+                ButtonIconShowBalanceWidget(
+                  showing: _visibleBalance,
+                  onTap: () {
+                    setState(() => _visibleBalance = !_visibleBalance);
+                  },
                 ),
               ],
             ),

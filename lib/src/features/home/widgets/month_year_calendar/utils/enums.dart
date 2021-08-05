@@ -1,1 +1,0 @@
-enum CalendarViews { months, year }
