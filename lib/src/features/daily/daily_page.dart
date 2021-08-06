@@ -1,6 +1,8 @@
+import 'package:budget/src/features/daily/widgets/all_card.dart';
+import 'package:budget/src/features/daily/widgets/buttons_appbar.dart';
+import 'package:budget/src/features/daily/widgets/input_card.dart';
+import 'package:budget/src/features/daily/widgets/output_card.dart';
 import 'package:flutter/material.dart';
-
-import '../../shared/constants/constants.dart';
 
 class DailyPage extends StatefulWidget {
   const DailyPage({Key? key}) : super(key: key);
@@ -11,12 +13,15 @@ class DailyPage extends StatefulWidget {
 
 class _DailyPageState extends State<DailyPage> {
   final PageController _pageController = PageController();
-  int? tela;
-  String get label => tela == 1
-      ? 'Total entradas'
-      : tela == 2
-          ? 'TOTAL'
-          : 'totaaskdask';
+  int screen = 0;
+  void navigator({required int pageindex}) {
+    _pageController.animateToPage(
+      pageindex,
+      duration: const Duration(milliseconds: 800),
+      curve: Curves.easeInOut,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +34,14 @@ class _DailyPageState extends State<DailyPage> {
         onPressed: () {},
       ),
       appBar: AppBar(
+        bottomOpacity: 0.0,
+        elevation: 0.0,
+        flexibleSpace: ButtonsAppBarDay(
+          buttonin: () => navigator(pageindex: 0),
+          buttonout: () => navigator(pageindex: 1),
+          buttonall: () => navigator(pageindex: 2),
+          tela: screen,
+        ),
         toolbarHeight: MediaQuery.of(context).size.height * 0.22,
         actions: [
           Padding(
@@ -39,138 +52,17 @@ class _DailyPageState extends State<DailyPage> {
             ),
           ),
         ],
-        flexibleSpace: Container(
-          decoration: BoxDecoration(gradient: AppGradients.blueGradientAppBar),
-          child: Column(
-            children: [
-              SizedBox(height: MediaQuery.of(context).size.height * 0.14),
-              Text(
-                'R\$ 1.104,53',
-                style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.w700),
-              ),
-              SizedBox(height: 5),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    TextButton(
-                      onPressed: () => tela = 1,
-                      child: Text(
-                        'Entradas',
-                        style: TextStyle(
-                            fontSize: 16, color: tela == 1 ? Colors.white : Color.fromARGB(60, 255, 255, 255)),
-                      ),
-                    ),
-                    Container(
-                      height: 20,
-                      width: 1,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.white,
-                          width: 1,
-                        ),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () => tela = 2,
-                      child: Text(
-                        'Saídas',
-                        style: TextStyle(
-                            fontSize: 16, color: tela == 2 ? Colors.white : Color.fromARGB(60, 255, 255, 255)),
-                      ),
-                    ),
-                    Container(
-                      height: 20,
-                      width: 1,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.white,
-                          width: 1,
-                        ),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () => tela = 3,
-                      child: Text(
-                        'Todos',
-                        style: TextStyle(
-                            fontSize: 16, color: tela == 3 ? Colors.white : Color.fromARGB(60, 255, 255, 255)),
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
       ),
-      body: Column(
+      body: PageView(
+        onPageChanged: (page) {
+          screen = page;
+          setState(() {});
+        },
+        controller: _pageController,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Card(
-              elevation: 2,
-              child: Column(
-                children: [
-                  Container(
-                    width: double.infinity,
-                    height: MediaQuery.of(context).size.height * 0.544,
-                    child: ListView(
-                      children: [
-                        ListTile(
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                          onTap: () {},
-                          leading: SizedBox(
-                            height: 40.0,
-                            child: CircleAvatar(
-                              backgroundColor: AppColors.amarelo,
-                              child: SizedBox(
-                                height: 20.0,
-                              ),
-                            ),
-                          ),
-                          title: Text(
-                            "alou",
-                          ),
-                          subtitle: Text(
-                            "alou",
-                          ),
-                          trailing: Text(
-                            'alou',
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Divider(
-                    height: 1,
-                  ),
-                  Container(
-                      width: double.infinity,
-                      height: MediaQuery.of(context).size.height * 0.1,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              label,
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w500, color: Color.fromARGB(255, 52, 48, 144)),
-                            ),
-                            Text(
-                              '+R\$ 2.415,00',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w500, color: Color.fromARGB(255, 88, 179, 104)),
-                            ),
-                          ],
-                        ),
-                      ))
-                ],
-              ),
-            ),
-          )
+          InputCard(),
+          OutCard(),
+          AllCard(),
         ],
       ),
     );
