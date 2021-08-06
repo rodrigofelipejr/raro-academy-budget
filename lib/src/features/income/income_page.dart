@@ -47,7 +47,8 @@ class _IncomePageState extends State<IncomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWithDrawer(),
+      appBar: AppBarWithDrawer(title: "Entrada"),
+      drawer: Drawer(),
       body: SingleChildScrollView(
         padding: EdgeInsets.only(
           top: 16,
@@ -68,6 +69,7 @@ class _IncomePageState extends State<IncomePage> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 54),
                 child: Column(
+                  mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

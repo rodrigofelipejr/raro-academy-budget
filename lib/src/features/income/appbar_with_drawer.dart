@@ -3,48 +3,51 @@ import 'package:flutter_finance_controller/src/features/income/text_styles.dart'
 
 class AppBarWithDrawer extends StatelessWidget with PreferredSizeWidget {
   final Size preferredSize;
+  final String title;
 
   AppBarWithDrawer({
     Key? key,
-  })  : preferredSize = Size.fromHeight(189),
+    required this.title,
+  })  : preferredSize = Size.fromHeight(180.0),
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final double sizedBoxHeight = MediaQuery.of(context).size.height * 0.06;
+    final double containerHeight = MediaQuery.of(context).size.height * 0.32;
     return Container(
-      height: 189,
-      color: Colors.blue,
-      child: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 49,
-              bottom: 115,
-              left: 16,
-              right: 319,
+        constraints: BoxConstraints(
+          minHeight: 120,
+          maxHeight: 189,
+        ),
+        height: containerHeight,
+        color: Colors.blue,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: sizedBoxHeight),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 16,
+              ),
+              child: IconButton(
+                icon: Icon(Icons.menu),
+                color: Colors.white,
+                iconSize: 25,
+                onPressed: () => Scaffold.of(context).openDrawer()
+              ),
             ),
-            child: IconButton(
-              icon: Icon(Icons.menu),
-              color: Colors.white,
-              iconSize: 25,
-              onPressed: () {},
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 95,
-              bottom: 62,
-            ),
-            child: Align(
+            Align(
               alignment: Alignment.center,
               child: Text(
-                "Entrada",
+                title,
                 style: TextStyles.white26w700Roboto,
               ),
             ),
-          ),
-        ],
-      ),
+            SizedBox(height: sizedBoxHeight),
+          ],
+        ),
     );
   }
 }
