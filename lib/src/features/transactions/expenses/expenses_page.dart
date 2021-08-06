@@ -7,6 +7,7 @@ import '../widgets/dropdown_buttom_widget.dart';
 import '../widgets/dropdown_item_data.dart';
 import '../widgets/text_styles.dart';
 import '/src/shared/widget/custom_text_field.dart';
+import '/src/shared/constants/app_colors.dart';
 
 class ExpensesPage extends StatefulWidget {
   const ExpensesPage({Key? key}) : super(key: key);
@@ -23,27 +24,27 @@ class _ExpensesPageState extends State<ExpensesPage> {
 
   final List<DropdownItemData> list = [
     DropdownItemData(
-      color: Colors.yellow,
+      color: AppColors.amarelo,
       value: "Refeição",
     ),
     DropdownItemData(
-      color: Colors.green,
+      color: AppColors.verde,
       value: "Transporte",
     ),
     DropdownItemData(
-      color: Colors.pink,
+      color: AppColors.rosa,
       value: "Viagem",
     ),
     DropdownItemData(
-      color: Colors.blue,
+      color: AppColors.azul,
       value: "Educação",
     ),
     DropdownItemData(
-      color: Colors.purple,
+      color: AppColors.roxo,
       value: "Pagamentos",
     ),
     DropdownItemData(
-      color: Colors.purple.withOpacity(0.54),
+      color: AppColors.roxo.withOpacity(0.54),
       value: "Outros",
     ),
   ];
@@ -95,7 +96,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
                         children: [
                           Text(
                             "Tipo de saída",
-                            style: TextStyles.blue12w400RobotoOp54,
+                            style: TextStyles.black12w400RobotoOp54,
                           ),
                           DropdownButtomWidget(
                             value: dropdownValue,

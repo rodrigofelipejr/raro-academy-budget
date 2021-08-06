@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '/src/shared/constants/app_colors.dart';
 import 'text_styles.dart';
 
 class AppBarWithDrawer extends StatelessWidget with PreferredSizeWidget {
@@ -22,7 +23,9 @@ class AppBarWithDrawer extends StatelessWidget with PreferredSizeWidget {
           maxHeight: 189,
         ),
         height: containerHeight,
-        color: Colors.blue,
+        decoration: BoxDecoration(
+          gradient: AppColors.blueGradientAppBar,
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,

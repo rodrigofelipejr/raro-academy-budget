@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '/src/shared/constants/app_colors.dart';
 import 'text_styles.dart';
 
 class ButtonWidget extends StatelessWidget {
@@ -9,7 +10,8 @@ class ButtonWidget extends StatelessWidget {
       width: 123,
       height: 50,
       decoration: BoxDecoration(
-        color: Colors.blue,
+        gradient: AppColors.blueGradientAppBar,
+        // color: Colors.blue,
         borderRadius: BorderRadius.all(
           Radius.circular(24.0),
         ),

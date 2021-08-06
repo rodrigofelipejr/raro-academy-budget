@@ -25,17 +25,17 @@ class DropdownButtomWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 12.0),
         child: Text(
           "Escolha",
-          style: TextStyles.blue16w400RobotoOp54,
+          style: TextStyles.black16w400RobotoOp54,
         ),
       ),
       value: value,
       icon: const Icon(Icons.arrow_drop_down),
       iconSize: 24,
       elevation: 8,
-      style: TextStyles.blue16w400RobotoOp54,
+      style: TextStyles.black16w400RobotoOp54,
       underline: Container(
         height: 1,
-        color: Colors.blue.withOpacity(0.42),
+        color: Colors.black.withOpacity(0.42),
       ),
       onChanged: onChanged,
       focusNode: focusNode,
@@ -46,7 +46,7 @@ class DropdownButtomWidget extends StatelessWidget {
             value: item,
             child: Text(
               item.value,
-              style: TextStyles.blue16w400RobotoOp54,
+              style: TextStyles.black16w400RobotoOp87,
             ),
           );
         }).toList();
@@ -69,7 +69,7 @@ class DropdownButtomWidget extends StatelessWidget {
               ),
               Text(
                 item.value,
-                style: TextStyles.blue16w400RobotoOp87,
+                style: TextStyles.black16w400RobotoOp87,
               ),
             ],
           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '/src/shared/widget/custom_text_field.dart';
+import '/src/shared/constants/app_colors.dart';
 import '../widgets/dropdown_item_data.dart';
 import '../widgets/dropdown_buttom_widget.dart';
 import '../widgets/appbar_with_drawer.dart';
@@ -24,23 +25,23 @@ class _IncomePageState extends State<IncomePage> {
 
   final List<DropdownItemData> list = [
     DropdownItemData(
-      color: Colors.blue,
+      color: AppColors.azul,
       value: "Dinheiro",
     ),
     DropdownItemData(
-      color: Colors.blue,
+      color: AppColors.azul,
       value: "Pix",
     ),
     DropdownItemData(
-      color: Colors.blue,
+      color: AppColors.azul,
       value: "Doc",
     ),
     DropdownItemData(
-      color: Colors.blue,
+      color: AppColors.azul,
       value: "Ted",
     ),
     DropdownItemData(
-      color: Colors.blue,
+      color: AppColors.azul,
       value: "Boleto",
     ),
   ];
@@ -92,7 +93,7 @@ class _IncomePageState extends State<IncomePage> {
                         children: [
                           Text(
                             "Tipo de entrada",
-                            style: TextStyles.blue12w400RobotoOp54,
+                            style: TextStyles.black12w400RobotoOp54,
                           ),
                           DropdownButtomWidget(
                             value: dropdownValue,
