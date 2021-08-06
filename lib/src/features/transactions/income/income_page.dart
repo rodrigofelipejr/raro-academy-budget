@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_finance_controller/src/features/income/appbar_with_drawer.dart';
-import 'package:flutter_finance_controller/src/features/income/button_widget.dart';
-import 'package:flutter_finance_controller/src/features/income/date_picker_widget.dart';
-import 'package:flutter_finance_controller/src/features/income/dropdown_buttom_widget.dart';
-import 'package:flutter_finance_controller/src/features/income/dropdown_item_data.dart';
-import 'package:flutter_finance_controller/src/features/income/text_styles.dart';
-import 'package:flutter_finance_controller/src/shared/widget/custom_text_field.dart';
+
+import '/src/shared/widget/custom_text_field.dart';
+import '../widgets/dropdown_item_data.dart';
+import '../widgets/dropdown_buttom_widget.dart';
+import '../widgets/appbar_with_drawer.dart';
+import '../widgets/button_widget.dart';
+import '../widgets/date_picker_widget.dart';
+import '../widgets/text_styles.dart';
 
 class IncomePage extends StatefulWidget {
   const IncomePage({Key? key}) : super(key: key);

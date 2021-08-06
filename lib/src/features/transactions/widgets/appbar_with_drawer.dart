@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_finance_controller/src/features/income/text_styles.dart';
+
+import 'text_styles.dart';
 
 class AppBarWithDrawer extends StatelessWidget with PreferredSizeWidget {
   final Size preferredSize;

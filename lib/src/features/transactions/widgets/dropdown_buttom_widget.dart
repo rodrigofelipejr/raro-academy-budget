@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_finance_controller/src/features/income/dropdown_item_data.dart';
-import 'package:flutter_finance_controller/src/features/income/text_styles.dart';
+
+import 'dropdown_item_data.dart';
+import 'text_styles.dart';
 
 class DropdownButtomWidget extends StatelessWidget {
   const DropdownButtomWidget({
