@@ -1,32 +1,57 @@
-import '../../shared/models/models.dart';
+import 'package:budget/src/shared/utils/utils.dart';
+import 'package:mobx/mobx.dart';
 
-class HomeController {
-  double generalBalance = 12233;
-  double dailyBalance = 5453;
-  double inputs = 9345;
-  double outputs = 3892;
-  String selectedMonth = 'ago';
-  List<TransactionModel> transactions = [
-    TransactionModel(
-      type: TypeTransaction.output,
-      category: CategoryTransaction.meal,
-      description: 'Refeição',
-      date: DateTime.now(),
-      value: 25.00,
-    ),
-    TransactionModel(
-      type: TypeTransaction.output,
-      category: CategoryTransaction.transport,
-      description: 'Transporte',
-      date: DateTime.now(),
-      value: 57.30,
-    ),
-    TransactionModel(
-      type: TypeTransaction.output,
-      category: CategoryTransaction.education,
-      description: 'Educação',
-      date: DateTime.now(),
-      value: 316.00,
-    ),
-  ];
+import 'home_state.dart';
+import 'repositories/home_repository.dart';
+import 'errors/errors.dart';
+
+part 'home_store.g.dart';
+
+class HomeStore = _HomeStoreBase with _$HomeStore;
+
+abstract class _HomeStoreBase with Store {
+  final HomeRepository repository;
+
+  _HomeStoreBase(this.repository);
+
+  DateTime _now = DateTime.now();
+
+  @observable
+  HomeState state = HomeState();
+  @action
+  void setState(HomeState value) => state = value;
+
+  @observable
+  bool isLoading = true;
+  @action
+  void setIsLoading(bool value) => isLoading = value;
+
+  @observable
+  Failure? onError;
+  @action
+  void setOnError(Failure? value) => onError = value;
+
+  Future<void> init() async {
+    setIsLoading(true);
+    try {
+      final generalBalance = await repository.getGeneralBalance();
+      final dailyModel = await repository.getDaily(_now.month);
+      final lastTransactions = await repository.getLastTransactions();
+
+      final newState = state.copyWith(
+        generalBalance: generalBalance.balance,
+        dailyBalance: (dailyModel.input - dailyModel.output),
+        inputs: dailyModel.input,
+        outputs: dailyModel.output,
+        selectedMonth: Dates.descriptionMonth(_now.month).substring(0, 3),
+        transactions: lastTransactions,
+      );
+
+      setState(newState);
+    } catch (e) {
+      setOnError(InternalError(message: e.toString())); //TODO - refactor
+    } finally {
+      setIsLoading(false);
+    }
+  }
 }

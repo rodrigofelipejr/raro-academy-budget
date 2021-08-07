@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -63,7 +65,7 @@ class _DailyStateWidget extends State<DailyWidget> {
                 IndicatorsWidget(
                   label: 'Saídas',
                   currentValue: widget.outputs,
-                  referenceValue: widget.inputs,
+                  referenceValue: max(widget.inputs, widget.outputs),
                   color: AppColors.ciano,
                 ),
                 SizedBox(
@@ -72,7 +74,7 @@ class _DailyStateWidget extends State<DailyWidget> {
                 IndicatorsWidget(
                   label: 'Entradas',
                   currentValue: widget.inputs,
-                  referenceValue: widget.inputs,
+                  referenceValue: max(widget.inputs, widget.outputs),
                   color: AppColors.amarelo,
                 ),
               ],

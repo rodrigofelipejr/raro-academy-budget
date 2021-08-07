@@ -17,13 +17,11 @@ class TransactionCategories {
     CategoryTransaction.education: {
       AppImages.icEducation: AppColors.azul,
     },
-    //FIXME - ic para pagamentos
     CategoryTransaction.payments: {
-      AppImages.icMeal: AppColors.roxo,
+      AppImages.icPayments: AppColors.roxo,
     },
-    //FIXME - ic para outros
     CategoryTransaction.others: {
-      AppImages.icMeal: AppColors.purpleLight,
+      AppImages.icOthers: AppColors.purpleLight,
     },
   };
 }

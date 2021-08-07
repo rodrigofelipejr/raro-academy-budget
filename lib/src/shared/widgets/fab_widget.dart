@@ -45,7 +45,7 @@ class FabWidget extends StatelessWidget {
               onTap: onTap,
               child: Container(
                 width: widthContainer,
-                padding: const EdgeInsets.only(left: 14.0, right: 16.0),
+                padding: const EdgeInsets.only(left: 14.0, right: 18.0),
                 height: size,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

@@ -20,11 +20,12 @@ class IndicatorsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width * 0.85;
-    final _width = (currentValue / referenceValue) * screenWidth;
+    final _screenWidth = MediaQuery.of(context).size.width * 0.85;
+    final _width = (currentValue / referenceValue) * _screenWidth;
 
     return Container(
-      width: _width,
+      // color: Colors.green,
+      width: double.infinity,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,9 +33,12 @@ class IndicatorsWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                label,
-                style: AppTextStyles.gray14w500Roboto,
+              Padding(
+                padding: const EdgeInsets.only(right: 24.0),
+                child: Text(
+                  label,
+                  style: AppTextStyles.gray14w500Roboto,
+                ),
               ),
               Text(
                 'R\$ ${Formatters.formatMoney(currentValue)}',
