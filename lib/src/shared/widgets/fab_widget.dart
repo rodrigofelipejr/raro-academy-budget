@@ -22,46 +22,50 @@ class FabWidget extends StatelessWidget {
   double get size => withDescription ? 44 : 56;
   BorderRadius? get borderRadius => withDescription ? BorderRadius.circular(size) : null;
   BoxShape get shape => withDescription ? BoxShape.rectangle : BoxShape.circle;
-  double get widthSizedBox => withDescription ? 8.0 : 0;
+  double get widthSizedBox => withDescription ? 4.0 : 0;
+  double? get widthContainer => withDescription ? null : size;
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: BoxConstraints(maxWidth: 188.0),
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: AppGradients.blueGradientButtons,
-          shape: shape,
-          borderRadius: borderRadius,
-          boxShadow: AppShadows.shadowsFab,
-        ),
-        child: Material(
-          color: AppColors.transparent,
-          borderRadius: borderRadius,
-          child: InkWell(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            gradient: AppGradients.blueGradientButtons,
+            shape: shape,
             borderRadius: borderRadius,
-            onTap: onTap,
-            child: Container(
-              width: withDescription ? null : size,
-              height: size,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.add,
-                    color: Colors.white,
-                  ),
-                  SizedBox(width: widthSizedBox),
-                  Text(
-                    label?.toUpperCase() ?? '',
-                    style: AppTextStyles.white14w500Roboto,
-                  ),
-                ],
+            boxShadow: AppShadows.shadowsFab,
+          ),
+          child: Material(
+            color: AppColors.transparent,
+            borderRadius: borderRadius,
+            child: InkWell(
+              borderRadius: borderRadius,
+              onTap: onTap,
+              child: Container(
+                width: widthContainer,
+                padding: const EdgeInsets.only(left: 14.0, right: 16.0),
+                height: size,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.add,
+                      color: Colors.white,
+                    ),
+                    SizedBox(width: widthSizedBox),
+                    Text(
+                      label?.toUpperCase() ?? '',
+                      style: AppTextStyles.white14w500Roboto,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
         ),
-      ),
+      ],
     );
   }
 }
