@@ -1,4 +1,5 @@
 import 'package:budget/src/features/daily/daily_store.dart';
+import 'package:budget/src/shared/utils/formatters.dart';
 import 'package:budget/src/shared/widgets/item_card_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,16 @@ class _InputCardState extends State<InputCard> {
   void initState() {
     _controller = DailyController();
     super.initState();
+  }
+
+  late var listvalue = _controller.transactions.map((e) => e.value).toList();
+
+  double sun(List list) {
+    var soma = 0.0;
+    for (var i = 0; i < list.length; i++) {
+      soma += list[i];
+    }
+    return soma;
   }
 
   @override
@@ -59,7 +70,7 @@ class _InputCardState extends State<InputCard> {
                                 color: Color.fromARGB(255, 52, 48, 144)),
                           ),
                           Text(
-                            '+R\$ 2.415,00',
+                            'R\$ ${Formatters.formatMoney(sun(listvalue))}',
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
