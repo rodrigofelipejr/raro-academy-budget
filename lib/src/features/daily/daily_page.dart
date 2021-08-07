@@ -1,3 +1,4 @@
+import 'package:budget/src/features/daily/daily_store.dart';
 import 'package:budget/src/features/daily/widgets/all_card.dart';
 import 'package:budget/src/features/daily/widgets/buttons_appbar.dart';
 import 'package:budget/src/features/daily/widgets/input_card.dart';
@@ -36,6 +37,15 @@ class _DailyPageState extends State<DailyPage> {
       appBar: AppBar(
         bottomOpacity: 0.0,
         elevation: 0.0,
+        leading: Align(
+          alignment: Alignment.topLeft,
+          child: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+            ),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ),
         flexibleSpace: ButtonsAppBarDay(
           buttonin: () => navigator(pageindex: 0),
           buttonout: () => navigator(pageindex: 1),

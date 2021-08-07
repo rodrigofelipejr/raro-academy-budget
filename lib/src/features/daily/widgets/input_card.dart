@@ -1,8 +1,22 @@
+import 'package:budget/src/features/daily/daily_store.dart';
+import 'package:budget/src/shared/widgets/item_card_widget.dart';
 import 'package:flutter/material.dart';
-import '../../../shared/constants/constants.dart';
 
-class InputCard extends StatelessWidget {
+class InputCard extends StatefulWidget {
   const InputCard({Key? key}) : super(key: key);
+
+  @override
+  _InputCardState createState() => _InputCardState();
+}
+
+class _InputCardState extends State<InputCard> {
+  late final DailyController _controller;
+
+  @override
+  void initState() {
+    _controller = DailyController();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,31 +32,12 @@ class InputCard extends StatelessWidget {
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height * 0.544,
                   child: ListView(
-                    children: [
-                      ListTile(
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 16),
-                        onTap: () {},
-                        leading: SizedBox(
-                          height: 40.0,
-                          child: CircleAvatar(
-                            backgroundColor: AppColors.amarelo,
-                            child: SizedBox(
-                              height: 20.0,
-                            ),
-                          ),
-                        ),
-                        title: Text(
-                          "alou",
-                        ),
-                        subtitle: Text(
-                          "alou",
-                        ),
-                        trailing: Text(
-                          'alou',
-                        ),
-                      ),
-                    ],
+                    children: _controller.transactions
+                        .map((transaction) => ItemCardWidget(
+                              transaction: transaction,
+                              onTap: () => null,
+                            ))
+                        .toList(),
                   ),
                 ),
                 Divider(
