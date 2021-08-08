@@ -27,58 +27,59 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
 
     return Observer(
       builder: (_) {
-        if (store.isLoading)
+        if (store.isLoading) {
           return Material(
             color: AppColors.white,
             child: ProgressIndicatorWidget(),
           );
-
-        //TODO - implementar widget de erro
-        if (store.onError != null)
-          return Material(
-            color: AppColors.white,
-            child: Center(
-              child: Text('${store.onError?.message}'),
-            ),
-          );
+        }
 
         return Scaffold(
           appBar: AppBarWidget(title: 'Olá José'),
-          floatingActionButton: FabWidget(
-            onTap: () {},
-            label: 'Inserir',
-          ),
+          floatingActionButton: Observer(builder: (_) {
+            if (store.onError != null) return SizedBox();
+
+            return FabWidget(
+              onTap: () {},
+              label: 'Inserir',
+            );
+          }),
           floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-          body: Container(
-            decoration: BoxDecoration(
-              gradient: AppGradients.purpleGradientScaffold,
-            ),
-            child: RefreshIndicator(
-              onRefresh: () async => store.init(),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    GeneralBalanceWidget(
-                      balance: store.state.generalBalance,
+          body: (store.onError != null)
+              ? CustomErrorWidget(
+                  message: store.onError?.message ?? 'Erro interno',
+                  reload: store.init,
+                )
+              : Container(
+                  decoration: BoxDecoration(
+                    gradient: AppGradients.purpleGradientScaffold,
+                  ),
+                  child: RefreshIndicator(
+                    onRefresh: () async => store.init(),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          GeneralBalanceWidget(
+                            balance: store.state.generalBalance,
+                          ),
+                          SizedBox(height: 18.0),
+                          DailyWidget(
+                            balance: store.state.dailyBalance,
+                            inputs: store.state.inputs,
+                            outputs: store.state.outputs,
+                            month: store.selectedMonthDescription,
+                          ),
+                          SizedBox(height: 18.0),
+                          LastTransactionsWidget(
+                            transactions: store.state.transactions,
+                          ),
+                          SizedBox(height: sizeScreen.height * 0.1),
+                        ],
+                      ),
                     ),
-                    SizedBox(height: 18.0),
-                    DailyWidget(
-                      balance: store.state.dailyBalance,
-                      inputs: store.state.inputs,
-                      outputs: store.state.outputs,
-                      month: store.selectedMonthDescription,
-                    ),
-                    SizedBox(height: 18.0),
-                    LastTransactionsWidget(
-                      transactions: store.state.transactions,
-                    ),
-                    SizedBox(height: sizeScreen.height * 0.1),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-          ),
         );
       },
     );

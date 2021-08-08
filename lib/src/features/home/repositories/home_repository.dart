@@ -8,8 +8,11 @@ import '../../../shared/constants/constants.dart';
 class HomeRepository {
   Future<GeneralBalanceModel> getGeneralBalance() async {
     CollectionReference db = FirebaseFirestore.instance.collection(AppCollections.generalBalance);
+
     final snapshot = await db.where('uuid', isEqualTo: AppSettings.userUuid).get();
-    return GeneralBalanceModel.fromFirestore(snapshot.docs.first);
+
+    final doc = snapshot.size > 0 ? snapshot.docs.first : null;
+    return GeneralBalanceModel.fromFirestore(doc);
   }
 
   Future<DailyModel> getDaily(int month) async {
@@ -21,13 +24,15 @@ class HomeRepository {
         .where('date', isLessThanOrEqualTo: Timestamp.fromDate(Dates.lastDayMonth(month: month)))
         .get();
 
-    return DailyModel.fromFirestore(snapshot.docs.first);
+    final doc = snapshot.size > 0 ? snapshot.docs.first : null;
+    return DailyModel.fromFirestore(doc);
   }
 
   Future<List<TransactionModel>> getLastTransactions() async {
     CollectionReference db = FirebaseFirestore.instance.collection(AppCollections.transactions);
     final snapshot =
         await db.where('uuid', isEqualTo: AppSettings.userUuid).orderBy('createAt', descending: true).limit(3).get();
+
     return snapshot.docs.map((e) => TransactionModel.fromFirestore(e)).toList();
   }
 }

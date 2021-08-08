@@ -64,18 +64,14 @@ class _DailyStateWidget extends State<DailyWidget> {
                   'R\$ ${Formatters.formatMoney(widget.balance)}',
                   style: AppTextStyles.black24w400Roboto,
                 ),
-                SizedBox(
-                  height: 16.0,
-                ),
+                SizedBox(height: 12.0),
                 IndicatorsWidget(
                   label: 'Saídas',
                   currentValue: widget.outputs,
                   referenceValue: max(widget.inputs, widget.outputs),
                   color: AppColors.ciano,
                 ),
-                SizedBox(
-                  height: 16.0,
-                ),
+                SizedBox(height: 6.0),
                 IndicatorsWidget(
                   label: 'Entradas',
                   currentValue: widget.inputs,

@@ -49,8 +49,8 @@ class DailyModel {
     );
   }
 
-  factory DailyModel.fromFirestore(DocumentSnapshot doc) {
-    Map map = doc.data() as Map<String, dynamic>;
+  factory DailyModel.fromFirestore(DocumentSnapshot? doc) {
+    Map map = (doc == null) ? {} : doc.data() as Map<String, dynamic>;
 
     return DailyModel(
       uuid: map['uuid'] ?? '',

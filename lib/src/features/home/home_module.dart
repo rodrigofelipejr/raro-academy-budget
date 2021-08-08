@@ -1,9 +1,9 @@
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../shared/constants/constants.dart';
 import 'home_page.dart';
 import 'home_store.dart';
 import 'repositories/home_repository.dart';
+import '../../shared/constants/constants.dart';
 
 class HomeModule extends Module {
   @override

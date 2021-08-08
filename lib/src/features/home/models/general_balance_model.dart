@@ -37,8 +37,8 @@ class GeneralBalanceModel {
     );
   }
 
-  factory GeneralBalanceModel.fromFirestore(DocumentSnapshot doc) {
-    Map map = doc.data() as Map<String, dynamic>;
+  factory GeneralBalanceModel.fromFirestore(DocumentSnapshot? doc) {
+    Map map = (doc == null) ? {} : doc.data() as Map<String, dynamic>;
 
     return GeneralBalanceModel(
       uuid: map['uuid'] ?? '',

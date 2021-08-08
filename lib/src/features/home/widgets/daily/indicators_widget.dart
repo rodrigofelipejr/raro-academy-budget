@@ -18,23 +18,28 @@ class IndicatorsWidget extends StatelessWidget {
     required this.color,
   }) : super(key: key);
 
+  MainAxisAlignment get mainAxisAlignment =>
+      currentValue != 0 ? MainAxisAlignment.spaceBetween : MainAxisAlignment.start;
+
   @override
   Widget build(BuildContext context) {
     final _screenWidth = MediaQuery.of(context).size.width * 0.85;
-    final _width = (currentValue / referenceValue) * _screenWidth;
+    final percentage = (currentValue / referenceValue);
+    final _width = percentage.isFinite ? percentage * _screenWidth : 0.0;
 
     return Container(
-      // color: Colors.green,
       width: double.infinity,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: mainAxisAlignment,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 24.0),
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                  minWidth: _screenWidth * 0.3,
+                ),
                 child: Text(
                   label,
                   style: AppTextStyles.gray14w500Roboto,
@@ -46,13 +51,15 @@ class IndicatorsWidget extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
-            height: 6.0,
-          ),
-          BarIndicatorWidget(
-            color: color,
-            width: _width,
-          ),
+          _width != 0
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 6.0),
+                  child: BarIndicatorWidget(
+                    color: color,
+                    width: _width,
+                  ),
+                )
+              : SizedBox(),
         ],
       ),
     );
