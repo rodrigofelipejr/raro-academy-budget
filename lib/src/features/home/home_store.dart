@@ -20,7 +20,7 @@ abstract class _HomeStoreBase with Store {
   void setState(HomeState value) => state = value;
 
   @observable
-  bool isLoading = true;
+  bool isLoading = false;
   @action
   void setIsLoading(bool value) => isLoading = value;
 
@@ -34,6 +34,7 @@ abstract class _HomeStoreBase with Store {
 
   Future<void> init() async {
     setIsLoading(true);
+
     try {
       final generalBalance = await repository.getGeneralBalance();
       final dailyModel = await repository.getDaily(state.selectedDate.month);
@@ -49,7 +50,8 @@ abstract class _HomeStoreBase with Store {
 
       setState(newState);
     } catch (e) {
-      setOnError(InternalError(message: e.toString())); //TODO - refactor
+      //TODO - refactor
+      setOnError(InternalError(message: e.toString())); 
     } finally {
       setIsLoading(false);
     }
