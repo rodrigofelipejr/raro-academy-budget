@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class AppColors {
   static const Color rosa = Color.fromRGBO(245, 72, 127, 1);
@@ -16,4 +15,16 @@ class AppColors {
   static const Color black38 = Color.fromRGBO(0, 0, 0, .38);
   static const Color black87 = Color.fromRGBO(0, 0, 0, .87);
   static const Color purpleLight = Color.fromRGBO(241, 240, 254, 1);
+  static const MaterialColor primaryMaterialColor = MaterialColor(0XFF4850b0, {
+    50: Color.fromRGBO(72, 80, 176, 0.05),
+    100: Color.fromRGBO(72, 80, 176, 0.1),
+    200: Color.fromRGBO(72, 80, 176, 0.2),
+    300: Color.fromRGBO(72, 80, 176, 0.3),
+    400: Color.fromRGBO(72, 80, 176, 0.4),
+    500: Color.fromRGBO(72, 80, 176, 0.5),
+    600: Color.fromRGBO(72, 80, 176, 0.6),
+    700: Color.fromRGBO(72, 80, 176, 0.7),
+    800: Color.fromRGBO(72, 80, 176, 0.8),
+    900: Color.fromRGBO(72, 80, 176, 0.9),
+  });
 }
