@@ -5,9 +5,10 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 import 'indicators_widget.dart';
 import 'month_selector_widget.dart';
-import '../../../../shared/widgets/widgets.dart';
-import '../../../../shared/utils/utils.dart';
+import '../../home_store.dart';
 import '../../../../shared/constants/constants.dart';
+import '../../../../shared/utils/utils.dart';
+import '../../../../shared/widgets/widgets.dart';
 
 class DailyWidget extends StatefulWidget {
   final double balance;
@@ -49,7 +50,11 @@ class _DailyStateWidget extends State<DailyWidget> {
                       'Dia a dia',
                       style: AppTextStyles.purple20w500Roboto,
                     ),
-                    MonthSelectorWidget(label: widget.month)
+                    MonthSelectorWidget(
+                      label: widget.month,
+                      referenceDate: Modular.get<HomeStore>().state.selectedDate,
+                      changeSelectedDate: Modular.get<HomeStore>().handleChangeMonthSelected,
+                    )
                   ],
                 ),
                 SizedBox(

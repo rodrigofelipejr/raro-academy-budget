@@ -5,7 +5,7 @@ class HomeState {
   final double dailyBalance;
   final double inputs;
   final double outputs;
-  final String selectedMonth;
+  final DateTime selectedDate;
   final List<TransactionModel> transactions;
 
   HomeState({
@@ -13,7 +13,7 @@ class HomeState {
     this.dailyBalance = 0.0,
     this.inputs = 0.0,
     this.outputs = 0.0,
-    this.selectedMonth = '', //TODO - mês atual por default
+    required this.selectedDate,
     this.transactions = const [],
   });
 
@@ -22,7 +22,7 @@ class HomeState {
     double? dailyBalance,
     double? inputs,
     double? outputs,
-    String? selectedMonth,
+    DateTime? selectedDate,
     List<TransactionModel>? transactions,
   }) {
     return HomeState(
@@ -30,7 +30,7 @@ class HomeState {
       dailyBalance: dailyBalance ?? this.dailyBalance,
       inputs: inputs ?? this.inputs,
       outputs: outputs ?? this.outputs,
-      selectedMonth: selectedMonth ?? this.selectedMonth,
+      selectedDate: selectedDate ?? this.selectedDate,
       transactions: transactions ?? this.transactions,
     );
   }

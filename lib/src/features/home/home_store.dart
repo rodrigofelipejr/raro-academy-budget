@@ -14,10 +14,8 @@ abstract class _HomeStoreBase with Store {
 
   _HomeStoreBase(this.repository);
 
-  DateTime _now = DateTime.now();
-
   @observable
-  HomeState state = HomeState();
+  HomeState state = HomeState(selectedDate: DateTime.now());
   @action
   void setState(HomeState value) => state = value;
 
@@ -31,11 +29,14 @@ abstract class _HomeStoreBase with Store {
   @action
   void setOnError(Failure? value) => onError = value;
 
+  @computed
+  String get selectedMonthDescription => Dates.descriptionMonth(state.selectedDate.month).substring(0, 3);
+
   Future<void> init() async {
     setIsLoading(true);
     try {
       final generalBalance = await repository.getGeneralBalance();
-      final dailyModel = await repository.getDaily(_now.month);
+      final dailyModel = await repository.getDaily(state.selectedDate.month);
       final lastTransactions = await repository.getLastTransactions();
 
       final newState = state.copyWith(
@@ -43,13 +44,32 @@ abstract class _HomeStoreBase with Store {
         dailyBalance: (dailyModel.input - dailyModel.output),
         inputs: dailyModel.input,
         outputs: dailyModel.output,
-        selectedMonth: Dates.descriptionMonth(_now.month).substring(0, 3),
         transactions: lastTransactions,
       );
 
       setState(newState);
     } catch (e) {
       setOnError(InternalError(message: e.toString())); //TODO - refactor
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  Future<void> handleChangeMonthSelected(DateTime selectedDate) async {
+    setIsLoading(true);
+    setState(state.copyWith(selectedDate: selectedDate));
+    try {
+      final dailyModel = await repository.getDaily(state.selectedDate.month);
+
+      final newState = state.copyWith(
+        dailyBalance: (dailyModel.input - dailyModel.output),
+        inputs: dailyModel.input,
+        outputs: dailyModel.output,
+      );
+
+      setState(newState);
+    } catch (e) {
+      setOnError(DailyError(message: e.toString()));
     } finally {
       setIsLoading(false);
     }

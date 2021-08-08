@@ -33,11 +33,12 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
             child: ProgressIndicatorWidget(),
           );
 
+        //TODO - implementar widget de erro
         if (store.onError != null)
           return Material(
             color: AppColors.white,
             child: Center(
-              child: Text('Error'),
+              child: Text('${store.onError?.message}'),
             ),
           );
 
@@ -66,7 +67,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                       balance: store.state.dailyBalance,
                       inputs: store.state.inputs,
                       outputs: store.state.outputs,
-                      month: store.state.selectedMonth,
+                      month: store.selectedMonthDescription,
                     ),
                     SizedBox(height: 18.0),
                     LastTransactionsWidget(
