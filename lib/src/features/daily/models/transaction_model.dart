@@ -1,14 +1,28 @@
-class TransactionModel {
-  int category;
-  DateTime date;
-  String description;
-  int type;
-  int value;
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-  TransactionModel(
-      {required this.category,
-      required this.date,
-      required this.description,
-      required this.type,
-      required this.value});
+class TransactionDailyModel {
+  int? category;
+  DateTime? date;
+  String? description;
+  int? type;
+  int? value;
+  final DocumentReference? reference;
+
+  TransactionDailyModel(
+      {this.reference,
+      this.category,
+      this.date,
+      this.description,
+      this.type,
+      this.value});
+
+  factory TransactionDailyModel.fromDocument(DocumentSnapshot doc) {
+    return TransactionDailyModel(
+        category: doc['category'],
+        date: doc['createAt'],
+        description: doc['description'],
+        type: doc['type'],
+        value: doc['value'],
+        reference: doc.reference);
+  }
 }
