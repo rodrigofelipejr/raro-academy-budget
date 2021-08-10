@@ -11,15 +11,15 @@ class InputCard extends StatefulWidget {
 }
 
 class _InputCardState extends State<InputCard> {
-  late final DailyController _controller;
+  // late final DailyController _controller;
 
-  @override
-  void initState() {
-    _controller = DailyController();
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   _controller = DailyController();
+  //   super.initState();
+  // }
 
-  late var listvalue = _controller.transactions.map((e) => e.value).toList();
+  // late var listvalue = _controller.transactions.map((e) => e.value).toList();
 
   double sun(List list) {
     var soma = 0.0;
@@ -42,14 +42,15 @@ class _InputCardState extends State<InputCard> {
                 Container(
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height * 0.544,
-                  child: ListView(
-                    children: _controller.transactions
-                        .map((transaction) => ItemCardWidget(
-                              transaction: transaction,
-                              onTap: () => null,
-                            ))
-                        .toList(),
-                  ),
+                  // child: ListView(
+                  //   children:
+                  //   _controller.transactions
+                  //       .map((transaction) => ItemCardWidget(
+                  //             transaction: transaction,
+                  //             onTap: () => null,
+                  //           ))
+                  //       .toList(),
+                  // ),
                 ),
                 Divider(
                   height: 1,
@@ -70,7 +71,9 @@ class _InputCardState extends State<InputCard> {
                                 color: Color.fromARGB(255, 52, 48, 144)),
                           ),
                           Text(
-                            'R\$ ${Formatters.formatMoney(sun(listvalue))}',
+                            'R\$'
+                            // ${Formatters.formatMoney(sun(listvalue))}'
+                            ,
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,

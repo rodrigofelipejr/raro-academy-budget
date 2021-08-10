@@ -11,13 +11,13 @@ class AllCard extends StatefulWidget {
 }
 
 class _AllCardState extends State<AllCard> {
-  late final DailyController _controller;
+  // late final DailyController _controller;
 
-  @override
-  void initState() {
-    _controller = DailyController();
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   _controller = DailyController();
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +32,14 @@ class _AllCardState extends State<AllCard> {
                 Container(
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height * 0.544,
-                  child: ListView(
-                    children: _controller.transactions
-                        .map((transaction) => ItemCardWidget(
-                              transaction: transaction,
-                              onTap: () => null,
-                            ))
-                        .toList(),
-                  ),
+                  // child: ListView(
+                  //   children: _controller.transactions
+                  //       .map((transaction) => ItemCardWidget(
+                  //             transaction: transaction,
+                  //             onTap: () => null,
+                  //           ))
+                  //       .toList(),
+                  // ),
                 ),
                 Divider(
                   height: 1,
