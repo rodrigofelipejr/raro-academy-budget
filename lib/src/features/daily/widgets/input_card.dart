@@ -2,6 +2,7 @@ import 'package:budget/src/features/daily/daily_store.dart';
 import 'package:budget/src/shared/utils/formatters.dart';
 import 'package:budget/src/shared/widgets/item_card_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class InputCard extends StatefulWidget {
   const InputCard({Key? key}) : super(key: key);
@@ -42,15 +43,15 @@ class _InputCardState extends State<InputCard> {
                 Container(
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height * 0.544,
-                  // child: ListView(
-                  //   children:
-                  //   _controller.transactions
-                  //       .map((transaction) => ItemCardWidget(
-                  //             transaction: transaction,
-                  //             onTap: () => null,
-                  //           ))
-                  //       .toList(),
-                  // ),
+                  child: Observer(
+                    builder: (_) {
+                      return ListView.builder(
+                        itemBuilder: (_, index) {
+                          return ListTile();
+                        },
+                      );
+                    },
+                  ),
                 ),
                 Divider(
                   height: 1,
