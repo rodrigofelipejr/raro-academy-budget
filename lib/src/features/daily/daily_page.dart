@@ -2,6 +2,7 @@ import 'package:budget/src/features/daily/widgets/all_card.dart';
 import 'package:budget/src/features/daily/widgets/buttons_appbar.dart';
 import 'package:budget/src/features/daily/widgets/input_card.dart';
 import 'package:budget/src/features/daily/widgets/output_card.dart';
+import 'package:budget/src/features/home/widgets/daily/month_selector_widget.dart';
 import 'package:flutter/material.dart';
 
 class DailyPage extends StatefulWidget {
@@ -36,6 +37,15 @@ class _DailyPageState extends State<DailyPage> {
       appBar: AppBar(
         bottomOpacity: 0.0,
         elevation: 0.0,
+        leading: Align(
+          alignment: Alignment.topLeft,
+          child: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+            ),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ),
         flexibleSpace: ButtonsAppBarDay(
           buttonin: () => navigator(pageindex: 0),
           buttonout: () => navigator(pageindex: 1),
@@ -48,7 +58,7 @@ class _DailyPageState extends State<DailyPage> {
             padding: const EdgeInsets.all(16.0),
             child: Align(
               alignment: Alignment.topRight,
-              child: Icon(Icons.ac_unit),
+              child: MonthSelectorWidget(label: "agosto"),
             ),
           ),
         ],

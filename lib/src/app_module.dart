@@ -15,7 +15,7 @@ class AppModule extends Module {
 
   @override
   List<ModularRoute> get routes => [
-        ModuleRoute(AppRoutes.initial, module: SplashModule()),
+        ModuleRoute(AppRoutes.initial, module: DailyModule()),
         ModuleRoute(AppRoutes.login, module: LoginModule()),
         ModuleRoute(AppRoutes.home, module: HomeModule()),
         ModuleRoute(AppRoutes.daily, module: DailyModule()),

@@ -1,8 +1,33 @@
+import 'package:budget/src/features/daily/daily_store.dart';
+import 'package:budget/src/shared/utils/formatters.dart';
+import 'package:budget/src/shared/widgets/item_card_widget.dart';
 import 'package:flutter/material.dart';
-import '../../../shared/constants/constants.dart';
 
-class InputCard extends StatelessWidget {
+class InputCard extends StatefulWidget {
   const InputCard({Key? key}) : super(key: key);
+
+  @override
+  _InputCardState createState() => _InputCardState();
+}
+
+class _InputCardState extends State<InputCard> {
+  late final DailyController _controller;
+
+  @override
+  void initState() {
+    _controller = DailyController();
+    super.initState();
+  }
+
+  late var listvalue = _controller.transactions.map((e) => e.value).toList();
+
+  double sun(List list) {
+    var soma = 0.0;
+    for (var i = 0; i < list.length; i++) {
+      soma += list[i];
+    }
+    return soma;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,31 +43,12 @@ class InputCard extends StatelessWidget {
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height * 0.544,
                   child: ListView(
-                    children: [
-                      ListTile(
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 16),
-                        onTap: () {},
-                        leading: SizedBox(
-                          height: 40.0,
-                          child: CircleAvatar(
-                            backgroundColor: AppColors.amarelo,
-                            child: SizedBox(
-                              height: 20.0,
-                            ),
-                          ),
-                        ),
-                        title: Text(
-                          "alou",
-                        ),
-                        subtitle: Text(
-                          "alou",
-                        ),
-                        trailing: Text(
-                          'alou',
-                        ),
-                      ),
-                    ],
+                    children: _controller.transactions
+                        .map((transaction) => ItemCardWidget(
+                              transaction: transaction,
+                              onTap: () => null,
+                            ))
+                        .toList(),
                   ),
                 ),
                 Divider(
@@ -64,7 +70,7 @@ class InputCard extends StatelessWidget {
                                 color: Color.fromARGB(255, 52, 48, 144)),
                           ),
                           Text(
-                            '+R\$ 2.415,00',
+                            'R\$ ${Formatters.formatMoney(sun(listvalue))}',
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,

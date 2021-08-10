@@ -15,8 +15,9 @@ class ItemCardWidget extends StatelessWidget {
   }) : super(key: key);
 
   String get prefix => transaction.type.index == 0 ? '+' : '-';
-  Map get mapCategoryImageColors => TransactionCategories.mapCategoryImageColors.values
-      .elementAt(CategoryTransaction.values.indexOf(transaction.category));
+  Map get mapCategoryImageColors =>
+      TransactionCategories.mapCategoryImageColors.values
+          .elementAt(CategoryTransaction.values.indexOf(transaction.category));
   Color get backgroundColor => mapCategoryImageColors.entries.first.value;
   String get asset => mapCategoryImageColors.entries.first.key;
 
