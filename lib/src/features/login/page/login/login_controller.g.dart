@@ -40,6 +40,38 @@ mixin _$LoginController on _LoginControllerBase, Store {
     });
   }
 
+  final _$emailControllerAtom =
+      Atom(name: '_LoginControllerBase.emailController');
+
+  @override
+  TextEditingController get emailController {
+    _$emailControllerAtom.reportRead();
+    return super.emailController;
+  }
+
+  @override
+  set emailController(TextEditingController value) {
+    _$emailControllerAtom.reportWrite(value, super.emailController, () {
+      super.emailController = value;
+    });
+  }
+
+  final _$passwordControllerAtom =
+      Atom(name: '_LoginControllerBase.passwordController');
+
+  @override
+  TextEditingController get passwordController {
+    _$passwordControllerAtom.reportRead();
+    return super.passwordController;
+  }
+
+  @override
+  set passwordController(TextEditingController value) {
+    _$passwordControllerAtom.reportWrite(value, super.passwordController, () {
+      super.passwordController = value;
+    });
+  }
+
   final _$loginAsyncAction = AsyncAction('_LoginControllerBase.login');
 
   @override
@@ -65,7 +97,9 @@ mixin _$LoginController on _LoginControllerBase, Store {
   String toString() {
     return '''
 showPasswordField: ${showPasswordField},
-listLength: ${listLength}
+listLength: ${listLength},
+emailController: ${emailController},
+passwordController: ${passwordController}
     ''';
   }
 }

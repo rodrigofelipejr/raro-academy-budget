@@ -1,4 +1,4 @@
-import '../../shared/models/models.dart';
+import '../../../shared/models/models.dart';
 
 class HomeState {
   final double generalBalance;

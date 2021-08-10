@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mobx/mobx.dart';
 
-import 'home_store.dart';
+import 'store/home_store.dart';
 import 'widgets/widgets.dart';
 import '../../shared/constants/constants.dart';
 import '../../shared/widgets/widgets.dart';

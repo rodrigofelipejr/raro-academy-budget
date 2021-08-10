@@ -2,8 +2,8 @@ import 'package:budget/src/shared/utils/utils.dart';
 import 'package:mobx/mobx.dart';
 
 import 'home_state.dart';
-import 'repositories/home_repository.dart';
-import 'errors/errors.dart';
+import '../repositories/home_repository.dart';
+import '../errors/errors.dart';
 
 part 'home_store.g.dart';
 

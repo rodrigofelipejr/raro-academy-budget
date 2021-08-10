@@ -6,7 +6,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import '../../../../shared/constants/constants.dart';
 import '../../../../shared/utils/utils.dart';
 import '../../../../shared/widgets/widgets.dart';
-import '../../home_store.dart';
+import '../../store/home_store.dart';
 import 'indicators_widget.dart';
 
 class DailyWidget extends StatefulWidget {
