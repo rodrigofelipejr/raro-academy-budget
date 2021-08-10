@@ -5,20 +5,28 @@ import '../month_year_calendar/month_year_calendar_widget.dart';
 
 class MonthSelectorWidget extends StatelessWidget {
   final String label;
+  final DateTime referenceDate;
+  final void Function(DateTime date) changeSelectedDate;
 
-  const MonthSelectorWidget({Key? key, required this.label}) : super(key: key);
+  const MonthSelectorWidget({
+    Key? key,
+    required this.label,
+    required this.referenceDate,
+    required this.changeSelectedDate,
+  }) : super(key: key);
 
   BorderRadius get borderRadius => BorderRadius.circular(34.0);
 
   _buildMonthYearSelector(context) async {
-    final String? date = await showDialog(
+    final DateTime? date = await showDialog(
       barrierColor: Colors.black87,
       context: context,
-      builder: (_) => MonthYearCalendarWidget(),
+      builder: (_) => MonthYearCalendarWidget(
+        referenceDate: referenceDate,
+      ),
     );
 
-    //FIXME - remover
-    print(date);
+    if (date != null) changeSelectedDate(date);
   }
 
   @override
