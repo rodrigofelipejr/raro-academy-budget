@@ -13,7 +13,7 @@ class CustomTextField extends StatelessWidget {
     this.obscureText = false,
     this.onChanged,
     this.inputFormatters,
-    required this.controller,
+    this.controller,
     this.icon,
     this.suffixIcon,
     this.suffix,
@@ -34,7 +34,7 @@ class CustomTextField extends StatelessWidget {
   final ValueChanged<String>? onChanged;
   final String? Function(String?)? validator;
   final List<TextInputFormatter>? inputFormatters;
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final Widget? icon;
   final Widget? suffixIcon;
   final Widget? suffix;
@@ -93,7 +93,7 @@ class CustomTextField extends StatelessWidget {
         icon: icon,
         suffix: suffix,
         labelText:
-            (focusNode.hasFocus || (controller.text != '')) ? labelText : null,
+            (focusNode.hasFocus || (controller?.text != '')) ? labelText : null,
         helperText: helperText,
         errorBorder: UnderlineInputBorder(
           borderSide: BorderSide(

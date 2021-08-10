@@ -47,7 +47,7 @@ abstract class _LoginControllerBase with Store {
           .signInWithEmailAndPassword(email: email, password: password);
       AuthController.instance.loginUser(response.user!);
       Modular.to.pushReplacementNamed(AppRoutes.home);
-      print(response.user!);
+      //print(response.user!);
     } catch (e) {
       print(e);
     }
