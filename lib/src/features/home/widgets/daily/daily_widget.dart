@@ -3,12 +3,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import 'indicators_widget.dart';
-import 'month_selector_widget.dart';
-import '../../home_store.dart';
 import '../../../../shared/constants/constants.dart';
 import '../../../../shared/utils/utils.dart';
 import '../../../../shared/widgets/widgets.dart';
+import '../../home_store.dart';
+import 'indicators_widget.dart';
 
 class DailyWidget extends StatefulWidget {
   final double balance;

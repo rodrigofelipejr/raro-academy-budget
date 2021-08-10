@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 
-import '../../../../shared/constants/constants.dart';
-import '../month_year_calendar/month_year_calendar_widget.dart';
+import '../constants/constants.dart';
+import 'widgets.dart';
 
 class MonthSelectorWidget extends StatelessWidget {
   final String label;
   final DateTime referenceDate;
   final void Function(DateTime date) changeSelectedDate;
+  final bool flatStyle;
 
   const MonthSelectorWidget({
     Key? key,
     required this.label,
     required this.referenceDate,
     required this.changeSelectedDate,
+    this.flatStyle = false,
   }) : super(key: key);
 
   BorderRadius get borderRadius => BorderRadius.circular(34.0);
@@ -29,14 +31,21 @@ class MonthSelectorWidget extends StatelessWidget {
     if (date != null) changeSelectedDate(date);
   }
 
+  BoxDecoration get decoration => !flatStyle
+      ? BoxDecoration(
+          borderRadius: borderRadius,
+          color: AppColors.white.withOpacity(0.1),
+        )
+      : BoxDecoration(
+          gradient: AppGradients.blueGradientButtons,
+          borderRadius: borderRadius,
+          boxShadow: AppShadows.shadowsButtons,
+        );
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        gradient: AppGradients.blueGradientButtons,
-        borderRadius: borderRadius,
-        boxShadow: AppShadows.shadowsButtons,
-      ),
+      decoration: decoration,
       child: Material(
         borderRadius: borderRadius,
         color: AppColors.transparent,
