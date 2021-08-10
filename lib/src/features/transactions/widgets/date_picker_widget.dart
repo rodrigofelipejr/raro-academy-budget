@@ -7,10 +7,10 @@ import 'text_styles.dart';
 class DatePickerWidget extends StatefulWidget {
   DatePickerWidget({
     Key? key,
-    this.date,
+    this.controller,
   }) : super(key: key);
 
-  final DateTime? date;
+  final TextEditingController? controller;
 
   @override
   _DatePickerWidgetState createState() => _DatePickerWidgetState();
@@ -18,7 +18,6 @@ class DatePickerWidget extends StatefulWidget {
 
 class _DatePickerWidgetState extends State<DatePickerWidget> {
   DateTime? selectedDate;
-  TextEditingController _dateController = TextEditingController();
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime? newDate = await showDatePicker(
@@ -30,14 +29,14 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
     );
     if (newDate != null) {
       selectedDate = newDate;
-      _dateController.text = DateFormat("dd/MM/yyyy").format(selectedDate!);
+      widget.controller!.text = DateFormat("dd/MM/yyyy").format(selectedDate!);
       setState(() {});
     }
   }
 
   @override
   void initState() {
-    _dateController.text = DateFormat("dd/MM/yyyy").format(DateTime.now());
+    widget.controller!.text = DateFormat("dd/MM/yyyy").format(DateTime.now());
     super.initState();
   }
 
@@ -48,7 +47,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
         _selectDate(context);
       },
       child: TextFormField(
-        controller: _dateController,
+        controller: widget.controller!,
         enabled: false,
         keyboardType: TextInputType.datetime,
         style: TextStyles.blue14w500Roboto,
