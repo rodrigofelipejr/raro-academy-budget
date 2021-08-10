@@ -51,7 +51,7 @@ abstract class _HomeStoreBase with Store {
       setState(newState);
     } catch (e) {
       //TODO - refactor
-      setOnError(InternalError(message: e.toString())); 
+      setOnError(InternalError(message: e.toString()));
     } finally {
       setIsLoading(false);
     }

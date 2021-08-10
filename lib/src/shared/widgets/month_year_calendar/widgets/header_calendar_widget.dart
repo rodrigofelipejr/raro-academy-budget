@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../shared/utils/months.dart';
-import '../../../../../shared/constants/constants.dart';
-
-import 'button_pagination_calendar_widget.dart';
+import '../../../constants/constants.dart';
+import '../../../utils/utils.dart';
+import 'widgets.dart';
 
 class HeaderCalendarWidget extends StatefulWidget {
   final DateTime date;

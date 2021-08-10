@@ -1,8 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
 
-import 'home_page.dart';
-import 'home_store.dart';
-import 'repositories/home_repository.dart';
+import 'home.dart';
+import 'repositories/repositories.dart';
 import '../../shared/constants/constants.dart';
 
 class HomeModule extends Module {
