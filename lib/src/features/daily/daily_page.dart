@@ -60,7 +60,7 @@ class _DailyPageState extends State<DailyPage> {
               alignment: Alignment.topRight,
               child: MonthSelectorWidget(
                 label: "agosto",
-                referenceDate: DateTime(2021),
+                referenceDate: DateTime(2021, 08),
                 changeSelectedDate: (daa) {},
               ),
             ),
