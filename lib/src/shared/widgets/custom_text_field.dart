@@ -17,7 +17,7 @@ class CustomTextField extends StatelessWidget {
     this.icon,
     this.suffixIcon,
     this.suffix,
-    this.focusNode,
+    required this.focusNode,
     this.keyboardType,
     this.textInputAction,
     this.onEditingComplete,
@@ -38,7 +38,7 @@ class CustomTextField extends StatelessWidget {
   final Widget? icon;
   final Widget? suffixIcon;
   final Widget? suffix;
-  final FocusNode? focusNode;
+  final FocusNode focusNode;
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
   final Function()? onEditingComplete;
@@ -73,6 +73,12 @@ class CustomTextField extends StatelessWidget {
           fontSize: 16,
           fontWeight: FontWeight.w400,
         ),
+        errorStyle: TextStyle(
+          color: AppColors.vermelho,
+          fontFamily: 'roboto',
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
+        ),
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(
             color: Colors.grey,
@@ -86,7 +92,8 @@ class CustomTextField extends StatelessWidget {
         ),
         icon: icon,
         suffix: suffix,
-        labelText: labelText,
+        labelText:
+            (focusNode.hasFocus || (controller?.text != '')) ? labelText : null,
         helperText: helperText,
         errorBorder: UnderlineInputBorder(
           borderSide: BorderSide(
@@ -94,7 +101,6 @@ class CustomTextField extends StatelessWidget {
           ),
         ),
         errorText: errorMessage,
-        errorStyle: TextStyle(color: Colors.grey),
       ),
     );
   }

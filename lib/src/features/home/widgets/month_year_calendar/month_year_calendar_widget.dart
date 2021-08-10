@@ -5,7 +5,12 @@ import 'widgets/header_calendar_widget.dart';
 import 'widgets/body_calendar_widget.dart';
 
 class MonthYearCalendarWidget extends StatefulWidget {
-  const MonthYearCalendarWidget({Key? key}) : super(key: key);
+  final DateTime? referenceDate;
+
+  const MonthYearCalendarWidget({
+    Key? key,
+    this.referenceDate,
+  }) : super(key: key);
 
   @override
   _MonthYearCalendarWidgetState createState() => _MonthYearCalendarWidgetState();
@@ -17,7 +22,7 @@ class _MonthYearCalendarWidgetState extends State<MonthYearCalendarWidget> {
   @override
   void initState() {
     super.initState();
-    final date = DateTime.now();
+    final date = widget.referenceDate ?? DateTime.now();
     _selected = DateTime(date.year, date.month, 15);
   }
 
@@ -33,8 +38,7 @@ class _MonthYearCalendarWidgetState extends State<MonthYearCalendarWidget> {
 
   void updateMonth(int month) {
     _selected = DateTime(_selected.year, month, 15);
-
-    Modular.to.pop(_selected.toString());
+    Modular.to.pop(_selected);
   }
 
   @override

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../utils/months.dart';
+import '../../../../../shared/utils/months.dart';
 import '../../../../../shared/constants/constants.dart';
 
 class BodyCalendarWidget extends StatefulWidget {

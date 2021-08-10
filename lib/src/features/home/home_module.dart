@@ -1,11 +1,16 @@
 import 'package:flutter_modular/flutter_modular.dart';
 
 import 'home_page.dart';
+import 'home_store.dart';
+import 'repositories/home_repository.dart';
 import '../../shared/constants/constants.dart';
 
 class HomeModule extends Module {
   @override
-  List<Bind<Object>> get binds => [];
+  List<Bind<Object>> get binds => [
+        Bind.singleton((i) => HomeRepository()),
+        Bind.lazySingleton((i) => HomeStore(i())),
+      ];
 
   @override
   List<ModularRoute> get routes => [

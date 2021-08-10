@@ -1,11 +1,14 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import 'indicators_widget.dart';
 import 'month_selector_widget.dart';
-import '../../../../shared/widgets/widgets.dart';
-import '../../../../shared/utils/utils.dart';
+import '../../home_store.dart';
 import '../../../../shared/constants/constants.dart';
+import '../../../../shared/utils/utils.dart';
+import '../../../../shared/widgets/widgets.dart';
 
 class DailyWidget extends StatefulWidget {
   final double balance;
@@ -47,7 +50,11 @@ class _DailyStateWidget extends State<DailyWidget> {
                       'Dia a dia',
                       style: AppTextStyles.purple20w500Roboto,
                     ),
-                    MonthSelectorWidget(label: widget.month)
+                    MonthSelectorWidget(
+                      label: widget.month,
+                      referenceDate: Modular.get<HomeStore>().state.selectedDate,
+                      changeSelectedDate: Modular.get<HomeStore>().handleChangeMonthSelected,
+                    )
                   ],
                 ),
                 SizedBox(
@@ -57,22 +64,18 @@ class _DailyStateWidget extends State<DailyWidget> {
                   'R\$ ${Formatters.formatMoney(widget.balance)}',
                   style: AppTextStyles.black24w400Roboto,
                 ),
-                SizedBox(
-                  height: 16.0,
-                ),
+                SizedBox(height: 12.0),
                 IndicatorsWidget(
                   label: 'Saídas',
                   currentValue: widget.outputs,
-                  referenceValue: widget.inputs,
+                  referenceValue: max(widget.inputs, widget.outputs),
                   color: AppColors.ciano,
                 ),
-                SizedBox(
-                  height: 16.0,
-                ),
+                SizedBox(height: 6.0),
                 IndicatorsWidget(
                   label: 'Entradas',
                   currentValue: widget.inputs,
-                  referenceValue: widget.inputs,
+                  referenceValue: max(widget.inputs, widget.outputs),
                   color: AppColors.amarelo,
                 ),
               ],

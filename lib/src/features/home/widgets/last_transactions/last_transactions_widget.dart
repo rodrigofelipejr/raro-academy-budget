@@ -15,7 +15,8 @@ class LastTransactionsWidget extends StatefulWidget {
 }
 
 class LatestTransactionsStateWidget extends State<LastTransactionsWidget> {
-  double get totalValueTransactions => widget.transactions.map((e) => e.value).reduce((p, c) => p + c);
+  double get totalValueTransactions =>
+      widget.transactions.isNotEmpty ? widget.transactions.map((e) => e.value).reduce((p, c) => p + c) : 0.0;
 
   @override
   Widget build(BuildContext context) {
