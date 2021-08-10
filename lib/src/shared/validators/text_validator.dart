@@ -65,7 +65,7 @@ class Validators {
         .hasMatch(email)) {
       return null;
     } else {
-      return "Email inválido";
+      return "Insira um endereço de email";
     }
   }
 }

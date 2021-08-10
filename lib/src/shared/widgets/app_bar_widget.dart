@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -13,25 +14,30 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: AppGradients.blueGradientAppBar,
-        boxShadow: AppShadows.shadowsAppBar,
-      ),
-      child: AppBar(
-        title: Text(
-          title,
-          style: AppTextStyles.white24w400Roboto.copyWith(
-            shadows: AppShadows.shadowsTextAppBar,
-          ),
+    return GestureDetector(
+      onTap: () async {
+        await FirebaseAuth.instance.signOut();
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: AppGradients.blueGradientAppBar,
+          boxShadow: AppShadows.shadowsAppBar,
         ),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: AppColors.transparent,
-        backwardsCompatibility: false,
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: AppColors.transparent,
-          statusBarIconBrightness: Brightness.light,
+        child: AppBar(
+          title: Text(
+            title,
+            style: AppTextStyles.white24w400Roboto.copyWith(
+              shadows: AppShadows.shadowsTextAppBar,
+            ),
+          ),
+          centerTitle: true,
+          elevation: 0,
+          backgroundColor: AppColors.transparent,
+          backwardsCompatibility: false,
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: AppColors.transparent,
+            statusBarIconBrightness: Brightness.light,
+          ),
         ),
       ),
     );

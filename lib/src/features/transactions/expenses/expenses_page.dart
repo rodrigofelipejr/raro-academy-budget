@@ -1,3 +1,4 @@
+import 'package:budget/src/shared/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/appbar_with_drawer.dart';
@@ -6,7 +7,6 @@ import '../widgets/date_picker_widget.dart';
 import '../widgets/dropdown_buttom_widget.dart';
 import '../widgets/dropdown_item_data.dart';
 import '../widgets/text_styles.dart';
-import '/src/shared/widget/custom_text_field.dart';
 import '/src/shared/constants/app_colors.dart';
 
 class ExpensesPage extends StatefulWidget {
@@ -99,15 +99,14 @@ class _ExpensesPageState extends State<ExpensesPage> {
                             style: TextStyles.black12w400RobotoOp54,
                           ),
                           DropdownButtomWidget(
-                            value: dropdownValue,
-                            items: list,
-                            focusNode: _inputTypeFocusNode,
-                            onChanged: (newValue) {
-                              setState(() {
-                                dropdownValue = newValue as DropdownItemData;
-                              });
-                            }
-                          ),
+                              value: dropdownValue,
+                              items: list,
+                              focusNode: _inputTypeFocusNode,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  dropdownValue = newValue as DropdownItemData;
+                                });
+                              }),
                         ],
                       ),
                     ),
