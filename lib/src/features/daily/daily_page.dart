@@ -7,6 +7,7 @@ import 'package:budget/src/features/daily/widgets/input_card.dart';
 import 'package:budget/src/features/daily/widgets/output_card.dart';
 import 'package:budget/src/features/home/widgets/widgets.dart';
 import 'package:budget/src/shared/models/models.dart';
+import 'package:budget/src/shared/widgets/item_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -80,85 +81,15 @@ class _DailyPageState extends ModularState<DailyPage, DailyStore> {
         },
         controller: _pageController,
         children: [
-          /////////////////////////////////////////////////////////////////////////////////////
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Card(
-                  elevation: 2,
-                  child: Column(
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        height: MediaQuery.of(context).size.height * 0.544,
-                        child: Observer(
-                          builder: (_) {
-                            // if (controller.transactionList!.error) {
-                            //   return Center(
-                            //     child: ElevatedButton(
-                            //         onPressed: () => controller.transactionList,
-                            //         child: Text("clica ai")),
-                            //   );
-                            // }
-                            if (controller.transactionList!.result == null) {
-                              return Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            }
-                            List<TransactionModel> list =
-                                controller.transactionList?.result;
-                            return ListView.builder(
-                              itemCount: list.length,
-                              itemBuilder: (_, index) {
-                                TransactionModel model = list[index];
-                                return ListTile(
-                                  title: Text(model.description),
-                                );
-                              },
-                            );
-                          },
-                        ),
-                      ),
-                      Divider(
-                        height: 1,
-                      ),
-                      Container(
-                          width: double.infinity,
-                          height: MediaQuery.of(context).size.height * 0.1,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Total entradas',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color.fromARGB(255, 52, 48, 144)),
-                                ),
-                                Text(
-                                  'R\$123123'
-                                  // ${Formatters.formatMoney(sun(listvalue))}'
-                                  ,
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color.fromARGB(255, 88, 179, 104)),
-                                ),
-                              ],
-                            ),
-                          ))
-                    ],
-                  ),
-                ),
-              )
-            ],
+          InputCard(
+            transaction: controller.transactionList!.value!,
           ),
-          /////////////////////////////////////////////////////////////////////////////////////
-          OutCard(),
-          AllCard(),
+          OutCard(
+            transaction: controller.transactionList!.value!,
+          ),
+          AllCard(
+            transaction: controller.transactionList!.value!,
+          ),
         ],
       ),
     );

@@ -1,23 +1,11 @@
-import 'package:budget/src/features/daily/daily_store.dart';
+import 'package:budget/src/shared/models/models.dart';
 import 'package:budget/src/shared/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import '../../../shared/constants/constants.dart';
 
-class OutCard extends StatefulWidget {
-  const OutCard({Key? key}) : super(key: key);
+class OutCard extends StatelessWidget {
+  List<TransactionModel> transaction;
 
-  @override
-  _OutCardState createState() => _OutCardState();
-}
-
-class _OutCardState extends State<OutCard> {
-  // late final DailyController _controller;
-
-  // @override
-  // void initState() {
-  //   _controller = DailyController();
-  //   super.initState();
-  // }
+  OutCard({Key? key, required this.transaction}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,15 +20,14 @@ class _OutCardState extends State<OutCard> {
                 Container(
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height * 0.544,
-                  // child: ListView(
-                  //   children:
-                  //   _controller.transactions
-                  //       .map((transaction) => ItemCardWidget(
-                  //             transaction: transaction,
-                  //             onTap: () => null,
-                  //           ))
-                  //       .toList(),
-                  // ),
+                  child: ListView(
+                    children: transaction
+                        .map((transaction) => ItemCardWidget(
+                              transaction: transaction,
+                              onTap: () => null,
+                            ))
+                        .toList(),
+                  ),
                 ),
                 Divider(
                   height: 1,

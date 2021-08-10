@@ -1,34 +1,13 @@
 import 'package:budget/src/features/daily/daily_store.dart';
+import 'package:budget/src/shared/models/models.dart';
 import 'package:budget/src/shared/utils/formatters.dart';
 import 'package:budget/src/shared/widgets/item_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
-class InputCard extends StatefulWidget {
-  const InputCard({Key? key}) : super(key: key);
-
-  @override
-  _InputCardState createState() => _InputCardState();
-}
-
-class _InputCardState extends State<InputCard> {
-  // late final DailyController _controller;
-
-  // @override
-  // void initState() {
-  //   _controller = DailyController();
-  //   super.initState();
-  // }
-
-  // late var listvalue = _controller.transactions.map((e) => e.value).toList();
-
-  double sun(List list) {
-    var soma = 0.0;
-    for (var i = 0; i < list.length; i++) {
-      soma += list[i];
-    }
-    return soma;
-  }
+class InputCard extends StatelessWidget {
+  List<TransactionModel> transaction;
+  InputCard({Key? key, required this.transaction}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,14 +22,13 @@ class _InputCardState extends State<InputCard> {
                 Container(
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height * 0.544,
-                  child: Observer(
-                    builder: (_) {
-                      return ListView.builder(
-                        itemBuilder: (_, index) {
-                          return ListTile();
-                        },
-                      );
-                    },
+                  child: ListView(
+                    children: transaction
+                        .map((transaction) => ItemCardWidget(
+                              transaction: transaction,
+                              onTap: () => null,
+                            ))
+                        .toList(),
                   ),
                 ),
                 Divider(
