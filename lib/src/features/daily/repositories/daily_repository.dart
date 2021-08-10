@@ -10,26 +10,28 @@ class DailyRepository implements IDailyRepository {
 
   DailyRepository(this.firestore);
 
-  @override
-  Stream<List<TransactionDailyModel>> getTransactions() {
-    return firestore
-        .collection(AppCollections.transactions)
-        .snapshots()
-        .map((query) {
-      return query.docs.map((doc) {
-        return TransactionDailyModel.fromDocument(doc);
-      }).toList();
-    });
-  }
-
-  // Future<List<TransactionModel>> getTransactions() async {
+  // @override
+  // Stream<List<TransactionDailyModel>> getTransactions() {
   //   CollectionReference db =
   //       FirebaseFirestore.instance.collection(AppCollections.transactions);
-  //   final snapshot = await db
-  //       .where('uuid', isEqualTo: AppSettings.userUuid)
-  //       .orderBy('createAt', descending: true)
-  //       .get();
-
-  //   return snapshot.docs.map((e) => TransactionModel.fromFirestore(e)).toList();
+  //   return firestore
+  //       .collection(AppCollections.transactions)
+  //       .snapshots()
+  //       .map((query) {
+  //     return query.docs.map((doc) {
+  //       return TransactionDailyModel.fromDocument(doc);
+  //     }).toList();
+  //   });
   // }
+
+  Future<List<TransactionModel>> getTransactions() async {
+    CollectionReference db =
+        FirebaseFirestore.instance.collection(AppCollections.transactions);
+    final snapshot = await db
+        .where('uuid', isEqualTo: AppSettings.userUuid)
+        .orderBy('createAt', descending: true)
+        .get();
+
+    return snapshot.docs.map((e) => TransactionModel.fromFirestore(e)).toList();
+  }
 }

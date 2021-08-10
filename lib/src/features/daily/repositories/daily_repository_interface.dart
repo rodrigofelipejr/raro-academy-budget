@@ -3,5 +3,5 @@ import 'package:budget/src/shared/models/models.dart';
 import 'package:mobx/mobx.dart';
 
 abstract class IDailyRepository {
-  Stream<List<TransactionDailyModel>> getTransactions();
+  Future<List<TransactionModel>> getTransactions();
 }

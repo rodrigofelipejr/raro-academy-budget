@@ -6,6 +6,7 @@ import 'package:budget/src/features/daily/widgets/buttons_appbar.dart';
 import 'package:budget/src/features/daily/widgets/input_card.dart';
 import 'package:budget/src/features/daily/widgets/output_card.dart';
 import 'package:budget/src/features/home/widgets/widgets.dart';
+import 'package:budget/src/shared/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -93,24 +94,27 @@ class _DailyPageState extends ModularState<DailyPage, DailyStore> {
                         height: MediaQuery.of(context).size.height * 0.544,
                         child: Observer(
                           builder: (_) {
-                            if (controller.transactionList!.hasError) {
-                              return Center(
-                                child: ElevatedButton(
-                                    onPressed: () => controller.transactionList,
-                                    child: Text("clica ai")),
-                              );
-                            }
-                            if (controller.transactionList!.data == null) {
+                            // if (controller.transactionList!.error) {
+                            //   return Center(
+                            //     child: ElevatedButton(
+                            //         onPressed: () => controller.transactionList,
+                            //         child: Text("clica ai")),
+                            //   );
+                            // }
+                            if (controller.transactionList!.result == null) {
                               return Center(
                                 child: CircularProgressIndicator(),
                               );
                             }
-                            List<TransactionDailyModel> list =
-                                controller.transactionList!.data;
+                            List<TransactionModel> list =
+                                controller.transactionList?.result;
                             return ListView.builder(
                               itemCount: list.length,
                               itemBuilder: (_, index) {
-                                return ListTile();
+                                TransactionModel model = list[index];
+                                return ListTile(
+                                  title: Text(model.description),
+                                );
                               },
                             );
                           },
