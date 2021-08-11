@@ -1,15 +1,10 @@
-import 'package:budget/src/features/daily/daily_state.dart';
 import 'package:budget/src/features/daily/daily_store.dart';
-import 'package:budget/src/features/daily/models/transaction_model.dart';
 import 'package:budget/src/features/daily/widgets/all_card.dart';
 import 'package:budget/src/features/daily/widgets/buttons_appbar.dart';
 import 'package:budget/src/features/daily/widgets/input_card.dart';
 import 'package:budget/src/features/daily/widgets/output_card.dart';
 import 'package:budget/src/features/home/widgets/widgets.dart';
-import 'package:budget/src/shared/models/models.dart';
-import 'package:budget/src/shared/widgets/item_card_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class DailyPage extends StatefulWidget {
@@ -82,10 +77,15 @@ class _DailyPageState extends ModularState<DailyPage, DailyStore> {
         controller: _pageController,
         children: [
           InputCard(
-            transaction: controller.transactionList!.value!,
+            value: 202,
+            transaction: controller.transactionList!.value!
+                .where((element) => element.type.index == 1)
+                .toList(),
           ),
           OutCard(
-            transaction: controller.transactionList!.value!,
+            transaction: controller.transactionList!.value!
+                .where((element) => element.type.index == 0)
+                .toList(),
           ),
           AllCard(
             transaction: controller.transactionList!.value!,

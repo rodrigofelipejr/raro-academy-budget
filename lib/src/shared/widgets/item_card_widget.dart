@@ -14,7 +14,7 @@ class ItemCardWidget extends StatelessWidget {
     required this.onTap,
   }) : super(key: key);
 
-  String get prefix => transaction.type.index == 0 ? '+' : '-';
+  String get prefix => transaction.type.index == 0 ? '-' : '+';
   Map get mapCategoryImageColors =>
       TransactionCategories.mapCategoryImageColors.values
           .elementAt(CategoryTransaction.values.indexOf(transaction.category));

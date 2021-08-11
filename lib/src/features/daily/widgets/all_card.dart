@@ -1,8 +1,6 @@
-import 'package:budget/src/features/daily/daily_store.dart';
 import 'package:budget/src/shared/models/models.dart';
 import 'package:budget/src/shared/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import '../../../shared/constants/constants.dart';
 
 class AllCard extends StatelessWidget {
   List<TransactionModel> transaction;

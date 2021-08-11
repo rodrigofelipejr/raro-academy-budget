@@ -1,13 +1,14 @@
-import 'package:budget/src/features/daily/daily_store.dart';
 import 'package:budget/src/shared/models/models.dart';
 import 'package:budget/src/shared/utils/formatters.dart';
 import 'package:budget/src/shared/widgets/item_card_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 
 class InputCard extends StatelessWidget {
   List<TransactionModel> transaction;
-  InputCard({Key? key, required this.transaction}) : super(key: key);
+  double value;
+
+  InputCard({Key? key, required this.transaction, required this.value})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +51,7 @@ class InputCard extends StatelessWidget {
                                 color: Color.fromARGB(255, 52, 48, 144)),
                           ),
                           Text(
-                            'R\$'
-                            // ${Formatters.formatMoney(sun(listvalue))}'
-                            ,
+                            'R\$${Formatters.formatMoney(value)}',
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
