@@ -1,10 +1,13 @@
 import 'package:budget/src/shared/models/models.dart';
+import 'package:budget/src/shared/utils/formatters.dart';
 import 'package:budget/src/shared/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class AllCard extends StatelessWidget {
   List<TransactionModel> transaction;
-  AllCard({Key? key, required this.transaction}) : super(key: key);
+  double value;
+  AllCard({Key? key, required this.transaction, required this.value})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,11 +50,15 @@ class AllCard extends StatelessWidget {
                                 color: Color.fromARGB(255, 52, 48, 144)),
                           ),
                           Text(
-                            '+R\$ 2.415,00',
+                            value > 0
+                                ? 'R\$${Formatters.formatMoney(value)}'
+                                : '-R\$${Formatters.formatMoney(value)}',
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
-                                color: Color.fromARGB(255, 88, 179, 104)),
+                                color: value > 0
+                                    ? Color.fromARGB(255, 88, 179, 104)
+                                    : Color.fromARGB(255, 244, 67, 54)),
                           ),
                         ],
                       ),

@@ -25,6 +25,21 @@ class _DailyPageState extends ModularState<DailyPage, DailyStore> {
     );
   }
 
+  double value(int type) {
+    double sum = 0.0;
+    controller.transactionList!.value!
+        .where((element) => element.type.index == type)
+        .forEach((value) {
+      sum += value.value;
+    });
+
+    return sum;
+  }
+
+  double valuee() {
+    return value(1) - value(0);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,17 +92,19 @@ class _DailyPageState extends ModularState<DailyPage, DailyStore> {
         controller: _pageController,
         children: [
           InputCard(
-            value: 202,
+            value: value(1),
             transaction: controller.transactionList!.value!
                 .where((element) => element.type.index == 1)
                 .toList(),
           ),
           OutCard(
+            value: value(0),
             transaction: controller.transactionList!.value!
                 .where((element) => element.type.index == 0)
                 .toList(),
           ),
           AllCard(
+            value: valuee(),
             transaction: controller.transactionList!.value!,
           ),
         ],
