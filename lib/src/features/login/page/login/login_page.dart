@@ -22,7 +22,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    controller.emailController.addListener(() {
+    emailController.addListener(() {
       if (!controller.showPasswordField) {
         controller.verifyDig();
       }
@@ -34,6 +34,11 @@ class _LoginPageState extends State<LoginPage> {
   void dispose() {
     super.dispose();
   }
+
+  FocusNode emailFocusNode = new FocusNode();
+  FocusNode passwordFocusNode = new FocusNode();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
   @override
@@ -58,15 +63,38 @@ class _LoginPageState extends State<LoginPage> {
                       HeaderWidget(
                         title: 'Vamos começar!',
                       ),
-                      Text(
-                        'Novo usuário? Crie uma conta',
-                        style: TextStyle(
-                          fontFamily: "Roboto",
-                          fontSize: 16,
-                          letterSpacing: 0.15,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.grey,
-                        ),
+                      Flex(
+                        direction: Axis.horizontal,
+                        children: [
+                          Flexible(
+                            child: Text(
+                              'Novo usuário? ',
+                              overflow: TextOverflow.clip,
+                              maxLines: 1,
+                              style: TextStyle(
+                                fontFamily: "Roboto",
+                                fontSize: 16,
+                                letterSpacing: 0.15,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                          Flexible(
+                            child: Text(
+                              'Crie uma conta',
+                              overflow: TextOverflow.clip,
+                              maxLines: 1,
+                              style: TextStyle(
+                                fontFamily: "Roboto",
+                                fontSize: 16,
+                                letterSpacing: 0.15,
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.azul,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(
                         height: 46,
@@ -82,11 +110,12 @@ class _LoginPageState extends State<LoginPage> {
                             labelText: "E-mail",
                             hintText: "Insira seu e-mail",
                             errorMessage: null,
+                            onChanged: controller.setEmail,
                             validator: (value) =>
                                 Validators().email(value ?? ''),
                             textInputAction: TextInputAction.next,
-                            controller: controller.emailController,
-                            focusNode: controller.emailFocusNode,
+                            controller: emailController,
+                            focusNode: emailFocusNode,
                             keyboardType: TextInputType.emailAddress,
                           ),
                           SizedBox(height: 8.0),
@@ -95,6 +124,7 @@ class _LoginPageState extends State<LoginPage> {
                                   labelText: "Senha",
                                   hintText: "Senha",
                                   obscureText: controller.passwordVisible,
+                                  onChanged: controller.setPassword,
                                   suffixIcon: VisibleWidget(
                                     visible: controller.passwordVisible,
                                     onPressed: () {
@@ -105,8 +135,8 @@ class _LoginPageState extends State<LoginPage> {
                                     },
                                   ),
                                   textInputAction: TextInputAction.next,
-                                  focusNode: controller.passwordFocusNode,
-                                  controller: controller.passwordController,
+                                  focusNode: passwordFocusNode,
+                                  controller: passwordController,
                                 )
                               : Container(),
                           SizedBox(height: 16.0),
@@ -118,10 +148,10 @@ class _LoginPageState extends State<LoginPage> {
                                 style: AppTextStyles.purple14w500Roboto,
                               ),
                               CircularButtonGradient(
-                                formKey: _formKey,
-                                controller: controller,
+                                onTap: controller.callLogin,
                                 text: 'Continuar',
-                              ),
+                                disabled: controller.disabledButton,
+                              )
                             ],
                           ),
                           SizedBox(
@@ -153,8 +183,8 @@ class _LoginPageState extends State<LoginPage> {
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50.0),
-                            ),
+                                borderRadius: BorderRadius.circular(50.0),
+                                side: BorderSide(color: Colors.grey)),
                           ),
                         ),
                         onPressed: () {},
@@ -181,8 +211,8 @@ class _LoginPageState extends State<LoginPage> {
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50.0),
-                                side: BorderSide(color: Colors.red)),
+                              borderRadius: BorderRadius.circular(50.0),
+                            ),
                           ),
                         ),
                         onPressed: () {},
