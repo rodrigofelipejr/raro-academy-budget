@@ -38,6 +38,8 @@ class ItemCardWidget extends StatelessWidget {
       ),
       title: Text(
         transaction.description,
+        overflow: TextOverflow.ellipsis,
+        maxLines: 1,
         style: AppTextStyles.purple16w500Roboto,
       ),
       subtitle: Text(
@@ -45,7 +47,7 @@ class ItemCardWidget extends StatelessWidget {
         style: AppTextStyles.gray14w400Roboto,
       ),
       trailing: Text(
-        '${prefix}R\$ ${transaction.value}',
+        '$prefix${Formatters.formatMoney(transaction.value)}',
         style: AppTextStyles.black16w400Roboto,
       ),
     );

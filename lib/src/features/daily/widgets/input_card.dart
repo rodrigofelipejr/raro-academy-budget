@@ -51,7 +51,7 @@ class InputCard extends StatelessWidget {
                                 color: Color.fromARGB(255, 52, 48, 144)),
                           ),
                           Text(
-                            'R\$${Formatters.formatMoney(value)}',
+                            '+${Formatters.formatMoney(value)}',
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
