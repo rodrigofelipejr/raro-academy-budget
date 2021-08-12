@@ -20,11 +20,15 @@ class ButtonsAppBarDay extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Text(
-            '${Formatters.formatMoney(Modular.get<DailyStore>().transactionTotal)}',
-            style: TextStyle(
-                color: Colors.white, fontSize: 26, fontWeight: FontWeight.w700),
-          ),
+          Observer(builder: (_) {
+            return Text(
+              '${Formatters.formatMoney(Modular.get<DailyStore>().transactionTotal)}',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 26,
+                  fontWeight: FontWeight.w700),
+            );
+          }),
           SizedBox(height: 11),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),

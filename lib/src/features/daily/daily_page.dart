@@ -79,10 +79,7 @@ class _DailyPageState extends ModularState<DailyPage, DailyStore> {
       ),
       body: Observer(builder: (_) {
         return PageView(
-          onPageChanged: (value) {
-            controller.setIndexPage(value);
-            print(controller.indexPage);
-          },
+          onPageChanged: (value) => controller.setIndexPage(value),
           controller: _pageController,
           children: [
             InputCard(

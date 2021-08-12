@@ -18,7 +18,7 @@ abstract class _DailyStoreBase with Store {
   }
 
   @observable
-  List<TransactionModel> transactions = [];
+  List<TransactionModel> transactions = ObservableList<TransactionModel>();
   @action
   void setTransactions(List<TransactionModel> value) {
     transactions.clear();
@@ -60,7 +60,12 @@ abstract class _DailyStoreBase with Store {
   Future<void> handleGetTransaction() async {
     try {
       final data = await repository.getTransactions();
+      print(transactions.length);
       setTransactions(data);
-    } catch (e) {}
+      print(transactions.length);
+    } catch (e) {
+      print("asdasd");
+      print(e);
+    }
   }
 }
