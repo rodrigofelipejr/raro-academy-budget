@@ -53,98 +53,92 @@ class _IncomePageState extends State<IncomePage> {
       appBar: AppBarWithDrawer(title: "Entrada"),
       drawer: Drawer(),
       body: SingleChildScrollView(
-        padding: EdgeInsets.only(
-          top: 16,
-          left: 16,
-          right: 16,
-          bottom: 40,
-        ),
-        child: Stack(
-          children: [
-            Card(
-              color: Colors.white,
-              elevation: 3.0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(7.0),
+        padding: EdgeInsets.all(16.0),
+        child: Container(
+          height: 480,
+          child: Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              Card(
+                color: Colors.white,
+                elevation: 3.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(7.0),
+                  ),
                 ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 54),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          top: 55,
-                          bottom: 12,
+                child: Container(
+                  height: 450,
+                  padding: const EdgeInsets.symmetric(horizontal: 54),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 55,
+                            bottom: 12,
+                          ),
+                          child: CustomTextField(
+                            hintText: "Valor",
+                            labelText: "Valor em R\$",
+                            focusNode: _incomeFocusNode,
+                            controller: _incomeController,
+                            // validator: (value) {
+                            //   print("validator: $value");
+                            //   return value;
+                            // },
+                          ),
                         ),
-                        child: CustomTextField(
-                          hintText: "Valor",
-                          labelText: "Valor em R\$",
-                          focusNode: _incomeFocusNode,
-                          controller: _incomeController,
-                          // validator: (value) {
-                          //   print("validator: $value");
-                          //   return value;
-                          // },
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Tipo de entrada",
+                                style: TextStyles.black12w400RobotoOp54,
+                              ),
+                              DropdownButtomWidget(
+                                value: _inputTypeController.value,
+                                items: _inputTypeController.items,
+                                focusNode: _inputTypeFocusNode,
+                                onChanged: (newValue) {
+                                  _inputTypeController.value = newValue!;
+                                  setState(() {});
+                                },
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Tipo de entrada",
-                              style: TextStyles.black12w400RobotoOp54,
-                            ),
-                            DropdownButtomWidget(
-                              value: _inputTypeController.value,
-                              items: _inputTypeController.items,
-                              focusNode: _inputTypeFocusNode,
-                              onChanged: (newValue) {
-                                _inputTypeController.value = newValue!;
-                                setState(() {});
-                              },
-                            ),
-                          ],
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          child: CustomTextField(
+                            hintText: "Nome da entrada",
+                            labelText: "Nome da entrada",
+                            focusNode: _inputNameFocusNode,
+                            controller: _inputNameController,
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        child: CustomTextField(
-                          hintText: "Nome da entrada",
-                          labelText: "Nome da entrada",
-                          focusNode: _inputNameFocusNode,
-                          controller: _inputNameController,
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 12,
+                          ),
+                          child: DatePickerWidget(
+                            controller: _dateController,
+                            focusNode: _datePickerFocusNode,
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          top: 12,
-                          bottom: 97,
-                        ),
-                        child: DatePickerWidget(
-                          controller: _dateController,
-                          focusNode: _datePickerFocusNode,
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 410,
-              ),
-              child: Align(
-                alignment: Alignment.center,
+              Positioned(
+                bottom: 0,
                 child: ButtonWidget(
                   label: "INSERIR",
                   onPressed: () {
@@ -169,7 +163,7 @@ class _IncomePageState extends State<IncomePage> {
                       // Modular.to.pushReplacementNamed(AppRoutes.daily);
                       showDialog(
                         context: context,
-                        builder: (context) => Container(
+                        builder: (_) => Container(
                           height: 400,
                           alignment: Alignment.center,
                           child: Card(
@@ -189,8 +183,8 @@ class _IncomePageState extends State<IncomePage> {
                   },
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
