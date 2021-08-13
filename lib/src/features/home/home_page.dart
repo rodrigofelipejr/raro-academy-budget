@@ -44,7 +44,8 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
               label: 'Inserir',
             );
           }),
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
           body: (store.onError != null)
               ? CustomErrorWidget(
                   message: store.onError?.message ?? 'Erro interno',

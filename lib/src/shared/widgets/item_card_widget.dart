@@ -14,9 +14,10 @@ class ItemCardWidget extends StatelessWidget {
     required this.onTap,
   }) : super(key: key);
 
-  String get prefix => transaction.type.index == 0 ? '+' : '-';
-  Map get mapCategoryImageColors => TransactionCategories.mapCategoryImageColors.values
-      .elementAt(CategoryTransaction.values.indexOf(transaction.category));
+  String get prefix => transaction.type.index == 0 ? '-' : '+';
+  Map get mapCategoryImageColors =>
+      TransactionCategories.mapCategoryImageColors.values
+          .elementAt(CategoryTransaction.values.indexOf(transaction.category));
   Color get backgroundColor => mapCategoryImageColors.entries.first.value;
   String get asset => mapCategoryImageColors.entries.first.key;
 
@@ -37,6 +38,8 @@ class ItemCardWidget extends StatelessWidget {
       ),
       title: Text(
         transaction.description,
+        overflow: TextOverflow.ellipsis,
+        maxLines: 1,
         style: AppTextStyles.purple16w500Roboto,
       ),
       subtitle: Text(
@@ -44,7 +47,7 @@ class ItemCardWidget extends StatelessWidget {
         style: AppTextStyles.gray14w400Roboto,
       ),
       trailing: Text(
-        '${prefix}R\$ ${transaction.value}',
+        '$prefix${Formatters.formatMoney(transaction.value)}',
         style: AppTextStyles.black16w400Roboto,
       ),
     );
