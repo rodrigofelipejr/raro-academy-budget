@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../shared/constants/constants.dart';
+import '../../../../../shared/constants/constants.dart';
 
 class ButtonIconShowBalanceWidget extends StatelessWidget {
   final void Function() onTap;
@@ -12,7 +12,7 @@ class ButtonIconShowBalanceWidget extends StatelessWidget {
     required this.showing,
   }) : super(key: key);
 
-  IconData get icon => showing ? Icons.visibility_off : Icons.visibility;
+  IconData get icon => showing ? Icons.visibility : Icons.visibility_off;
 
   @override
   Widget build(BuildContext context) {
