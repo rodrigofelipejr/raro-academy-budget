@@ -169,22 +169,20 @@ class _IncomePageState extends State<IncomePage> {
                       // Modular.to.pushReplacementNamed(AppRoutes.daily);
                       showDialog(
                         context: context,
-                        builder: (context) => Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Card(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Dados enviados com sucesso",
-                                  style: TextStyle(
-                                    fontSize: 24,
-                                  ),
+                        builder: (context) => Container(
+                          height: 400,
+                          alignment: Alignment.center,
+                          child: Card(
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Text(
+                                "Dados enviados com sucesso",
+                                style: TextStyle(
+                                  fontSize: 18,
                                 ),
                               ),
-                            )
-                          ],
+                            ),
+                          ),
                         ),
                       );
                     }
