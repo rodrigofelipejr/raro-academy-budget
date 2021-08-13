@@ -1,3 +1,4 @@
+import 'package:budget/src/features/transactions/constants/transactions_items.dart';
 import 'package:budget/src/features/transactions/models/transaction_data.dart';
 import 'package:budget/src/features/transactions/repository/transactions_repository.dart';
 import 'package:budget/src/shared/widgets/custom_text_field.dart';
@@ -30,7 +31,7 @@ class _IncomePageState extends State<IncomePage> {
   TransactionsController _controller = TransactionsController();
   TextEditingController _incomeController = TextEditingController();
   TextEditingController _inputNameController = TextEditingController();
-  DropdownController _inputTypeController = DropdownController();
+  DropdownController _inputTypeController = DropdownController(items: TransactionsItems.incomeItems);
   DateController _dateController = DateController();
 
   FocusNode _incomeFocusNode = FocusNode();

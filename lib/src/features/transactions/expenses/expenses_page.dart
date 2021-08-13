@@ -1,3 +1,4 @@
+import 'package:budget/src/features/transactions/constants/transactions_items.dart';
 import 'package:budget/src/features/transactions/models/transaction_data.dart';
 import 'package:budget/src/shared/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
 
   TransactionsController _controller = TransactionsController();
   TextEditingController _expensesController = TextEditingController();
-  DropdownController _inputTypeController = DropdownController();
+  DropdownController _inputTypeController = DropdownController(items: TransactionsItems.expensesItems);
   DateController _dateController = DateController();
 
   FocusNode _expensesFocusNode = FocusNode();
