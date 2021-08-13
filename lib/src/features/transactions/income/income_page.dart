@@ -1,50 +1,51 @@
+import 'package:budget/src/features/transactions/models/transaction_data.dart';
+import 'package:budget/src/features/transactions/repository/transactions_repository.dart';
 import 'package:budget/src/shared/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
-import '/src/shared/constants/app_colors.dart';
-import '../widgets/dropdown_item_data.dart';
 import '../widgets/dropdown_buttom_widget.dart';
 import '../widgets/appbar_with_drawer.dart';
 import '../widgets/button_widget.dart';
 import '../widgets/date_picker_widget.dart';
 import '../widgets/text_styles.dart';
+import '../repository/transactions_repository.dart';
+import '../controller/transactions_controller.dart';
+import '../controller/date_controller.dart';
+import '../controller/dropdown_controller.dart';
+import '../../../shared/constants/app_routes.dart';
 
 class IncomePage extends StatefulWidget {
   const IncomePage({Key? key}) : super(key: key);
+  // const IncomePage({Key? key, this.data}) : super(key: key);
+  // final TransactionModel? data;
 
   @override
   _IncomePageState createState() => _IncomePageState();
 }
 
 class _IncomePageState extends State<IncomePage> {
+  TransactionsRepository _repository = TransactionsRepository();
+
+  TransactionsController _controller = TransactionsController();
+  TextEditingController _incomeController = TextEditingController();
+  TextEditingController _inputNameController = TextEditingController();
+  DropdownController _inputTypeController = DropdownController();
+  DateController _dateController = DateController();
+
   FocusNode _incomeFocusNode = FocusNode();
   FocusNode _inputTypeFocusNode = FocusNode();
   FocusNode _inputNameFocusNode = FocusNode();
+  FocusNode _datePickerFocusNode = FocusNode();
 
-  DropdownItemData? dropdownValue;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final List<DropdownItemData> list = [
-    DropdownItemData(
-      color: AppColors.azul,
-      value: "Dinheiro",
-    ),
-    DropdownItemData(
-      color: AppColors.azul,
-      value: "Pix",
-    ),
-    DropdownItemData(
-      color: AppColors.azul,
-      value: "Doc",
-    ),
-    DropdownItemData(
-      color: AppColors.azul,
-      value: "Ted",
-    ),
-    DropdownItemData(
-      color: AppColors.azul,
-      value: "Boleto",
-    ),
-  ];
+  late TransactionData _data;
+
+  void initState() {
+    _controller.repository = _repository;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,69 +71,125 @@ class _IncomePageState extends State<IncomePage> {
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 54),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 55,
-                        bottom: 12,
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 55,
+                          bottom: 12,
+                        ),
+                        child: CustomTextField(
+                          hintText: "Valor",
+                          labelText: "Valor em R\$",
+                          focusNode: _incomeFocusNode,
+                          controller: _incomeController,
+                          // validator: (value) {
+                          //   print("validator: $value");
+                          //   return value;
+                          // },
+                        ),
                       ),
-                      child: CustomTextField(
-                        hintText: "Valor",
-                        labelText: "Valor em R\$",
-                        focusNode: _incomeFocusNode,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Tipo de entrada",
-                            style: TextStyles.black12w400RobotoOp54,
-                          ),
-                          DropdownButtomWidget(
-                              value: dropdownValue,
-                              items: list,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Tipo de entrada",
+                              style: TextStyles.black12w400RobotoOp54,
+                            ),
+                            DropdownButtomWidget(
+                              value: _inputTypeController.value,
+                              items: _inputTypeController.items,
                               focusNode: _inputTypeFocusNode,
                               onChanged: (newValue) {
-                                setState(() {
-                                  dropdownValue = newValue as DropdownItemData;
-                                });
-                              }),
-                        ],
+                                _inputTypeController.value = newValue!;
+                                setState(() {});
+                              },
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      child: CustomTextField(
-                        hintText: "Nome da entrada",
-                        labelText: "Nome da entrada",
-                        focusNode: _inputNameFocusNode,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        child: CustomTextField(
+                          hintText: "Nome da entrada",
+                          labelText: "Nome da entrada",
+                          focusNode: _inputNameFocusNode,
+                          controller: _inputNameController,
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 12,
-                        bottom: 97,
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 12,
+                          bottom: 97,
+                        ),
+                        child: DatePickerWidget(
+                          controller: _dateController,
+                          focusNode: _datePickerFocusNode,
+                        ),
                       ),
-                      child: DatePickerWidget(),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(
-                top: 429,
+                top: 410,
               ),
               child: Align(
                 alignment: Alignment.center,
-                child: ButtonWidget(),
+                child: ButtonWidget(
+                  label: "INSERIR",
+                  onPressed: () {
+                    FocusScope.of(context).unfocus();
+                    if (_formKey.currentState!.validate()) {
+                      _data = TransactionData(
+                        value: double.parse(_incomeController.value.text),
+                        type: _inputTypeController.value!.value,
+                        name: _inputNameController.value.text,
+                        date: _dateController.date,
+                        uid: 'asdf',
+                      );
+                      // _controller.repository.deleteTransaction("9vSc8LJDgKl2wy4cNGjz");
+                      _controller.repository.createTransaction(_data);
+                      print('DATA ${_data.toString()}');
+                      _controller.repository.getTransactions();
+
+                      //Adiciona nova transacao na lista
+                      // final list = Modular.get<DailyStore>().transactions();
+                      // list.add(_data);
+                      // Modular.get<DailyStore>().setTransactions();
+                      // Modular.to.pushReplacementNamed(AppRoutes.daily);
+                      showDialog(
+                        context: context,
+                        builder: (context) => Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Card(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  "Dados enviados com sucesso",
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      );
+                    }
+                  },
+                ),
               ),
             ),
           ],
