@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../constants/constants.dart';
+import 'animated_switcher_widget.dart';
 
 class FabWidget extends StatelessWidget {
   final void Function() onTap;
@@ -29,46 +30,48 @@ class FabWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            gradient: AppGradients.blueGradientButtons,
-            shape: shape,
-            borderRadius: borderRadius,
-            boxShadow: AppShadows.shadowsFab,
-          ),
-          child: Material(
-            color: AppColors.transparent,
-            borderRadius: borderRadius,
-            child: InkWell(
+    return AnimatedSwitcherWidget(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              gradient: AppGradients.blueGradientButtons,
+              shape: shape,
               borderRadius: borderRadius,
-              onTap: onTap,
-              child: Container(
-                width: widthContainer,
-                padding: paddingContainer,
-                height: size,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.add,
-                      color: Colors.white,
-                    ),
-                    SizedBox(width: widthSizedBox),
-                    Text(
-                      label?.toUpperCase() ?? '',
-                      style: AppTextStyles.white14w500Roboto,
-                    ),
-                  ],
+              boxShadow: AppShadows.shadowsFab,
+            ),
+            child: Material(
+              color: AppColors.transparent,
+              borderRadius: borderRadius,
+              child: InkWell(
+                borderRadius: borderRadius,
+                onTap: onTap,
+                child: Container(
+                  width: widthContainer,
+                  padding: paddingContainer,
+                  height: size,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
+                      SizedBox(width: widthSizedBox),
+                      Text(
+                        label?.toUpperCase() ?? '',
+                        style: AppTextStyles.white14w500Roboto,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
