@@ -166,9 +166,7 @@ class _IncomePageState extends State<IncomePage> {
                       showDialog(
                         context: context,
                         builder: (_) => DialogWidget(
-                          height: 400,
                           message: "Dados enviados com sucesso",
-                          fontSize: 18,
                         ),
                       );
                     }

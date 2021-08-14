@@ -146,9 +146,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
                       showDialog(
                         context: context,
                         builder: (_) =>DialogWidget(
-                          height: 400,
                           message: "Dados enviados com sucesso",
-                          fontSize: 18,
                         ),
                       );
                     }
