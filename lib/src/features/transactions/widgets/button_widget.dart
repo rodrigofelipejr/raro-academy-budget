@@ -22,9 +22,12 @@ class ButtonWidget extends StatelessWidget {
           Radius.circular(24.0),
         ),
       ),
-      child: IconButton(
+      child: TextButton(
+        style: ButtonStyle(
+          overlayColor: MaterialStateProperty.all(Colors.white30),
+        ),
         onPressed: onPressed,
-        icon: Row(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Icon(
