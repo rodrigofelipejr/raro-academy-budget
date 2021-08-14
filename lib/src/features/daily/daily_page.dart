@@ -1,15 +1,15 @@
-import 'package:budget/src/features/daily/daily_store.dart';
+import 'package:budget/src/features/daily/daily_store.dart'; //TODO - organizar imports
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:budget/src/features/daily/widgets/all_card.dart';
 import 'package:budget/src/features/daily/widgets/buttons_appbar.dart';
 import 'package:budget/src/features/daily/widgets/input_card.dart';
 import 'package:budget/src/features/daily/widgets/output_card.dart';
 import 'package:budget/src/features/home/home.dart';
-import 'package:budget/src/features/home/widgets/widgets.dart';
 import 'package:budget/src/shared/utils/dates.dart';
 import 'package:budget/src/shared/widgets/fab_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
+import 'package:budget/src/shared/widgets/widgets.dart';
 
 class DailyPage extends StatefulWidget {
   const DailyPage({Key? key}) : super(key: key);
@@ -52,9 +52,9 @@ class _DailyPageState extends ModularState<DailyPage, DailyStore> {
           ),
         ),
         flexibleSpace: ButtonsAppBarDay(
-          buttonin: () => _navigator(index: 0),
-          buttonout: () => _navigator(index: 1),
-          buttonall: () => _navigator(index: 2),
+          buttonin: () => _navigator(index: 0), //TODO - buttonIo => usar padão camelcase
+          buttonout: () => _navigator(index: 1), //TODO - buttonIo => usar padão camelcase
+          buttonall: () => _navigator(index: 2), //TODO - buttonIo => usar padão camelcase
         ),
         toolbarHeight: MediaQuery.of(context).size.height * 0.22,
         actions: [
@@ -63,13 +63,12 @@ class _DailyPageState extends ModularState<DailyPage, DailyStore> {
             child: Align(
               alignment: Alignment.topRight,
               child: Observer(builder: (_) {
-                final homestore = Modular.get<HomeStore>();
+                final homeStore = Modular.get<HomeStore>();
                 return MonthSelectorWidget(
-                  label: Dates.descriptionMonth(
-                      homestore.state.selectedDate.month),
-                  referenceDate: homestore.state.selectedDate,
+                  label: Dates.descriptionMonth(homeStore.dailyStore.state.date.month),
+                  referenceDate: homeStore.dailyStore.state.date,
                   changeSelectedDate: (DateTime date) {
-                    homestore.handleChangeMonthSelected(date);
+                    homeStore.dailyStore.handleDaily(date: date);
                   },
                 );
               }),

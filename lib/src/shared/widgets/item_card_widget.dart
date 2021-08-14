@@ -7,19 +7,32 @@ import '../models/models.dart';
 class ItemCardWidget extends StatelessWidget {
   final TransactionModel transaction;
   final void Function() onTap;
+  final bool prefixEnable;
 
   const ItemCardWidget({
     Key? key,
     required this.transaction,
     required this.onTap,
+    this.prefixEnable = false,
   }) : super(key: key);
 
-  String get prefix => transaction.type.index == 0 ? '-' : '+';
-  Map get mapCategoryImageColors =>
-      TransactionCategories.mapCategoryImageColors.values
-          .elementAt(CategoryTransaction.values.indexOf(transaction.category));
   Color get backgroundColor => mapCategoryImageColors.entries.first.value;
   String get asset => mapCategoryImageColors.entries.first.key;
+  String get prefix => transaction.type.index == 0 ? '+' : '-';
+  Map get mapCategoryImageColors => TransactionCategories.mapCategoryImageColors.values.elementAt(
+        CategoryTransaction.values.indexOf(
+          transaction.category,
+        ),
+      );
+  TextStyle get style => prefixEnable
+      ? AppTextStyles.black16w400Roboto
+      : AppTextStyles.black16w400Roboto.copyWith(
+          color: AppColors.roxo,
+        );
+  Text get trailing => Text(
+        '${prefixEnable ? prefix : ''}R\$ ${transaction.value}',
+        style: style,
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -46,10 +59,7 @@ class ItemCardWidget extends StatelessWidget {
         Formatters.dateParsing(transaction.createAt),
         style: AppTextStyles.gray14w400Roboto,
       ),
-      trailing: Text(
-        '$prefix${Formatters.formatMoney(transaction.value)}',
-        style: AppTextStyles.black16w400Roboto,
-      ),
+      trailing: trailing,
     );
   }
 }
