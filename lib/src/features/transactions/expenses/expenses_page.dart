@@ -126,7 +126,6 @@ class _ExpensesPageState extends State<ExpensesPage> {
                   onPressed: () {
                     FocusScope.of(context).unfocus();
                     if (_formKey.currentState!.validate()) {
-                      print("I***I: ${_expensesController.value.text}");
                       _data = TransactionData(
                         value: double.parse(_expensesController.value.text),
                         type: _inputTypeController.value!.value,

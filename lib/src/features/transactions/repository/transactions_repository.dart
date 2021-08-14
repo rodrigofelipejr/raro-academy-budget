@@ -23,11 +23,11 @@ class TransactionsRepository {
 
   Future<bool> deleteTransaction(String docId) async {
     try {
-      final response = await FirebaseFirestore.instance
+      await FirebaseFirestore.instance
           .collection("/test")
           .doc(docId)
           .delete();
-      print("DeleteteTransaction:");
+      print("DeleteteTransaction: ");
       return true;
     } catch (e) {
       print("ErrorDeleteTransaction: $e");
@@ -37,15 +37,14 @@ class TransactionsRepository {
 
   Future<bool> updateTransaction(TransactionData transaction) async {
     try {
-      final response =
-          await FirebaseFirestore.instance.collection("/test").doc("asdf").set({
+      await FirebaseFirestore.instance.collection("/test").doc("asdf").set({
         "uid": transaction.uid,
         "value": transaction.value,
         "type": transaction.type,
         "name": transaction.name,
         "createdAt": transaction.date,
       }, SetOptions(merge: true));
-      // print("UpdateTransaction: $response.docs");
+      print("UpdateTransaction: ");
       return true;
     } catch (e) {
       print("ErrorUpdateTransaction: $e");
@@ -59,6 +58,20 @@ class TransactionsRepository {
           await FirebaseFirestore.instance.collection("/test").get();
       print('Transactions: ${response.docs.map(((e) => e.data()))}');
       print(response);
+      return true;
+    } catch (e) {
+      print('ErrorTransactions: $e');
+      throw e;
+    }
+  }
+
+  Future<bool> getDocs() async {
+    try {
+      final response = await FirebaseFirestore.instance
+          .collection("/test")
+          .get()
+          .then((value) => value.docs.map((doc) => print(doc.id)));
+      print(response.length);
       return true;
     } catch (e) {
       print('ErrorTransactions: $e');

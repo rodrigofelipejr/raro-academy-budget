@@ -153,10 +153,11 @@ class _IncomePageState extends State<IncomePage> {
                         date: _dateController.date,
                         uid: 'asdf',
                       );
-                      // _controller.repository.deleteTransaction("9vSc8LJDgKl2wy4cNGjz");
-                      _controller.repository.createTransaction(_data);
+                      // _controller.repository.deleteTransaction("dDGxfOYHOdceR99Z0rwj");
+                      // _controller.repository.createTransaction(_data);
                       print('DATA ${_data.toString()}');
                       _controller.repository.getTransactions();
+                      _controller.repository.getDocs();
 
                       //Adiciona nova transacao na lista
                       // final list = Modular.get<DailyStore>().transactions();
