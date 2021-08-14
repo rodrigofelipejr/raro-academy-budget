@@ -86,8 +86,7 @@ class TransactionModel {
 
   String toJson() => json.encode(toMap());
 
-  factory TransactionModel.fromJson(String source) =>
-      TransactionModel.fromMap(json.decode(source));
+  factory TransactionModel.fromJson(String source) => TransactionModel.fromMap(json.decode(source));
 
   @override
   String toString() {
