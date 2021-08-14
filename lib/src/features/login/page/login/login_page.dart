@@ -71,13 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                               'Novo usuário? ',
                               overflow: TextOverflow.clip,
                               maxLines: 1,
-                              style: TextStyle(
-                                fontFamily: "Roboto",
-                                fontSize: 16,
-                                letterSpacing: 0.15,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.grey,
-                              ),
+                              style: AppTextStyles.grey16w400Roboto,
                             ),
                           ),
                           Flexible(
@@ -85,13 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                               'Crie uma conta',
                               overflow: TextOverflow.clip,
                               maxLines: 1,
-                              style: TextStyle(
-                                fontFamily: "Roboto",
-                                fontSize: 16,
-                                letterSpacing: 0.15,
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.azul,
-                              ),
+                              style: AppTextStyles.blue16w400Roboto,
                             ),
                           ),
                         ],
@@ -109,7 +97,6 @@ class _LoginPageState extends State<LoginPage> {
                           CustomTextField(
                             labelText: "E-mail",
                             hintText: "Insira seu e-mail",
-                            errorMessage: null,
                             onChanged: controller.setEmail,
                             validator: (value) =>
                                 Validators().email(value ?? ''),
@@ -125,6 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                                   hintText: "Senha",
                                   obscureText: controller.passwordVisible,
                                   onChanged: controller.setPassword,
+                                  errorMessage: controller.passwordError,
                                   suffixIcon: VisibleWidget(
                                     visible: controller.passwordVisible,
                                     onPressed: () {
@@ -143,15 +131,19 @@ class _LoginPageState extends State<LoginPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                'Recuperar senha',
-                                style: AppTextStyles.purple14w500Roboto,
-                              ),
-                              CircularButtonGradient(
-                                onTap: controller.callLogin,
-                                text: 'Continuar',
-                                disabled: controller.disabledButton,
-                              )
+                              controller.showPasswordField
+                                  ? Text(
+                                      'Recuperar senha',
+                                      style: AppTextStyles.purple14w500Roboto,
+                                    )
+                                  : Container(),
+                              controller.loading
+                                  ? CircularProgressIndicator()
+                                  : CircularButtonGradient(
+                                      onTap: callLogin,
+                                      text: 'Continuar'.toUpperCase(),
+                                      disabled: controller.disabledButton,
+                                    )
                             ],
                           ),
                           SizedBox(
@@ -167,16 +159,8 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Center(
-                        child: Text(
-                          "Ou",
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontFamily: 'Roboto',
-                            fontSize: 16,
-                            letterSpacing: 0.4,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
+                        child:
+                            Text("ou", style: AppTextStyles.grey16w400Roboto),
                       ),
                       ElevatedButton(
                         style: ButtonStyle(
@@ -186,22 +170,35 @@ class _LoginPageState extends State<LoginPage> {
                                 borderRadius: BorderRadius.circular(50.0),
                                 side: BorderSide(color: Colors.grey)),
                           ),
+                          backgroundColor:
+                              MaterialStateProperty.all(AppColors.white),
+                          shadowColor:
+                              MaterialStateProperty.all(AppColors.transparent),
                         ),
                         onPressed: () {},
                         child: Flex(
                           direction: Axis.horizontal,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.android),
+                            Container(
+                              height: 16,
+                              width: 16,
+                              decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                    image:
+                                        AssetImage('assets/images/google.png'),
+                                    fit: BoxFit.fill),
+                              ),
+                            ),
                             SizedBox(
                               width: 8,
                             ),
                             Flexible(
                               child: Text(
-                                "continuar com o google",
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                                style: TextStyle(fontSize: 20.0),
-                              ),
+                                  "continuar com o google".toUpperCase(),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  style: AppTextStyles.darkGray13w500Roboto),
                             ),
                           ],
                         ),
@@ -214,25 +211,35 @@ class _LoginPageState extends State<LoginPage> {
                               borderRadius: BorderRadius.circular(50.0),
                             ),
                           ),
+                          backgroundColor:
+                              MaterialStateProperty.all(AppColors.blueFacebook),
+                          shadowColor:
+                              MaterialStateProperty.all(AppColors.transparent),
                         ),
                         onPressed: () {},
                         child: Flex(
                           direction: Axis.horizontal,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.facebook),
+                            Icon(
+                              Icons.facebook,
+                              size: 20,
+                            ),
                             SizedBox(
                               width: 8,
                             ),
                             Flexible(
                               child: Text(
-                                "continuar com o facebook",
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                                style: TextStyle(fontSize: 20.0),
-                              ),
+                                  "continuar com o facebook".toUpperCase(),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  style: AppTextStyles.white13w500Roboto),
                             )
                           ],
                         ),
+                      ),
+                      SizedBox(
+                        height: 32,
                       ),
                     ],
                   ),
@@ -243,5 +250,13 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  callLogin() {
+    if (_formKey.currentState!.validate()) {
+      controller
+          .login(emailController.text, passwordController.text)
+          .then((value) => {});
+    }
   }
 }

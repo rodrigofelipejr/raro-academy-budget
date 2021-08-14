@@ -8,6 +8,7 @@ class AppColors {
   static const Color ciano = Color.fromRGBO(68, 194, 253, 1);
   static const Color amarelo = Color.fromRGBO(250, 199, 54, 1);
   static const Color azul = Color.fromRGBO(52, 48, 144, 1);
+  static const Color blueFacebook = Color.fromRGBO(58, 91, 150, 1);
   static const Color transparent = Colors.transparent;
   static const Color black = Color.fromRGBO(0, 0, 0, 1);
   static const Color gray = Color.fromRGBO(196, 196, 196, 1);

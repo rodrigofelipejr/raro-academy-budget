@@ -78,6 +78,36 @@ mixin _$LoginController on _LoginControllerBase, Store {
     });
   }
 
+  final _$passwordErrorAtom = Atom(name: '_LoginControllerBase.passwordError');
+
+  @override
+  String? get passwordError {
+    _$passwordErrorAtom.reportRead();
+    return super.passwordError;
+  }
+
+  @override
+  set passwordError(String? value) {
+    _$passwordErrorAtom.reportWrite(value, super.passwordError, () {
+      super.passwordError = value;
+    });
+  }
+
+  final _$loadingAtom = Atom(name: '_LoginControllerBase.loading');
+
+  @override
+  bool get loading {
+    _$loadingAtom.reportRead();
+    return super.loading;
+  }
+
+  @override
+  set loading(bool value) {
+    _$loadingAtom.reportWrite(value, super.loading, () {
+      super.loading = value;
+    });
+  }
+
   final _$loginAsyncAction = AsyncAction('_LoginControllerBase.login');
 
   @override
@@ -128,6 +158,8 @@ showPasswordField: ${showPasswordField},
 listLength: ${listLength},
 email: ${email},
 password: ${password},
+passwordError: ${passwordError},
+loading: ${loading},
 disabledButton: ${disabledButton}
     ''';
   }
