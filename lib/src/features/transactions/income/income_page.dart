@@ -1,6 +1,7 @@
 import 'package:budget/src/features/transactions/constants/transactions_items.dart';
 import 'package:budget/src/features/transactions/models/transaction_data.dart';
 import 'package:budget/src/features/transactions/repository/transactions_repository.dart';
+import 'package:budget/src/features/transactions/widgets/dialog_widget.dart';
 import 'package:budget/src/shared/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -164,20 +165,10 @@ class _IncomePageState extends State<IncomePage> {
                       // Modular.to.pushReplacementNamed(AppRoutes.daily);
                       showDialog(
                         context: context,
-                        builder: (_) => Container(
+                        builder: (_) => DialogWidget(
                           height: 400,
-                          alignment: Alignment.center,
-                          child: Card(
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Text(
-                                "Dados enviados com sucesso",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
-                          ),
+                          message: "Dados enviados com sucesso",
+                          fontSize: 18,
                         ),
                       );
                     }
