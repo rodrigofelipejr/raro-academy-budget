@@ -10,8 +10,7 @@ class DialogWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 400,
+    return Align(
       alignment: Alignment.center,
       child: Card(
         borderOnForeground: false,
