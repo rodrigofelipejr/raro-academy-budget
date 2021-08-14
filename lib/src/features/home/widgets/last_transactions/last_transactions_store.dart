@@ -22,7 +22,7 @@ abstract class _LastTransactionsStoreBase extends BaseStore with Store {
   @observable
   Failure? onError;
   @action
-  void setOnError(Failure value) => onError = value;
+  void setOnError(Failure? value) => onError = value;
 
   Future<void> init() async {
     await handleTransactions();
@@ -31,9 +31,8 @@ abstract class _LastTransactionsStoreBase extends BaseStore with Store {
   Future<void> handleTransactions() async {
     try {
       final transactions = await repository.getLastTransactions();
-      setState(
-        state.copyWith(transactions: transactions),
-      );
+      setOnError(null);
+      setState(state.copyWith(transactions: transactions));
     } catch (e) {
       setOnError(LastTransactionError(message: e.toString()));
     } finally {}

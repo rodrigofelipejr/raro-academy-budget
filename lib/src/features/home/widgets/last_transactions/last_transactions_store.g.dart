@@ -54,7 +54,7 @@ mixin _$LastTransactionsStore on _LastTransactionsStoreBase, Store {
   }
 
   @override
-  void setOnError(Failure value) {
+  void setOnError(Failure? value) {
     final _$actionInfo = _$_LastTransactionsStoreBaseActionController
         .startAction(name: '_LastTransactionsStoreBase.setOnError');
     try {

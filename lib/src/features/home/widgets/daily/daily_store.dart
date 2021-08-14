@@ -23,7 +23,7 @@ abstract class _DailyStoreBase extends BaseStore with Store {
   @observable
   Failure? onError;
   @action
-  void setOnError(Failure value) => onError = value;
+  void setOnError(Failure? value) => onError = value;
 
   @computed
   String get selectedMonthDescription => Dates.descriptionMonth(state.date.month).substring(0, 3);
@@ -40,6 +40,7 @@ abstract class _DailyStoreBase extends BaseStore with Store {
 
     try {
       final dailyModel = await repository.getDaily(state.date.month);
+      setOnError(null);
       setState(
         state.copyWith(
           dailyBalance: (dailyModel.input - dailyModel.output),
@@ -49,6 +50,6 @@ abstract class _DailyStoreBase extends BaseStore with Store {
       );
     } catch (e) {
       setOnError(DailyError(message: e.toString()));
-    } finally {}
+    }
   }
 }

@@ -7,7 +7,7 @@ import '../../../../shared/utils/utils.dart';
 import '../../../../shared/widgets/widgets.dart';
 
 import 'general_balance_store.dart';
-import 'widgets/button_icon_widget.dart';
+import '../../../../shared/widgets/button_icon_visible_widget.dart';
 import 'widgets/blur_widget.dart';
 
 class GeneralBalanceWidget extends StatefulWidget {
@@ -28,30 +28,36 @@ class GeneralBalanceStateWidget extends ModularState<GeneralBalanceWidget, Gener
       margin: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
       child: CardWidget(
         child: Observer(
-          builder: (_) => Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Saldo geral',
-                    style: AppTextStyles.purple20w500Roboto,
-                  ),
-                  ButtonIconShowBalanceWidget(
-                    showing: store.visibleBalance,
-                    onTap: () => store.setVisibleBalance(!store.visibleBalance),
-                  ),
-                ],
-              ),
-              BlurWidget(
-                blurEnable: !store.visibleBalance,
-                child: SizedBox(
-                  width: screenSize.width,
-                  child: _buildText('R\$ ${Formatters.formatMoney(store.state.value)}'),
+          builder: (_) => WrapperWidget(
+            visible: store.onError != null,
+            overlay: TryAgainButtonWidget(
+              onPressed: () => store.handleGeneralBalance(),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Saldo geral',
+                      style: AppTextStyles.purple20w500Roboto,
+                    ),
+                    ButtonIconVisibleWidget(
+                      showing: store.visibleBalance,
+                      onTap: () => store.setVisibleBalance(!store.visibleBalance),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+                BlurWidget(
+                  blurEnable: !store.visibleBalance,
+                  child: SizedBox(
+                    width: screenSize.width,
+                    child: _buildText('R\$ ${Formatters.formatMoney(store.state.value)}'),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

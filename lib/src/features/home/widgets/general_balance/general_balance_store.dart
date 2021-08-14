@@ -15,14 +15,14 @@ abstract class _GeneralBalanceStoreBase extends BaseStore with Store {
   _GeneralBalanceStoreBase(this.repository);
 
   @observable
-  Failure? onError;
-  @action
-  void setOnError(Failure value) => onError = value;
-
-  @observable
   GeneralBalanceState state = GeneralBalanceState();
   @action
   void setState(GeneralBalanceState value) => state = value;
+
+  @observable
+  Failure? onError;
+  @action
+  void setOnError(Failure? value) => onError = value;
 
   @observable
   bool visibleBalance = false;
@@ -37,13 +37,10 @@ abstract class _GeneralBalanceStoreBase extends BaseStore with Store {
   Future<void> handleGeneralBalance() async {
     try {
       final generalBalance = await repository.getGeneralBalance();
-      setState(
-        state.copyWith(
-          value: generalBalance.balance,
-        ),
-      );
+      setOnError(null);
+      setState(state.copyWith(value: generalBalance.balance));
     } catch (e) {
       setOnError(GeneralBalanceError(message: e.toString()));
-    } finally {}
+    }
   }
 }

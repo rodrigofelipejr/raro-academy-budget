@@ -62,7 +62,7 @@ mixin _$DailyStore on _DailyStoreBase, Store {
   }
 
   @override
-  void setOnError(Failure value) {
+  void setOnError(Failure? value) {
     final _$actionInfo = _$_DailyStoreBaseActionController.startAction(
         name: '_DailyStoreBase.setOnError');
     try {

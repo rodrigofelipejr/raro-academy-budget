@@ -53,46 +53,52 @@ class _DailyStateWidget extends ModularState<DailyWidget, DailyStore> {
             padding: const EdgeInsets.all(16.0),
             child: Observer(
               builder: (_) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Dia a dia',
-                          style: AppTextStyles.purple20w500Roboto,
-                        ),
-                        MonthSelectorWidget(
-                          label: store.selectedMonthDescription,
-                          referenceDate: Modular.get<HomeStore>().dailyStore.state.date,
-                          changeSelectedDate: (DateTime date) =>
-                              Modular.get<HomeStore>().dailyStore.handleDaily(date: date),
-                        )
-                      ],
-                    ),
-                    SizedBox(height: 6.0),
-                    Text(
-                      'R\$ ${Formatters.formatMoney(store.state.dailyBalance)}',
-                      style: AppTextStyles.black24w400Roboto,
-                    ),
-                    SizedBox(height: 12.0),
-                    (resetValues)
-                        ? Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Flexible(child: _buildInput()),
-                              Flexible(child: _buildOutput()),
-                            ],
-                          )
-                        : Column(
-                            children: [
-                              _buildInput(),
-                              SizedBox(height: 6.0),
-                              _buildOutput(),
-                            ],
+                return WrapperWidget(
+                  visible: store.onError != null,
+                  overlay: TryAgainButtonWidget(
+                    onPressed: () => store.handleDaily(),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Dia a dia',
+                            style: AppTextStyles.purple20w500Roboto,
                           ),
-                  ],
+                          MonthSelectorWidget(
+                            label: store.selectedMonthDescription,
+                            referenceDate: Modular.get<HomeStore>().dailyStore.state.date,
+                            changeSelectedDate: (DateTime date) =>
+                                Modular.get<HomeStore>().dailyStore.handleDaily(date: date),
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 6.0),
+                      Text(
+                        'R\$ ${Formatters.formatMoney(store.state.dailyBalance)}',
+                        style: AppTextStyles.black24w400Roboto,
+                      ),
+                      SizedBox(height: 12.0),
+                      (resetValues)
+                          ? Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Flexible(child: _buildInput()),
+                                Flexible(child: _buildOutput()),
+                              ],
+                            )
+                          : Column(
+                              children: [
+                                _buildInput(),
+                                SizedBox(height: 6.0),
+                                _buildOutput(),
+                              ],
+                            ),
+                    ],
+                  ),
                 );
               },
             ),

@@ -20,65 +20,71 @@ class LatestTransactionsStateWidget extends ModularState<LastTransactionsWidget,
 
   @override
   Widget build(BuildContext context) {
-    return Observer(
-      builder: (_) {
-        return Container(
-          margin: const EdgeInsets.only(bottom: 16.0, left: 16.0, right: 16.0),
-          child: CardWidget(
-            contentPadding: const EdgeInsets.only(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Últimas transações',
-                            style: AppTextStyles.purple20w500Roboto,
-                          ),
-                          ButtonIconWidget(
-                            onTap: () => null,
-                            child: Icon(
-                              Icons.navigate_next,
-                              color: AppColors.roxo,
-                              size: 32.0,
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16.0, left: 16.0, right: 16.0),
+      child: CardWidget(
+        contentPadding: const EdgeInsets.only(),
+        child: Observer(
+          builder: (_) {
+            return WrapperWidget(
+              visible: store.onError != null,
+              overlay: TryAgainButtonWidget(
+                onPressed: () => store.handleTransactions(),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Últimas transações',
+                              style: AppTextStyles.purple20w500Roboto,
                             ),
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 4.0, bottom: 6.0),
-                        child: Text(
-                          'R\$ ${Formatters.formatMoney(totalValueTransactions)}',
-                          style: AppTextStyles.gray24w400Roboto,
+                            ButtonIconWidget(
+                              onTap: () => null,
+                              child: Icon(
+                                Icons.navigate_next,
+                                color: AppColors.roxo,
+                                size: 32.0,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      Text(
-                        'No momento',
-                        style: AppTextStyles.gray14w500Roboto,
-                      ),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4.0, bottom: 6.0),
+                          child: Text(
+                            'R\$ ${Formatters.formatMoney(totalValueTransactions)}',
+                            style: AppTextStyles.gray24w400Roboto,
+                          ),
+                        ),
+                        Text(
+                          'No momento',
+                          style: AppTextStyles.gray14w500Roboto,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Column(
-                  children: store.state.transactions
-                      .map((transaction) => ItemCardWidget(
-                            prefixEnable: true,
-                            transaction: transaction,
-                            onTap: () => null,
-                          ))
-                      .toList(),
-                )
-              ],
-            ),
-          ),
-        );
-      },
+                  Column(
+                    children: store.state.transactions
+                        .map((transaction) => ItemCardWidget(
+                              prefixEnable: true,
+                              transaction: transaction,
+                              onTap: () => null,
+                            ))
+                        .toList(),
+                  )
+                ],
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }
