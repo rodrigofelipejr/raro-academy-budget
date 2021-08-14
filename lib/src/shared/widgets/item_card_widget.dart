@@ -51,6 +51,8 @@ class ItemCardWidget extends StatelessWidget {
       ),
       title: Text(
         transaction.description,
+        overflow: TextOverflow.ellipsis,
+        maxLines: 1,
         style: AppTextStyles.purple16w500Roboto,
       ),
       subtitle: Text(
