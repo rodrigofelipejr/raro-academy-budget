@@ -1,14 +1,12 @@
-import 'dart:ui';
-
 import 'package:budget/src/shared/widgets/circular_button_gradient.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
-import 'widgets/header_widget.dart';
-import 'login_controller.dart';
 import '../../../../shared/constants/constants.dart';
-import '../../../../shared/widgets/widgets.dart';
 import '../../../../shared/validators/text_validator.dart';
+import '../../../../shared/widgets/widgets.dart';
+import 'login_controller.dart';
+import 'widgets/header_widget.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -49,8 +47,7 @@ class _LoginPageState extends State<LoginPage> {
         padding: const EdgeInsets.symmetric(horizontal: 48),
         child: SingleChildScrollView(
           child: ConstrainedBox(
-            constraints:
-                BoxConstraints(minHeight: MediaQuery.of(context).size.height),
+            constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height),
             child: Container(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -85,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                         ],
                       ),
                       SizedBox(
-                        height: 46,
+                        height: 23,
                       ),
                     ],
                   ),
@@ -98,8 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                             labelText: "E-mail",
                             hintText: "Insira seu e-mail",
                             onChanged: controller.setEmail,
-                            validator: (value) =>
-                                Validators().email(value ?? ''),
+                            validator: (value) => Validators().email(value ?? ''),
                             textInputAction: TextInputAction.next,
                             controller: emailController,
                             focusNode: emailFocusNode,
@@ -117,8 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                                     visible: controller.passwordVisible,
                                     onPressed: () {
                                       setState(() {
-                                        controller.passwordVisible =
-                                            !controller.passwordVisible;
+                                        controller.passwordVisible = !controller.passwordVisible;
                                       });
                                     },
                                   ),
@@ -147,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                             ],
                           ),
                           SizedBox(
-                            height: 50,
+                            height: 25,
                           ),
                         ],
                       ),
@@ -159,21 +154,16 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Center(
-                        child:
-                            Text("ou", style: AppTextStyles.grey16w400Roboto),
+                        child: Text("ou", style: AppTextStyles.grey16w400Roboto),
                       ),
                       ElevatedButton(
                         style: ButtonStyle(
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50.0),
-                                side: BorderSide(color: Colors.grey)),
+                                borderRadius: BorderRadius.circular(50.0), side: BorderSide(color: Colors.grey)),
                           ),
-                          backgroundColor:
-                              MaterialStateProperty.all(AppColors.white),
-                          shadowColor:
-                              MaterialStateProperty.all(AppColors.transparent),
+                          backgroundColor: MaterialStateProperty.all(AppColors.white),
+                          shadowColor: MaterialStateProperty.all(AppColors.transparent),
                         ),
                         onPressed: () {},
                         child: Flex(
@@ -184,18 +174,14 @@ class _LoginPageState extends State<LoginPage> {
                               height: 16,
                               width: 16,
                               decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                    image:
-                                        AssetImage('assets/images/google.png'),
-                                    fit: BoxFit.fill),
+                                image: DecorationImage(image: AssetImage(AppImages.icGoogle), fit: BoxFit.fill),
                               ),
                             ),
                             SizedBox(
                               width: 8,
                             ),
                             Flexible(
-                              child: Text(
-                                  "continuar com o google".toUpperCase(),
+                              child: Text("continuar com o google".toUpperCase(),
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
                                   style: AppTextStyles.darkGray13w500Roboto),
@@ -205,16 +191,13 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       ElevatedButton(
                         style: ButtonStyle(
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50.0),
                             ),
                           ),
-                          backgroundColor:
-                              MaterialStateProperty.all(AppColors.blueFacebook),
-                          shadowColor:
-                              MaterialStateProperty.all(AppColors.transparent),
+                          backgroundColor: MaterialStateProperty.all(AppColors.blueFacebook),
+                          shadowColor: MaterialStateProperty.all(AppColors.transparent),
                         ),
                         onPressed: () {},
                         child: Flex(
@@ -229,17 +212,14 @@ class _LoginPageState extends State<LoginPage> {
                               width: 8,
                             ),
                             Flexible(
-                              child: Text(
-                                  "continuar com o facebook".toUpperCase(),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                  style: AppTextStyles.white13w500Roboto),
+                              child: Text("continuar com o facebook".toUpperCase(),
+                                  overflow: TextOverflow.ellipsis, maxLines: 1, style: AppTextStyles.white13w500Roboto),
                             )
                           ],
                         ),
                       ),
                       SizedBox(
-                        height: 32,
+                        height: 16,
                       ),
                     ],
                   ),
@@ -254,9 +234,7 @@ class _LoginPageState extends State<LoginPage> {
 
   callLogin() {
     if (_formKey.currentState!.validate()) {
-      controller
-          .login(emailController.text, passwordController.text)
-          .then((value) => {});
+      controller.login(emailController.text, passwordController.text).then((value) => {});
     }
   }
 }

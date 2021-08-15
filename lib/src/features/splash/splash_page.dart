@@ -19,12 +19,12 @@ class _SplashPageState extends ModularState<SplashPage, SplashStore> {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
     SystemChrome.setEnabledSystemUIOverlays([]);
     // FIXME - Verificar como implementar essa logica.
-    // WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
-    //   // FIXME - deve ser revisto, quando o usuário já está logado
-    //   Future.delayed(Duration(seconds: 3)).then(
-    //     (value) => Modular.to.pushReplacementNamed(AppRoutes.login),
-    //   );
-    // });
+    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
+      // FIXME - deve ser revisto, quando o usuário já está logado
+      Future.delayed(Duration(seconds: 3)).then(
+        (value) => Modular.to.pushReplacementNamed(AppRoutes.login),
+      );
+    });
     store.init();
     super.initState();
   }
