@@ -34,6 +34,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      drawer: DrawerWidget(),
       body: Container(
         decoration: BoxDecoration(
           gradient: AppGradients.purpleGradientScaffold,

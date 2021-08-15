@@ -1,13 +1,14 @@
 import 'package:budget/src/shared/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
+import '/src/shared/constants/app_colors.dart';
+import '../../../shared/widgets/widgets.dart';
 import '../widgets/appbar_with_drawer.dart';
 import '../widgets/button_widget.dart';
 import '../widgets/date_picker_widget.dart';
 import '../widgets/dropdown_buttom_widget.dart';
 import '../widgets/dropdown_item_data.dart';
 import '../widgets/text_styles.dart';
-import '/src/shared/constants/app_colors.dart';
 
 class ExpensesPage extends StatefulWidget {
   const ExpensesPage({Key? key}) : super(key: key);
@@ -53,7 +54,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWithDrawer(title: "Saída"),
-      drawer: Drawer(),
+      drawer: DrawerWidget(),
       body: SingleChildScrollView(
         padding: EdgeInsets.only(
           top: 16,

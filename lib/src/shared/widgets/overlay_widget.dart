@@ -1,10 +1,9 @@
 import 'dart:ui';
 
-import 'package:budget/src/shared/constants/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../constants/app_colors.dart';
+import '../constants/constants.dart';
 import 'widgets.dart';
 
 const defaultValue = 56.0;

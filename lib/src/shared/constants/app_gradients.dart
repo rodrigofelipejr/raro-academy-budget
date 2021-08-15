@@ -33,6 +33,22 @@ class AppGradients {
     transform: GradientRotation((60 * pi) / 180),
   );
 
+  static const blueGradientHeaderDrawer = LinearGradient(
+    colors: <Color>[
+      AppColors.ciano,
+      AppColors.cornflowerBlue,
+      AppColors.roxo,
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    stops: [
+      0.1,
+      0.45,
+      0.65,
+    ],
+    transform: GradientRotation((50 * pi) / 180),
+  );
+
   static const blueGradientButtons = LinearGradient(
     colors: <Color>[
       AppColors.ciano,
