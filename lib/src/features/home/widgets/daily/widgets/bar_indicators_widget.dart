@@ -17,16 +17,26 @@ class BarIndicatorWidget extends StatefulWidget {
 class _BarIndicatorWidgetState extends State<BarIndicatorWidget> {
   double _width = 0;
 
+  void _build({int milliseconds = 1000}) => Future.delayed(
+        Duration(milliseconds: milliseconds),
+      ).then((value) => setState(() => _width = widget.width));
+
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 1), () => setState(() => _width = widget.width));
+    _build();
+  }
+
+  @override
+  void didUpdateWidget(covariant BarIndicatorWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.width != widget.width) _build(milliseconds: 400);
   }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      duration: Duration(milliseconds: 1500),
+      duration: Duration(seconds: 1),
       width: _width,
       child: Container(
         height: 12.0,

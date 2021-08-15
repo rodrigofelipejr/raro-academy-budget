@@ -48,63 +48,35 @@ mixin _$LoginController on _LoginControllerBase, Store {
     });
   }
 
-  final _$emailAtom = Atom(name: '_LoginControllerBase.email');
+  final _$emailControllerAtom =
+      Atom(name: '_LoginControllerBase.emailController');
 
   @override
-  String get email {
-    _$emailAtom.reportRead();
-    return super.email;
+  TextEditingController get emailController {
+    _$emailControllerAtom.reportRead();
+    return super.emailController;
   }
 
   @override
-  set email(String value) {
-    _$emailAtom.reportWrite(value, super.email, () {
-      super.email = value;
+  set emailController(TextEditingController value) {
+    _$emailControllerAtom.reportWrite(value, super.emailController, () {
+      super.emailController = value;
     });
   }
 
-  final _$passwordAtom = Atom(name: '_LoginControllerBase.password');
+  final _$passwordControllerAtom =
+      Atom(name: '_LoginControllerBase.passwordController');
 
   @override
-  String get password {
-    _$passwordAtom.reportRead();
-    return super.password;
+  TextEditingController get passwordController {
+    _$passwordControllerAtom.reportRead();
+    return super.passwordController;
   }
 
   @override
-  set password(String value) {
-    _$passwordAtom.reportWrite(value, super.password, () {
-      super.password = value;
-    });
-  }
-
-  final _$passwordErrorAtom = Atom(name: '_LoginControllerBase.passwordError');
-
-  @override
-  String? get passwordError {
-    _$passwordErrorAtom.reportRead();
-    return super.passwordError;
-  }
-
-  @override
-  set passwordError(String? value) {
-    _$passwordErrorAtom.reportWrite(value, super.passwordError, () {
-      super.passwordError = value;
-    });
-  }
-
-  final _$loadingAtom = Atom(name: '_LoginControllerBase.loading');
-
-  @override
-  bool get loading {
-    _$loadingAtom.reportRead();
-    return super.loading;
-  }
-
-  @override
-  set loading(bool value) {
-    _$loadingAtom.reportWrite(value, super.loading, () {
-      super.loading = value;
+  set passwordController(TextEditingController value) {
+    _$passwordControllerAtom.reportWrite(value, super.passwordController, () {
+      super.passwordController = value;
     });
   }
 
@@ -156,11 +128,8 @@ mixin _$LoginController on _LoginControllerBase, Store {
     return '''
 showPasswordField: ${showPasswordField},
 listLength: ${listLength},
-email: ${email},
-password: ${password},
-passwordError: ${passwordError},
-loading: ${loading},
-disabledButton: ${disabledButton}
+emailController: ${emailController},
+passwordController: ${passwordController}
     ''';
   }
 }

@@ -19,5 +19,6 @@ class AppModule extends Module {
         ModuleRoute(AppRoutes.login, module: LoginModule()),
         ModuleRoute(AppRoutes.home, module: HomeModule()),
         ModuleRoute(AppRoutes.daily, module: DailyModule()),
+        //TODO - incluir módulo (Daniel)
       ];
 }
