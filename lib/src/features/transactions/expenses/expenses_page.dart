@@ -13,6 +13,7 @@ import '../controller/transactions_controller.dart';
 import '../controller/date_controller.dart';
 import '../controller/dropdown_controller.dart';
 import '../models/transaction_model.dart';
+import '../validators/text_validator.dart';
 
 class ExpensesPage extends StatefulWidget {
   const ExpensesPage({Key? key}) : super(key: key);
@@ -82,8 +83,11 @@ class _ExpensesPageState extends State<ExpensesPage> {
                           child: CustomTextField(
                             hintText: "Valor",
                             labelText: "Valor em R\$",
+                            keyboardType: TextInputType.number,
                             focusNode: _expensesFocusNode,
                             controller: _expensesController,
+                            validator: (value) =>
+                                Validators().validateNumber(value!),
                           ),
                         ),
                         Padding(
@@ -99,6 +103,8 @@ class _ExpensesPageState extends State<ExpensesPage> {
                                   value: _inputTypeController.value,
                                   items: _inputTypeController.items,
                                   focusNode: _inputTypeFocusNode,
+                                  validator: (value) =>
+                                      Validators().validateTransactionCategory(value),
                                   onChanged: (newValue) {
                                     _inputTypeController.value = newValue!;
                                     setState(() {});

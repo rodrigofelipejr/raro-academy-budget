@@ -15,6 +15,7 @@ import '../controller/transactions_controller.dart';
 import '../controller/date_controller.dart';
 import '../controller/dropdown_controller.dart';
 import '../models/transaction_model.dart';
+import '../validators/text_validator.dart';
 
 class IncomePage extends StatefulWidget {
   const IncomePage({Key? key}) : super(key: key);
@@ -87,12 +88,11 @@ class _IncomePageState extends State<IncomePage> {
                           child: CustomTextField(
                             hintText: "Valor",
                             labelText: "Valor em R\$",
+                            keyboardType: TextInputType.number,
                             focusNode: _incomeFocusNode,
                             controller: _incomeController,
-                            // validator: (value) {
-                            //   print("validator: $value");
-                            //   return value;
-                            // },
+                            validator: (value) =>
+                                Validators().validateNumber(value!),
                           ),
                         ),
                         Padding(
@@ -108,6 +108,7 @@ class _IncomePageState extends State<IncomePage> {
                                 value: _inputTypeController.value,
                                 items: _inputTypeController.items,
                                 focusNode: _inputTypeFocusNode,
+                                validator: (value) => Validators().validateTransactionCategory(value),
                                 onChanged: (newValue) {
                                   _inputTypeController.value = newValue!;
                                   setState(() {});
@@ -121,8 +122,11 @@ class _IncomePageState extends State<IncomePage> {
                           child: CustomTextField(
                             hintText: "Nome da entrada",
                             labelText: "Nome da entrada",
+                            keyboardType: TextInputType.text,
                             focusNode: _inputNameFocusNode,
                             controller: _inputNameController,
+                            validator: (value) =>
+                                Validators().validateName(value!),
                           ),
                         ),
                         Padding(
