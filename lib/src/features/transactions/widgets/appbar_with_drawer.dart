@@ -1,7 +1,6 @@
 import 'package:budget/src/shared/constants/app_gradients.dart';
 import 'package:flutter/material.dart';
 
-import '/src/shared/constants/app_colors.dart';
 import 'text_styles.dart';
 
 class AppBarWithDrawer extends StatelessWidget with PreferredSizeWidget {

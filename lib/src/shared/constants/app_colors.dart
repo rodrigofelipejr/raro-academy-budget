@@ -6,6 +6,7 @@ class AppColors {
   static const Color verde = Color.fromRGBO(88, 179, 104, 1);
   static const Color roxo = Color.fromRGBO(52, 48, 144, 1);
   static const Color ciano = Color.fromRGBO(68, 194, 253, 1);
+  static const Color cornflowerBlue = Color.fromRGBO(69, 101, 196, 1);
   static const Color amarelo = Color.fromRGBO(250, 199, 54, 1);
   static const Color azul = Color.fromRGBO(52, 48, 144, 1);
   static const Color blueFacebook = Color.fromRGBO(58, 91, 150, 1);
@@ -19,6 +20,7 @@ class AppColors {
   static const Color black38 = Color.fromRGBO(0, 0, 0, .38);
   static const Color black87 = Color.fromRGBO(0, 0, 0, .87);
   static const Color purpleLight = Color.fromRGBO(241, 240, 254, 1);
+  static const Color red = Color.fromRGBO(244, 67, 54, 1);
   static const MaterialColor primaryMaterialColor = MaterialColor(0XFF4850b0, {
     50: Color.fromRGBO(72, 80, 176, 0.05),
     100: Color.fromRGBO(72, 80, 176, 0.1),

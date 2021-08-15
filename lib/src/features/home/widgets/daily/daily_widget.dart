@@ -1,33 +1,45 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../shared/constants/constants.dart';
 import '../../../../shared/utils/utils.dart';
 import '../../../../shared/widgets/widgets.dart';
+
 import '../../home_store.dart';
-import 'indicators_widget.dart';
+import 'daily_store.dart';
+import 'widgets/indicators_widget.dart';
 
 class DailyWidget extends StatefulWidget {
-  final double balance;
-  final double inputs;
-  final double outputs;
-  final String month;
-
-  const DailyWidget({
-    Key? key,
-    required this.balance,
-    required this.inputs,
-    required this.outputs,
-    required this.month,
-  }) : super(key: key);
+  const DailyWidget({Key? key}) : super(key: key);
 
   @override
   _DailyStateWidget createState() => _DailyStateWidget();
 }
 
-class _DailyStateWidget extends State<DailyWidget> {
+class _DailyStateWidget extends ModularState<DailyWidget, DailyStore> {
+  bool get resetValues => store.state.inputs == 0.0 && store.state.outputs == 0.0;
+
+  Widget _buildInput() {
+    return IndicatorsWidget(
+      label: 'Entradas',
+      currentValue: store.state.inputs,
+      referenceValue: max(store.state.inputs, store.state.outputs),
+      color: AppColors.amarelo,
+    );
+  }
+
+  Widget _buildOutput() {
+    return IndicatorsWidget(
+      label: 'Saídas',
+      currentValue: store.state.outputs,
+      referenceValue: max(store.state.inputs, store.state.outputs),
+      color: AppColors.ciano,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,45 +51,56 @@ class _DailyStateWidget extends State<DailyWidget> {
           borderRadius: BorderRadius.all(Radius.circular(7.0)),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Dia a dia',
-                      style: AppTextStyles.purple20w500Roboto,
-                    ),
-                    MonthSelectorWidget(
-                      label: widget.month,
-                      referenceDate: Modular.get<HomeStore>().state.selectedDate,
-                      changeSelectedDate: Modular.get<HomeStore>().handleChangeMonthSelected,
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 6.0,
-                ),
-                Text(
-                  'R\$ ${Formatters.formatMoney(widget.balance)}',
-                  style: AppTextStyles.black24w400Roboto,
-                ),
-                SizedBox(height: 12.0),
-                IndicatorsWidget(
-                  label: 'Saídas',
-                  currentValue: widget.outputs,
-                  referenceValue: max(widget.inputs, widget.outputs),
-                  color: AppColors.ciano,
-                ),
-                SizedBox(height: 6.0),
-                IndicatorsWidget(
-                  label: 'Entradas',
-                  currentValue: widget.inputs,
-                  referenceValue: max(widget.inputs, widget.outputs),
-                  color: AppColors.amarelo,
-                ),
-              ],
+            child: Observer(
+              builder: (_) {
+                return WrapperWidget(
+                  visible: store.onError != null,
+                  overlay: TryAgainButtonWidget(
+                    onPressed: () => store.handleDaily(),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Dia a dia',
+                            style: AppTextStyles.purple20w500Roboto,
+                          ),
+                          MonthSelectorWidget(
+                            label: store.selectedMonthDescription,
+                            referenceDate: Modular.get<HomeStore>().dailyStore.state.date,
+                            changeSelectedDate: (DateTime date) =>
+                                Modular.get<HomeStore>().dailyStore.handleDaily(date: date),
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 6.0),
+                      Text(
+                        'R\$ ${Formatters.formatMoney(store.state.dailyBalance)}',
+                        style: AppTextStyles.black24w400Roboto,
+                      ),
+                      SizedBox(height: 12.0),
+                      (resetValues)
+                          ? Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Flexible(child: _buildInput()),
+                                Flexible(child: _buildOutput()),
+                              ],
+                            )
+                          : Column(
+                              children: [
+                                _buildInput(),
+                                SizedBox(height: 6.0),
+                                _buildOutput(),
+                              ],
+                            ),
+                    ],
+                  ),
+                );
+              },
             ),
           ),
         ),

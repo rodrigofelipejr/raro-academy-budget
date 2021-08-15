@@ -1,9 +1,13 @@
 {
   "cSpell.words": [
+    "Appbar",
     "Firestore",
     "LTRB",
+    "LTWH",
     "RGBO",
     "Roboto",
-    "Scrollable"
+    "Scrollable",
+    "codegen",
+    "mixins"
   ]
 }

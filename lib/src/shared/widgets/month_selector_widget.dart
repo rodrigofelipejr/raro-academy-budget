@@ -31,7 +31,7 @@ class MonthSelectorWidget extends StatelessWidget {
     if (date != null) changeSelectedDate(date);
   }
 
-  BoxDecoration get decoration => !flatStyle
+  BoxDecoration get decoration => flatStyle
       ? BoxDecoration(
           borderRadius: borderRadius,
           color: AppColors.white.withOpacity(0.1),

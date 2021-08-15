@@ -17,9 +17,7 @@ class CustomErrorWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            message,
-          ),
+          Text(message),
           //FIXME - alterar widget
           ElevatedButton(
             onPressed: reload,
