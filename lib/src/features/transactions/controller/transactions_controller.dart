@@ -1,11 +1,11 @@
 import '../repository/transactions_repository.dart';
-import '../models/transaction_data.dart';
+import '../models/transaction_model.dart';
 
 class TransactionsController {
   late final TransactionsRepository repository;
 
   Future<bool> createTransaction({
-    TransactionData? transaction,
+    TransactionModel? transaction,
   }) async {
     return await repository.createTransaction(transaction!);
   }

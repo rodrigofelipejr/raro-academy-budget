@@ -1,17 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../models/transaction_data.dart';
+import '../models/transaction_model.dart';
 
 class TransactionsRepository {
-  Future<bool> createTransaction(TransactionData transaction) async {
+  Future<bool> createTransaction(TransactionModel transaction) async {
     try {
       final response =
           await FirebaseFirestore.instance.collection("/test").add({
-        "uid": transaction.uid,
+        "uuid": transaction.uuid,
         "value": transaction.value,
         "type": transaction.type,
-        "name": transaction.name,
-        "createdAt": transaction.date,
+        "description": transaction.description,
+        "createdAt": transaction.createAt,
+        "updatedAt": transaction.updateAt,
       });
       print("CreateTransaction: $response.docs");
       return true;
@@ -35,14 +36,15 @@ class TransactionsRepository {
     }
   }
 
-  Future<bool> updateTransaction(TransactionData transaction) async {
+  Future<bool> updateTransaction(TransactionModel transaction) async {
     try {
       await FirebaseFirestore.instance.collection("/test").doc("asdf").set({
-        "uid": transaction.uid,
+        "uuid": transaction.uuid,
         "value": transaction.value,
         "type": transaction.type,
-        "name": transaction.name,
-        "createdAt": transaction.date,
+        "description": transaction.description,
+        "createdAt": transaction.createAt,
+        "updatedAt": transaction.updateAt,
       }, SetOptions(merge: true));
       print("UpdateTransaction: ");
       return true;
@@ -70,7 +72,8 @@ class TransactionsRepository {
       final response = await FirebaseFirestore.instance
           .collection("/test")
           .get()
-          .then((value) => value.docs.map((doc) => print(doc.id)));
+          .then((value) => value.docs.map((doc) => doc.id));
+      print(response.toList());
       print(response.length);
       return true;
     } catch (e) {

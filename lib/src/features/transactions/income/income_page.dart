@@ -1,5 +1,4 @@
 import 'package:budget/src/features/transactions/constants/transactions_items.dart';
-import 'package:budget/src/features/transactions/models/transaction_data.dart';
 import 'package:budget/src/features/transactions/repository/transactions_repository.dart';
 import 'package:budget/src/features/transactions/widgets/dialog_widget.dart';
 import 'package:budget/src/shared/widgets/custom_text_field.dart';
@@ -15,7 +14,7 @@ import '../repository/transactions_repository.dart';
 import '../controller/transactions_controller.dart';
 import '../controller/date_controller.dart';
 import '../controller/dropdown_controller.dart';
-import '../../../shared/constants/app_routes.dart';
+import '../models/transaction_model.dart';
 
 class IncomePage extends StatefulWidget {
   const IncomePage({Key? key}) : super(key: key);
@@ -32,7 +31,8 @@ class _IncomePageState extends State<IncomePage> {
   TransactionsController _controller = TransactionsController();
   TextEditingController _incomeController = TextEditingController();
   TextEditingController _inputNameController = TextEditingController();
-  DropdownController _inputTypeController = DropdownController(items: TransactionsItems.incomeItems);
+  DropdownController _inputTypeController =
+      DropdownController(items: TransactionsItems.incomeItems);
   DateController _dateController = DateController();
 
   FocusNode _incomeFocusNode = FocusNode();
@@ -42,7 +42,7 @@ class _IncomePageState extends State<IncomePage> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  late TransactionData _data;
+  late TransactionModel _data;
 
   void initState() {
     _controller.repository = _repository;
@@ -146,14 +146,16 @@ class _IncomePageState extends State<IncomePage> {
                   onPressed: () {
                     FocusScope.of(context).unfocus();
                     if (_formKey.currentState!.validate()) {
-                      _data = TransactionData(
+                      _data = TransactionModel(
                         value: double.parse(_incomeController.value.text),
-                        type: _inputTypeController.value!.value,
-                        name: _inputNameController.value.text,
-                        date: _dateController.date,
-                        uid: 'asdf',
+                        type: 'input',
+                        category: _inputTypeController.value!.value,
+                        description: _inputNameController.value.text,
+                        createAt: _dateController.date,
+                        updateAt: _dateController.date,
+                        uuid: 'asdf',
                       );
-                      // _controller.repository.deleteTransaction("dDGxfOYHOdceR99Z0rwj");
+                      // _controller.repository.deleteTransaction("VvglcDTgd4XlpLVDfcqQ");
                       // _controller.repository.createTransaction(_data);
                       print('DATA ${_data.toString()}');
                       _controller.repository.getTransactions();
@@ -167,7 +169,7 @@ class _IncomePageState extends State<IncomePage> {
                       showDialog(
                         context: context,
                         builder: (_) => DialogWidget(
-                          message: "Dados enviados com sucesso",
+                          message: "Dado enviado com sucesso",
                         ),
                       );
                     }

@@ -1,5 +1,4 @@
 import 'package:budget/src/features/transactions/constants/transactions_items.dart';
-import 'package:budget/src/features/transactions/models/transaction_data.dart';
 import 'package:budget/src/features/transactions/widgets/dialog_widget.dart';
 import 'package:budget/src/shared/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +12,7 @@ import '../repository/transactions_repository.dart';
 import '../controller/transactions_controller.dart';
 import '../controller/date_controller.dart';
 import '../controller/dropdown_controller.dart';
+import '../models/transaction_model.dart';
 
 class ExpensesPage extends StatefulWidget {
   const ExpensesPage({Key? key}) : super(key: key);
@@ -26,7 +26,8 @@ class _ExpensesPageState extends State<ExpensesPage> {
 
   TransactionsController _controller = TransactionsController();
   TextEditingController _expensesController = TextEditingController();
-  DropdownController _inputTypeController = DropdownController(items: TransactionsItems.expensesItems);
+  DropdownController _inputTypeController =
+      DropdownController(items: TransactionsItems.expensesItems);
   DateController _dateController = DateController();
 
   FocusNode _expensesFocusNode = FocusNode();
@@ -35,7 +36,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  late TransactionData _data;
+  late TransactionModel _data;
 
   @override
   void initState() {
@@ -126,16 +127,19 @@ class _ExpensesPageState extends State<ExpensesPage> {
                   onPressed: () {
                     FocusScope.of(context).unfocus();
                     if (_formKey.currentState!.validate()) {
-                      _data = TransactionData(
+                      _data = TransactionModel(
                         value: double.parse(_expensesController.value.text),
-                        type: _inputTypeController.value!.value,
-                        date: _dateController.date,
-                        uid: 'asdfg',
+                        type: 'output',
+                        category: _inputTypeController.value!.value,
+                        createAt: _dateController.date,
+                        updateAt: _dateController.date,
+                        uuid: 'asdfg',
                       );
-                      // _controller.repository.deleteTransaction("9vSc8LJDgKl2wy4cNGjz");
+                      // _controller.repository.deleteTransaction("cKwzRsuGMJ6VREv6ZVHS");
                       // _controller.repository.createTransaction(_data);
                       print('DATA ${_data.toString()}');
                       _controller.repository.getTransactions();
+                      _controller.repository.getDocs();
 
                       //Adiciona nova transacao na lista
                       // final list = Modular.get<DailyStore>().transactions();
@@ -144,8 +148,8 @@ class _ExpensesPageState extends State<ExpensesPage> {
                       // Modular.to.pushReplacementNamed(AppRoutes.daily);
                       showDialog(
                         context: context,
-                        builder: (_) =>DialogWidget(
-                          message: "Dados enviados com sucesso",
+                        builder: (_) => DialogWidget(
+                          message: "Dado enviado com sucesso",
                         ),
                       );
                     }
