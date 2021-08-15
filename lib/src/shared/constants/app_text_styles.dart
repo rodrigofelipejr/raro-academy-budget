@@ -141,6 +141,23 @@ class AppTextStyles {
     letterSpacing: -0.05,
   );
 
+  static const TextStyle white13w400Montserrat = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 13,
+    fontWeight: FontWeight.w400,
+    color: AppColors.white,
+    letterSpacing: 1.0,
+  );
+
+  static const TextStyle whiteOpacity13w300Roboto = TextStyle(
+    fontFamily: 'Roboto',
+    fontSize: 13,
+    fontWeight: FontWeight.w300,
+    fontStyle: FontStyle.italic,
+    color: AppColors.white50,
+    letterSpacing: 2.0,
+  );
+
   static const TextStyle white13w300Montserrat = TextStyle(
     fontSize: 13.0,
     fontWeight: FontWeight.w300,
