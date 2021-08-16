@@ -3,6 +3,14 @@ import 'package:flutter/material.dart';
 import 'text_styles.dart';
 
 class ButtonWidget extends StatelessWidget {
+  const ButtonWidget({
+      required this.label,
+      required this.onPressed,
+  });
+
+  final String? label;
+  final Function()? onPressed;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -10,23 +18,25 @@ class ButtonWidget extends StatelessWidget {
       height: 50,
       decoration: BoxDecoration(
         gradient: AppGradients.blueGradientAppBar,
-        // color: Colors.blue,
         borderRadius: BorderRadius.all(
           Radius.circular(24.0),
         ),
       ),
-      child: IconButton(
-        onPressed: () {},
-        icon: Row(
+      child: TextButton(
+        style: ButtonStyle(
+          overlayColor: MaterialStateProperty.all(Colors.white30),
+        ),
+        onPressed: onPressed,
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Icon(
               Icons.add,
               color: Colors.white,
-              semanticLabel: "INSERIR",
+              semanticLabel: label ?? "",
             ),
             Text(
-              "INSERIR",
+              label ?? "",
               style: TextStyles.white15w500Roboto,
             ),
           ],
