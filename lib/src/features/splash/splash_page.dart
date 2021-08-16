@@ -1,9 +1,10 @@
-import 'package:budget/src/shared/auth/auth_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:animated_card/animated_card.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../shared/constants/constants.dart';
+import 'splash_store.dart';
+import 'widgets/widgets.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -12,9 +13,11 @@ class SplashPage extends StatefulWidget {
   _SplashPageState createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage> {
+class _SplashPageState extends ModularState<SplashPage, SplashStore> {
   @override
   void initState() {
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
+    SystemChrome.setEnabledSystemUIOverlays([]);
     // FIXME - Verificar como implementar essa logica.
     WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
       // FIXME - deve ser revisto, quando o usuário já está logado
@@ -22,8 +25,14 @@ class _SplashPageState extends State<SplashPage> {
         (value) => Modular.to.pushReplacementNamed(AppRoutes.login),
       );
     });
-    // AuthController.instance.init();
+    store.init();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    super.dispose();
   }
 
   @override
@@ -35,71 +44,12 @@ class _SplashPageState extends State<SplashPage> {
         decoration: BoxDecoration(
           gradient: AppGradients.blueGradient,
         ),
-        child: Stack(
-          alignment: Alignment.center,
+        child: Column(
           children: [
-            AnimatedCard(
-              direction: AnimatedCardDirection.top,
-              duration: Duration(seconds: 1),
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Positioned(
-                    top: (MediaQuery.of(context).size.height / 2) - 100,
-                    child: Hero(
-                      tag: "notes_logo",
-                      child: Image.asset(
-                        "assets/images/logo_splash.png",
-                      ),
-                    ),
-                  ),
-                  Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Hero(
-                          tag: "journal",
-                          child: Material(
-                            color: Colors.transparent,
-                            child: Text(
-                              "budget",
-                              style: AppTextStyles.white72w700Montserrat,
-                            ),
-                          ),
-                        ),
-                        Text(
-                          "YOUR WALLET’S BEST FRIEND",
-                          style: AppTextStyles.white13w300Montserrat,
-                          textAlign: TextAlign.end,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+            Expanded(
+              child: BodySplashWidget(),
             ),
-            AnimatedCard(
-              direction: AnimatedCardDirection.bottom,
-              duration: Duration(seconds: 1),
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      "powered by",
-                      style: AppTextStyles.white12w200Roboto,
-                    ),
-                    SizedBox(
-                      height: 8.0,
-                    ),
-                    Image.asset("assets/images/raro_academy_logo.png"),
-                    SizedBox(height: 40.0)
-                  ],
-                ),
-              ),
-            ),
+            FooterSplashWidget(),
           ],
         ),
       ),
