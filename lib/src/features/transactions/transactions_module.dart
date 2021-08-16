@@ -1,6 +1,6 @@
-import 'package:budget/src/features/home/widgets/widgets.dart';
 import 'package:budget/src/features/transactions/pages/expenses/expenses_page.dart';
 import 'package:budget/src/features/transactions/pages/income/income_page.dart';
+import 'package:budget/src/features/transactions/pages/transactions/transactions_store.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -12,7 +12,7 @@ class TransactionsModule extends Module {
   @override
   List<Bind<Object>> get binds => [
         Bind.singleton((i) => TransactionsRepository(i())),
-        Bind.singleton((i) => DailyStore(i.get())),
+        Bind.singleton((i) => TransactionsStore(i.get())),
         Bind.singleton((i) => FirebaseFirestore.instance),
       ];
 

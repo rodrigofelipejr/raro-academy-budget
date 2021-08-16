@@ -1,5 +1,6 @@
 import 'package:budget/src/features/transactions/pages/transactions/transactions_store.dart';
 import 'package:budget/src/features/transactions/pages/transactions/widgets/output_card.dart';
+import 'package:budget/src/shared/constants/app_routes.dart';
 import 'package:budget/src/shared/utils/dates.dart';
 import 'package:budget/src/shared/widgets/fab_widget.dart';
 import 'package:budget/src/shared/widgets/widgets.dart';
@@ -19,7 +20,8 @@ class TransactionsPage extends StatefulWidget {
   _TransactionsPageState createState() => _TransactionsPageState();
 }
 
-class _TransactionsPageState extends ModularState<TransactionsPage, TransactionsStore> {
+class _TransactionsPageState
+    extends ModularState<TransactionsPage, TransactionsStore> {
   final PageController _pageController = PageController();
 
   void _navigator({required int index}) {
@@ -39,7 +41,9 @@ class _TransactionsPageState extends ModularState<TransactionsPage, Transactions
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FabWidget(onTap: () {}),
+      floatingActionButton: FabWidget(
+          onTap: () => Modular.to
+              .pushNamed('${AppRoutes.transaction}/${AppRoutes.income}')),
       appBar: AppBar(
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -53,9 +57,12 @@ class _TransactionsPageState extends ModularState<TransactionsPage, Transactions
           ),
         ),
         flexibleSpace: ButtonsAppBarDay(
-          buttonin: () => _navigator(index: 0), //TODO - buttonIo => usar padão camelcase
-          buttonout: () => _navigator(index: 1), //TODO - buttonIo => usar padão camelcase
-          buttonall: () => _navigator(index: 2), //TODO - buttonIo => usar padão camelcase
+          buttonin: () =>
+              _navigator(index: 0), //TODO - buttonIo => usar padão camelcase
+          buttonout: () =>
+              _navigator(index: 1), //TODO - buttonIo => usar padão camelcase
+          buttonall: () =>
+              _navigator(index: 2), //TODO - buttonIo => usar padão camelcase
         ),
         toolbarHeight: MediaQuery.of(context).size.height * 0.22,
         actions: [
@@ -66,7 +73,9 @@ class _TransactionsPageState extends ModularState<TransactionsPage, Transactions
               child: Observer(builder: (_) {
                 final homeStore = Modular.get<HomeStore>();
                 return MonthSelectorWidget(
-                  label: Dates.descriptionMonth(homeStore.dailyStore.state.date.month),
+                  flatStyle: true,
+                  label: Dates.descriptionMonth(
+                      homeStore.dailyStore.state.date.month),
                   referenceDate: homeStore.dailyStore.state.date,
                   changeSelectedDate: (DateTime date) {
                     homeStore.dailyStore.handleDaily(date: date);

@@ -1,8 +1,8 @@
 import 'package:budget/src/features/transactions/constants/transactions_items.dart';
 import 'package:budget/src/features/transactions/controller/date_controller.dart';
 import 'package:budget/src/features/transactions/controller/dropdown_controller.dart';
-import 'package:budget/src/features/transactions/controller/transactions_controller.dart';
 import 'package:budget/src/features/transactions/models/transaction_model.dart';
+import 'package:budget/src/features/transactions/pages/income/income_store.dart';
 import 'package:budget/src/features/transactions/repositories/transactions_repository.dart';
 import 'package:budget/src/features/transactions/validators/text_validator.dart';
 import 'package:budget/src/features/transactions/widgets/appbar_with_drawer.dart';
@@ -25,10 +25,11 @@ class IncomePage extends StatefulWidget {
   _IncomePageState createState() => _IncomePageState();
 }
 
-class _IncomePageState extends ModularState<IncomePage, TransactionsController> {
+class _IncomePageState extends ModularState<IncomePage, IncomeController> {
   TextEditingController _incomeController = TextEditingController();
   TextEditingController _inputNameController = TextEditingController();
-  DropdownController _inputTypeController = DropdownController(items: TransactionsItems.incomeItems);
+  DropdownController _inputTypeController =
+      DropdownController(items: TransactionsItems.incomeItems);
   DateController _dateController = DateController();
 
   FocusNode _incomeFocusNode = FocusNode();
@@ -81,7 +82,8 @@ class _IncomePageState extends ModularState<IncomePage, TransactionsController> 
                             keyboardType: TextInputType.number,
                             focusNode: _incomeFocusNode,
                             controller: _incomeController,
-                            validator: (value) => Validators().validateNumber(value!),
+                            validator: (value) =>
+                                Validators().validateNumber(value!),
                           ),
                         ),
                         Padding(
@@ -97,7 +99,8 @@ class _IncomePageState extends ModularState<IncomePage, TransactionsController> 
                                 value: _inputTypeController.value,
                                 items: _inputTypeController.items,
                                 focusNode: _inputTypeFocusNode,
-                                validator: (value) => Validators().validateTransactionCategory(value),
+                                validator: (value) => Validators()
+                                    .validateTransactionCategory(value),
                                 onChanged: (newValue) {
                                   _inputTypeController.value = newValue!;
                                   setState(() {});
@@ -114,7 +117,8 @@ class _IncomePageState extends ModularState<IncomePage, TransactionsController> 
                             keyboardType: TextInputType.text,
                             focusNode: _inputNameFocusNode,
                             controller: _inputNameController,
-                            validator: (value) => Validators().validateName(value!),
+                            validator: (value) =>
+                                Validators().validateName(value!),
                           ),
                         ),
                         Padding(
