@@ -1,12 +1,10 @@
 import 'package:budget/src/features/transactions/constants/transactions_items.dart';
 import 'package:budget/src/features/transactions/controller/date_controller.dart';
 import 'package:budget/src/features/transactions/controller/dropdown_controller.dart';
-import 'package:budget/src/features/transactions/pages/transactions/repositories/transactions_repository.dart';
 import 'package:budget/src/features/transactions/validators/text_validator.dart';
 import 'package:budget/src/features/transactions/widgets/appbar_with_drawer.dart';
 import 'package:budget/src/features/transactions/widgets/button_widget.dart';
 import 'package:budget/src/features/transactions/widgets/date_picker_widget.dart';
-import 'package:budget/src/features/transactions/widgets/dialog_widget.dart';
 import 'package:budget/src/features/transactions/widgets/dropdown_buttom_widget.dart';
 import 'package:budget/src/features/transactions/widgets/text_styles.dart';
 import 'package:budget/src/shared/models/models.dart';
@@ -15,7 +13,6 @@ import 'package:budget/src/shared/widgets/drawer/drawer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '/src/shared/constants/app_colors.dart';
 import 'expenses_store.dart';
 
 class ExpensesPage extends StatefulWidget {
@@ -25,11 +22,9 @@ class ExpensesPage extends StatefulWidget {
   _ExpensesPageState createState() => _ExpensesPageState();
 }
 
-class _ExpensesPageState
-    extends ModularState<ExpensesPage, ExpensesController> {
+class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
   TextEditingController _expensesController = TextEditingController();
-  DropdownController _inputTypeController =
-      DropdownController(items: TransactionsItems.expensesItems);
+  DropdownController _inputTypeController = DropdownController(items: TransactionsItems.expensesItems);
   DateController _dateController = DateController();
 
   FocusNode _expensesFocusNode = FocusNode();
@@ -81,8 +76,7 @@ class _ExpensesPageState
                             keyboardType: TextInputType.number,
                             focusNode: _expensesFocusNode,
                             controller: _expensesController,
-                            validator: (value) =>
-                                Validators().validateNumber(value!),
+                            validator: (value) => Validators().validateNumber(value!),
                           ),
                         ),
                         Padding(
@@ -98,8 +92,7 @@ class _ExpensesPageState
                                   value: _inputTypeController.value,
                                   items: _inputTypeController.items,
                                   focusNode: _inputTypeFocusNode,
-                                  validator: (value) => Validators()
-                                      .validateTransactionCategory(value),
+                                  validator: (value) => Validators().validateTransactionCategory(value),
                                   onChanged: (newValue) {
                                     _inputTypeController.value = newValue!;
                                     setState(() {});

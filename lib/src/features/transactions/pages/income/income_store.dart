@@ -1,10 +1,10 @@
-import 'package:budget/src/features/transactions/models/transaction_model.dart';
 import 'package:budget/src/features/transactions/repositories/transactions_repository.dart';
+import 'package:budget/src/shared/models/models.dart';
 
-class IncomeController {
+class IncomeStore {
   final TransactionsRepository repository;
 
-  IncomeController(this.repository);
+  IncomeStore(this.repository);
 
   Future<bool> createTransaction({
     TransactionModel? transaction,

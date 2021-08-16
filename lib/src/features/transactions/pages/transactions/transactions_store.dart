@@ -1,4 +1,4 @@
-import 'package:budget/src/features/transactions/pages/transactions/repositories/transaction_repository_interface.dart';
+import 'package:budget/src/features/transactions/repositories/transaction_repository_interface.dart';
 import 'package:budget/src/shared/models/models.dart';
 import 'package:mobx/mobx.dart';
 

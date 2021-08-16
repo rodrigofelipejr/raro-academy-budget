@@ -5,14 +5,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../shared/constants/constants.dart';
-import 'pages/transactions/repositories/transactions_repository.dart';
+import 'pages/expenses/expenses_store.dart';
+import 'pages/income/income_store.dart';
 import 'pages/transactions/transactions_page.dart';
+import 'repositories/transactions_repository.dart';
 
 class TransactionsModule extends Module {
   @override
   List<Bind<Object>> get binds => [
         Bind.singleton((i) => TransactionsRepository(i())),
-        Bind.singleton((i) => TransactionsStore(i.get())),
+        Bind.singleton((i) => TransactionsStore(i())),
+        Bind.singleton((i) => IncomeStore(i())),
+        Bind.singleton((i) => ExpensesStore(i())),
         Bind.singleton((i) => FirebaseFirestore.instance),
       ];
 

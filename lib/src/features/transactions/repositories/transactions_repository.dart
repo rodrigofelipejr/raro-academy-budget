@@ -1,12 +1,19 @@
+import 'package:budget/src/shared/constants/app_collections.dart';
+import 'package:budget/src/shared/constants/constants.dart';
+import 'package:budget/src/shared/models/transaction_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../models/transaction_model.dart';
+import 'transaction_repository_interface.dart';
 
-class TransactionsRepository {
+class TransactionsRepository implements ITransactionsRepository {
+  final FirebaseFirestore firestore;
+
+  TransactionsRepository(this.firestore);
+
+  @override
   Future<bool> createTransaction(TransactionModel transaction) async {
     try {
-      final response =
-          await FirebaseFirestore.instance.collection("/test").add({
+      final response = await FirebaseFirestore.instance.collection("/test").add({
         "uuid": transaction.uuid,
         "value": transaction.value,
         "type": transaction.type,
@@ -22,12 +29,10 @@ class TransactionsRepository {
     }
   }
 
-  Future<bool> deleteTransaction(String docId) async {
+  @override
+  Future<bool> deleteTransactions(String uuid) async {
     try {
-      await FirebaseFirestore.instance
-          .collection("/test")
-          .doc(docId)
-          .delete();
+      await FirebaseFirestore.instance.collection("/test").doc(uuid).delete();
       print("DeleteteTransaction: ");
       return true;
     } catch (e) {
@@ -36,7 +41,17 @@ class TransactionsRepository {
     }
   }
 
-  Future<bool> updateTransaction(TransactionModel transaction) async {
+  @override
+  Future<List<TransactionModel>> getTransactions() async {
+    CollectionReference db = FirebaseFirestore.instance.collection(AppCollections.transactions);
+    final snapshot =
+        await db.where('uuid', isEqualTo: AppSettings.userUuid).orderBy('createAt', descending: true).get();
+
+    return snapshot.docs.map((e) => TransactionModel.fromFirestore(e)).toList();
+  }
+
+  @override
+  Future<bool> updateTransactions(TransactionModel transaction) async {
     try {
       await FirebaseFirestore.instance.collection("/test").doc("asdf").set({
         "uuid": transaction.uuid,
@@ -50,34 +65,6 @@ class TransactionsRepository {
       return true;
     } catch (e) {
       print("ErrorUpdateTransaction: $e");
-      throw e;
-    }
-  }
-
-  Future<bool> getTransactions() async {
-    try {
-      final response =
-          await FirebaseFirestore.instance.collection("/test").get();
-      print('Transactions: ${response.docs.map(((e) => e.data()))}');
-      print(response);
-      return true;
-    } catch (e) {
-      print('ErrorTransactions: $e');
-      throw e;
-    }
-  }
-
-  Future<bool> getDocs() async {
-    try {
-      final response = await FirebaseFirestore.instance
-          .collection("/test")
-          .get()
-          .then((value) => value.docs.map((doc) => doc.id));
-      print(response.toList());
-      print(response.length);
-      return true;
-    } catch (e) {
-      print('ErrorTransactions: $e');
       throw e;
     }
   }
