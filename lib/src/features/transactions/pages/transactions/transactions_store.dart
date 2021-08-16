@@ -1,15 +1,15 @@
-import 'package:budget/src/features/daily/repositories/daily_repository_interface.dart';
+import 'package:budget/src/features/transactions/pages/transactions/repositories/transaction_repository_interface.dart';
 import 'package:budget/src/shared/models/models.dart';
 import 'package:mobx/mobx.dart';
 
-part 'daily_store.g.dart';
+part 'transactions_store.g.dart';
 
-class DailyStore = _DailyStoreBase with _$DailyStore;
+class TransactionsStore = _TransactionsStoreBase with _$TransactionsStore;
 
-abstract class _DailyStoreBase with Store {
-  final IDailyRepository repository;
+abstract class _TransactionsStoreBase with Store {
+  final ITransactionsRepository repository;
 
-  _DailyStoreBase(this.repository) {
+  _TransactionsStoreBase(this.repository) {
     init();
   }
 

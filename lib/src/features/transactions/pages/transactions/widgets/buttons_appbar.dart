@@ -1,17 +1,15 @@
-import 'package:budget/src/features/daily/daily_store.dart';
+import 'package:budget/src/features/transactions/pages/transactions/transactions_store.dart';
+import 'package:budget/src/shared/constants/constants.dart';
 import 'package:budget/src/shared/utils/formatters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import '../../../shared/constants/constants.dart';
 
 class ButtonsAppBarDay extends StatelessWidget {
   final VoidCallback? buttonin;
   final VoidCallback? buttonout;
   final VoidCallback? buttonall;
-  const ButtonsAppBarDay(
-      {Key? key, this.buttonin, this.buttonout, this.buttonall})
-      : super(key: key);
+  const ButtonsAppBarDay({Key? key, this.buttonin, this.buttonout, this.buttonall}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +20,8 @@ class ButtonsAppBarDay extends StatelessWidget {
         children: [
           Observer(builder: (_) {
             return Text(
-              '${Formatters.formatMoney(Modular.get<DailyStore>().transactionTotal)}',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 26,
-                  fontWeight: FontWeight.w700),
+              '${Formatters.formatMoney(Modular.get<TransactionsStore>().transactionTotal)}',
+              style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.w700),
             );
           }),
           SizedBox(height: 11),
@@ -75,7 +70,7 @@ class ButtonsAppBarDay extends StatelessWidget {
             text,
             style: TextStyle(
                 fontSize: 16,
-                color: Modular.get<DailyStore>().indexPage == screen
+                color: Modular.get<TransactionsStore>().indexPage == screen
                     ? Colors.white
                     : Color.fromARGB(60, 255, 255, 255)),
           ),

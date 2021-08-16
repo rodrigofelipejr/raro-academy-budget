@@ -1,24 +1,25 @@
-import 'package:budget/src/features/daily/daily_store.dart'; //TODO - organizar imports
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:budget/src/features/daily/widgets/all_card.dart';
-import 'package:budget/src/features/daily/widgets/buttons_appbar.dart';
-import 'package:budget/src/features/daily/widgets/input_card.dart';
-import 'package:budget/src/features/daily/widgets/output_card.dart';
-import 'package:budget/src/features/home/home.dart';
+import 'package:budget/src/features/transactions/pages/transactions/transactions_store.dart';
+import 'package:budget/src/features/transactions/pages/transactions/widgets/output_card.dart';
 import 'package:budget/src/shared/utils/dates.dart';
 import 'package:budget/src/shared/widgets/fab_widget.dart';
 import 'package:budget/src/shared/widgets/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
-class DailyPage extends StatefulWidget {
-  const DailyPage({Key? key}) : super(key: key);
+import '../../../home/home.dart';
+import 'widgets/all_card.dart';
+import 'widgets/buttons_appbar.dart';
+import 'widgets/input_card.dart';
+
+class TransactionsPage extends StatefulWidget {
+  const TransactionsPage({Key? key}) : super(key: key);
 
   @override
-  _DailyPageState createState() => _DailyPageState();
+  _TransactionsPageState createState() => _TransactionsPageState();
 }
 
-class _DailyPageState extends ModularState<DailyPage, DailyStore> {
+class _TransactionsPageState extends ModularState<TransactionsPage, TransactionsStore> {
   final PageController _pageController = PageController();
 
   void _navigator({required int index}) {

@@ -3,8 +3,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 import 'features/splash/splash_module.dart';
 import 'features/home/home.dart';
-import 'features/daily/daily_module.dart';
 import 'features/login/login_module.dart';
+import 'features/transactions/transactions_module.dart';
 import 'shared/constants/constants.dart';
 
 class AppModule extends Module {
@@ -18,7 +18,7 @@ class AppModule extends Module {
         ModuleRoute(AppRoutes.initial, module: SplashModule()),
         ModuleRoute(AppRoutes.login, module: LoginModule()),
         ModuleRoute(AppRoutes.home, module: HomeModule()),
-        ModuleRoute(AppRoutes.daily, module: DailyModule()),
+        ModuleRoute(AppRoutes.daily, module: TransactionsModule()),
         //TODO - incluir módulo (Daniel)
       ];
 }
