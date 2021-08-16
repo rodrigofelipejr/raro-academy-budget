@@ -1,23 +1,23 @@
-import 'package:budget/src/shared/utils/utils.dart';
 import 'package:mobx/mobx.dart';
 
-import 'home_state.dart';
-import 'repositories/home_repository.dart';
+import '../../shared/stores/stores.dart';
 import 'errors/errors.dart';
+import 'widgets/widgets.dart';
 
 part 'home_store.g.dart';
 
 class HomeStore = _HomeStoreBase with _$HomeStore;
 
-abstract class _HomeStoreBase with Store {
-  final HomeRepository repository;
+abstract class _HomeStoreBase extends BaseStore with Store {
+  final GeneralBalanceStore generalBalanceStore;
+  final DailyStore dailyStore;
+  final LastTransactionsStore lastTransactionsStore;
 
-  _HomeStoreBase(this.repository);
-
-  @observable
-  HomeState state = HomeState(selectedDate: DateTime.now());
-  @action
-  void setState(HomeState value) => state = value;
+  _HomeStoreBase(
+    this.generalBalanceStore,
+    this.dailyStore,
+    this.lastTransactionsStore,
+  );
 
   @observable
   bool isLoading = false;
@@ -27,53 +27,17 @@ abstract class _HomeStoreBase with Store {
   @observable
   Failure? onError;
   @action
-  void setOnError(Failure? value) => onError = value;
+  void setOnError(Failure value) => onError = value;
 
-  @computed
-  String get selectedMonthDescription => Dates.descriptionMonth(state.selectedDate.month).substring(0, 3);
-
+  @override
   Future<void> init() async {
     setIsLoading(true);
 
-    try {
-      final generalBalance = await repository.getGeneralBalance();
-      final dailyModel = await repository.getDaily(state.selectedDate.month);
-      final lastTransactions = await repository.getLastTransactions();
-
-      final newState = state.copyWith(
-        generalBalance: generalBalance.balance,
-        dailyBalance: (dailyModel.input - dailyModel.output),
-        inputs: dailyModel.input,
-        outputs: dailyModel.output,
-        transactions: lastTransactions,
-      );
-
-      setState(newState);
-    } catch (e) {
-      //TODO - refactor
-      setOnError(InternalError(message: e.toString())); 
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-  Future<void> handleChangeMonthSelected(DateTime selectedDate) async {
-    setIsLoading(true);
-    setState(state.copyWith(selectedDate: selectedDate));
-    try {
-      final dailyModel = await repository.getDaily(state.selectedDate.month);
-
-      final newState = state.copyWith(
-        dailyBalance: (dailyModel.input - dailyModel.output),
-        inputs: dailyModel.input,
-        outputs: dailyModel.output,
-      );
-
-      setState(newState);
-    } catch (e) {
-      setOnError(DailyError(message: e.toString()));
-    } finally {
-      setIsLoading(false);
-    }
+    Future.wait([
+      generalBalanceStore.init(),
+      dailyStore.init(),
+      lastTransactionsStore.init(),
+      Future.delayed(Duration(seconds: 2)),
+    ]).then((_) {}).whenComplete(() => setIsLoading(false));
   }
 }

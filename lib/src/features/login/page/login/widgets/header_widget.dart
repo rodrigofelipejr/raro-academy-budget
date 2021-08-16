@@ -1,3 +1,4 @@
+import 'package:budget/src/shared/constants/app_images.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../shared/constants/app_colors.dart';
@@ -14,6 +15,7 @@ class HeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sizeScreen = MediaQuery.of(context).size;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -23,8 +25,11 @@ class HeaderWidget extends StatelessWidget {
         ),
         Hero(
           tag: "notes_logo",
-          child: Image.asset(
-            "assets/images/logo_with_color.png",
+          child: SizedBox(
+            width: sizeScreen.width * 0.29,
+            child: Image.asset(
+              AppImages.logoBudgetBlue,
+            ),
           ),
         ),
         SizedBox(

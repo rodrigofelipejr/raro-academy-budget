@@ -3,17 +3,21 @@ import 'package:budget/src/features/transactions/widgets/dialog_widget.dart';
 import 'package:budget/src/shared/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
+import '/src/shared/constants/app_colors.dart';
+import '../../../shared/widgets/widgets.dart';
 import '../widgets/appbar_with_drawer.dart';
 import '../widgets/button_widget.dart';
 import '../widgets/date_picker_widget.dart';
 import '../widgets/dropdown_buttom_widget.dart';
 import '../widgets/text_styles.dart';
+
 import '../repository/transactions_repository.dart';
 import '../controller/transactions_controller.dart';
 import '../controller/date_controller.dart';
 import '../controller/dropdown_controller.dart';
 import '../models/transaction_model.dart';
 import '../validators/text_validator.dart';
+
 
 class ExpensesPage extends StatefulWidget {
   const ExpensesPage({Key? key}) : super(key: key);
@@ -49,7 +53,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWithDrawer(title: "Saída"),
-      drawer: Drawer(),
+      drawer: DrawerWidget(),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
         child: Container(

@@ -7,4 +7,8 @@ class AppImages {
   static const String icTrip = '$_path/ic_trip.png';
   static const String icOthers = '$_path/ic_others.png';
   static const String icPayments = '$_path/ic_payments.png';
+  static const String icBudget = '$_path/ic_budget.png';
+  static const String logoRaroAcademy = '$_path/raro_academy_logo.png';
+  static const String icGoogle = '$_path/logo_google.png';
+  static const String logoBudgetBlue = '$_path/logo_budget_group_blue.png';
 }

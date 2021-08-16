@@ -92,8 +92,7 @@ class CustomTextField extends StatelessWidget {
         ),
         icon: icon,
         suffix: suffix,
-        labelText:
-            (focusNode.hasFocus || (controller?.text != '')) ? labelText : null,
+        labelText: labelText,
         helperText: helperText,
         errorBorder: UnderlineInputBorder(
           borderSide: BorderSide(

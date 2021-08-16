@@ -1,14 +1,12 @@
-import 'dart:ui';
-
 import 'package:budget/src/shared/widgets/circular_button_gradient.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
-import 'widgets/header_widget.dart';
-import 'login_controller.dart';
 import '../../../../shared/constants/constants.dart';
-import '../../../../shared/widgets/widgets.dart';
 import '../../../../shared/validators/text_validator.dart';
+import '../../../../shared/widgets/widgets.dart';
+import 'login_controller.dart';
+import 'widgets/header_widget.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -22,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    controller.emailController.addListener(() {
+    emailController.addListener(() {
       if (!controller.showPasswordField) {
         controller.verifyDig();
       }
@@ -35,6 +33,11 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
+  FocusNode emailFocusNode = new FocusNode();
+  FocusNode passwordFocusNode = new FocusNode();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -44,8 +47,7 @@ class _LoginPageState extends State<LoginPage> {
         padding: const EdgeInsets.symmetric(horizontal: 48),
         child: SingleChildScrollView(
           child: ConstrainedBox(
-            constraints:
-                BoxConstraints(minHeight: MediaQuery.of(context).size.height),
+            constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height),
             child: Container(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -58,18 +60,29 @@ class _LoginPageState extends State<LoginPage> {
                       HeaderWidget(
                         title: 'Vamos começar!',
                       ),
-                      Text(
-                        'Novo usuário? Crie uma conta',
-                        style: TextStyle(
-                          fontFamily: "Roboto",
-                          fontSize: 16,
-                          letterSpacing: 0.15,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.grey,
-                        ),
+                      Flex(
+                        direction: Axis.horizontal,
+                        children: [
+                          Flexible(
+                            child: Text(
+                              'Novo usuário? ',
+                              overflow: TextOverflow.clip,
+                              maxLines: 1,
+                              style: AppTextStyles.grey16w400Roboto,
+                            ),
+                          ),
+                          Flexible(
+                            child: Text(
+                              'Crie uma conta',
+                              overflow: TextOverflow.clip,
+                              maxLines: 1,
+                              style: AppTextStyles.blue16w400Roboto,
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(
-                        height: 46,
+                        height: 23,
                       ),
                     ],
                   ),
@@ -81,12 +94,11 @@ class _LoginPageState extends State<LoginPage> {
                           CustomTextField(
                             labelText: "E-mail",
                             hintText: "Insira seu e-mail",
-                            errorMessage: null,
-                            validator: (value) =>
-                                Validators().email(value ?? ''),
+                            onChanged: controller.setEmail,
+                            validator: (value) => Validators().email(value ?? ''),
                             textInputAction: TextInputAction.next,
-                            controller: controller.emailController,
-                            focusNode: controller.emailFocusNode,
+                            controller: emailController,
+                            focusNode: emailFocusNode,
                             keyboardType: TextInputType.emailAddress,
                           ),
                           SizedBox(height: 8.0),
@@ -95,37 +107,42 @@ class _LoginPageState extends State<LoginPage> {
                                   labelText: "Senha",
                                   hintText: "Senha",
                                   obscureText: controller.passwordVisible,
+                                  onChanged: controller.setPassword,
+                                  errorMessage: controller.passwordError,
                                   suffixIcon: VisibleWidget(
                                     visible: controller.passwordVisible,
                                     onPressed: () {
                                       setState(() {
-                                        controller.passwordVisible =
-                                            !controller.passwordVisible;
+                                        controller.passwordVisible = !controller.passwordVisible;
                                       });
                                     },
                                   ),
                                   textInputAction: TextInputAction.next,
-                                  focusNode: controller.passwordFocusNode,
-                                  controller: controller.passwordController,
+                                  focusNode: passwordFocusNode,
+                                  controller: passwordController,
                                 )
                               : Container(),
                           SizedBox(height: 16.0),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                'Recuperar senha',
-                                style: AppTextStyles.purple14w500Roboto,
-                              ),
-                              CircularButtonGradient(
-                                formKey: _formKey,
-                                controller: controller,
-                                text: 'Continuar',
-                              ),
+                              controller.showPasswordField
+                                  ? Text(
+                                      'Recuperar senha',
+                                      style: AppTextStyles.purple14w500Roboto,
+                                    )
+                                  : Container(),
+                              controller.loading
+                                  ? CircularProgressIndicator()
+                                  : CircularButtonGradient(
+                                      onTap: callLogin,
+                                      text: 'Continuar'.toUpperCase(),
+                                      disabled: controller.disabledButton,
+                                    )
                             ],
                           ),
                           SizedBox(
-                            height: 50,
+                            height: 25,
                           ),
                         ],
                       ),
@@ -137,72 +154,72 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Center(
-                        child: Text(
-                          "Ou",
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontFamily: 'Roboto',
-                            fontSize: 16,
-                            letterSpacing: 0.4,
-                            fontWeight: FontWeight.w400,
+                        child: Text("ou", style: AppTextStyles.grey16w400Roboto),
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50.0), side: BorderSide(color: Colors.grey)),
                           ),
+                          backgroundColor: MaterialStateProperty.all(AppColors.white),
+                          shadowColor: MaterialStateProperty.all(AppColors.transparent),
+                        ),
+                        onPressed: () {},
+                        child: Flex(
+                          direction: Axis.horizontal,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: 16,
+                              width: 16,
+                              decoration: const BoxDecoration(
+                                image: DecorationImage(image: AssetImage(AppImages.icGoogle), fit: BoxFit.fill),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Flexible(
+                              child: Text("continuar com o google".toUpperCase(),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  style: AppTextStyles.darkGray13w500Roboto),
+                            ),
+                          ],
                         ),
                       ),
                       ElevatedButton(
                         style: ButtonStyle(
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50.0),
                             ),
                           ),
+                          backgroundColor: MaterialStateProperty.all(AppColors.blueFacebook),
+                          shadowColor: MaterialStateProperty.all(AppColors.transparent),
                         ),
                         onPressed: () {},
                         child: Flex(
                           direction: Axis.horizontal,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.android),
+                            Icon(
+                              Icons.facebook,
+                              size: 20,
+                            ),
                             SizedBox(
                               width: 8,
                             ),
                             Flexible(
-                              child: Text(
-                                "continuar com o google",
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                                style: TextStyle(fontSize: 20.0),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50.0),
-                                side: BorderSide(color: Colors.red)),
-                          ),
-                        ),
-                        onPressed: () {},
-                        child: Flex(
-                          direction: Axis.horizontal,
-                          children: [
-                            Icon(Icons.facebook),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Flexible(
-                              child: Text(
-                                "continuar com o facebook",
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                                style: TextStyle(fontSize: 20.0),
-                              ),
+                              child: Text("continuar com o facebook".toUpperCase(),
+                                  overflow: TextOverflow.ellipsis, maxLines: 1, style: AppTextStyles.white13w500Roboto),
                             )
                           ],
                         ),
+                      ),
+                      SizedBox(
+                        height: 16,
                       ),
                     ],
                   ),
@@ -213,5 +230,11 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  callLogin() {
+    if (_formKey.currentState!.validate()) {
+      controller.login(emailController.text, passwordController.text).then((value) => {});
+    }
   }
 }

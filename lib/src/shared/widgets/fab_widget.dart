@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../constants/constants.dart';
+import 'animated_switcher_widget.dart';
 
 class FabWidget extends StatelessWidget {
   final void Function() onTap;
@@ -24,48 +25,53 @@ class FabWidget extends StatelessWidget {
   BoxShape get shape => withDescription ? BoxShape.rectangle : BoxShape.circle;
   double get widthSizedBox => withDescription ? 4.0 : 0;
   double? get widthContainer => withDescription ? null : size;
+  EdgeInsets get paddingContainer =>
+      withDescription ? const EdgeInsets.only(left: 14.0, right: 18.0) : const EdgeInsets.all(14.0);
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            gradient: AppGradients.blueGradientButtons,
-            shape: shape,
-            borderRadius: borderRadius,
-            boxShadow: AppShadows.shadowsFab,
-          ),
-          child: Material(
-            color: AppColors.transparent,
-            borderRadius: borderRadius,
-            child: InkWell(
+    return AnimatedSwitcherWidget(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              gradient: AppGradients.blueGradientButtons,
+              shape: shape,
               borderRadius: borderRadius,
-              onTap: onTap,
-              child: Container(
-                width: widthContainer,
-                padding: const EdgeInsets.only(left: 14.0, right: 18.0),
-                height: size,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.add,
-                      color: Colors.white,
-                    ),
-                    SizedBox(width: widthSizedBox),
-                    Text(
-                      label?.toUpperCase() ?? '',
-                      style: AppTextStyles.white14w500Roboto,
-                    ),
-                  ],
+              boxShadow: AppShadows.shadowsFab,
+            ),
+            child: Material(
+              color: AppColors.transparent,
+              borderRadius: borderRadius,
+              child: InkWell(
+                borderRadius: borderRadius,
+                onTap: onTap,
+                child: Container(
+                  width: widthContainer,
+                  padding: paddingContainer,
+                  height: size,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
+                      SizedBox(width: widthSizedBox),
+                      Text(
+                        label?.toUpperCase() ?? '',
+                        style: AppTextStyles.white14w500Roboto,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

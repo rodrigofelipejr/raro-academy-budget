@@ -5,6 +5,10 @@ import 'package:budget/src/shared/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../../shared/widgets/widgets.dart';
+import '/src/shared/constants/app_colors.dart';
+import '../widgets/dropdown_item_data.dart';
+
 import '../widgets/dropdown_buttom_widget.dart';
 import '../widgets/appbar_with_drawer.dart';
 import '../widgets/button_widget.dart';
@@ -54,7 +58,7 @@ class _IncomePageState extends State<IncomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWithDrawer(title: "Entrada"),
-      drawer: Drawer(),
+      drawer: DrawerWidget(),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
         child: Container(

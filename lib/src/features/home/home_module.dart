@@ -1,15 +1,19 @@
 import 'package:flutter_modular/flutter_modular.dart';
 
-import 'home_page.dart';
-import 'home_store.dart';
-import 'repositories/home_repository.dart';
 import '../../shared/constants/constants.dart';
+import 'home.dart';
+import 'repositories/repositories.dart';
+import 'home_store.dart';
+import 'widgets/widgets.dart';
 
 class HomeModule extends Module {
   @override
   List<Bind<Object>> get binds => [
         Bind.singleton((i) => HomeRepository()),
-        Bind.lazySingleton((i) => HomeStore(i())),
+        Bind.lazySingleton((i) => GeneralBalanceStore(i())),
+        Bind.lazySingleton((i) => DailyStore(i())),
+        Bind.lazySingleton((i) => LastTransactionsStore(i())),
+        Bind.lazySingleton((i) => HomeStore(i(), i(), i())),
       ];
 
   @override

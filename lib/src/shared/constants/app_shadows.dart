@@ -88,4 +88,13 @@ class AppShadows {
           spreadRadius: -1.0,
         ),
       ];
+
+  static List<BoxShadow> get shadowsTextLogoBudget => [
+        BoxShadow(
+          color: AppColors.black.withOpacity(0.25),
+          offset: Offset(0.0, 4.0),
+          blurRadius: 25.0,
+          spreadRadius: 0.0,
+        ),
+      ];
 }
