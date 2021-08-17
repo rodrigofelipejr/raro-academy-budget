@@ -1,6 +1,7 @@
 import 'package:budget/src/shared/constants/app_collections.dart';
 import 'package:budget/src/shared/constants/constants.dart';
 import 'package:budget/src/shared/models/transaction_model.dart';
+import 'package:budget/src/shared/utils/dates.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'transaction_repository_interface.dart';
@@ -13,7 +14,8 @@ class TransactionsRepository implements ITransactionsRepository {
   @override
   Future<bool> createTransaction(TransactionModel transaction) async {
     try {
-      final response = await FirebaseFirestore.instance.collection("/test").add({
+      final response =
+          await FirebaseFirestore.instance.collection("/test").add({
         "uuid": transaction.uuid,
         "value": transaction.value,
         "type": transaction.type,
@@ -42,10 +44,19 @@ class TransactionsRepository implements ITransactionsRepository {
   }
 
   @override
-  Future<List<TransactionModel>> getTransactions() async {
-    CollectionReference db = FirebaseFirestore.instance.collection(AppCollections.transactions);
-    final snapshot =
-        await db.where('uuid', isEqualTo: AppSettings.userUuid).orderBy('createAt', descending: true).get();
+  Future<List<TransactionModel>> getTransactions(int month) async {
+    CollectionReference db =
+        FirebaseFirestore.instance.collection(AppCollections.transactions);
+    final snapshot = await db
+        .where('uuid', isEqualTo: AppSettings.userUuid)
+        .where('createAt',
+            isGreaterThanOrEqualTo:
+                Timestamp.fromDate(Dates.firstDayMonth(month: month)))
+        .where('createAt',
+            isLessThanOrEqualTo:
+                Timestamp.fromDate(Dates.lastDayMonth(month: month)))
+        .orderBy('createAt', descending: true)
+        .get();
 
     return snapshot.docs.map((e) => TransactionModel.fromFirestore(e)).toList();
   }

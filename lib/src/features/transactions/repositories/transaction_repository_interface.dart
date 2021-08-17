@@ -4,5 +4,5 @@ abstract class ITransactionsRepository {
   Future<bool> createTransaction(TransactionModel transaction);
   Future<bool> updateTransactions(TransactionModel transaction);
   Future<bool> deleteTransactions(String uuid);
-  Future<List<TransactionModel>> getTransactions();
+  Future<List<TransactionModel>> getTransactions(int month);
 }

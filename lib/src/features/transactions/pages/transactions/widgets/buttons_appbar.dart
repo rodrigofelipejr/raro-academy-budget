@@ -6,10 +6,12 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class ButtonsAppBarDay extends StatelessWidget {
-  final VoidCallback? buttonin;
-  final VoidCallback? buttonout;
-  final VoidCallback? buttonall;
-  const ButtonsAppBarDay({Key? key, this.buttonin, this.buttonout, this.buttonall}) : super(key: key);
+  final VoidCallback? buttonIn;
+  final VoidCallback? buttonOut;
+  final VoidCallback? buttonAll;
+  const ButtonsAppBarDay(
+      {Key? key, this.buttonIn, this.buttonOut, this.buttonAll})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,10 @@ class ButtonsAppBarDay extends StatelessWidget {
           Observer(builder: (_) {
             return Text(
               '${Formatters.formatMoney(Modular.get<TransactionsStore>().transactionTotal)}',
-              style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.w700),
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 26,
+                  fontWeight: FontWeight.w700),
             );
           }),
           SizedBox(height: 11),
@@ -30,7 +35,7 @@ class ButtonsAppBarDay extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                textbutton("Entradas", buttonin, 0),
+                textbutton("Entradas", buttonIn, 0),
                 Container(
                   height: 20,
                   width: 1,
@@ -41,7 +46,7 @@ class ButtonsAppBarDay extends StatelessWidget {
                     ),
                   ),
                 ),
-                textbutton("Saídas", buttonout, 1),
+                textbutton("Saídas", buttonOut, 1),
                 Container(
                   height: 20,
                   width: 1,
@@ -52,7 +57,7 @@ class ButtonsAppBarDay extends StatelessWidget {
                     ),
                   ),
                 ),
-                textbutton("Todos", buttonall, 2),
+                textbutton("Todos", buttonAll, 2),
               ],
             ),
           )

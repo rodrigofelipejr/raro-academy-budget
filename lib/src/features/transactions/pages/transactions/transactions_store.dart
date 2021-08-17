@@ -1,5 +1,7 @@
+import 'package:budget/src/features/home/home.dart';
 import 'package:budget/src/features/transactions/repositories/transaction_repository_interface.dart';
 import 'package:budget/src/shared/models/models.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 part 'transactions_store.g.dart';
@@ -57,15 +59,15 @@ abstract class _TransactionsStoreBase with Store {
   @action
   void setIndexPage(int value) => indexPage = value;
 
-  Future<void> handleGetTransaction() async {
+  Future<void> handleGetTransaction({DateTime? date}) async {
     try {
-      final data = await repository.getTransactions();
-      print(transactions.length);
+      final data = await repository.getTransactions(
+          Modular.get<HomeStore>().dailyStore.state.date.month);
+
       setTransactions(data);
-      print(transactions.length);
     } catch (e) {
       print("asdasd");
-      print(e);
+      print('$e');
     }
   }
 }
