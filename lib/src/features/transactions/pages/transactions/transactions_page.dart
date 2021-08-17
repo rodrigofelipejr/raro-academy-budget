@@ -41,8 +41,14 @@ class _TransactionsPageState
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton:
-          FabWidget(onTap: () => Modular.to.pushNamed(AppRoutes.income)),
+      floatingActionButton: Observer(builder: (_) {
+        return controller.indexPage == 2
+            ? SizedBox()
+            : FabWidget(
+                onTap: () => controller.indexPage == 0
+                    ? Modular.to.pushNamed(AppRoutes.income)
+                    : Modular.to.pushNamed(AppRoutes.expenses));
+      }),
       appBar: AppBar(
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -88,6 +94,7 @@ class _TransactionsPageState
           return Center(
             child: LoadingWidget(),
           );
+
         if (controller.onError != null)
           return Center(
             child: CustomErrorWidget(

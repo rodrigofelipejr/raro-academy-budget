@@ -80,6 +80,7 @@ abstract class _TransactionsStoreBase with Store {
       setOnError(null);
 
       setTransactions(data);
+      setIndexPage(0);
       setIsLoading(false);
     } catch (e) {
       setIsLoading(false);
