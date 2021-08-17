@@ -10,7 +10,7 @@ class AppWidget extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Budget',
       theme: ThemeData(primarySwatch: AppColors.primaryMaterialColor),
-      initialRoute: AppRoutes.home,
+      initialRoute: AppRoutes.splash,
     ).modular();
   }
 }
