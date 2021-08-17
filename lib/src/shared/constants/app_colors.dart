@@ -21,6 +21,7 @@ class AppColors {
   static const Color black38 = Color.fromRGBO(0, 0, 0, .38);
   static const Color black87 = Color.fromRGBO(0, 0, 0, .87);
   static const Color purpleLight = Color.fromRGBO(241, 240, 254, 1);
+  static const Color melrose = Color.fromRGBO(162, 158, 255, 1);
   static const Color red = Color.fromRGBO(244, 67, 54, 1);
   static const MaterialColor primaryMaterialColor = MaterialColor(0XFF4850b0, {
     50: Color.fromRGBO(72, 80, 176, 0.05),

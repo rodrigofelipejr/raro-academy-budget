@@ -1,17 +1,35 @@
 import 'dart:convert';
 
+import 'package:budget/src/shared/constants/constants.dart';
+import 'package:budget/src/shared/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../utils/utils.dart';
-
 enum TypeTransaction { output, input }
-enum CategoryTransaction { meal, transport, trip, education, payments, others }
+
+class CategoryTransaction {
+  static const Map<String, String> output = {
+    TransactionCategories.meal: 'Alimentação',
+    TransactionCategories.education: 'Educação',
+    TransactionCategories.others: 'Outros',
+    TransactionCategories.payments: 'Pagamentos',
+    TransactionCategories.transport: 'Transporte',
+    TransactionCategories.trip: 'Viagem',
+  };
+
+  static const Map<String, String> input = {
+    TransactionCategories.pix: 'Pix',
+    TransactionCategories.ticket: 'Boleto',
+    TransactionCategories.ted: 'Ted',
+    TransactionCategories.doc: 'Doc',
+    TransactionCategories.money: 'Dinheiro',
+  };
+}
 
 class TransactionModel {
   final String uuid;
-  final CategoryTransaction category;
+  final String category;
   final TypeTransaction type;
-  final String description;
+  final String? description;
   final double value;
   final DateTime createAt;
   final DateTime updateAt;
@@ -20,7 +38,7 @@ class TransactionModel {
     required this.uuid,
     required this.category,
     required this.type,
-    required this.description,
+    this.description,
     required this.value,
     required this.createAt,
     required this.updateAt,
@@ -28,7 +46,7 @@ class TransactionModel {
 
   TransactionModel copyWith({
     String? uuid,
-    CategoryTransaction? category,
+    String? category,
     TypeTransaction? type,
     String? description,
     double? value,
@@ -49,7 +67,7 @@ class TransactionModel {
   Map<String, dynamic> toMap() {
     return {
       'uuid': uuid,
-      'category': CategoryTransaction.values.indexOf(category),
+      'category': category,
       'type': TypeTransaction.values.indexOf(type),
       'description': description,
       'value': value,
@@ -58,29 +76,31 @@ class TransactionModel {
     };
   }
 
+  factory TransactionModel.fromFirestore(DocumentSnapshot doc) {
+    Map map = doc.data() as Map<String, dynamic>;
+
+    print(map['category']);
+
+    return TransactionModel(
+      uuid: map['uuid'] ?? '',
+      category: map['category'] ?? '',
+      type: TypeTransaction.values[map['type'] ?? 0],
+      description: map['description'],
+      value: Converters.parseMoneyFromFirebase(map['value']),
+      createAt: Dates.parseTimestampDateTime(map['createAt']) ?? DateTime.now(),
+      updateAt: Dates.parseTimestampDateTime(map['updateAt']) ?? DateTime.now(),
+    );
+  }
+
   factory TransactionModel.fromMap(Map<String, dynamic> map) {
     return TransactionModel(
       uuid: map['uuid'],
-      category: CategoryTransaction.values[map['category']],
+      category: map['category'],
       type: TypeTransaction.values[map['type']],
       description: map['description'],
       value: map['value'],
       createAt: DateTime.fromMillisecondsSinceEpoch(map['createAt']),
       updateAt: DateTime.fromMillisecondsSinceEpoch(map['updateAt']),
-    );
-  }
-
-  factory TransactionModel.fromFirestore(DocumentSnapshot doc) {
-    Map map = doc.data() as Map<String, dynamic>;
-
-    return TransactionModel(
-      uuid: map['uuid'] ?? '',
-      category: CategoryTransaction.values[map['category'] ?? 0],
-      type: TypeTransaction.values[map['type'] ?? 0],
-      description: map['description'] ?? '',
-      value: Converters.parseMoneyFromFirebase(map['value']),
-      createAt: Dates.parseTimestampDateTime(map['createAt']) ?? DateTime.now(),
-      updateAt: Dates.parseTimestampDateTime(map['updateAt']) ?? DateTime.now(),
     );
   }
 
