@@ -1,23 +1,19 @@
 import 'package:budget/src/features/transactions/constants/transactions_items.dart';
-import 'package:budget/src/features/transactions/widgets/dialog_widget.dart';
+import 'package:budget/src/features/transactions/controller/date_controller.dart';
+import 'package:budget/src/features/transactions/controller/dropdown_controller.dart';
+import 'package:budget/src/features/transactions/validators/text_validator.dart';
+import 'package:budget/src/features/transactions/widgets/appbar_with_drawer.dart';
+import 'package:budget/src/features/transactions/widgets/button_widget.dart';
+import 'package:budget/src/features/transactions/widgets/date_picker_widget.dart';
+import 'package:budget/src/features/transactions/widgets/dropdown_buttom_widget.dart';
+import 'package:budget/src/features/transactions/widgets/text_styles.dart';
+import 'package:budget/src/shared/models/models.dart';
 import 'package:budget/src/shared/widgets/custom_text_field.dart';
+import 'package:budget/src/shared/widgets/drawer/drawer_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
-import '/src/shared/constants/app_colors.dart';
-import '../../../shared/widgets/widgets.dart';
-import '../widgets/appbar_with_drawer.dart';
-import '../widgets/button_widget.dart';
-import '../widgets/date_picker_widget.dart';
-import '../widgets/dropdown_buttom_widget.dart';
-import '../widgets/text_styles.dart';
-
-import '../repository/transactions_repository.dart';
-import '../controller/transactions_controller.dart';
-import '../controller/date_controller.dart';
-import '../controller/dropdown_controller.dart';
-import '../models/transaction_model.dart';
-import '../validators/text_validator.dart';
-
+import 'expenses_store.dart';
 
 class ExpensesPage extends StatefulWidget {
   const ExpensesPage({Key? key}) : super(key: key);
@@ -26,13 +22,9 @@ class ExpensesPage extends StatefulWidget {
   _ExpensesPageState createState() => _ExpensesPageState();
 }
 
-class _ExpensesPageState extends State<ExpensesPage> {
-  TransactionsRepository _repository = TransactionsRepository();
-
-  TransactionsController _controller = TransactionsController();
+class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
   TextEditingController _expensesController = TextEditingController();
-  DropdownController _inputTypeController =
-      DropdownController(items: TransactionsItems.expensesItems);
+  DropdownController _inputTypeController = DropdownController(items: TransactionsItems.expensesItems);
   DateController _dateController = DateController();
 
   FocusNode _expensesFocusNode = FocusNode();
@@ -42,12 +34,6 @@ class _ExpensesPageState extends State<ExpensesPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   late TransactionModel _data;
-
-  @override
-  void initState() {
-    _controller.repository = _repository;
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,8 +76,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
                             keyboardType: TextInputType.number,
                             focusNode: _expensesFocusNode,
                             controller: _expensesController,
-                            validator: (value) =>
-                                Validators().validateNumber(value!),
+                            validator: (value) => Validators().validateNumber(value!),
                           ),
                         ),
                         Padding(
@@ -107,8 +92,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
                                   value: _inputTypeController.value,
                                   items: _inputTypeController.items,
                                   focusNode: _inputTypeFocusNode,
-                                  validator: (value) =>
-                                      Validators().validateTransactionCategory(value),
+                                  validator: (value) => Validators().validateTransactionCategory(value),
                                   onChanged: (newValue) {
                                     _inputTypeController.value = newValue!;
                                     setState(() {});
@@ -135,34 +119,34 @@ class _ExpensesPageState extends State<ExpensesPage> {
                 child: ButtonWidget(
                   label: "INSERIR",
                   onPressed: () {
-                    FocusScope.of(context).unfocus();
-                    if (_formKey.currentState!.validate()) {
-                      _data = TransactionModel(
-                        value: double.parse(_expensesController.value.text),
-                        type: 'output',
-                        category: _inputTypeController.value!.value,
-                        createAt: _dateController.date,
-                        updateAt: _dateController.date,
-                        uuid: 'asdfg',
-                      );
-                      // _controller.repository.deleteTransaction("cKwzRsuGMJ6VREv6ZVHS");
-                      // _controller.repository.createTransaction(_data);
-                      print('DATA ${_data.toString()}');
-                      _controller.repository.getTransactions();
-                      _controller.repository.getDocs();
+                    // FocusScope.of(context).unfocus();
+                    // if (_formKey.currentState!.validate()) {
+                    //   _data = TransactionModel(
+                    //     value: double.parse(_expensesController.value.text),
+                    //     type: 'output',
+                    //     category: _inputTypeController.value!.value,
+                    //     createAt: _dateController.date,
+                    //     updateAt: _dateController.date,
+                    //     uuid: 'asdfg',
+                    //   );
+                    //   // _controller.repository.deleteTransaction("cKwzRsuGMJ6VREv6ZVHS");
+                    //   // _controller.repository.createTransaction(_data);
+                    //   print('DATA ${_data.toString()}');
+                    //   _controller.repository.getTransactions();
+                    //   _controller.repository.getDocs();
 
-                      //Adiciona nova transacao na lista
-                      // final list = Modular.get<DailyStore>().transactions();
-                      // list.add(_data);
-                      // Modular.get<DailyStore>().setTransactions();
-                      // Modular.to.pushReplacementNamed(AppRoutes.daily);
-                      showDialog(
-                        context: context,
-                        builder: (_) => DialogWidget(
-                          message: "Dado enviado com sucesso",
-                        ),
-                      );
-                    }
+                    //   //Adiciona nova transacao na lista
+                    //   // final list = Modular.get<DailyStore>().transactions();
+                    //   // list.add(_data);
+                    //   // Modular.get<DailyStore>().setTransactions();
+                    //   // Modular.to.pushReplacementNamed(AppRoutes.daily);
+                    //   showDialog(
+                    //     context: context,
+                    //     builder: (_) => DialogWidget(
+                    //       message: "Dado enviado com sucesso",
+                    //     ),
+                    //   );
+                    // }
                   },
                 ),
               ),

@@ -1,27 +1,53 @@
 import 'package:flutter/material.dart';
 
 import 'constants.dart';
-import '../models/models.dart';
 
 class TransactionCategories {
-  static const Map<CategoryTransaction, Map<String, Color>> mapCategoryImageColors = {
-    CategoryTransaction.meal: {
+  static const String meal = 'meal';
+  static const String transport = 'transport';
+  static const String trip = 'trip';
+  static const String education = 'education';
+  static const String payments = 'payments';
+  static const String others = 'others';
+  static const String pix = 'pix';
+  static const String money = 'money';
+  static const String doc = 'doc';
+  static const String ted = 'ted';
+  static const String ticket = 'ticket';
+
+  static const Map<String, Map<String, Color>> mapCategoryImageColors = {
+    meal: {
       AppImages.icMeal: Colors.amber,
     },
-    CategoryTransaction.transport: {
+    transport: {
       AppImages.icTransport: AppColors.verde,
     },
-    CategoryTransaction.trip: {
+    trip: {
       AppImages.icTrip: AppColors.rosa,
     },
-    CategoryTransaction.education: {
+    education: {
       AppImages.icEducation: AppColors.azul,
     },
-    CategoryTransaction.payments: {
+    payments: {
       AppImages.icPayments: AppColors.roxo,
     },
-    CategoryTransaction.others: {
-      AppImages.icOthers: AppColors.purpleLight,
+    others: {
+      AppImages.icOthers: AppColors.melrose,
+    },
+    pix: {
+      AppImages.icPix: AppColors.azul,
+    },
+    money: {
+      AppImages.icPayments: AppColors.azul,
+    },
+    doc: {
+      AppImages.icDoc: AppColors.azul,
+    },
+    ted: {
+      AppImages.icTed: AppColors.azul,
+    },
+    ticket: {
+      AppImages.icBoleto: AppColors.azul,
     },
   };
 }

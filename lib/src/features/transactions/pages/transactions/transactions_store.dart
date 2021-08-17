@@ -1,15 +1,20 @@
-import 'package:budget/src/features/daily/repositories/daily_repository_interface.dart';
+import 'package:budget/src/features/home/home.dart';
+import 'package:budget/src/features/transactions/repositories/transaction_repository_interface.dart';
+import 'package:budget/src/features/transactions/transactions_module.dart';
 import 'package:budget/src/shared/models/models.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
-part 'daily_store.g.dart';
+import 'errors/erros.dart';
 
-class DailyStore = _DailyStoreBase with _$DailyStore;
+part 'transactions_store.g.dart';
 
-abstract class _DailyStoreBase with Store {
-  final IDailyRepository repository;
+class TransactionsStore = _TransactionsStoreBase with _$TransactionsStore;
 
-  _DailyStoreBase(this.repository) {
+abstract class _TransactionsStoreBase with Store {
+  final ITransactionsRepository repository;
+
+  _TransactionsStoreBase(this.repository) {
     init();
   }
 
@@ -57,15 +62,29 @@ abstract class _DailyStoreBase with Store {
   @action
   void setIndexPage(int value) => indexPage = value;
 
+  @observable
+  bool isLoading = false;
+  @action
+  void setIsLoading(bool value) => isLoading = value;
+
+  @observable
+  Failure? onError;
+  @action
+  void setOnError(Failure? value) => onError = value;
+
   Future<void> handleGetTransaction() async {
+    setIsLoading(true);
     try {
-      final data = await repository.getTransactions();
-      print(transactions.length);
+      final data = await repository.getTransactions(
+          Modular.get<HomeStore>().dailyStore.state.date.month);
+      setOnError(null);
+
       setTransactions(data);
-      print(transactions.length);
+      setIndexPage(0);
+      setIsLoading(false);
     } catch (e) {
-      print("asdasd");
-      print(e);
+      setIsLoading(false);
+      setOnError(TransActionError(message: e.toString()));
     }
   }
 }

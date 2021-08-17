@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:budget/src/shared/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class TransactionModel {
+class TransactionModel2 {
   final String uuid;
   final String category;
   final String type;
@@ -12,7 +12,7 @@ class TransactionModel {
   final DateTime createAt;
   final DateTime updateAt;
 
-  TransactionModel({
+  TransactionModel2({
     required this.uuid,
     required this.category,
     required this.type,
@@ -22,7 +22,7 @@ class TransactionModel {
     required this.updateAt,
   });
 
-  TransactionModel copyWith({
+  TransactionModel2 copyWith({
     String? uuid,
     String? category,
     String? type,
@@ -31,7 +31,7 @@ class TransactionModel {
     DateTime? createAt,
     DateTime? updateAt,
   }) {
-    return TransactionModel(
+    return TransactionModel2(
       uuid: uuid ?? this.uuid,
       category: category ?? this.category,
       type: type ?? this.type,
@@ -54,8 +54,8 @@ class TransactionModel {
     };
   }
 
-  factory TransactionModel.fromMap(Map<String, dynamic> map) {
-    return TransactionModel(
+  factory TransactionModel2.fromMap(Map<String, dynamic> map) {
+    return TransactionModel2(
       uuid: map['uuid'],
       category: map['category'],
       type: map['type'],
@@ -66,10 +66,10 @@ class TransactionModel {
     );
   }
 
-  factory TransactionModel.fromFirestore(DocumentSnapshot doc) {
+  factory TransactionModel2.fromFirestore(DocumentSnapshot doc) {
     Map map = doc.data() as Map<String, dynamic>;
 
-    return TransactionModel(
+    return TransactionModel2(
       uuid: map['uuid'] ?? '',
       category: map['category'] ?? '',
       type: map['type'] ?? '',
@@ -82,18 +82,18 @@ class TransactionModel {
 
   String toJson() => json.encode(toMap());
 
-  factory TransactionModel.fromJson(String source) => TransactionModel.fromMap(json.decode(source));
+  factory TransactionModel2.fromJson(String source) => TransactionModel2.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'TransactionModel(uuid: $uuid, category: $category, type: $type, description: $description, value: $value, createAt: $createAt, updateAt: $updateAt)';
+    return 'TransactionModel2(uuid: $uuid, category: $category, type: $type, description: $description, value: $value, createAt: $createAt, updateAt: $updateAt)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is TransactionModel &&
+    return other is TransactionModel2 &&
         other.uuid == uuid &&
         other.category == category &&
         other.type == type &&

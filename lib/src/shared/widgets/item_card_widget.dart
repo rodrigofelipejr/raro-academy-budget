@@ -1,3 +1,4 @@
+import 'package:budget/src/shared/constants/transaction_categories.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/constants.dart';
@@ -16,14 +17,13 @@ class ItemCardWidget extends StatelessWidget {
     this.prefixEnable = false,
   }) : super(key: key);
 
+  Map get mapCategoryImageColors =>
+      TransactionCategories.mapCategoryImageColors[transaction.category] ??
+      TransactionCategories.mapCategoryImageColors[TransactionCategories.others]!;
+
   Color get backgroundColor => mapCategoryImageColors.entries.first.value;
   String get asset => mapCategoryImageColors.entries.first.key;
   String get prefix => transaction.type.index == 0 ? '+' : '-';
-  Map get mapCategoryImageColors => TransactionCategories.mapCategoryImageColors.values.elementAt(
-        CategoryTransaction.values.indexOf(
-          transaction.category,
-        ),
-      );
   TextStyle get style => prefixEnable
       ? AppTextStyles.black16w400Roboto
       : AppTextStyles.black16w400Roboto.copyWith(
@@ -45,12 +45,13 @@ class ItemCardWidget extends StatelessWidget {
           backgroundColor: backgroundColor,
           child: SizedBox(
             height: 20.0,
-            child: Image.asset(asset, fit: BoxFit.cover),
+            width: 20.0,
+            child: Image.asset(asset, fit: BoxFit.contain),
           ),
         ),
       ),
       title: Text(
-        transaction.description,
+        transaction.description ?? transaction.category,
         overflow: TextOverflow.ellipsis,
         maxLines: 1,
         style: AppTextStyles.purple16w500Roboto,
