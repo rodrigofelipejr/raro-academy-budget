@@ -76,6 +76,36 @@ mixin _$TransactionsStore on _TransactionsStoreBase, Store {
     });
   }
 
+  final _$isLoadingAtom = Atom(name: '_TransactionsStoreBase.isLoading');
+
+  @override
+  bool get isLoading {
+    _$isLoadingAtom.reportRead();
+    return super.isLoading;
+  }
+
+  @override
+  set isLoading(bool value) {
+    _$isLoadingAtom.reportWrite(value, super.isLoading, () {
+      super.isLoading = value;
+    });
+  }
+
+  final _$onErrorAtom = Atom(name: '_TransactionsStoreBase.onError');
+
+  @override
+  Failure? get onError {
+    _$onErrorAtom.reportRead();
+    return super.onError;
+  }
+
+  @override
+  set onError(Failure? value) {
+    _$onErrorAtom.reportWrite(value, super.onError, () {
+      super.onError = value;
+    });
+  }
+
   final _$_TransactionsStoreBaseActionController =
       ActionController(name: '_TransactionsStoreBase');
 
@@ -102,10 +132,34 @@ mixin _$TransactionsStore on _TransactionsStoreBase, Store {
   }
 
   @override
+  void setIsLoading(bool value) {
+    final _$actionInfo = _$_TransactionsStoreBaseActionController.startAction(
+        name: '_TransactionsStoreBase.setIsLoading');
+    try {
+      return super.setIsLoading(value);
+    } finally {
+      _$_TransactionsStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setOnError(Failure? value) {
+    final _$actionInfo = _$_TransactionsStoreBaseActionController.startAction(
+        name: '_TransactionsStoreBase.setOnError');
+    try {
+      return super.setOnError(value);
+    } finally {
+      _$_TransactionsStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 transactions: ${transactions},
 indexPage: ${indexPage},
+isLoading: ${isLoading},
+onError: ${onError},
 transactionOutput: ${transactionOutput},
 transactionInput: ${transactionInput},
 transactionOutputTotal: ${transactionOutputTotal},

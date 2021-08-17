@@ -75,6 +75,7 @@ class _TransactionsPageState
                   referenceDate: homeStore.dailyStore.state.date,
                   changeSelectedDate: (DateTime date) {
                     homeStore.dailyStore.handleDaily(date: date);
+                    controller.handleGetTransaction();
                   },
                 );
               }),
@@ -83,6 +84,16 @@ class _TransactionsPageState
         ],
       ),
       body: Observer(builder: (_) {
+        if (controller.isLoading)
+          return Center(
+            child: LoadingWidget(),
+          );
+        if (controller.onError != null)
+          return Center(
+            child: CustomErrorWidget(
+                message: "Error interno", reload: () => controller.init()),
+          );
+
         return PageView(
           onPageChanged: (value) => controller.setIndexPage(value),
           controller: _pageController,

@@ -1,8 +1,11 @@
 import 'package:budget/src/features/home/home.dart';
 import 'package:budget/src/features/transactions/repositories/transaction_repository_interface.dart';
+import 'package:budget/src/features/transactions/transactions_module.dart';
 import 'package:budget/src/shared/models/models.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+
+import 'errors/erros.dart';
 
 part 'transactions_store.g.dart';
 
@@ -59,15 +62,28 @@ abstract class _TransactionsStoreBase with Store {
   @action
   void setIndexPage(int value) => indexPage = value;
 
-  Future<void> handleGetTransaction({DateTime? date}) async {
+  @observable
+  bool isLoading = false;
+  @action
+  void setIsLoading(bool value) => isLoading = value;
+
+  @observable
+  Failure? onError;
+  @action
+  void setOnError(Failure? value) => onError = value;
+
+  Future<void> handleGetTransaction() async {
+    setIsLoading(true);
     try {
       final data = await repository.getTransactions(
           Modular.get<HomeStore>().dailyStore.state.date.month);
+      setOnError(null);
 
       setTransactions(data);
+      setIsLoading(false);
     } catch (e) {
-      print("asdasd");
-      print('$e');
+      setIsLoading(false);
+      setOnError(TransActionError(message: e.toString()));
     }
   }
 }

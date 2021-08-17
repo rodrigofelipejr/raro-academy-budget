@@ -70,14 +70,17 @@ class ButtonsAppBarDay extends StatelessWidget {
     return Observer(builder: (_) {
       return Expanded(
         child: TextButton(
-          onPressed: button,
+          onPressed:
+              Modular.get<TransactionsStore>().onError != null ? null : button,
           child: Text(
             text,
             style: TextStyle(
                 fontSize: 16,
-                color: Modular.get<TransactionsStore>().indexPage == screen
-                    ? Colors.white
-                    : Color.fromARGB(60, 255, 255, 255)),
+                color: Modular.get<TransactionsStore>().onError != null
+                    ? Color.fromARGB(60, 255, 255, 255)
+                    : Modular.get<TransactionsStore>().indexPage == screen
+                        ? Colors.white
+                        : Color.fromARGB(60, 255, 255, 255)),
           ),
         ),
       );
