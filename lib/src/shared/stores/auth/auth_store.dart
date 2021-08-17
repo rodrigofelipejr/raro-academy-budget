@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
@@ -17,7 +19,7 @@ abstract class _AuthStoreBase with Store implements Disposable {
 
   _AuthStoreBase(this.firebaseAuth, this.repository);
 
-  late dynamic listen;
+  StreamSubscription<User?>? listen;
 
   void addListenAuth() async {
     listen = firebaseAuth.authStateChanges().listen((User? user) {
@@ -54,8 +56,8 @@ abstract class _AuthStoreBase with Store implements Disposable {
     setUser(data);
   }
 
-  void logoffUser() async {
-    setUser(null);
+  Future<void> logoffUser() async {
     await firebaseAuth.signOut();
+    setUser(null);
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../constants/constants.dart';
 
 class ButtonIconVisibleWidget extends StatelessWidget {
+  final Color colorIcon;
   final void Function() onTap;
   final bool showing;
 
@@ -10,6 +11,7 @@ class ButtonIconVisibleWidget extends StatelessWidget {
     Key? key,
     required this.onTap,
     required this.showing,
+    this.colorIcon = AppColors.roxo,
   }) : super(key: key);
 
   IconData get icon => showing ? Icons.visibility : Icons.visibility_off;
@@ -25,7 +27,7 @@ class ButtonIconVisibleWidget extends StatelessWidget {
           onPressed: onTap,
           icon: Icon(
             icon,
-            color: AppColors.roxo,
+            color: colorIcon,
           ),
           splashRadius: kMinInteractiveDimension * 0.5,
         ),

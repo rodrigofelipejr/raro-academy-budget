@@ -1,6 +1,6 @@
-import 'package:budget/src/shared/constants/app_images.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../shared/constants/constants.dart';
 import '../../../../../shared/constants/app_colors.dart';
 
 class HeaderWidget extends StatelessWidget {
@@ -20,11 +20,8 @@ class HeaderWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SizedBox(
-          height: 74,
-        ),
-        Hero(
-          tag: "notes_logo",
+        Padding(
+          padding: const EdgeInsets.only(top: 74.0),
           child: SizedBox(
             width: sizeScreen.width * 0.29,
             child: Image.asset(
@@ -32,9 +29,7 @@ class HeaderWidget extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(
-          height: 16.15,
-        ),
+        SizedBox(height: 16.15),
         Text(
           title ?? '',
           style: TextStyle(
@@ -55,9 +50,7 @@ class HeaderWidget extends StatelessWidget {
                 ),
               )
             : Container(),
-        SizedBox(
-          height: 8,
-        ),
+        SizedBox(height: 8),
       ],
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mobx/mobx.dart';
 
 import '../../shared/constants/constants.dart';
 import 'splash_store.dart';
@@ -14,24 +15,23 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends ModularState<SplashPage, SplashStore> {
+  late ReactionDisposer _disposer;
+
   @override
   void initState() {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
-    SystemChrome.setEnabledSystemUIOverlays([]);
-    // FIXME - Verificar como implementar essa logica.
-    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
-      // FIXME - deve ser revisto, quando o usuário já está logado
-      Future.delayed(Duration(seconds: 3)).then(
-        (value) => Modular.to.pushReplacementNamed(AppRoutes.login),
-      );
+
+    _disposer = reaction<String>((_) => store.navigation, (String route) {
+      if (route.isNotEmpty) Modular.to.pushReplacementNamed(route);
     });
+
     store.init();
     super.initState();
   }
 
   @override
   void dispose() {
-    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    _disposer();
     super.dispose();
   }
 

@@ -1,4 +1,4 @@
-import 'package:budget/src/features/login/page/login/login_controller.dart';
+import 'package:budget/src/features/login/page/login/login_store.dart';
 import 'package:budget/src/shared/constants/app_gradients.dart';
 import 'package:budget/src/shared/constants/constants.dart';
 import 'package:flutter/material.dart';
