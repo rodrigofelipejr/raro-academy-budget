@@ -25,7 +25,7 @@ class TransactionsModule extends Module {
         ChildRoute(AppRoutes.initial, child: (_, args) => TransactionsPage()),
         ChildRoute(AppRoutes.income,
             child: (_, args) => IncomePage(
-                  transaction: args.data,
+                  data: args.data,
                 )),
         ChildRoute(AppRoutes.expenses, child: (_, args) => ExpensesPage()),
       ];
