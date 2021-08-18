@@ -7,8 +7,8 @@ class IncomeStore {
   IncomeStore(this.repository);
 
   Future<bool> createTransaction({
-    TransactionModel? transaction,
+    required TransactionModel transaction,
   }) async {
-    return await repository.createTransaction(transaction!);
+    return await repository.createTransaction(transaction);
   }
 }
