@@ -1,12 +1,14 @@
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../shared/constants/constants.dart';
-import 'page/login/login_page.dart';
+import 'page/login/login.dart';
 import 'page/register/register_page.dart';
 
 class LoginModule extends Module {
   @override
-  List<Bind<Object>> get binds => [];
+  List<Bind<Object>> get binds => [
+        Bind.singleton((i) => LoginStore(i(), i())),
+      ];
 
   @override
   List<ModularRoute> get routes => [

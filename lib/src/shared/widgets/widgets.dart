@@ -15,5 +15,5 @@ export 'month_year_calendar/month_year_calendar_widget.dart';
 export 'overlay_widget.dart';
 export 'progress_indicator_widget.dart';
 export 'try_again_button_widget.dart';
-export 'visible_widget.dart'; //TODO - duplicado button_icon_visible_widget
 export 'wrapper_widget.dart';
+export 'circular_button_gradient.dart'; //TODO - revisar lógica

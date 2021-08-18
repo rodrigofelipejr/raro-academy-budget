@@ -26,7 +26,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
     final sizeScreen = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBarWidget(title: 'Olá José'), //TODO - buscar em Auth
+      appBar: AppBarWidget(title: store.authStore.welcomeMessage),
       floatingActionButton: Observer(
         builder: (_) => Visibility(
           visible: store.isLoading == false && store.onError == null,
