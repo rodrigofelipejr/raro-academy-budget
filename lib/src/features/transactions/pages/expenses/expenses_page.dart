@@ -16,7 +16,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'expenses_store.dart';
 
 class ExpensesPage extends StatefulWidget {
-  const ExpensesPage({Key? key}) : super(key: key);
+  final TransactionModel? data;
+  const ExpensesPage({Key? key, this.data}) : super(key: key);
 
   @override
   _ExpensesPageState createState() => _ExpensesPageState();
@@ -34,7 +35,18 @@ class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  late TransactionModel _data;
+  // late TransactionModel _data;
+  void initState() {
+    super.initState();
+    _expensesController =
+        TextEditingController(text: widget.data?.value.toString());
+
+    _dateController.date = widget.data?.createAt ?? DateTime.now();
+
+    _inputTypeController.value = TransactionsItems.expensesItems
+        .where((element) => element.value == "Viagem")
+        .first;
+  }
 
   @override
   Widget build(BuildContext context) {

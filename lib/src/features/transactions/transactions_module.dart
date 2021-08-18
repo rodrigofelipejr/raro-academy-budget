@@ -27,6 +27,9 @@ class TransactionsModule extends Module {
             child: (_, args) => IncomePage(
                   data: args.data,
                 )),
-        ChildRoute(AppRoutes.expenses, child: (_, args) => ExpensesPage()),
+        ChildRoute(AppRoutes.expenses,
+            child: (_, args) => ExpensesPage(
+                  data: args.data,
+                )),
       ];
 }
