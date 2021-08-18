@@ -1,9 +1,9 @@
 import 'package:intl/intl.dart';
 
 class Formatters {
-  static String formatMoney(double value) {
+  static String formatMoney(double value, {bool prefix = true}) {
     final currency = new NumberFormat("#,##0.00", "pt_BR");
-    return 'R\$ ${currency.format(value)}';
+    return '${prefix ? "R\$ " : ""}${currency.format(value)}';
   }
 
   static String dateParsing(DateTime date) {

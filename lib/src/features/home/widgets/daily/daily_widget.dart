@@ -82,7 +82,7 @@ class _DailyStateWidget extends ModularState<DailyWidget, DailyStore> {
                       ),
                       SizedBox(height: 6.0),
                       Text(
-                        'R\$ ${Formatters.formatMoney(store.state.dailyBalance)}',
+                        '${Formatters.formatMoney(store.state.dailyBalance)}',
                         style: AppTextStyles.black24w400Roboto,
                       ),
                       SizedBox(height: 12.0),
