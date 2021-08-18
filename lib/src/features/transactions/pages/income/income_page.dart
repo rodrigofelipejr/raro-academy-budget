@@ -1,3 +1,4 @@
+import 'package:budget/src/features/home/widgets/daily/daily_store.dart';
 import 'package:budget/src/features/transactions/constants/transactions_items.dart';
 import 'package:budget/src/features/transactions/controller/date_controller.dart';
 import 'package:budget/src/features/transactions/controller/dropdown_controller.dart';
@@ -138,7 +139,7 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                 bottom: 0,
                 child: ButtonWidget(
                   label: "INSERIR",
-                  onPressed: () {
+                  onPressed: () async {
                     FocusScope.of(context).unfocus();
                     if (_formKey.currentState!.validate()) {
                       _newData = TransactionModel(
@@ -148,31 +149,31 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                         description: _inputNameController.value.text,
                         createAt: _dateController.date,
                         updateAt: _dateController.date,
-                        uuid: 'asdf',
+                        uuid: '31KaO9IFxTOY3No1kWfoYyHptiw2',
                       );
-                      // _controller.repository.deleteTransaction("VvglcDTgd4XlpLVDfcqQ");
-                      // _controller.repository.createTransaction(_newData);
-                      print('DATA ${_newData.toString()}');
-                      // controller.repository.getTransactions();
+                      print('DATA ${_newData.toMap()}');
 
-                      //Adiciona nova transacao na lista
-                      // final list = Modular.get<DailyStore>().transactions();
-                      // list.add(_newData);
-                      // Modular.get<DailyStore>().setTransactions();
-                      // Modular.to.pushReplacementNamed(AppRoutes.daily);
+                      // final bool isSentToDatabase = true;
+                      final bool isSentToDatabase =
+                          await store.createTransaction(transaction: _newData);
 
-                      final list =
-                          Modular.get<TransactionsStore>().transactions;
-                      list.add(_newData);
-                      Modular.to.pop();
+                      if (isSentToDatabase) {
+                        final List<TransactionModel> list =
+                            Modular.get<TransactionsStore>().transactions;
+                        list.add(_newData);
+                        Modular.to.pop();
 
-                      showDialog(
-                        context: context,
-                        builder: (_) => DialogWidget(
-                          message: "Dado enviado com sucesso",
-                        ),
-                      );
+                        showDialog(
+                          context: context,
+                          builder: (_) => DialogWidget(
+                            message: "Dado enviado com sucesso",
+                          ),
+                        );
+                      }
                     }
+                    // store.repository.deleteTransaction("jeH1WD8NeFDTcPiC57XU");
+                    store.repository.showTransactions();
+                    store.repository.showDocs();
                   },
                 ),
               ),
