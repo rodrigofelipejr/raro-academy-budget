@@ -49,7 +49,7 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
         TextEditingController(text: widget.data?.value.toString());
     _inputNameController =
         TextEditingController(text: widget.data?.description);
-    _dateController.date = widget.data!.createAt;
+    _dateController.date = widget.data?.createAt ?? DateTime.now();
     _inputTypeController.value = TransactionsItems.incomeItems
         .where((element) => element.value == "Dinheiro")
         .first;
