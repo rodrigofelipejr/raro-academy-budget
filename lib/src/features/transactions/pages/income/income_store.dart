@@ -9,6 +9,11 @@ class IncomeStore {
   Future<bool> createTransaction({
     required TransactionModel transaction,
   }) async {
-    return await repository.createTransaction(transaction);
+    try {
+      await repository.createTransaction(transaction);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }
