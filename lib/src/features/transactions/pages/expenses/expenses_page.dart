@@ -24,7 +24,8 @@ class ExpensesPage extends StatefulWidget {
 
 class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
   TextEditingController _expensesController = TextEditingController();
-  DropdownController _inputTypeController = DropdownController(items: TransactionsItems.expensesItems);
+  DropdownController _inputTypeController =
+      DropdownController(items: TransactionsItems.expensesItems);
   DateController _dateController = DateController();
 
   FocusNode _expensesFocusNode = FocusNode();
@@ -76,7 +77,8 @@ class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
                             keyboardType: TextInputType.number,
                             focusNode: _expensesFocusNode,
                             controller: _expensesController,
-                            validator: (value) => Validators().validateNumber(value!),
+                            validator: (value) =>
+                                Validators().validateNumber(value!),
                           ),
                         ),
                         Padding(
@@ -92,7 +94,8 @@ class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
                                   value: _inputTypeController.value,
                                   items: _inputTypeController.items,
                                   focusNode: _inputTypeFocusNode,
-                                  validator: (value) => Validators().validateTransactionCategory(value),
+                                  validator: (value) => Validators()
+                                      .validateTransactionCategory(value),
                                   onChanged: (newValue) {
                                     _inputTypeController.value = newValue!;
                                     setState(() {});

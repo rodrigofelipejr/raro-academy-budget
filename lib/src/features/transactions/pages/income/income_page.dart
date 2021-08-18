@@ -8,17 +8,19 @@ import 'package:budget/src/features/transactions/widgets/button_widget.dart';
 import 'package:budget/src/features/transactions/widgets/date_picker_widget.dart';
 import 'package:budget/src/features/transactions/widgets/dialog_widget.dart';
 import 'package:budget/src/features/transactions/widgets/dropdown_buttom_widget.dart';
+import 'package:budget/src/features/transactions/widgets/dropdown_item_data.dart';
 import 'package:budget/src/features/transactions/widgets/text_styles.dart';
+import 'package:budget/src/shared/constants/app_colors.dart';
 import 'package:budget/src/shared/models/models.dart';
 import 'package:budget/src/shared/widgets/custom_text_field.dart';
 import 'package:budget/src/shared/widgets/drawer/drawer_widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class IncomePage extends StatefulWidget {
-  const IncomePage({Key? key}) : super(key: key);
-  // const IncomePage({Key? key, this.data}) : super(key: key);
-  // final TransactionModel? data;
+  final TransactionModel? transaction;
+  const IncomePage({Key? key, this.transaction}) : super(key: key);
 
   @override
   _IncomePageState createState() => _IncomePageState();
@@ -27,7 +29,8 @@ class IncomePage extends StatefulWidget {
 class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
   TextEditingController _incomeController = TextEditingController();
   TextEditingController _inputNameController = TextEditingController();
-  DropdownController _inputTypeController = DropdownController(items: TransactionsItems.incomeItems);
+  DropdownController _inputTypeController =
+      DropdownController(items: TransactionsItems.incomeItems);
   DateController _dateController = DateController();
 
   FocusNode _incomeFocusNode = FocusNode();
@@ -37,7 +40,18 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  late TransactionModel _data;
+  @override
+  void initState() {
+    super.initState();
+    _incomeController =
+        TextEditingController(text: widget.transaction?.value.toString());
+    _inputNameController =
+        TextEditingController(text: widget.transaction?.description);
+    _dateController.date = widget.transaction!.createAt;
+    _inputTypeController.value = TransactionsItems.incomeItems
+        .where((element) => element.value == "Dinheiro")
+        .first;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +94,8 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                             keyboardType: TextInputType.number,
                             focusNode: _incomeFocusNode,
                             controller: _incomeController,
-                            validator: (value) => Validators().validateNumber(value!),
+                            validator: (value) =>
+                                Validators().validateNumber(value!),
                           ),
                         ),
                         Padding(
@@ -96,7 +111,8 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                                 value: _inputTypeController.value,
                                 items: _inputTypeController.items,
                                 focusNode: _inputTypeFocusNode,
-                                validator: (value) => Validators().validateTransactionCategory(value),
+                                validator: (value) => Validators()
+                                    .validateTransactionCategory(value),
                                 onChanged: (newValue) {
                                   _inputTypeController.value = newValue!;
                                   setState(() {});
@@ -113,7 +129,8 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                             keyboardType: TextInputType.text,
                             focusNode: _inputNameFocusNode,
                             controller: _inputNameController,
-                            validator: (value) => Validators().validateName(value!),
+                            validator: (value) =>
+                                Validators().validateName(value!),
                           ),
                         ),
                         Padding(
@@ -121,6 +138,7 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                             top: 12,
                           ),
                           child: DatePickerWidget(
+                            date: _dateController.date,
                             controller: _dateController,
                             focusNode: _datePickerFocusNode,
                           ),
@@ -133,7 +151,7 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
               Positioned(
                 bottom: 0,
                 child: ButtonWidget(
-                  label: "INSERIR",
+                  label: widget.transaction == null ? "INSERIR" : "ATUALIZAR",
                   onPressed: () {
                     // FocusScope.of(context).unfocus();
                     // if (_formKey.currentState!.validate()) {

@@ -10,8 +10,9 @@ class DatePickerWidget extends StatefulWidget {
     Key? key,
     required this.controller,
     this.focusNode,
+    this.date,
   }) : super(key: key);
-
+  final DateTime? date;
   final DateController controller;
   final FocusNode? focusNode;
 
@@ -34,6 +35,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
     );
     if (newDate != null) {
       selectedDate = newDate;
+
       widget.controller.date = selectedDate!;
       textController.text = DateFormat("dd/MM/yyyy").format(selectedDate!);
       setState(() {});
@@ -42,7 +44,8 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
 
   @override
   void initState() {
-    textController.text = DateFormat("dd/MM/yyyy").format(DateTime.now());
+    textController.text =
+        DateFormat("dd/MM/yyyy").format(widget.date ?? DateTime.now());
     super.initState();
   }
 
