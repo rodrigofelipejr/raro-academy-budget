@@ -75,7 +75,7 @@ abstract class _TransactionsStoreBase with Store {
   Future<void> handleGetTransaction() async {
     setIsLoading(true);
     try {
-      final data = await repository.getTransactions(
+      final data = await repository.getTransactionsByMonth(
           Modular.get<HomeStore>().dailyStore.state.date.month);
       setOnError(null);
 
