@@ -1,7 +1,9 @@
+import 'package:budget/src/features/home/widgets/daily/daily_store.dart';
 import 'package:budget/src/features/transactions/constants/transactions_items.dart';
 import 'package:budget/src/features/transactions/controller/date_controller.dart';
 import 'package:budget/src/features/transactions/controller/dropdown_controller.dart';
 import 'package:budget/src/features/transactions/pages/income/income_store.dart';
+import 'package:budget/src/features/transactions/pages/transactions/transactions_store.dart';
 import 'package:budget/src/features/transactions/validators/text_validator.dart';
 import 'package:budget/src/features/transactions/widgets/appbar_with_drawer.dart';
 import 'package:budget/src/features/transactions/widgets/button_widget.dart';
@@ -19,8 +21,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class IncomePage extends StatefulWidget {
-  final TransactionModel? transaction;
-  const IncomePage({Key? key, this.transaction}) : super(key: key);
+  const IncomePage({Key? key, this.data}) : super(key: key);
+  final TransactionModel? data;
 
   @override
   _IncomePageState createState() => _IncomePageState();
@@ -44,14 +46,16 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
   void initState() {
     super.initState();
     _incomeController =
-        TextEditingController(text: widget.transaction?.value.toString());
+        TextEditingController(text: widget.data?.value.toString());
     _inputNameController =
-        TextEditingController(text: widget.transaction?.description);
-    _dateController.date = widget.transaction!.createAt;
+        TextEditingController(text: widget.data?.description);
+    _dateController.date = widget.data!.createAt;
     _inputTypeController.value = TransactionsItems.incomeItems
         .where((element) => element.value == "Dinheiro")
         .first;
   }
+
+  late TransactionModel _newData;
 
   @override
   Widget build(BuildContext context) {
@@ -151,36 +155,42 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
               Positioned(
                 bottom: 0,
                 child: ButtonWidget(
-                  label: widget.transaction == null ? "INSERIR" : "ATUALIZAR",
-                  onPressed: () {
-                    // FocusScope.of(context).unfocus();
-                    // if (_formKey.currentState!.validate()) {
-                    //   _data = TransactionModel(
-                    //     value: double.parse(_incomeController.value.text),
-                    //     type: 'input',
-                    //     category: _inputTypeController.value!.value,
-                    //     description: _inputNameController.value.text,
-                    //     createAt: _dateController.date,
-                    //     updateAt: _dateController.date,
-                    //     uuid: 'asdf',
-                    //   );
-                    //   // _controller.repository.deleteTransaction("VvglcDTgd4XlpLVDfcqQ");
-                    //   // _controller.repository.createTransaction(_data);
-                    //   print('DATA ${_data.toString()}');
-                    //   controller.repository.getTransactions();
+                  label: "INSERIR",
+                  onPressed: () async {
+                    FocusScope.of(context).unfocus();
+                    if (_formKey.currentState!.validate()) {
+                      _newData = TransactionModel(
+                        value: double.parse(_incomeController.value.text),
+                        type: TypeTransaction.input,
+                        category: _inputTypeController.value!.value,
+                        description: _inputNameController.value.text,
+                        createAt: _dateController.date,
+                        updateAt: _dateController.date,
+                        uuid: '31KaO9IFxTOY3No1kWfoYyHptiw2',
+                      );
+                      print('DATA ${_newData.toMap()}');
 
-                    //   //Adiciona nova transacao na lista
-                    //   // final list = Modular.get<DailyStore>().transactions();
-                    //   // list.add(_data);
-                    //   // Modular.get<DailyStore>().setTransactions();
-                    //   // Modular.to.pushReplacementNamed(AppRoutes.daily);
-                    //   showDialog(
-                    //     context: context,
-                    //     builder: (_) => DialogWidget(
-                    //       message: "Dado enviado com sucesso",
-                    //     ),
-                    //   );
-                    // }
+                      // final bool isSentToDatabase = true;
+                      final bool isSentToDatabase =
+                          await store.createTransaction(transaction: _newData);
+
+                      if (isSentToDatabase) {
+                        final List<TransactionModel> list =
+                            Modular.get<TransactionsStore>().transactions;
+                        list.add(_newData);
+                        Modular.to.pop();
+
+                        showDialog(
+                          context: context,
+                          builder: (_) => DialogWidget(
+                            message: "Dado enviado com sucesso",
+                          ),
+                        );
+                      }
+                    }
+                    // store.repository.deleteTransaction("jeH1WD8NeFDTcPiC57XU");
+                    store.repository.showTransactions();
+                    store.repository.showDocs();
                   },
                 ),
               ),

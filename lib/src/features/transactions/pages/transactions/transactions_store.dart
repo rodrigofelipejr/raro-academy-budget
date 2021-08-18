@@ -75,7 +75,7 @@ abstract class _TransactionsStoreBase with Store {
     setIsLoading(true);
     try {
       final month = homeStore.dailyStore.state.date.month;
-      final data = await repository.getTransactions(month);
+      final data = await repository.getTransactionsByMonth(month);
       setOnError(null);
 
       setTransactions(data);
