@@ -1,24 +1,27 @@
-import 'package:budget/src/features/daily/daily_store.dart'; //TODO - organizar imports
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:budget/src/features/daily/widgets/all_card.dart';
-import 'package:budget/src/features/daily/widgets/buttons_appbar.dart';
-import 'package:budget/src/features/daily/widgets/input_card.dart';
-import 'package:budget/src/features/daily/widgets/output_card.dart';
-import 'package:budget/src/features/home/home.dart';
+import 'package:budget/src/features/transactions/pages/transactions/transactions_store.dart';
+import 'package:budget/src/features/transactions/pages/transactions/widgets/output_card.dart';
+import 'package:budget/src/shared/constants/app_routes.dart';
 import 'package:budget/src/shared/utils/dates.dart';
 import 'package:budget/src/shared/widgets/fab_widget.dart';
 import 'package:budget/src/shared/widgets/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
-class DailyPage extends StatefulWidget {
-  const DailyPage({Key? key}) : super(key: key);
+import '../../../home/home.dart';
+import 'widgets/all_card.dart';
+import 'widgets/buttons_appbar.dart';
+import 'widgets/input_card.dart';
+
+class TransactionsPage extends StatefulWidget {
+  const TransactionsPage({Key? key}) : super(key: key);
 
   @override
-  _DailyPageState createState() => _DailyPageState();
+  _TransactionsPageState createState() => _TransactionsPageState();
 }
 
-class _DailyPageState extends ModularState<DailyPage, DailyStore> {
+class _TransactionsPageState
+    extends ModularState<TransactionsPage, TransactionsStore> {
   final PageController _pageController = PageController();
 
   void _navigator({required int index}) {
@@ -38,7 +41,14 @@ class _DailyPageState extends ModularState<DailyPage, DailyStore> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FabWidget(onTap: () {}),
+      floatingActionButton: Observer(builder: (_) {
+        return controller.indexPage == 2
+            ? SizedBox()
+            : FabWidget(
+                onTap: () => controller.indexPage == 0
+                    ? Modular.to.pushNamed(AppRoutes.income)
+                    : Modular.to.pushNamed(AppRoutes.expenses));
+      }),
       appBar: AppBar(
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -52,9 +62,9 @@ class _DailyPageState extends ModularState<DailyPage, DailyStore> {
           ),
         ),
         flexibleSpace: ButtonsAppBarDay(
-          buttonin: () => _navigator(index: 0), //TODO - buttonIo => usar padão camelcase
-          buttonout: () => _navigator(index: 1), //TODO - buttonIo => usar padão camelcase
-          buttonall: () => _navigator(index: 2), //TODO - buttonIo => usar padão camelcase
+          buttonIn: () => _navigator(index: 0),
+          buttonOut: () => _navigator(index: 1),
+          buttonAll: () => _navigator(index: 2),
         ),
         toolbarHeight: MediaQuery.of(context).size.height * 0.22,
         actions: [
@@ -65,10 +75,13 @@ class _DailyPageState extends ModularState<DailyPage, DailyStore> {
               child: Observer(builder: (_) {
                 final homeStore = Modular.get<HomeStore>();
                 return MonthSelectorWidget(
-                  label: Dates.descriptionMonth(homeStore.dailyStore.state.date.month),
+                  flatStyle: true,
+                  label: Dates.descriptionMonth(
+                      homeStore.dailyStore.state.date.month),
                   referenceDate: homeStore.dailyStore.state.date,
                   changeSelectedDate: (DateTime date) {
                     homeStore.dailyStore.handleDaily(date: date);
+                    controller.handleGetTransaction();
                   },
                 );
               }),
@@ -77,6 +90,17 @@ class _DailyPageState extends ModularState<DailyPage, DailyStore> {
         ],
       ),
       body: Observer(builder: (_) {
+        if (controller.isLoading)
+          return Center(
+            child: LoadingWidget(),
+          );
+
+        if (controller.onError != null)
+          return Center(
+            child: CustomErrorWidget(
+                message: "Error interno", reload: () => controller.init()),
+          );
+
         return PageView(
           onPageChanged: (value) => controller.setIndexPage(value),
           controller: _pageController,

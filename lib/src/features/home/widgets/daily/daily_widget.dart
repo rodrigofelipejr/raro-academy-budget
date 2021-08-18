@@ -20,7 +20,8 @@ class DailyWidget extends StatefulWidget {
 }
 
 class _DailyStateWidget extends ModularState<DailyWidget, DailyStore> {
-  bool get resetValues => store.state.inputs == 0.0 && store.state.outputs == 0.0;
+  bool get resetValues =>
+      store.state.inputs == 0.0 && store.state.outputs == 0.0;
 
   Widget _buildInput() {
     return IndicatorsWidget(
@@ -47,7 +48,7 @@ class _DailyStateWidget extends ModularState<DailyWidget, DailyStore> {
       child: CardWidget(
         contentPadding: const EdgeInsets.all(0.0),
         child: InkWell(
-          onTap: () => Modular.to.pushNamed(AppRoutes.daily),
+          onTap: () => Modular.to.pushNamed(AppRoutes.transaction),
           borderRadius: BorderRadius.all(Radius.circular(7.0)),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -70,9 +71,12 @@ class _DailyStateWidget extends ModularState<DailyWidget, DailyStore> {
                           ),
                           MonthSelectorWidget(
                             label: store.selectedMonthDescription,
-                            referenceDate: Modular.get<HomeStore>().dailyStore.state.date,
+                            referenceDate:
+                                Modular.get<HomeStore>().dailyStore.state.date,
                             changeSelectedDate: (DateTime date) =>
-                                Modular.get<HomeStore>().dailyStore.handleDaily(date: date),
+                                Modular.get<HomeStore>()
+                                    .dailyStore
+                                    .handleDaily(date: date),
                           )
                         ],
                       ),

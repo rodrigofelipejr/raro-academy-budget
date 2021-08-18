@@ -1,16 +1,16 @@
-import 'package:budget/src/features/daily/daily_store.dart';
+import 'package:budget/src/features/transactions/pages/transactions/transactions_store.dart';
+import 'package:budget/src/shared/constants/constants.dart';
 import 'package:budget/src/shared/utils/formatters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import '../../../shared/constants/constants.dart';
 
 class ButtonsAppBarDay extends StatelessWidget {
-  final VoidCallback? buttonin;
-  final VoidCallback? buttonout;
-  final VoidCallback? buttonall;
+  final VoidCallback? buttonIn;
+  final VoidCallback? buttonOut;
+  final VoidCallback? buttonAll;
   const ButtonsAppBarDay(
-      {Key? key, this.buttonin, this.buttonout, this.buttonall})
+      {Key? key, this.buttonIn, this.buttonOut, this.buttonAll})
       : super(key: key);
 
   @override
@@ -22,7 +22,7 @@ class ButtonsAppBarDay extends StatelessWidget {
         children: [
           Observer(builder: (_) {
             return Text(
-              '${Formatters.formatMoney(Modular.get<DailyStore>().transactionTotal)}',
+              '${Formatters.formatMoney(Modular.get<TransactionsStore>().transactionTotal)}',
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 26,
@@ -35,7 +35,7 @@ class ButtonsAppBarDay extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                textbutton("Entradas", buttonin, 0),
+                textbutton("Entradas", buttonIn, 0),
                 Container(
                   height: 20,
                   width: 1,
@@ -46,7 +46,7 @@ class ButtonsAppBarDay extends StatelessWidget {
                     ),
                   ),
                 ),
-                textbutton("Saídas", buttonout, 1),
+                textbutton("Saídas", buttonOut, 1),
                 Container(
                   height: 20,
                   width: 1,
@@ -57,7 +57,7 @@ class ButtonsAppBarDay extends StatelessWidget {
                     ),
                   ),
                 ),
-                textbutton("Todos", buttonall, 2),
+                textbutton("Todos", buttonAll, 2),
               ],
             ),
           )
@@ -70,14 +70,17 @@ class ButtonsAppBarDay extends StatelessWidget {
     return Observer(builder: (_) {
       return Expanded(
         child: TextButton(
-          onPressed: button,
+          onPressed:
+              Modular.get<TransactionsStore>().onError != null ? null : button,
           child: Text(
             text,
             style: TextStyle(
                 fontSize: 16,
-                color: Modular.get<DailyStore>().indexPage == screen
-                    ? Colors.white
-                    : Color.fromARGB(60, 255, 255, 255)),
+                color: Modular.get<TransactionsStore>().onError != null
+                    ? Color.fromARGB(60, 255, 255, 255)
+                    : Modular.get<TransactionsStore>().indexPage == screen
+                        ? Colors.white
+                        : Color.fromARGB(60, 255, 255, 255)),
           ),
         ),
       );
