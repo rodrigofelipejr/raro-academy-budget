@@ -1,6 +1,7 @@
 import 'package:budget/src/features/home/home.dart';
 import 'package:budget/src/features/transactions/repositories/transaction_repository_interface.dart';
 import 'package:budget/src/shared/models/models.dart';
+import 'package:budget/src/shared/stores/auth/auth_store.dart';
 import 'package:mobx/mobx.dart';
 
 import 'errors/erros.dart';
@@ -12,8 +13,9 @@ class TransactionsStore = _TransactionsStoreBase with _$TransactionsStore;
 abstract class _TransactionsStoreBase with Store {
   final ITransactionsRepository repository;
   final HomeStore homeStore;
+  final AuthStore authStore;
 
-  _TransactionsStoreBase(this.repository, this.homeStore) {
+  _TransactionsStoreBase(this.repository, this.homeStore, this.authStore) {
     init();
   }
 
@@ -75,7 +77,7 @@ abstract class _TransactionsStoreBase with Store {
     setIsLoading(true);
     try {
       final month = homeStore.dailyStore.state.date.month;
-      final data = await repository.getTransactionsByMonth(month);
+      final data = await repository.getTransactionsByMonth(uuid: authStore.user!.uuid, month: month);
       setOnError(null);
 
       setTransactions(data);

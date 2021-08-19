@@ -8,9 +8,9 @@ class HomeModule extends Module {
   @override
   List<Bind<Object>> get binds => [
         Bind.singleton((i) => HomeStore(i(), i(), i(), i())),
-        Bind.lazySingleton((i) => GeneralBalanceStore(i())),
-        Bind.lazySingleton((i) => DailyStore(i())),
-        Bind.lazySingleton((i) => LastTransactionsStore(i())),
+        Bind.lazySingleton((i) => GeneralBalanceStore(i(), i())),
+        Bind.lazySingleton((i) => DailyStore(i(), i())),
+        Bind.lazySingleton((i) => LastTransactionsStore(i(), i())),
         Bind.lazySingleton((i) => HomeRepository()),
       ];
 
