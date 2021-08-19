@@ -1,7 +1,9 @@
+import 'package:budget/src/shared/constants/constants.dart';
 import 'package:budget/src/shared/models/models.dart';
 import 'package:budget/src/shared/utils/formatters.dart';
 import 'package:budget/src/shared/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class InputCard extends StatelessWidget {
   List<TransactionModel> transaction;
@@ -28,7 +30,9 @@ class InputCard extends StatelessWidget {
                         children: transaction
                             .map((transaction) => ItemCardWidget(
                                   transaction: transaction,
-                                  onTap: () => null,
+                                  onTap: () => Modular.to.pushNamed(
+                                      AppRoutes.income,
+                                      arguments: transaction),
                                 ))
                             .toList(),
                       ),

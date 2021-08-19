@@ -14,7 +14,7 @@ class TransactionsModule extends Module {
   @override
   List<Bind<Object>> get binds => [
         Bind.singleton((i) => TransactionsRepository(i())),
-        Bind.singleton((i) => TransactionsStore(i())),
+        Bind.singleton((i) => TransactionsStore(i(), i())),
         Bind.singleton((i) => IncomeStore(i())),
         Bind.singleton((i) => ExpensesStore(i())),
         Bind.singleton((i) => FirebaseFirestore.instance),
@@ -23,7 +23,13 @@ class TransactionsModule extends Module {
   @override
   List<ModularRoute> get routes => [
         ChildRoute(AppRoutes.initial, child: (_, args) => TransactionsPage()),
-        ChildRoute(AppRoutes.income, child: (_, args) => IncomePage()),
-        ChildRoute(AppRoutes.expenses, child: (_, args) => ExpensesPage()),
+        ChildRoute(AppRoutes.income,
+            child: (_, args) => IncomePage(
+                  data: args.data,
+                )),
+        ChildRoute(AppRoutes.expenses,
+            child: (_, args) => ExpensesPage(
+                  data: args.data,
+                )),
       ];
 }

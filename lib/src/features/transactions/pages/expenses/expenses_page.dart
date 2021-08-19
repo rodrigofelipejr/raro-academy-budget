@@ -16,7 +16,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'expenses_store.dart';
 
 class ExpensesPage extends StatefulWidget {
-  const ExpensesPage({Key? key}) : super(key: key);
+  final TransactionModel? data;
+  const ExpensesPage({Key? key, this.data}) : super(key: key);
 
   @override
   _ExpensesPageState createState() => _ExpensesPageState();
@@ -24,7 +25,8 @@ class ExpensesPage extends StatefulWidget {
 
 class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
   TextEditingController _expensesController = TextEditingController();
-  DropdownController _inputTypeController = DropdownController(items: TransactionsItems.expensesItems);
+  DropdownController _inputTypeController =
+      DropdownController(items: TransactionsItems.expensesItems);
   DateController _dateController = DateController();
 
   FocusNode _expensesFocusNode = FocusNode();
@@ -33,7 +35,18 @@ class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  late TransactionModel _data;
+  // late TransactionModel _data;
+  void initState() {
+    super.initState();
+    _expensesController =
+        TextEditingController(text: widget.data?.value.toString());
+
+    _dateController.date = widget.data?.createAt ?? DateTime.now();
+
+    _inputTypeController.value = TransactionsItems.expensesItems
+        .where((element) => element.value == "Viagem")
+        .first;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +89,8 @@ class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
                             keyboardType: TextInputType.number,
                             focusNode: _expensesFocusNode,
                             controller: _expensesController,
-                            validator: (value) => Validators().validateNumber(value!),
+                            validator: (value) =>
+                                Validators().validateNumber(value!),
                           ),
                         ),
                         Padding(
@@ -92,7 +106,8 @@ class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
                                   value: _inputTypeController.value,
                                   items: _inputTypeController.items,
                                   focusNode: _inputTypeFocusNode,
-                                  validator: (value) => Validators().validateTransactionCategory(value),
+                                  validator: (value) => Validators()
+                                      .validateTransactionCategory(value),
                                   onChanged: (newValue) {
                                     _inputTypeController.value = newValue!;
                                     setState(() {});

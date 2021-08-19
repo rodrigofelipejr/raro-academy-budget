@@ -42,12 +42,14 @@ class _TransactionsPageState
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Observer(builder: (_) {
-        return controller.indexPage == 2
-            ? SizedBox()
-            : FabWidget(
-                onTap: () => controller.indexPage == 0
-                    ? Modular.to.pushNamed(AppRoutes.income)
-                    : Modular.to.pushNamed(AppRoutes.expenses));
+        return Visibility(
+          visible: controller.indexPage != 2,
+          child: FabWidget(onTap: () {
+            Modular.to.pushNamed(controller.indexPage == 0
+                ? AppRoutes.income
+                : AppRoutes.expenses);
+          }),
+        );
       }),
       appBar: AppBar(
         bottomOpacity: 0.0,

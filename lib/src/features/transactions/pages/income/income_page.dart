@@ -1,24 +1,28 @@
+import 'package:budget/src/features/home/widgets/daily/daily_store.dart';
 import 'package:budget/src/features/transactions/constants/transactions_items.dart';
 import 'package:budget/src/features/transactions/controller/date_controller.dart';
 import 'package:budget/src/features/transactions/controller/dropdown_controller.dart';
 import 'package:budget/src/features/transactions/pages/income/income_store.dart';
+import 'package:budget/src/features/transactions/pages/transactions/transactions_store.dart';
 import 'package:budget/src/features/transactions/validators/text_validator.dart';
 import 'package:budget/src/features/transactions/widgets/appbar_with_drawer.dart';
 import 'package:budget/src/features/transactions/widgets/button_widget.dart';
 import 'package:budget/src/features/transactions/widgets/date_picker_widget.dart';
 import 'package:budget/src/features/transactions/widgets/dialog_widget.dart';
 import 'package:budget/src/features/transactions/widgets/dropdown_buttom_widget.dart';
+import 'package:budget/src/features/transactions/widgets/dropdown_item_data.dart';
 import 'package:budget/src/features/transactions/widgets/text_styles.dart';
+import 'package:budget/src/shared/constants/app_colors.dart';
 import 'package:budget/src/shared/models/models.dart';
 import 'package:budget/src/shared/widgets/custom_text_field.dart';
 import 'package:budget/src/shared/widgets/drawer/drawer_widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class IncomePage extends StatefulWidget {
-  const IncomePage({Key? key}) : super(key: key);
-  // const IncomePage({Key? key, this.data}) : super(key: key);
-  // final TransactionModel? data;
+  const IncomePage({Key? key, this.data}) : super(key: key);
+  final TransactionModel? data;
 
   @override
   _IncomePageState createState() => _IncomePageState();
@@ -27,7 +31,8 @@ class IncomePage extends StatefulWidget {
 class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
   TextEditingController _incomeController = TextEditingController();
   TextEditingController _inputNameController = TextEditingController();
-  DropdownController _inputTypeController = DropdownController(items: TransactionsItems.incomeItems);
+  DropdownController _inputTypeController =
+      DropdownController(items: TransactionsItems.incomeItems);
   DateController _dateController = DateController();
 
   FocusNode _incomeFocusNode = FocusNode();
@@ -37,7 +42,20 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  late TransactionModel _data;
+  @override
+  void initState() {
+    super.initState();
+    _incomeController =
+        TextEditingController(text: widget.data?.value.toString());
+    _inputNameController =
+        TextEditingController(text: widget.data?.description);
+    _dateController.date = widget.data?.createAt ?? DateTime.now();
+    _inputTypeController.value = TransactionsItems.incomeItems
+        .where((element) => element.value == "Dinheiro")
+        .first;
+  }
+
+  late TransactionModel _newData;
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +98,8 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                             keyboardType: TextInputType.number,
                             focusNode: _incomeFocusNode,
                             controller: _incomeController,
-                            validator: (value) => Validators().validateNumber(value!),
+                            validator: (value) =>
+                                Validators().validateNumber(value!),
                           ),
                         ),
                         Padding(
@@ -96,7 +115,8 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                                 value: _inputTypeController.value,
                                 items: _inputTypeController.items,
                                 focusNode: _inputTypeFocusNode,
-                                validator: (value) => Validators().validateTransactionCategory(value),
+                                validator: (value) => Validators()
+                                    .validateTransactionCategory(value),
                                 onChanged: (newValue) {
                                   _inputTypeController.value = newValue!;
                                   setState(() {});
@@ -113,7 +133,8 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                             keyboardType: TextInputType.text,
                             focusNode: _inputNameFocusNode,
                             controller: _inputNameController,
-                            validator: (value) => Validators().validateName(value!),
+                            validator: (value) =>
+                                Validators().validateName(value!),
                           ),
                         ),
                         Padding(
@@ -121,6 +142,7 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                             top: 12,
                           ),
                           child: DatePickerWidget(
+                            date: _dateController.date,
                             controller: _dateController,
                             focusNode: _datePickerFocusNode,
                           ),
@@ -134,35 +156,41 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                 bottom: 0,
                 child: ButtonWidget(
                   label: "INSERIR",
-                  onPressed: () {
-                    // FocusScope.of(context).unfocus();
-                    // if (_formKey.currentState!.validate()) {
-                    //   _data = TransactionModel(
-                    //     value: double.parse(_incomeController.value.text),
-                    //     type: 'input',
-                    //     category: _inputTypeController.value!.value,
-                    //     description: _inputNameController.value.text,
-                    //     createAt: _dateController.date,
-                    //     updateAt: _dateController.date,
-                    //     uuid: 'asdf',
-                    //   );
-                    //   // _controller.repository.deleteTransaction("VvglcDTgd4XlpLVDfcqQ");
-                    //   // _controller.repository.createTransaction(_data);
-                    //   print('DATA ${_data.toString()}');
-                    //   controller.repository.getTransactions();
+                  onPressed: () async {
+                    FocusScope.of(context).unfocus();
+                    if (_formKey.currentState!.validate()) {
+                      _newData = TransactionModel(
+                        value: double.parse(_incomeController.value.text),
+                        type: TypeTransaction.input,
+                        category: _inputTypeController.value!.value,
+                        description: _inputNameController.value.text,
+                        createAt: _dateController.date,
+                        updateAt: _dateController.date,
+                        uuid: '31KaO9IFxTOY3No1kWfoYyHptiw2',
+                      );
+                      print('DATA ${_newData.toMap()}');
 
-                    //   //Adiciona nova transacao na lista
-                    //   // final list = Modular.get<DailyStore>().transactions();
-                    //   // list.add(_data);
-                    //   // Modular.get<DailyStore>().setTransactions();
-                    //   // Modular.to.pushReplacementNamed(AppRoutes.daily);
-                    //   showDialog(
-                    //     context: context,
-                    //     builder: (_) => DialogWidget(
-                    //       message: "Dado enviado com sucesso",
-                    //     ),
-                    //   );
-                    // }
+                      // final bool isSentToDatabase = true;
+                      final bool isSentToDatabase =
+                          await store.createTransaction(transaction: _newData);
+
+                      if (isSentToDatabase) {
+                        final List<TransactionModel> list =
+                            Modular.get<TransactionsStore>().transactions;
+                        list.add(_newData);
+                        Modular.to.pop();
+
+                        showDialog(
+                          context: context,
+                          builder: (_) => DialogWidget(
+                            message: "Dado enviado com sucesso",
+                          ),
+                        );
+                      }
+                    }
+                    // store.repository.deleteTransaction("jeH1WD8NeFDTcPiC57XU");
+                    store.repository.showTransactions();
+                    store.repository.showDocs();
                   },
                 ),
               ),

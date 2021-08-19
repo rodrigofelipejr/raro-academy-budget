@@ -1,8 +1,6 @@
 import 'package:budget/src/features/home/home.dart';
 import 'package:budget/src/features/transactions/repositories/transaction_repository_interface.dart';
-import 'package:budget/src/features/transactions/transactions_module.dart';
 import 'package:budget/src/shared/models/models.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 import 'errors/erros.dart';
@@ -13,8 +11,9 @@ class TransactionsStore = _TransactionsStoreBase with _$TransactionsStore;
 
 abstract class _TransactionsStoreBase with Store {
   final ITransactionsRepository repository;
+  final HomeStore homeStore;
 
-  _TransactionsStoreBase(this.repository) {
+  _TransactionsStoreBase(this.repository, this.homeStore) {
     init();
   }
 
@@ -75,8 +74,8 @@ abstract class _TransactionsStoreBase with Store {
   Future<void> handleGetTransaction() async {
     setIsLoading(true);
     try {
-      final data = await repository.getTransactions(
-          Modular.get<HomeStore>().dailyStore.state.date.month);
+      final month = homeStore.dailyStore.state.date.month;
+      final data = await repository.getTransactionsByMonth(month);
       setOnError(null);
 
       setTransactions(data);
