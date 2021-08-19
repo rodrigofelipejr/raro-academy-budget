@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:budget/src/shared/auth/auth_controller.dart';
 import 'package:budget/src/shared/constants/app_routes.dart';
 import 'package:flutter_modular/flutter_modular.dart';

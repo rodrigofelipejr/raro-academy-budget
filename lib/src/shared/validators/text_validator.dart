@@ -43,19 +43,30 @@ class Validators {
     }
   }
 
-  String? validatePassword(String value, String value1) {
-    if (value != value1) {
-      return "As senhas não conferem";
-    }
-    double strength = estimatePasswordStrength(value);
-    if (strength > 0.4) {
+  String? phoneValidator(String value) {
+    if (value.length >= 14) {
       return null;
     } else {
-      var myRichRunesMessage = new Runes(
-        ' \u{1F512} Escolha uma senha mais forte',
-      );
+      return "Telefone inválido";
+    }
+  }
 
-      return new String.fromCharCodes(myRichRunesMessage);
+  String? validatePassword(String value, String value1) {
+    if (value.length < 8) {
+      return "A senha deve conter mais que 8 caracteres";
+    }
+
+    if (!RegExp(r'^(?=.*?[A-Z])').hasMatch(value))
+      return "Deve conter pelo menos um caracter maiúsculo";
+    if (!RegExp(r'^(?=.*?[a-z])').hasMatch(value))
+      return "Deve conter pelo menos um caracter minúsculo";
+    if (!RegExp(r'^(?=.*?[0-9])').hasMatch(value))
+      return "Deve conter pelo menos um número";
+    if (!RegExp(r'^(?=.*?[!@#\$&*~]).{8,}').hasMatch(value))
+      return "Deve conter pelo menos um caracter especial";
+
+    if (value != value1) {
+      return "As senhas não conferem";
     }
   }
 

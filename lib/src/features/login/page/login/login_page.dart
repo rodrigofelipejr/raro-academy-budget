@@ -1,10 +1,11 @@
 import 'dart:ui';
 
+import 'package:budget/src/features/login/page/widgets/header_widget.dart';
 import 'package:budget/src/shared/widgets/circular_button_gradient.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
-import 'widgets/header_widget.dart';
 import 'login_controller.dart';
 import '../../../../shared/constants/constants.dart';
 import '../../../../shared/widgets/widgets.dart';
@@ -75,11 +76,16 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           Flexible(
-                            child: Text(
-                              'Crie uma conta',
-                              overflow: TextOverflow.clip,
-                              maxLines: 1,
-                              style: AppTextStyles.blue16w400Roboto,
+                            child: GestureDetector(
+                              onTap: () => {
+                                Modular.to.pushNamed(AppRoutes.register),
+                              },
+                              child: Text(
+                                'Crie uma conta',
+                                overflow: TextOverflow.clip,
+                                maxLines: 1,
+                                style: AppTextStyles.blue16w400Roboto,
+                              ),
                             ),
                           ),
                         ],
@@ -89,70 +95,67 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ],
                   ),
-                  Observer(builder: (_) {
-                    return Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          CustomTextField(
-                            labelText: "E-mail",
-                            hintText: "Insira seu e-mail",
-                            onChanged: controller.setEmail,
-                            validator: (value) =>
-                                Validators().email(value ?? ''),
-                            textInputAction: TextInputAction.next,
-                            controller: emailController,
-                            focusNode: emailFocusNode,
-                            keyboardType: TextInputType.emailAddress,
-                          ),
-                          SizedBox(height: 8.0),
-                          controller.showPasswordField
-                              ? CustomTextField(
-                                  labelText: "Senha",
-                                  hintText: "Senha",
-                                  obscureText: controller.passwordVisible,
-                                  onChanged: controller.setPassword,
-                                  errorMessage: controller.passwordError,
-                                  suffixIcon: VisibleWidget(
-                                    visible: controller.passwordVisible,
-                                    onPressed: () {
-                                      setState(() {
-                                        controller.passwordVisible =
-                                            !controller.passwordVisible;
-                                      });
-                                    },
-                                  ),
-                                  textInputAction: TextInputAction.next,
-                                  focusNode: passwordFocusNode,
-                                  controller: passwordController,
-                                )
-                              : Container(),
-                          SizedBox(height: 16.0),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              controller.showPasswordField
-                                  ? Text(
-                                      'Recuperar senha',
-                                      style: AppTextStyles.purple14w500Roboto,
-                                    )
-                                  : Container(),
-                              controller.loading
-                                  ? CircularProgressIndicator()
-                                  : CircularButtonGradient(
-                                      onTap: callLogin,
-                                      text: 'Continuar'.toUpperCase(),
-                                      disabled: controller.disabledButton,
-                                    )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 50,
-                          ),
-                        ],
-                      ),
-                    );
-                  }),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        CustomTextField(
+                          labelText: "E-mail",
+                          hintText: "Insira seu e-mail",
+                          onChanged: controller.setEmail,
+                          validator: (value) => Validators().email(value ?? ''),
+                          textInputAction: TextInputAction.next,
+                          controller: emailController,
+                          focusNode: emailFocusNode,
+                          keyboardType: TextInputType.emailAddress,
+                        ),
+                        SizedBox(height: 8.0),
+                        controller.showPasswordField
+                            ? CustomTextField(
+                                labelText: "Senha",
+                                hintText: "Senha",
+                                obscureText: controller.passwordVisible,
+                                onChanged: controller.setPassword,
+                                errorMessage: controller.passwordError,
+                                suffixIcon: VisibleWidget(
+                                  visible: controller.passwordVisible,
+                                  onPressed: () {
+                                    setState(() {
+                                      controller.passwordVisible =
+                                          !controller.passwordVisible;
+                                    });
+                                  },
+                                ),
+                                textInputAction: TextInputAction.next,
+                                focusNode: passwordFocusNode,
+                                controller: passwordController,
+                              )
+                            : Container(),
+                        SizedBox(height: 16.0),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            controller.showPasswordField
+                                ? Text(
+                                    'Recuperar senha',
+                                    style: AppTextStyles.purple14w500Roboto,
+                                  )
+                                : Container(),
+                            controller.loading
+                                ? CircularProgressIndicator()
+                                : CircularButtonGradient(
+                                    onTap: callLogin,
+                                    text: 'Continuar'.toUpperCase(),
+                                    disabled: controller.disabledButton,
+                                  )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 50,
+                        ),
+                      ],
+                    ),
+                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisSize: MainAxisSize.min,

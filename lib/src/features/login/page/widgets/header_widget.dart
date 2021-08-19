@@ -1,6 +1,5 @@
+import 'package:budget/src/shared/constants/app_colors.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../../shared/constants/app_colors.dart';
 
 class HeaderWidget extends StatelessWidget {
   const HeaderWidget({
