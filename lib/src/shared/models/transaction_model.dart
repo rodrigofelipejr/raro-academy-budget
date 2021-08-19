@@ -71,8 +71,8 @@ class TransactionModel {
       'type': TypeTransaction.values.indexOf(type),
       'description': description,
       'value': Converters.parseDoubleToIntWithDecimals(value),
-      'createAt': createAt.millisecondsSinceEpoch,
-      'updateAt': updateAt.millisecondsSinceEpoch,
+      'createAt': createAt,
+      'updateAt': updateAt,
     };
   }
 
@@ -99,8 +99,8 @@ class TransactionModel {
       type: TypeTransaction.values[map['type']],
       description: map['description'],
       value: map['value'],
-      createAt: DateTime.fromMillisecondsSinceEpoch(map['createAt']),
-      updateAt: DateTime.fromMillisecondsSinceEpoch(map['updateAt']),
+      createAt: DateTime(map['createAt']),
+      updateAt: DateTime(map['updateAt']),
     );
   }
 
