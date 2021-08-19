@@ -94,14 +94,8 @@ class OverlayWidget extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CircularProgressIndicator(),
-                ConditionalParentWidget(
-                  condition: (_label != null && _label?.isNotEmpty == true),
-                  child: Text(_label ?? ''),
-                  conditionalBuilder: (Widget child) => Padding(
-                    padding: const EdgeInsets.only(top: 14.0),
-                    child: child,
-                  ),
+                ProgressIndicatorWidget(
+                  label: _label,
                 ),
               ],
             ),

@@ -41,17 +41,21 @@ abstract class _LoginStoreBase with Store {
   @computed
   bool get showPasswordField => state.email.isNotEmpty;
 
-  Future<bool> login(String email, String password) async {
+  Future<bool> login() async {
     bool loginSuccess = false;
     setIsLoading(true);
 
     try {
-      final response = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+      final response = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: state.email,
+        password: state.password,
+      );
       await authStore.loginUser(response.user!.uid);
       loginSuccess = true;
       authStore.addListenAuth();
     } on FirebaseAuthException catch (e) {
-      setState(state.copyWith(passwordError: FireBaseErrors.verifyErroCode(e.code)));
+      final errorMessage = FireBaseErrors.verifyErroCode(e.code);
+      setState(state.copyWith(passwordError: errorMessage));
     } finally {
       setIsLoading(false);
     }
