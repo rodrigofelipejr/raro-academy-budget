@@ -46,14 +46,15 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
   @override
   void initState() {
     super.initState();
-    _incomeController =
-        TextEditingController(text: widget.data?.value.toString());
-    _inputNameController =
-        TextEditingController(text: widget.data?.description);
-    _dateController.date = widget.data?.createAt ?? DateTime.now();
-    _inputTypeController.value = TransactionsItems.incomeItems
-        .where((element) => element.value == "Dinheiro")
-        .first;
+    if (widget.data != null) {
+      print(widget.data.toString());
+      _incomeController =
+          TextEditingController(text: widget.data?.value.toString());
+      _inputNameController =
+          TextEditingController(text: widget.data?.description);
+      _inputTypeController.value = TransactionsItems.incomeItems
+          .firstWhere((item) => item.key == widget.data!.category);
+    }
   }
 
   late TransactionModel _newData;
