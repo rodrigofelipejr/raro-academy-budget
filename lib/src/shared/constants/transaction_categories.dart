@@ -15,6 +15,23 @@ class TransactionCategories {
   static const String ted = 'ted';
   static const String ticket = 'ticket';
 
+  static const Map<String, String> output = {
+    TransactionCategories.meal: 'meal',
+    TransactionCategories.education: 'education',
+    TransactionCategories.others: 'others',
+    TransactionCategories.payments: 'payments',
+    TransactionCategories.transport: 'transport',
+    TransactionCategories.trip: 'trip',
+  };
+
+  static const Map<String, String> input = {
+    TransactionCategories.pix: 'pix',
+    TransactionCategories.ticket: 'ticket',
+    TransactionCategories.ted: 'ted',
+    TransactionCategories.doc: 'doc',
+    TransactionCategories.money: 'money',
+  };
+
   static const Map<String, Map<String, Color>> mapCategoryImageColors = {
     meal: {
       AppImages.icMeal: Colors.amber,
