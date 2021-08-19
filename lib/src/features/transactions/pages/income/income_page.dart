@@ -13,6 +13,7 @@ import 'package:budget/src/features/transactions/widgets/dropdown_buttom_widget.
 import 'package:budget/src/features/transactions/widgets/dropdown_item_data.dart';
 import 'package:budget/src/features/transactions/widgets/text_styles.dart';
 import 'package:budget/src/shared/constants/app_colors.dart';
+import 'package:budget/src/shared/constants/constants.dart';
 import 'package:budget/src/shared/models/models.dart';
 import 'package:budget/src/shared/widgets/custom_text_field.dart';
 import 'package:budget/src/shared/widgets/drawer/drawer_widget.dart';
@@ -162,7 +163,7 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                       _newData = TransactionModel(
                         value: double.parse(_incomeController.value.text),
                         type: TypeTransaction.input,
-                        category: _inputTypeController.value!.value,
+                        category: TransactionCategories.input[_inputTypeController.value!.key]!,
                         description: _inputNameController.value.text,
                         createAt: _dateController.date,
                         updateAt: _dateController.date,
@@ -170,7 +171,6 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                       );
                       print('DATA ${_newData.toMap()}');
 
-                      // final bool isSentToDatabase = true;
                       final bool isSentToDatabase =
                           await store.createTransaction(transaction: _newData);
 
