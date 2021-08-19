@@ -70,7 +70,7 @@ class TransactionModel {
       'category': category,
       'type': TypeTransaction.values.indexOf(type),
       'description': description,
-      'value': value,
+      'value': Converters.parseDoubleToIntWithDecimals(value),
       'createAt': createAt.millisecondsSinceEpoch,
       'updateAt': updateAt.millisecondsSinceEpoch,
     };
