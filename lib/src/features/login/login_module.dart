@@ -1,8 +1,8 @@
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../shared/constants/constants.dart';
-import 'page/login/login.dart';
-import 'page/register/register_page.dart';
+import 'pages/login/login.dart';
+import 'pages/register/register_page.dart';
 
 class LoginModule extends Module {
   @override
