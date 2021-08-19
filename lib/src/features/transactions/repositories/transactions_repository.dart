@@ -7,7 +7,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'transaction_repository_interface.dart';
 
 class TransactionsRepository implements ITransactionsRepository {
-  // final String _collectionPath = "/test";
   final String _collectionPath = AppCollections.transactions;
   final FirebaseFirestore firestore;
 
@@ -23,6 +22,18 @@ class TransactionsRepository implements ITransactionsRepository {
   @override
   Future<void> deleteTransaction(String uuid) async {
     await FirebaseFirestore.instance.collection(_collectionPath).doc(uuid).delete();
+  }
+
+  @override
+  Future<List<TransactionModel>> getTransactions() async {
+    CollectionReference db =
+        FirebaseFirestore.instance.collection(_collectionPath);
+    final snapshot = await db
+        .where('uuid', isEqualTo: AppSettings.userUuid)
+        .orderBy('createAt', descending: true)
+        .get();
+
+    return snapshot.docs.map((e) => TransactionModel.fromFirestore(e)).toList();
   }
 
   @override
