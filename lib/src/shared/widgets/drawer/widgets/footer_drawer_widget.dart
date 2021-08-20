@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'sub_menu_widget.dart';
 
 class FooterDrawerWidget extends StatelessWidget {
-  const FooterDrawerWidget({Key? key}) : super(key: key);
+  final Function()? onTap;
+
+  const FooterDrawerWidget({Key? key, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +15,7 @@ class FooterDrawerWidget extends StatelessWidget {
         Divider(height: 1),
         SubMenuWidget(
           label: 'Sair',
-          onTap: () {},
+          onTap: onTap,
           textAlign: TextAlign.center,
           padding: const EdgeInsets.symmetric(vertical: 16.0),
         ),

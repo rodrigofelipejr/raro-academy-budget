@@ -14,9 +14,7 @@ class TransactionsRepository implements ITransactionsRepository {
 
   @override
   Future<void> createTransaction(TransactionModel transaction) async {
-    await FirebaseFirestore.instance
-      .collection(_collectionPath)
-      .add(transaction.toMap());
+    await FirebaseFirestore.instance.collection(_collectionPath).add(transaction.toMap());
   }
 
   @override
@@ -37,17 +35,12 @@ class TransactionsRepository implements ITransactionsRepository {
   }
 
   @override
-  Future<List<TransactionModel>> getTransactionsByMonth(int month) async {
-    CollectionReference db =
-        FirebaseFirestore.instance.collection(_collectionPath);
+  Future<List<TransactionModel>> getTransactionsByMonth({required int month, required String uuid}) async {
+    CollectionReference db = FirebaseFirestore.instance.collection(_collectionPath);
     final snapshot = await db
-        .where('uuid', isEqualTo: AppSettings.userUuid)
-        .where('createAt',
-            isGreaterThanOrEqualTo:
-                Timestamp.fromDate(Dates.firstDayMonth(month: month)))
-        .where('createAt',
-            isLessThanOrEqualTo:
-                Timestamp.fromDate(Dates.lastDayMonth(month: month)))
+        .where('uuid', isEqualTo: uuid)
+        .where('createAt', isGreaterThanOrEqualTo: Timestamp.fromDate(Dates.firstDayMonth(month: month)))
+        .where('createAt', isLessThanOrEqualTo: Timestamp.fromDate(Dates.lastDayMonth(month: month)))
         .orderBy('createAt', descending: true)
         .get();
 
@@ -57,9 +50,9 @@ class TransactionsRepository implements ITransactionsRepository {
   @override
   Future<void> updateTransaction(TransactionModel transaction, String docId) async {
     await FirebaseFirestore.instance
-      .collection(_collectionPath)
-      .doc(docId)
-      .set(transaction.toMap(), SetOptions(merge: true));
+        .collection(_collectionPath)
+        .doc(docId)
+        .set(transaction.toMap(), SetOptions(merge: true));
   }
 
   // Para testes
@@ -72,9 +65,9 @@ class TransactionsRepository implements ITransactionsRepository {
   // Para testes
   Future<void> showDocs() async {
     final response = await FirebaseFirestore.instance
-      .collection(_collectionPath)
-      .get()
-      .then((value) => value.docs.map((doc) => doc.id));
+        .collection(_collectionPath)
+        .get()
+        .then((value) => value.docs.map((doc) => doc.id));
     print('DOCS[${response.length}]: ${response.toList()}');
   }
 }

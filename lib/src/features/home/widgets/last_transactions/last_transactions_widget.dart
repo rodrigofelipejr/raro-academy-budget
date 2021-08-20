@@ -59,7 +59,7 @@ class LatestTransactionsStateWidget extends ModularState<LastTransactionsWidget,
                         Padding(
                           padding: const EdgeInsets.only(top: 4.0, bottom: 6.0),
                           child: Text(
-                            'R\$ ${Formatters.formatMoney(totalValueTransactions)}',
+                            '${Formatters.formatMoney(totalValueTransactions)}',
                             style: AppTextStyles.gray24w400Roboto,
                           ),
                         ),

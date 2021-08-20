@@ -1,19 +1,18 @@
-import 'package:budget/src/features/login/page/login/login_controller.dart';
-import 'package:budget/src/shared/constants/app_gradients.dart';
-import 'package:budget/src/shared/constants/constants.dart';
 import 'package:flutter/material.dart';
 
+import '../constants/constants.dart';
+
 class CircularButtonGradient extends StatelessWidget {
+  final String text;
+  final bool disabled;
+  final Function()? onTap;
+
   const CircularButtonGradient({
     Key? key,
     required this.text,
     this.disabled = false,
     this.onTap,
   }) : super(key: key);
-
-  final String text;
-  final bool disabled;
-  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +28,7 @@ class CircularButtonGradient extends StatelessWidget {
               child: InkWell(
                 borderRadius: BorderRadius.circular(34.0),
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
                   child: Text(
                     text,
                     style: AppTextStyles.darkGray14w500Roboto,
@@ -52,8 +50,7 @@ class CircularButtonGradient extends StatelessWidget {
                 borderRadius: BorderRadius.circular(34.0),
                 onTap: onTap,
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
                   child: Text(
                     text,
                     style: AppTextStyles.white14w500Roboto,

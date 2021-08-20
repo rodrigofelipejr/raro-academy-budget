@@ -79,8 +79,6 @@ class TransactionModel {
   factory TransactionModel.fromFirestore(DocumentSnapshot doc) {
     Map map = doc.data() as Map<String, dynamic>;
 
-    print(map['category']);
-
     return TransactionModel(
       uuid: map['uuid'] ?? '',
       category: map['category'] ?? '',
@@ -106,8 +104,7 @@ class TransactionModel {
 
   String toJson() => json.encode(toMap());
 
-  factory TransactionModel.fromJson(String source) =>
-      TransactionModel.fromMap(json.decode(source));
+  factory TransactionModel.fromJson(String source) => TransactionModel.fromMap(json.decode(source));
 
   @override
   String toString() {

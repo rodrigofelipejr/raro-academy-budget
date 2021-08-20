@@ -1,11 +1,13 @@
-import 'package:budget/src/shared/widgets/circular_button_gradient.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mobx/mobx.dart';
 
 import '../../../../shared/constants/constants.dart';
-import '../../../../shared/validators/text_validator.dart';
+import '../../../../shared/utils/utils.dart';
+import '../../../../shared/validators/validators.dart';
 import '../../../../shared/widgets/widgets.dart';
-import 'login_controller.dart';
+import 'login_store.dart';
 import 'widgets/header_widget.dart';
 
 class LoginPage extends StatefulWidget {
@@ -15,36 +17,37 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  final controller = LoginController();
+class _LoginPageState extends ModularState<LoginPage, LoginStore> with KeyboardManager {
+  FocusNode emailFocusNode = new FocusNode();
+  FocusNode passwordFocusNode = new FocusNode();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  late ReactionDisposer _disposer;
 
   @override
   void initState() {
-    emailController.addListener(() {
-      if (!controller.showPasswordField) {
-        controller.verifyDig();
-      }
+    _disposer = reaction<bool>((_) => store.isLoading, (bool loading) {
+      (loading)
+          ? OverlayWidget.show(context, label: AppStrings.txtLoginApp)
+          : Future.delayed(Duration(milliseconds: 300)).then((value) => OverlayWidget.hide());
     });
     super.initState();
   }
 
   @override
   void dispose() {
+    _disposer();
     super.dispose();
   }
 
-  FocusNode emailFocusNode = new FocusNode();
-  FocusNode passwordFocusNode = new FocusNode();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-
   final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // resizeToAvoidBottomInset: false,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 48),
+      body: BodyPageWidget(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 48.0),
         child: SingleChildScrollView(
           child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height),
@@ -94,7 +97,7 @@ class _LoginPageState extends State<LoginPage> {
                           CustomTextField(
                             labelText: "E-mail",
                             hintText: "Insira seu e-mail",
-                            onChanged: controller.setEmail,
+                            onChanged: (value) => store.onChange(email: value),
                             validator: (value) => Validators().email(value ?? ''),
                             textInputAction: TextInputAction.next,
                             controller: emailController,
@@ -102,48 +105,53 @@ class _LoginPageState extends State<LoginPage> {
                             keyboardType: TextInputType.emailAddress,
                           ),
                           SizedBox(height: 8.0),
-                          controller.showPasswordField
-                              ? CustomTextField(
-                                  labelText: "Senha",
-                                  hintText: "Senha",
-                                  obscureText: controller.passwordVisible,
-                                  onChanged: controller.setPassword,
-                                  errorMessage: controller.passwordError,
-                                  suffixIcon: VisibleWidget(
-                                    visible: controller.passwordVisible,
-                                    onPressed: () {
-                                      setState(() {
-                                        controller.passwordVisible = !controller.passwordVisible;
-                                      });
-                                    },
-                                  ),
-                                  textInputAction: TextInputAction.next,
-                                  focusNode: passwordFocusNode,
-                                  controller: passwordController,
-                                )
-                              : Container(),
+                          Visibility(
+                            visible: store.showPasswordField,
+                            child: CustomTextField(
+                              labelText: "Senha",
+                              hintText: "Senha",
+                              obscureText: store.state.passwordContentVisible,
+                              onChanged: (value) => store.onChange(password: value),
+                              errorMessage: store.state.passwordError,
+                              suffixIcon: ButtonIconVisibleWidget(
+                                colorIcon: AppColors.black54,
+                                showing: store.state.passwordContentVisible,
+                                onTap: () => store.onChange(
+                                  passwordContentVisible: !store.state.passwordContentVisible,
+                                ),
+                              ),
+                              textInputAction: TextInputAction.done,
+                              keyboardType: TextInputType.visiblePassword,
+                              focusNode: passwordFocusNode,
+                              controller: passwordController,
+                            ),
+                          ),
                           SizedBox(height: 16.0),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              controller.showPasswordField
-                                  ? Text(
-                                      'Recuperar senha',
-                                      style: AppTextStyles.purple14w500Roboto,
-                                    )
-                                  : Container(),
-                              controller.loading
-                                  ? CircularProgressIndicator()
-                                  : CircularButtonGradient(
-                                      onTap: callLogin,
-                                      text: 'Continuar'.toUpperCase(),
-                                      disabled: controller.disabledButton,
-                                    )
+                              Visibility(
+                                visible: store.showPasswordField,
+                                child: Text(
+                                  'Recuperar senha',
+                                  style: AppTextStyles.purple14w500Roboto,
+                                ),
+                              ),
+                              CircularButtonGradient(
+                                text: 'Continuar'.toUpperCase(),
+                                disabled: store.disabledButton,
+                                onTap: () {
+                                  hideKeyboard(context);
+                                  if (_formKey.currentState!.validate()) {
+                                    controller.login().then((value) {
+                                      if (value) Modular.to.pushReplacementNamed(AppRoutes.home);
+                                    });
+                                  }
+                                },
+                              )
                             ],
                           ),
-                          SizedBox(
-                            height: 25,
-                          ),
+                          SizedBox(height: 25),
                         ],
                       ),
                     );
@@ -160,7 +168,9 @@ class _LoginPageState extends State<LoginPage> {
                         style: ButtonStyle(
                           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50.0), side: BorderSide(color: Colors.grey)),
+                              borderRadius: BorderRadius.circular(50.0),
+                              side: BorderSide(color: Colors.grey),
+                            ),
                           ),
                           backgroundColor: MaterialStateProperty.all(AppColors.white),
                           shadowColor: MaterialStateProperty.all(AppColors.transparent),
@@ -192,9 +202,7 @@ class _LoginPageState extends State<LoginPage> {
                       ElevatedButton(
                         style: ButtonStyle(
                           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50.0),
-                            ),
+                            RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
                           ),
                           backgroundColor: MaterialStateProperty.all(AppColors.blueFacebook),
                           shadowColor: MaterialStateProperty.all(AppColors.transparent),
@@ -204,13 +212,8 @@ class _LoginPageState extends State<LoginPage> {
                           direction: Axis.horizontal,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(
-                              Icons.facebook,
-                              size: 20,
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
+                            Icon(Icons.facebook, size: 20),
+                            SizedBox(width: 8),
                             Flexible(
                               child: Text("continuar com o facebook".toUpperCase(),
                                   overflow: TextOverflow.ellipsis, maxLines: 1, style: AppTextStyles.white13w500Roboto),
@@ -218,9 +221,7 @@ class _LoginPageState extends State<LoginPage> {
                           ],
                         ),
                       ),
-                      SizedBox(
-                        height: 16,
-                      ),
+                      SizedBox(height: 16),
                     ],
                   ),
                 ],
@@ -230,11 +231,5 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
-  }
-
-  callLogin() {
-    if (_formKey.currentState!.validate()) {
-      controller.login(emailController.text, passwordController.text).then((value) => {});
-    }
   }
 }

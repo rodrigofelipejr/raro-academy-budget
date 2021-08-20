@@ -12,8 +12,9 @@ class DailyStore = _DailyStoreBase with _$DailyStore;
 
 abstract class _DailyStoreBase extends BaseStore with Store {
   final HomeRepository repository;
+  final AuthStore authStore;
 
-  _DailyStoreBase(this.repository);
+  _DailyStoreBase(this.repository, this.authStore);
 
   @observable
   DailyState state = DailyState(date: DateTime.now());
@@ -39,7 +40,7 @@ abstract class _DailyStoreBase extends BaseStore with Store {
     }
 
     try {
-      final dailyModel = await repository.getDaily(state.date.month);
+      final dailyModel = await repository.getDaily(uuid: authStore.user!.uuid, month: state.date.month);
       setOnError(null);
       setState(
         state.copyWith(

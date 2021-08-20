@@ -6,20 +6,20 @@ import '../../../shared/utils/utils.dart';
 import '../../../shared/constants/constants.dart';
 
 class HomeRepository {
-  Future<GeneralBalanceModel> getGeneralBalance() async {
+  Future<GeneralBalanceModel> getGeneralBalance({required String uuid}) async {
     CollectionReference db = FirebaseFirestore.instance.collection(AppCollections.generalBalance);
 
-    final snapshot = await db.where('uuid', isEqualTo: AppSettings.userUuid).get();
+    final snapshot = await db.where('uuid', isEqualTo: uuid).get();
 
     final doc = snapshot.size > 0 ? snapshot.docs.first : null;
     return GeneralBalanceModel.fromFirestore(doc);
   }
 
-  Future<DailyModel> getDaily(int month) async {
+  Future<DailyModel> getDaily({required String uuid, required int month}) async {
     CollectionReference db = FirebaseFirestore.instance.collection(AppCollections.daily);
 
     final snapshot = await db
-        .where('uuid', isEqualTo: AppSettings.userUuid)
+        .where('uuid', isEqualTo: uuid)
         .where('date', isGreaterThanOrEqualTo: Timestamp.fromDate(Dates.firstDayMonth(month: month)))
         .where('date', isLessThanOrEqualTo: Timestamp.fromDate(Dates.lastDayMonth(month: month)))
         .get();
@@ -28,10 +28,9 @@ class HomeRepository {
     return DailyModel.fromFirestore(doc);
   }
 
-  Future<List<TransactionModel>> getLastTransactions() async {
+  Future<List<TransactionModel>> getLastTransactions({required String uuid}) async {
     CollectionReference db = FirebaseFirestore.instance.collection(AppCollections.transactions);
-    final snapshot =
-        await db.where('uuid', isEqualTo: AppSettings.userUuid).orderBy('createAt', descending: true).limit(3).get();
+    final snapshot = await db.where('uuid', isEqualTo: uuid).orderBy('createAt', descending: true).limit(3).get();
 
     return snapshot.docs.map((e) => TransactionModel.fromFirestore(e)).toList();
   }

@@ -35,4 +35,10 @@ class AppColors {
     800: Color.fromRGBO(72, 80, 176, 0.8),
     900: Color.fromRGBO(72, 80, 176, 0.9),
   });
+
+//TODO - colors dialog
+  static const Color redLight = Color.fromRGBO(255, 97, 109, 1);
+  static const Color greenLight = Color.fromRGBO(102, 222, 147, 1);
+  static const Color blueLight = Color.fromRGBO(119, 172, 241, 1);
+  static const Color orangeLight = Color.fromRGBO(255, 183, 64, 1);
 }

@@ -11,8 +11,9 @@ class GeneralBalanceStore = _GeneralBalanceStoreBase with _$GeneralBalanceStore;
 
 abstract class _GeneralBalanceStoreBase extends BaseStore with Store {
   final HomeRepository repository;
+  final AuthStore authStore;
 
-  _GeneralBalanceStoreBase(this.repository);
+  _GeneralBalanceStoreBase(this.repository, this.authStore);
 
   @observable
   GeneralBalanceState state = GeneralBalanceState();
@@ -36,7 +37,7 @@ abstract class _GeneralBalanceStoreBase extends BaseStore with Store {
 
   Future<void> handleGeneralBalance() async {
     try {
-      final generalBalance = await repository.getGeneralBalance();
+      final generalBalance = await repository.getGeneralBalance(uuid: authStore.user!.uuid);
       setOnError(null);
       setState(state.copyWith(value: generalBalance.balance));
     } catch (e) {

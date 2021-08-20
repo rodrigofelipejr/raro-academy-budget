@@ -32,8 +32,7 @@ class IncomePage extends StatefulWidget {
 class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
   TextEditingController _incomeController = TextEditingController();
   TextEditingController _inputNameController = TextEditingController();
-  DropdownController _inputTypeController =
-      DropdownController(items: TransactionsItems.incomeItems);
+  DropdownController _inputTypeController = DropdownController(items: TransactionsItems.incomeItems);
   DateController _dateController = DateController();
 
   FocusNode _incomeFocusNode = FocusNode();
@@ -100,8 +99,7 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                             keyboardType: TextInputType.number,
                             focusNode: _incomeFocusNode,
                             controller: _incomeController,
-                            validator: (value) =>
-                                Validators().validateNumber(value!),
+                            validator: (value) => Validators().validateNumber(value!),
                           ),
                         ),
                         Padding(
@@ -117,8 +115,7 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                                 value: _inputTypeController.value,
                                 items: _inputTypeController.items,
                                 focusNode: _inputTypeFocusNode,
-                                validator: (value) => Validators()
-                                    .validateTransactionCategory(value),
+                                validator: (value) => Validators().validateTransactionCategory(value),
                                 onChanged: (newValue) {
                                   _inputTypeController.value = newValue!;
                                   setState(() {});
@@ -135,8 +132,7 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                             keyboardType: TextInputType.text,
                             focusNode: _inputNameFocusNode,
                             controller: _inputNameController,
-                            validator: (value) =>
-                                Validators().validateName(value!),
+                            validator: (value) => Validators().validateName(value!),
                           ),
                         ),
                         Padding(
@@ -176,8 +172,7 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                           await store.createTransaction(transaction: _newData);
 
                       if (isSentToDatabase) {
-                        final List<TransactionModel> list =
-                            Modular.get<TransactionsStore>().transactions;
+                        final List<TransactionModel> list = Modular.get<TransactionsStore>().transactions;
                         list.add(_newData);
                         Modular.to.pop();
 

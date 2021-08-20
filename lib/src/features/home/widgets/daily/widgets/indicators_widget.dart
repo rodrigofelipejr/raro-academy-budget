@@ -48,7 +48,7 @@ class _IndicatorsWidgetState extends State<IndicatorsWidget> {
                 child: Text(widget.label, style: AppTextStyles.gray14w500Roboto),
               ),
               Text(
-                'R\$ ${Formatters.formatMoney(widget.currentValue)}',
+                '${Formatters.formatMoney(widget.currentValue)}',
                 style: AppTextStyles.gray14w400Roboto,
               ),
             ],
