@@ -21,6 +21,6 @@ class AppModule extends Module {
         ModuleRoute(AppRoutes.splash, module: SplashModule()),
         ModuleRoute(AppRoutes.login, module: LoginModule()),
         ModuleRoute(AppRoutes.home, module: HomeModule()),
-        ModuleRoute(AppRoutes.transaction, module: TransactionsModule()),
+        ModuleRoute(AppRoutes.transactions, module: TransactionsModule()),
       ];
 }

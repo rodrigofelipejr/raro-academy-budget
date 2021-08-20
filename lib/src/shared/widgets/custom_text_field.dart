@@ -17,7 +17,7 @@ class CustomTextField extends StatelessWidget {
     this.icon,
     this.suffixIcon,
     this.suffix,
-    required this.focusNode,
+    this.focusNode,
     this.keyboardType,
     this.textInputAction,
     this.onEditingComplete,
@@ -38,7 +38,7 @@ class CustomTextField extends StatelessWidget {
   final Widget? icon;
   final Widget? suffixIcon;
   final Widget? suffix;
-  final FocusNode focusNode;
+  final FocusNode? focusNode;
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
   final Function()? onEditingComplete;
