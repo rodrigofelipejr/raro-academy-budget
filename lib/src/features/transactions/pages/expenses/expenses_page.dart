@@ -1,12 +1,15 @@
 import 'package:budget/src/features/transactions/constants/transactions_items.dart';
 import 'package:budget/src/features/transactions/controller/date_controller.dart';
 import 'package:budget/src/features/transactions/controller/dropdown_controller.dart';
+import 'package:budget/src/features/transactions/pages/transactions/transactions_store.dart';
 import 'package:budget/src/features/transactions/validators/text_validator.dart';
 import 'package:budget/src/features/transactions/widgets/appbar_with_drawer.dart';
 import 'package:budget/src/features/transactions/widgets/button_widget.dart';
 import 'package:budget/src/features/transactions/widgets/date_picker_widget.dart';
+import 'package:budget/src/features/transactions/widgets/dialog_widget.dart';
 import 'package:budget/src/features/transactions/widgets/dropdown_buttom_widget.dart';
 import 'package:budget/src/features/transactions/widgets/text_styles.dart';
+import 'package:budget/src/shared/constants/constants.dart';
 import 'package:budget/src/shared/models/models.dart';
 import 'package:budget/src/shared/widgets/custom_text_field.dart';
 import 'package:budget/src/shared/widgets/drawer/drawer_widget.dart';
@@ -35,18 +38,17 @@ class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  // late TransactionModel _data;
   void initState() {
     super.initState();
+    if(widget.data != null) {
     _expensesController =
         TextEditingController(text: widget.data?.value.toString());
-
-    _dateController.date = widget.data?.createAt ?? DateTime.now();
-
     _inputTypeController.value = TransactionsItems.expensesItems
-        .where((element) => element.value == "Viagem")
-        .first;
+        .firstWhere((item) => item.key == widget.data!.category);
+      }
   }
+
+  late TransactionModel _newData;
 
   @override
   Widget build(BuildContext context) {
@@ -133,35 +135,39 @@ class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
                 bottom: 0,
                 child: ButtonWidget(
                   label: "INSERIR",
-                  onPressed: () {
-                    // FocusScope.of(context).unfocus();
-                    // if (_formKey.currentState!.validate()) {
-                    //   _data = TransactionModel(
-                    //     value: double.parse(_expensesController.value.text),
-                    //     type: 'output',
-                    //     category: _inputTypeController.value!.value,
-                    //     createAt: _dateController.date,
-                    //     updateAt: _dateController.date,
-                    //     uuid: 'asdfg',
-                    //   );
-                    //   // _controller.repository.deleteTransaction("cKwzRsuGMJ6VREv6ZVHS");
-                    //   // _controller.repository.createTransaction(_data);
-                    //   print('DATA ${_data.toString()}');
-                    //   _controller.repository.getTransactions();
-                    //   _controller.repository.getDocs();
+                  onPressed: () async {
+                    FocusScope.of(context).unfocus();
+                    if (_formKey.currentState!.validate()) {
+                      _newData = TransactionModel(
+                        value: double.parse(_expensesController.value.text),
+                        type: TypeTransaction.output,
+                        category: TransactionCategories
+                            .output[_inputTypeController.value!.key]!,
+                        createAt: _dateController.date,
+                        updateAt: _dateController.date,
+                        uuid: '31KaO9IFxTOY3No1kWfoYyHptiw2',
+                      );
+                      print('DATA ${_newData.toString()}');
 
-                    //   //Adiciona nova transacao na lista
-                    //   // final list = Modular.get<DailyStore>().transactions();
-                    //   // list.add(_data);
-                    //   // Modular.get<DailyStore>().setTransactions();
-                    //   // Modular.to.pushReplacementNamed(AppRoutes.daily);
-                    //   showDialog(
-                    //     context: context,
-                    //     builder: (_) => DialogWidget(
-                    //       message: "Dado enviado com sucesso",
-                    //     ),
-                    //   );
-                    // }
+                      final bool isSentToDatabase =
+                          await store.createTransaction(transaction: _newData);
+
+                      if (isSentToDatabase) {
+                        final List<TransactionModel> list =
+                            Modular.get<TransactionsStore>().transactions;
+                        list.add(_newData);
+                        Modular.to.pop();
+
+                        showDialog(
+                          context: context,
+                          builder: (_) => DialogWidget(
+                            message: "Dado enviado com sucesso",
+                          ),
+                        );
+                      }
+                    }
+                    store.repository.showTransactions();
+                    store.repository.showDocs();
                   },
                 ),
               ),

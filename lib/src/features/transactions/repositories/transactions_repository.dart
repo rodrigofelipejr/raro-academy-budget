@@ -23,6 +23,18 @@ class TransactionsRepository implements ITransactionsRepository {
   }
 
   @override
+  Future<List<TransactionModel>> getTransactions() async {
+    CollectionReference db =
+        FirebaseFirestore.instance.collection(_collectionPath);
+    final snapshot = await db
+        .where('uuid', isEqualTo: AppSettings.userUuid)
+        .orderBy('createAt', descending: true)
+        .get();
+
+    return snapshot.docs.map((e) => TransactionModel.fromFirestore(e)).toList();
+  }
+
+  @override
   Future<List<TransactionModel>> getTransactionsByMonth({required int month, required String uuid}) async {
     CollectionReference db = FirebaseFirestore.instance.collection(_collectionPath);
     final snapshot = await db
