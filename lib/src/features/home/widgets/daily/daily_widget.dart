@@ -8,7 +8,7 @@ import '../../../../shared/constants/constants.dart';
 import '../../../../shared/utils/utils.dart';
 import '../../../../shared/widgets/widgets.dart';
 
-import '../../home_store.dart';
+import '../../home.dart';
 import 'daily_store.dart';
 import 'widgets/indicators_widget.dart';
 
@@ -20,8 +20,7 @@ class DailyWidget extends StatefulWidget {
 }
 
 class _DailyStateWidget extends ModularState<DailyWidget, DailyStore> {
-  bool get resetValues =>
-      store.state.inputs == 0.0 && store.state.outputs == 0.0;
+  bool get resetValues => store.state.inputs == 0.0 && store.state.outputs == 0.0;
 
   Widget _buildInput() {
     return IndicatorsWidget(
@@ -71,12 +70,9 @@ class _DailyStateWidget extends ModularState<DailyWidget, DailyStore> {
                           ),
                           MonthSelectorWidget(
                             label: store.selectedMonthDescription,
-                            referenceDate:
-                                Modular.get<HomeStore>().dailyStore.state.date,
+                            referenceDate: Modular.get<HomeStore>().dailyStore.state.date,
                             changeSelectedDate: (DateTime date) =>
-                                Modular.get<HomeStore>()
-                                    .dailyStore
-                                    .handleDaily(date: date),
+                                Modular.get<HomeStore>().dailyStore.handleDaily(date: date),
                           )
                         ],
                       ),

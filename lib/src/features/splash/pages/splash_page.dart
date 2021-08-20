@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../shared/constants/constants.dart';
-import 'splash_store.dart';
-import 'widgets/widgets.dart';
+import '../../../shared/constants/constants.dart';
+import '../splash.dart';
+import '../widgets/widgets.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
