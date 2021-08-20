@@ -3,6 +3,7 @@ import 'package:mobx/mobx.dart';
 
 import '../../../../shared/stores/stores.dart';
 import 'login_state.dart';
+import 'repositories/repositories.dart';
 import 'utils/firebase_errors.dart';
 
 part 'login_store.g.dart';
@@ -12,8 +13,9 @@ class LoginStore = _LoginStoreBase with _$LoginStore;
 abstract class _LoginStoreBase with Store {
   final FirebaseAuth firebaseAuth;
   final AuthStore authStore;
+  final LoginRepository _repository;
 
-  _LoginStoreBase(this.firebaseAuth, this.authStore);
+  _LoginStoreBase(this.firebaseAuth, this.authStore, this._repository);
 
   @observable
   LoginState state = LoginState();
@@ -46,11 +48,8 @@ abstract class _LoginStoreBase with Store {
     setIsLoading(true);
 
     try {
-      final response = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: state.email,
-        password: state.password,
-      );
-      await authStore.loginUser(response.user!.uid);
+      final userCredential = await _repository.signInWithEmailAndPassword(email: state.email, password: state.password);
+      await authStore.loginUser(userCredential.user!.uid);
       loginSuccess = true;
       authStore.addListenAuth();
     } on FirebaseAuthException catch (e) {

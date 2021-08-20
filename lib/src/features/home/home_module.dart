@@ -11,7 +11,7 @@ class HomeModule extends Module {
         Bind.lazySingleton((i) => GeneralBalanceStore(i(), i())),
         Bind.lazySingleton((i) => DailyStore(i(), i())),
         Bind.lazySingleton((i) => LastTransactionsStore(i(), i())),
-        Bind.lazySingleton((i) => HomeRepository()),
+        Bind.lazySingleton((i) => HomeRepositoryImpl(i())),
       ];
 
   @override

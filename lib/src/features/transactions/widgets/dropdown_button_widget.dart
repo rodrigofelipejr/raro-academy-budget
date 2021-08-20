@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'dropdown_item_data.dart';
 import 'text_styles.dart';
 
-class DropdownButtomWidget extends StatelessWidget {
-  const DropdownButtomWidget({
+class DropdownButtonWidget extends StatelessWidget {
+  const DropdownButtonWidget({
     Key? key,
     this.value,
     this.items,
@@ -59,8 +59,7 @@ class DropdownButtomWidget extends StatelessWidget {
       onChanged: onChanged,
       focusNode: focusNode,
       selectedItemBuilder: (BuildContext context) {
-        return items!
-            .map<DropdownMenuItem<DropdownItemData>>((DropdownItemData item) {
+        return items!.map<DropdownMenuItem<DropdownItemData>>((DropdownItemData item) {
           return DropdownMenuItem<DropdownItemData>(
             value: item,
             child: Text(
@@ -70,8 +69,7 @@ class DropdownButtomWidget extends StatelessWidget {
           );
         }).toList();
       },
-      items: items!
-          .map<DropdownMenuItem<DropdownItemData>>((DropdownItemData item) {
+      items: items!.map<DropdownMenuItem<DropdownItemData>>((DropdownItemData item) {
         return DropdownMenuItem<DropdownItemData>(
           value: item,
           child: Row(
