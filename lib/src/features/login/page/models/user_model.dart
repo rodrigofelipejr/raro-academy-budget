@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-class User {
+class UserModel {
   final String cpf;
   final String name;
   final String phone;
@@ -9,7 +9,7 @@ class User {
   final DateTime? updateAt;
   final DateTime? createAt;
 
-  User({
+  UserModel({
     required this.cpf,
     required this.name,
     required this.phone,
@@ -19,7 +19,7 @@ class User {
     this.createAt,
   });
 
-  User copyWith({
+  UserModel copyWith({
     String? cpf,
     String? name,
     String? phone,
@@ -28,7 +28,7 @@ class User {
     DateTime? updateAt,
     DateTime? createAt,
   }) {
-    return User(
+    return UserModel(
       cpf: cpf ?? this.cpf,
       name: name ?? this.name,
       phone: phone ?? this.phone,
@@ -51,8 +51,8 @@ class User {
     };
   }
 
-  factory User.fromMap(Map<String, dynamic> map) {
-    return User(
+  factory UserModel.fromMap(Map<String, dynamic> map) {
+    return UserModel(
       cpf: map['cpf'],
       name: map['name'],
       phone: map['phone'],
@@ -65,7 +65,8 @@ class User {
 
   String toJson() => json.encode(toMap());
 
-  factory User.fromJson(String source) => User.fromMap(json.decode(source));
+  factory UserModel.fromJson(String source) =>
+      UserModel.fromMap(json.decode(source));
 
   @override
   String toString() {
@@ -76,7 +77,7 @@ class User {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is User &&
+    return other is UserModel &&
         other.cpf == cpf &&
         other.name == name &&
         other.phone == phone &&

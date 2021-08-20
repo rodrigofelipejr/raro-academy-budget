@@ -11,7 +11,7 @@ class RegisterRepository extends IRegisterRepository {
   RegisterRepository(this.firestore);
 
   @override
-  Future<void> createUser(User user) async {
+  Future<void> createUser(UserModel user) async {
     await FirebaseFirestore.instance
         .collection(_collectionPath)
         .add(user.toMap());

@@ -10,7 +10,7 @@ class RegisterRepository {
   RegisterRepository(this.firestore);
 
   @override
-  Future<void> createUser(User transaction) async {
+  Future<void> createUser(UserModel transaction) async {
     await FirebaseFirestore.instance
         .collection(_collectionPath)
         .add(transaction.toMap());

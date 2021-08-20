@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:budget/src/shared/auth/auth_controller.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
@@ -72,6 +74,24 @@ abstract class _RegisterControllerBase with Store {
     this.passwordVisible = value;
   }
 
+  @action
+  Future<void> login(
+    String email,
+    String password,
+  ) async {
+    try {
+      loading = true;
+      final response = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      AuthController.instance.loginUser(response.user!);
+      loading = false;
+      this.createUser(response);
+    } on FirebaseAuthException catch (e) {
+      loading = false;
+      //passwordError = verifyErroCode(e.code);
+    }
+  }
+
   void pushPage() {
     pageController.jumpToPage(this.currentPage + 1);
   }
@@ -84,16 +104,15 @@ abstract class _RegisterControllerBase with Store {
     }
   }
 
-  Future<void> createUser() async {
+  Future<void> createUser(UserCredential user) async {
     try {
-      print('dasdasdasd');
       this.loading = true;
-      await repository.createUser(User(
+      await repository.createUser(UserModel(
           cpf: this.cpfController.text,
           name: this.nameController.text,
           phone: this.phoneController.text,
           termsAndConditions: policy,
-          uuid: 'Teste Save 00001'));
+          uuid: user.user?.uid ?? ''));
       this.loading = false;
     } catch (e) {
       this.loading = false;
@@ -117,7 +136,7 @@ abstract class _RegisterControllerBase with Store {
     } else if (currentPage == 3) {
       if (formKeyPassword.currentState!.validate()) {
         pushPage();
-        this.createUser();
+        this.login(this.emailController.text, this.passwordController.text);
       }
     }
   }

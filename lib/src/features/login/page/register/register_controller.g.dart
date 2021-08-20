@@ -72,6 +72,28 @@ mixin _$RegisterController on _RegisterControllerBase, Store {
     });
   }
 
+  final _$loadingAtom = Atom(name: '_RegisterControllerBase.loading');
+
+  @override
+  bool get loading {
+    _$loadingAtom.reportRead();
+    return super.loading;
+  }
+
+  @override
+  set loading(bool value) {
+    _$loadingAtom.reportWrite(value, super.loading, () {
+      super.loading = value;
+    });
+  }
+
+  final _$loginAsyncAction = AsyncAction('_RegisterControllerBase.login');
+
+  @override
+  Future<void> login(String email, String password) {
+    return _$loginAsyncAction.run(() => super.login(email, password));
+  }
+
   final _$_RegisterControllerBaseActionController =
       ActionController(name: '_RegisterControllerBase');
 
@@ -109,11 +131,11 @@ mixin _$RegisterController on _RegisterControllerBase, Store {
   }
 
   @override
-  void pushPage() {
+  void updatePasswordVisible(bool value) {
     final _$actionInfo = _$_RegisterControllerBaseActionController.startAction(
-        name: '_RegisterControllerBase.pushPage');
+        name: '_RegisterControllerBase.updatePasswordVisible');
     try {
-      return super.pushPage();
+      return super.updatePasswordVisible(value);
     } finally {
       _$_RegisterControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -125,7 +147,8 @@ mixin _$RegisterController on _RegisterControllerBase, Store {
 currentPage: ${currentPage},
 policy: ${policy},
 passwordVisible: ${passwordVisible},
-confirmPasswordVisible: ${confirmPasswordVisible}
+confirmPasswordVisible: ${confirmPasswordVisible},
+loading: ${loading}
     ''';
   }
 }
