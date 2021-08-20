@@ -15,7 +15,7 @@ class TransactionsModule extends Module {
   List<Bind<Object>> get binds => [
         Bind.singleton((i) => TransactionsRepository(i())),
         Bind.singleton((i) => TransactionsStore(i(), i(), i())),
-        Bind.singleton((i) => IncomeStore(i())),
+        Bind.singleton((i) => IncomeStore(i(), i())),
         Bind.singleton((i) => ExpensesStore(i())),
         Bind.singleton((i) => FirebaseFirestore.instance),
       ];
