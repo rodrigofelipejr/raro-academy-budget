@@ -1,6 +1,6 @@
-import 'package:budget/src/features/login/page/models/user_model.dart';
 import 'package:budget/src/shared/constants/app_collections.dart';
 import 'package:budget/src/shared/constants/constants.dart';
+import 'package:budget/src/shared/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RegisterRepository {
@@ -11,9 +11,7 @@ class RegisterRepository {
 
   @override
   Future<void> createUser(UserModel transaction) async {
-    await FirebaseFirestore.instance
-        .collection(_collectionPath)
-        .add(transaction.toMap());
+    await FirebaseFirestore.instance.collection(_collectionPath).add(transaction.toMap());
   }
 
   // @override

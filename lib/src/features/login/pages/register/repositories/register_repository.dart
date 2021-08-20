@@ -1,7 +1,7 @@
-import 'package:budget/src/features/login/page/models/user_model.dart';
-import 'package:budget/src/features/login/page/register/repositories/register_repository_interface.dart';
+import 'package:budget/src/features/login/pages/register/repositories/register_repository_interface.dart';
 import 'package:budget/src/shared/constants/app_collections.dart';
 import 'package:budget/src/shared/constants/constants.dart';
+import 'package:budget/src/shared/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RegisterRepository extends IRegisterRepository {
@@ -12,9 +12,7 @@ class RegisterRepository extends IRegisterRepository {
 
   @override
   Future<void> createUser(UserModel user) async {
-    await FirebaseFirestore.instance
-        .collection(_collectionPath)
-        .add(user.toMap());
+    await FirebaseFirestore.instance.collection(_collectionPath).add(user.toMap());
   }
 
   // @override

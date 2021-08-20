@@ -1,5 +1,5 @@
-import 'package:budget/src/features/login/page/register/register_controller.dart';
-import 'package:budget/src/features/login/page/widgets/header_widget.dart';
+import 'package:budget/src/features/login/pages/register/register_controller.dart';
+import 'package:budget/src/features/login/widgets/header_widget.dart';
 import 'package:budget/src/shared/constants/constants.dart';
 import 'package:budget/src/shared/validators/text_validator.dart';
 import 'package:budget/src/shared/widgets/circular_button_gradient_with_icon.dart';
@@ -16,8 +16,7 @@ class RegisterPage extends StatefulWidget {
   _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _RegisterPageState
-    extends ModularState<RegisterPage, RegisterController> {
+class _RegisterPageState extends ModularState<RegisterPage, RegisterController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,8 +50,7 @@ class _RegisterPageState
                               CustomTextField(
                                 labelText: "Nome",
                                 //onChanged: controller.setEmail,
-                                validator: (value) =>
-                                    Validators().validateName(value ?? ''),
+                                validator: (value) => Validators().validateName(value ?? ''),
                                 textInputAction: TextInputAction.next,
                                 controller: controller.nameController,
                                 focusNode: controller.nameFocusNode,
@@ -62,8 +60,7 @@ class _RegisterPageState
                               CustomTextField(
                                 labelText: "E-mail",
                                 //onChanged: controller.setEmail,
-                                validator: (value) =>
-                                    Validators().email(value ?? ''),
+                                validator: (value) => Validators().email(value ?? ''),
                                 textInputAction: TextInputAction.next,
                                 controller: controller.emailController,
                                 focusNode: controller.emailFocusNode,
@@ -106,16 +103,12 @@ class _RegisterPageState
                               CustomTextField(
                                 labelText: "Telefone",
                                 //onChanged: controller.setEmail,
-                                validator: (value) =>
-                                    Validators().phoneValidator(value ?? ''),
+                                validator: (value) => Validators().phoneValidator(value ?? ''),
                                 textInputAction: TextInputAction.next,
                                 controller: controller.phoneController,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
-                                  TextInputMask(mask: [
-                                    '(99) 9999-9999',
-                                    '(99) 99999-9999'
-                                  ])
+                                  TextInputMask(mask: ['(99) 9999-9999', '(99) 99999-9999'])
                                 ],
                                 onEditingComplete: () {
                                   FocusScope.of(context).nextFocus();
@@ -131,10 +124,8 @@ class _RegisterPageState
                                   inputFormatters: [
                                     TextInputMask(mask: ['999.999.999-99'])
                                   ],
-                                  validator: (cpf) =>
-                                      Validators().cpfValidator(cpf ?? ''),
-                                  helperText:
-                                      "O CPF é necessário para conectar suas contas."),
+                                  validator: (cpf) => Validators().cpfValidator(cpf ?? ''),
+                                  helperText: "O CPF é necessário para conectar suas contas."),
                               SizedBox(
                                 height: 50,
                               ),
@@ -197,8 +188,7 @@ class _RegisterPageState
                                   ),
                                   leading: Observer(
                                     builder: (_) => Checkbox(
-                                      materialTapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
+                                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                       checkColor: Colors.white,
                                       // fillColor: MaterialStateProperty.resolveWith(Colors.accents),
                                       value: controller.policy,
@@ -270,12 +260,10 @@ class _RegisterPageState
                                       controller: controller.passwordController,
                                       focusNode: controller.passwordFocusNode,
                                       obscureText: controller.passwordVisible,
-                                      suffixIcon: VisibleWidget(
-                                        visible: controller.passwordVisible,
-                                        onPressed: () {
-                                          controller.updatePasswordVisible(
-                                              !controller.passwordVisible);
-                                        },
+                                      suffixIcon: ButtonIconVisibleWidget(
+                                        colorIcon: AppColors.black54,
+                                        showing: controller.passwordVisible,
+                                        onTap: () => controller.updatePasswordVisible(!controller.passwordVisible),
                                       ),
                                     ),
                                   ),
@@ -283,27 +271,18 @@ class _RegisterPageState
                                   Observer(
                                     builder: (_) => CustomTextField(
                                       labelText: "Confirmar Senha",
-                                      controller:
-                                          controller.confirmPasswordController,
-                                      focusNode:
-                                          controller.confirmPasswordFocusNode,
-                                      validator: (value) =>
-                                          Validators().validatePassword(
+                                      controller: controller.confirmPasswordController,
+                                      focusNode: controller.confirmPasswordFocusNode,
+                                      validator: (value) => Validators().validatePassword(
                                         value ?? '',
-                                        controller
-                                            .passwordController.value.text,
+                                        controller.passwordController.value.text,
                                       ),
-                                      obscureText:
-                                          controller.confirmPasswordVisible,
-                                      suffixIcon: VisibleWidget(
-                                        visible:
-                                            controller.confirmPasswordVisible,
-                                        onPressed: () {
-                                          controller
-                                              .updateConfirmPasswordVisible(
-                                                  !controller
-                                                      .confirmPasswordVisible);
-                                        },
+                                      obscureText: controller.confirmPasswordVisible,
+                                      suffixIcon: ButtonIconVisibleWidget(
+                                        colorIcon: AppColors.black54,
+                                        showing: controller.confirmPasswordVisible,
+                                        onTap: () =>
+                                            controller.updateConfirmPasswordVisible(!controller.confirmPasswordVisible),
                                       ),
                                     ),
                                   ),

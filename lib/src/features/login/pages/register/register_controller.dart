@@ -1,13 +1,10 @@
-import 'dart:convert';
-
-import 'package:budget/src/shared/auth/auth_controller.dart';
+import 'package:budget/src/features/login/pages/register/repositories/register_repositories.dart';
+import 'package:budget/src/shared/models/user_model.dart';
+import 'package:budget/src/shared/stores/stores.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-
-import 'package:budget/src/features/login/page/models/models.dart';
-import 'package:budget/src/features/login/page/register/repositories/register_repository.dart';
 import 'package:budget/src/shared/constants/app_routes.dart';
 
 part 'register_controller.g.dart';
@@ -36,6 +33,7 @@ abstract class _RegisterControllerBase with Store {
   TextEditingController confirmPasswordController = TextEditingController();
 
   final RegisterRepository repository;
+  final AuthStore authStore;
 
   @observable
   int currentPage = 0;
@@ -52,7 +50,7 @@ abstract class _RegisterControllerBase with Store {
   @observable
   bool loading = false;
 
-  _RegisterControllerBase(this.repository);
+  _RegisterControllerBase(this.repository, this.authStore);
 
   @action
   void updateCurrentPage(int index) {
@@ -81,9 +79,9 @@ abstract class _RegisterControllerBase with Store {
   ) async {
     try {
       loading = true;
-      final response = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
-      AuthController.instance.loginUser(response.user!);
+      final response = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+      // AuthController.instance.loginUser(response.user!);
+      this.authStore.loginUser(response.user!.uid);
       loading = false;
       this.createUser(response);
     } on FirebaseAuthException catch (e) {
@@ -112,7 +110,8 @@ abstract class _RegisterControllerBase with Store {
           name: this.nameController.text,
           phone: this.phoneController.text,
           termsAndConditions: policy,
-          uuid: user.user?.uid ?? ''));
+          uuid: user.user?.uid ?? '',
+          createAt: DateTime.now()));
       this.loading = false;
     } catch (e) {
       this.loading = false;

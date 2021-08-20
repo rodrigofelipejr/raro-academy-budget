@@ -7,7 +7,7 @@ class UserModel {
   final String uuid;
   final String cpf;
   final String name;
-  final int phone;
+  final String phone;
   final bool termsAndConditions;
   final DateTime createAt;
   final DateTime? updateAt;
@@ -26,7 +26,7 @@ class UserModel {
     String? uuid,
     String? cpf,
     String? name,
-    int? phone,
+    String? phone,
     bool? termsAndConditions,
     DateTime? createAt,
     DateTime? updateAt,

@@ -1,3 +1,4 @@
+import 'package:budget/src/features/login/widgets/header_widget.dart';
 import 'package:budget/src/shared/validators/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -7,7 +8,6 @@ import '../../../../shared/constants/constants.dart';
 import '../../../../shared/utils/utils.dart';
 import '../../../../shared/widgets/widgets.dart';
 import 'login_store.dart';
-import 'widgets/header_widget.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);

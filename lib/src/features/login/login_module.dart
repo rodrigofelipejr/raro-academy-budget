@@ -10,7 +10,7 @@ class LoginModule extends Module {
   @override
   List<Bind<Object>> get binds => [
         Bind.singleton((i) => RegisterRepository(i())),
-        Bind.lazySingleton((i) => RegisterController(i())),
+        Bind.lazySingleton((i) => RegisterController(i(), i())),
         Bind.singleton((i) => FirebaseFirestore.instance),
         Bind.singleton((i) => LoginStore(i(), i(), i())),
         Bind.lazySingleton((i) => LoginRepositoryImpl(i())),

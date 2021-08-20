@@ -1,4 +1,3 @@
-import 'package:budget/src/features/login/page/login/login_controller.dart';
 import 'package:budget/src/shared/constants/app_gradients.dart';
 import 'package:budget/src/shared/constants/constants.dart';
 import 'package:flutter/material.dart';
@@ -31,8 +30,7 @@ class CircularButtonGradientWithIcon extends StatelessWidget {
               child: InkWell(
                 borderRadius: BorderRadius.circular(34.0),
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
                   child: Text(
                     text,
                     style: AppTextStyles.darkGray14w500Roboto,
@@ -54,8 +52,7 @@ class CircularButtonGradientWithIcon extends StatelessWidget {
                 borderRadius: BorderRadius.circular(34.0),
                 onTap: onTap,
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 5.0, vertical: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 8),
                   child: Flex(
                     direction: Axis.horizontal,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

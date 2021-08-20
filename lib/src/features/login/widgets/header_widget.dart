@@ -1,12 +1,7 @@
 import 'package:budget/src/shared/constants/app_colors.dart';
+import 'package:budget/src/shared/constants/app_images.dart';
 import 'package:flutter/material.dart';
 
-<<<<<<< HEAD:lib/src/features/login/pages/widgets/header_widget.dart
-=======
-import '../../../../../shared/constants/constants.dart';
-import '../../../../../shared/constants/app_colors.dart';
-
->>>>>>> dev:lib/src/features/login/pages/login/widgets/header_widget.dart
 class HeaderWidget extends StatelessWidget {
   const HeaderWidget({
     Key? key,
