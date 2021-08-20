@@ -1,4 +1,4 @@
-import 'package:budget/src/features/transactions/pages/transactions/transactions_store.dart';
+import 'package:budget/src/features/transactions/pages/transactions/stores/transactions_store.dart';
 import 'package:budget/src/shared/constants/constants.dart';
 import 'package:budget/src/shared/utils/formatters.dart';
 import 'package:flutter/material.dart';
@@ -9,9 +9,7 @@ class ButtonsAppBarDay extends StatelessWidget {
   final VoidCallback? buttonIn;
   final VoidCallback? buttonOut;
   final VoidCallback? buttonAll;
-  const ButtonsAppBarDay(
-      {Key? key, this.buttonIn, this.buttonOut, this.buttonAll})
-      : super(key: key);
+  const ButtonsAppBarDay({Key? key, this.buttonIn, this.buttonOut, this.buttonAll}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +21,7 @@ class ButtonsAppBarDay extends StatelessWidget {
           Observer(builder: (_) {
             return Text(
               '${Formatters.formatMoney(Modular.get<TransactionsStore>().transactionTotal)}',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 26,
-                  fontWeight: FontWeight.w700),
+              style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.w700),
             );
           }),
           SizedBox(height: 11),
@@ -70,8 +65,7 @@ class ButtonsAppBarDay extends StatelessWidget {
     return Observer(builder: (_) {
       return Expanded(
         child: TextButton(
-          onPressed:
-              Modular.get<TransactionsStore>().onError != null ? null : button,
+          onPressed: Modular.get<TransactionsStore>().onError != null ? null : button,
           child: Text(
             text,
             style: TextStyle(

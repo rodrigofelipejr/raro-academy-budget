@@ -1,29 +1,10 @@
 import 'dart:convert';
 
-import 'package:budget/src/shared/constants/constants.dart';
-import 'package:budget/src/shared/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../utils/utils.dart';
+
 enum TypeTransaction { output, input }
-
-class CategoryTransaction {
-  static const Map<String, String> output = {
-    TransactionCategories.meal: 'Alimentação',
-    TransactionCategories.education: 'Educação',
-    TransactionCategories.others: 'Outros',
-    TransactionCategories.payments: 'Pagamentos',
-    TransactionCategories.transport: 'Transporte',
-    TransactionCategories.trip: 'Viagem',
-  };
-
-  static const Map<String, String> input = {
-    TransactionCategories.pix: 'Pix',
-    TransactionCategories.ticket: 'Boleto',
-    TransactionCategories.ted: 'Ted',
-    TransactionCategories.doc: 'Doc',
-    TransactionCategories.money: 'Dinheiro',
-  };
-}
 
 class TransactionModel {
   final String uuid;

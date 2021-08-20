@@ -1,17 +1,13 @@
-import 'package:budget/src/features/transactions/pages/transactions/transactions_store.dart';
-import 'package:budget/src/features/transactions/pages/transactions/widgets/output_card.dart';
-import 'package:budget/src/shared/constants/app_routes.dart';
-import 'package:budget/src/shared/utils/dates.dart';
-import 'package:budget/src/shared/widgets/fab_widget.dart';
-import 'package:budget/src/shared/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../../../shared/constants/constants.dart';
+import '../../../../shared/utils/utils.dart';
+import '../../../../shared/widgets/widgets.dart';
 import '../../../home/home.dart';
-import 'widgets/all_card.dart';
-import 'widgets/buttons_appbar.dart';
-import 'widgets/input_card.dart';
+import 'stores/transactions_store.dart';
+import 'widgets/widgets.dart';
 
 class TransactionsPage extends StatefulWidget {
   const TransactionsPage({Key? key}) : super(key: key);
