@@ -31,8 +31,7 @@ class IncomePage extends StatefulWidget {
 class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
   TextEditingController _incomeController = TextEditingController();
   TextEditingController _inputNameController = TextEditingController();
-  DropdownController _inputTypeController =
-      DropdownController(items: TransactionsItems.incomeItems);
+  DropdownController _inputTypeController = DropdownController(items: TransactionsItems.incomeItems);
   DateController _dateController = DateController();
 
   FocusNode _incomeFocusNode = FocusNode();
@@ -45,14 +44,10 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
   @override
   void initState() {
     super.initState();
-    _incomeController =
-        TextEditingController(text: widget.data?.value.toString());
-    _inputNameController =
-        TextEditingController(text: widget.data?.description);
+    _incomeController = TextEditingController(text: widget.data?.value.toString());
+    _inputNameController = TextEditingController(text: widget.data?.description);
     _dateController.date = widget.data?.createAt ?? DateTime.now();
-    _inputTypeController.value = TransactionsItems.incomeItems
-        .where((element) => element.value == "Dinheiro")
-        .first;
+    _inputTypeController.value = TransactionsItems.incomeItems.where((element) => element.value == "Dinheiro").first;
   }
 
   late TransactionModel _newData;
@@ -98,8 +93,7 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                             keyboardType: TextInputType.number,
                             focusNode: _incomeFocusNode,
                             controller: _incomeController,
-                            validator: (value) =>
-                                Validators().validateNumber(value!),
+                            validator: (value) => Validators().validateNumber(value!),
                           ),
                         ),
                         Padding(
@@ -115,8 +109,7 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                                 value: _inputTypeController.value,
                                 items: _inputTypeController.items,
                                 focusNode: _inputTypeFocusNode,
-                                validator: (value) => Validators()
-                                    .validateTransactionCategory(value),
+                                validator: (value) => Validators().validateTransactionCategory(value),
                                 onChanged: (newValue) {
                                   _inputTypeController.value = newValue!;
                                   setState(() {});
@@ -133,8 +126,7 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                             keyboardType: TextInputType.text,
                             focusNode: _inputNameFocusNode,
                             controller: _inputNameController,
-                            validator: (value) =>
-                                Validators().validateName(value!),
+                            validator: (value) => Validators().validateName(value!),
                           ),
                         ),
                         Padding(
@@ -171,12 +163,10 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                       print('DATA ${_newData.toMap()}');
 
                       // final bool isSentToDatabase = true;
-                      final bool isSentToDatabase =
-                          await store.createTransaction(transaction: _newData);
+                      final bool isSentToDatabase = await store.createTransaction(transaction: _newData);
 
                       if (isSentToDatabase) {
-                        final List<TransactionModel> list =
-                            Modular.get<TransactionsStore>().transactions;
+                        final List<TransactionModel> list = Modular.get<TransactionsStore>().transactions;
                         list.add(_newData);
                         Modular.to.pop();
 

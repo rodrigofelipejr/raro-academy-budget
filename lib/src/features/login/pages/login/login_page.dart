@@ -29,7 +29,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> with KeyboardM
   void initState() {
     _disposer = reaction<bool>((_) => store.isLoading, (bool loading) {
       (loading)
-          ? OverlayWidget.show(context, label: AppStrings.msgLoginApp)
+          ? OverlayWidget.show(context, label: AppStrings.txtLoginApp)
           : Future.delayed(Duration(milliseconds: 300)).then((value) => OverlayWidget.hide());
     });
     super.initState();
