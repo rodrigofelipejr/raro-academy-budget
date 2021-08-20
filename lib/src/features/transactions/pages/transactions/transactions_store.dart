@@ -82,6 +82,7 @@ abstract class _TransactionsStoreBase extends BaseStore with Store {
     setIsLoading(true);
     try {
       final month = homeStore.dailyStore.state.date.month;
+      // final data = await repository.getTransactionsByMonth(uuid: authStore.firebaseAuth.currentUser!.uid, month: month);
       final transactions = await repository.getAllTransactionsByMonth(uuid: authStore.user!.uuid, month: month);
       setOnError(null);
       setTransactions(values: transactions);

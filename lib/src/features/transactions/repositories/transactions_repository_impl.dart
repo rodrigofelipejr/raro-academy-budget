@@ -15,13 +15,19 @@ class TransactionsRepositoryImpl implements TransactionsRepository {
   }
 
   @override
-  Future<void> createTransaction(TransactionModel transaction) async {
-    await _db.add(transaction.toMap());
+  Future<String?> createTransaction(TransactionModel transaction) async {
+    final newTransaction = await _db.add(transaction.toMap());
+    return newTransaction.id;
   }
 
   @override
-  Future<void> deleteTransaction(String docId) async {
-    await _db.doc(docId).delete();
+  Future<void> updateTransaction(TransactionModel transaction) async {
+    _db.doc(transaction.id).set(transaction.toMap(), SetOptions(merge: true));
+  }
+
+  @override
+  Future<void> deleteTransaction(TransactionModel transaction) async {
+    _db.doc(transaction.id).delete();
   }
 
   @override
@@ -40,10 +46,5 @@ class TransactionsRepositoryImpl implements TransactionsRepository {
         .get();
 
     return snapshot.docs.map((e) => TransactionModel.fromFirestore(e)).toList();
-  }
-
-  @override
-  Future<void> updateTransaction({required String docId, required TransactionModel transaction}) async {
-    await _db.doc(docId).set(transaction.toMap(), SetOptions(merge: true));
   }
 }
