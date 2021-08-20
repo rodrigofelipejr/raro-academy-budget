@@ -28,7 +28,8 @@ class IncomePage extends StatefulWidget {
 class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
   TextEditingController _incomeController = TextEditingController();
   TextEditingController _inputNameController = TextEditingController();
-  DropdownController _inputTypeController = DropdownController(items: TransactionsItems.incomeItems);
+  DropdownController _inputTypeController =
+      DropdownController(items: TransactionsItems.incomeItems);
   DateController _dateController = DateController();
 
   FocusNode _incomeFocusNode = FocusNode();
@@ -93,7 +94,8 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                             keyboardType: TextInputType.number,
                             focusNode: _incomeFocusNode,
                             controller: _incomeController,
-                            validator: (value) => Validators().validateNumber(value!),
+                            validator: (value) =>
+                                Validators().validateNumber(value!),
                           ),
                         ),
                         Padding(
@@ -126,7 +128,8 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                             keyboardType: TextInputType.text,
                             focusNode: _inputNameFocusNode,
                             controller: _inputNameController,
-                            validator: (value) => Validators().validateName(value!),
+                            validator: (value) =>
+                                Validators().validateName(value!),
                           ),
                         ),
                         Padding(
@@ -154,31 +157,89 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                       _newData = TransactionModel(
                         value: double.parse(_incomeController.value.text),
                         type: TypeTransaction.input,
-                        category: TransactionCategories.input[_inputTypeController.value!.key]!,
+                        category: TransactionCategories
+                            .input[_inputTypeController.value!.key]!,
                         description: _inputNameController.value.text,
                         createAt: _dateController.date,
                         updateAt: _dateController.date,
-                        uuid: '31KaO9IFxTOY3No1kWfoYyHptiw2',
                       );
                       print('DATA ${_newData.toMap()}');
 
-                      final bool isSentToDatabase = await store.createTransaction(transaction: _newData);
+                      final String? returnedId;
+                      bool isUpdated = false;
+                      if (widget.data == null) {
+                        returnedId = await store.createTransaction(
+                            transaction: _newData);
+                      } else {
+                        _newData = widget.data!.copyWith(
+                          value: double.parse(_incomeController.value.text),
+                          category: TransactionCategories
+                              .input[_inputTypeController.value!.key]!,
+                          description: _inputNameController.value.text,
+                          updateAt: _dateController.date,
+                        );
+                        final List<TransactionModel> list =
+                            Modular.get<TransactionsStore>().transactions;
+                        list.remove(widget.data!);
+                        list.add(_newData);
+                        await store.updateTransaction(transaction: _newData);
+                        returnedId = null;
+                        isUpdated = true;
+                        Modular.to.pop();
+                      }
 
-                      if (isSentToDatabase) {
-                        final List<TransactionModel> list = Modular.get<TransactionsStore>().transactions;
+                      if (returnedId != null) {
+                        _newData = _newData.copyWith(id: returnedId);
+                        final List<TransactionModel> list =
+                            Modular.get<TransactionsStore>().transactions;
                         list.add(_newData);
                         Modular.to.pop();
+                      }
 
+                      if (returnedId != null || isUpdated) {
                         showDialog(
                           context: context,
                           builder: (_) => DialogWidget(
-                            message: "Dado enviado com sucesso",
+                            message: isUpdated
+                                ? "Dado atualizado com sucesso"
+                                : "Dado enviado com sucesso",
                           ),
                         );
                       }
                     }
+                    // store.repository.showTransactions();
+                    // store.repository.showDocs();
+                    print(store.authStore.firebaseAuth.currentUser!.uid);
+                    print("TRANSACTIONS STORE");
+                    Modular.get<TransactionsStore>()
+                        .transactions
+                        .forEach((element) => print(element));
                   },
                 ),
+              ),
+              ButtonWidget(
+                onPressed: () async {
+                  bool isDeleted = false;
+                  if (widget.data != null) {
+                    await store.deleteTransaction(
+                      transaction: widget.data!);
+                  }
+                  final List<TransactionModel> list =
+                    Modular.get<TransactionsStore>().transactions;
+                  list.remove(widget.data!);
+                  isDeleted = true;
+                  Modular.to.pop();
+
+                  if (isDeleted) {
+                    showDialog(
+                      context: context,
+                      builder: (_) => DialogWidget(
+                        message: "Dado removido com sucesso"
+                      ),
+                    );
+                  }
+                },
+                label: "DEL",
               ),
             ],
           ),

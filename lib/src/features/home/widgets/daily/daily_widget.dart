@@ -55,7 +55,7 @@ class _DailyStateWidget extends State<DailyWidget> {
       child: CardWidget(
         contentPadding: const EdgeInsets.all(0.0),
         child: InkWell(
-          onTap: () => Modular.to.pushNamed(AppRoutes.transaction),
+          onTap: () => Modular.to.pushNamed(AppRoutes.transactions),
           borderRadius: BorderRadius.all(Radius.circular(7.0)),
           child: Padding(
             padding: const EdgeInsets.all(16.0),

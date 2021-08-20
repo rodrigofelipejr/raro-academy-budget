@@ -7,7 +7,8 @@ import '../utils/utils.dart';
 enum TypeTransaction { output, input }
 
 class TransactionModel {
-  final String uuid;
+  final String? id;
+  final String? uuid;
   final String category;
   final TypeTransaction type;
   final String? description;
@@ -16,7 +17,8 @@ class TransactionModel {
   final DateTime updateAt;
 
   TransactionModel({
-    required this.uuid,
+    this.id,
+    this.uuid,
     required this.category,
     required this.type,
     this.description,
@@ -26,6 +28,7 @@ class TransactionModel {
   });
 
   TransactionModel copyWith({
+    String? id,
     String? uuid,
     String? category,
     TypeTransaction? type,
@@ -35,6 +38,7 @@ class TransactionModel {
     DateTime? updateAt,
   }) {
     return TransactionModel(
+      id: id ?? this.id,
       uuid: uuid ?? this.uuid,
       category: category ?? this.category,
       type: type ?? this.type,
@@ -47,6 +51,7 @@ class TransactionModel {
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'uuid': uuid,
       'category': category,
       'type': TypeTransaction.values.indexOf(type),
@@ -60,7 +65,10 @@ class TransactionModel {
   factory TransactionModel.fromFirestore(DocumentSnapshot doc) {
     Map map = doc.data() as Map<String, dynamic>;
 
+    print("DOCID: ${doc.id}");
+
     return TransactionModel(
+      id: doc.id,
       uuid: map['uuid'] ?? '',
       category: map['category'] ?? '',
       type: TypeTransaction.values[map['type'] ?? 0],
@@ -73,6 +81,7 @@ class TransactionModel {
 
   factory TransactionModel.fromMap(Map<String, dynamic> map) {
     return TransactionModel(
+      id: map['id'],
       uuid: map['uuid'],
       category: map['category'],
       type: TypeTransaction.values[map['type']],
@@ -85,11 +94,12 @@ class TransactionModel {
 
   String toJson() => json.encode(toMap());
 
-  factory TransactionModel.fromJson(String source) => TransactionModel.fromMap(json.decode(source));
+  factory TransactionModel.fromJson(String source) =>
+      TransactionModel.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'TransactionModel(uuid: $uuid, category: $category, type: $type, description: $description, value: $value, createAt: $createAt, updateAt: $updateAt)';
+    return 'TransactionModel(id: $id, uuid: $uuid, category: $category, type: $type, description: $description, value: $value, createAt: $createAt, updateAt: $updateAt)';
   }
 
   @override
@@ -97,6 +107,7 @@ class TransactionModel {
     if (identical(this, other)) return true;
 
     return other is TransactionModel &&
+        other.id == id &&
         other.uuid == uuid &&
         other.category == category &&
         other.type == type &&
@@ -108,7 +119,8 @@ class TransactionModel {
 
   @override
   int get hashCode {
-    return uuid.hashCode ^
+    return id.hashCode ^
+        uuid.hashCode ^
         category.hashCode ^
         type.hashCode ^
         description.hashCode ^

@@ -77,7 +77,7 @@ class UserModel {
       uuid: map['uuid'] ?? '',
       cpf: map['cpf'] ?? '',
       name: map['name'] ?? '',
-      phone: map['phone'] ?? 0,
+      phone: map['phone'] ?? '',
       termsAndConditions: map['termsAndConditions'] ?? false,
       createAt: Dates.parseTimestampDateTime(map['createAt']) ?? DateTime.now(),
       updateAt: Dates.parseTimestampDateTime(map['updateAt']) ?? DateTime.now(),
