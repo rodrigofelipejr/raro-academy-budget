@@ -24,6 +24,14 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     super.initState();
   }
 
+  Future<void> _logoff(BuildContext context) async {
+    Navigator.pop(context);
+    OverlayWidget.show(context, label: AppStrings.txtLogoffApp);
+    await Future.delayed(Duration(milliseconds: 300));
+    await _authStore.logoffUser();
+    OverlayWidget.hide();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -38,11 +46,16 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           ),
           FooterDrawerWidget(
             onTap: () async {
-              Navigator.pop(context);
-              OverlayWidget.show(context, label: AppStrings.msgLogoffApp);
-              await Future.delayed(Duration(milliseconds: 300));
-              await _authStore.logoffUser();
-              OverlayWidget.hide();
+              await showDialog(
+                context: context,
+                builder: (_) => DialogWidget(
+                  type: DialogTypeEnum.info,
+                  title: AppStrings.titleDialogSairApp,
+                  message: AppStrings.bodyDialogSairApp,
+                  textButtonPrimary: AppStrings.txtSair,
+                  onPressedPrimary: () async => await _logoff(context),
+                ),
+              );
             },
           ),
         ],

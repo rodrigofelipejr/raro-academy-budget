@@ -1,20 +1,21 @@
-import 'package:budget/src/shared/constants/transaction_categories.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/constants.dart';
-import '../utils/utils.dart';
 import '../models/models.dart';
+import '../utils/utils.dart';
 
 class ItemCardWidget extends StatelessWidget {
   final TransactionModel transaction;
-  final void Function() onTap;
+  final void Function()? onTap;
+  final void Function()? onLongPress;
   final bool prefixEnable;
 
   const ItemCardWidget({
     Key? key,
     required this.transaction,
-    required this.onTap,
+    this.onTap,
     this.prefixEnable = false,
+    this.onLongPress,
   }) : super(key: key);
 
   Map get mapCategoryImageColors =>
@@ -30,7 +31,7 @@ class ItemCardWidget extends StatelessWidget {
           color: AppColors.roxo,
         );
   Text get trailing => Text(
-        '${prefixEnable ? prefix : ''}R\$ ${transaction.value}',
+        '${prefixEnable ? prefix : ''} ${Formatters.formatMoney(transaction.value)}',
         style: style,
       );
 
@@ -39,6 +40,7 @@ class ItemCardWidget extends StatelessWidget {
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
       onTap: onTap,
+      onLongPress: onLongPress,
       leading: SizedBox(
         height: 40.0,
         child: CircleAvatar(

@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import '../constants/constants.dart';
 
 class ProgressIndicatorWidget extends StatelessWidget {
-  final bool showLabel;
   final double height;
+  final String? label;
 
   const ProgressIndicatorWidget({
     Key? key,
-    this.showLabel = true,
+    this.label,
     this.height = 36.0,
   }) : super(key: key);
 
@@ -28,10 +28,10 @@ class ProgressIndicatorWidget extends StatelessWidget {
               valueColor: AlwaysStoppedAnimation(AppColors.ciano),
             ),
           ),
-          if (showLabel)
+          if (label != null && label?.isNotEmpty == true)
             Padding(
               padding: const EdgeInsets.only(top: 14.0),
-              child: Text('Carregando...'),
+              child: Text(label!),
             )
         ],
       ),

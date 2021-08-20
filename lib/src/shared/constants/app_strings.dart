@@ -1,4 +1,7 @@
 class AppStrings {
-  static const msgLogoffApp = 'Realizando logoff...';
-  static const msgLoginApp = 'Validando...';
+  static const txtLogoffApp = 'Realizando logoff...';
+  static const txtLoginApp = 'Validando...';
+  static const titleDialogSairApp = 'Sair do aplicativo';
+  static const bodyDialogSairApp = 'Deseja realmente encerrar a sua sessão?';
+  static const txtSair = 'Sair';
 }
