@@ -33,38 +33,16 @@ class TransactionCategories {
   };
 
   static const Map<String, Map<String, Color>> mapCategoryImageColors = {
-    meal: {
-      AppImages.icMeal: Colors.amber,
-    },
-    transport: {
-      AppImages.icTransport: AppColors.verde,
-    },
-    trip: {
-      AppImages.icTrip: AppColors.rosa,
-    },
-    education: {
-      AppImages.icEducation: AppColors.azul,
-    },
-    payments: {
-      AppImages.icPayments: AppColors.roxo,
-    },
-    others: {
-      AppImages.icOthers: AppColors.melrose,
-    },
-    pix: {
-      AppImages.icPix: AppColors.azul,
-    },
-    money: {
-      AppImages.icPayments: AppColors.azul,
-    },
-    doc: {
-      AppImages.icDoc: AppColors.azul,
-    },
-    ted: {
-      AppImages.icTed: AppColors.azul,
-    },
-    ticket: {
-      AppImages.icBoleto: AppColors.azul,
-    },
+    meal: {AppImages.icMeal: Colors.amber},
+    transport: {AppImages.icTransport: AppColors.verde},
+    trip: {AppImages.icTrip: AppColors.rosa},
+    education: {AppImages.icEducation: AppColors.azul},
+    payments: {AppImages.icPayments: AppColors.roxo},
+    others: {AppImages.icOthers: AppColors.melrose},
+    pix: {AppImages.icPix: AppColors.azul},
+    money: {AppImages.icPayments: AppColors.azul},
+    doc: {AppImages.icDoc: AppColors.azul},
+    ted: {AppImages.icTed: AppColors.azul},
+    ticket: {AppImages.icBoleto: AppColors.azul},
   };
 }
