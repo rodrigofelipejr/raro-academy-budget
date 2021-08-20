@@ -3,7 +3,7 @@ import 'package:mobx/mobx.dart';
 import '../../../../shared/stores/stores.dart';
 import '../../../../shared/utils/utils.dart';
 import '../../errors/errors.dart';
-import '../../repositories/home_repository.dart';
+import '../../repositories/repositories.dart';
 import 'daily_state.dart';
 
 part 'daily_store.g.dart';
@@ -12,8 +12,9 @@ class DailyStore = _DailyStoreBase with _$DailyStore;
 
 abstract class _DailyStoreBase extends BaseStore with Store {
   final HomeRepository repository;
+  final AuthStore authStore;
 
-  _DailyStoreBase(this.repository);
+  _DailyStoreBase(this.repository, this.authStore);
 
   @observable
   DailyState state = DailyState(date: DateTime.now());
@@ -39,7 +40,7 @@ abstract class _DailyStoreBase extends BaseStore with Store {
     }
 
     try {
-      final dailyModel = await repository.getDaily(state.date.month);
+      final dailyModel = await repository.getDaily(uuid: authStore.user!.uuid, month: state.date.month);
       setOnError(null);
       setState(
         state.copyWith(

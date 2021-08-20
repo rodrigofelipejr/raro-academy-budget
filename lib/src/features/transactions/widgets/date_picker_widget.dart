@@ -2,15 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../controller/date_controller.dart';
 import 'text_styles.dart';
 
 class DatePickerWidget extends StatefulWidget {
   DatePickerWidget({
     Key? key,
+    required this.controller,
+    this.focusNode,
     this.date,
   }) : super(key: key);
-
   final DateTime? date;
+  final DateController controller;
+  final FocusNode? focusNode;
 
   @override
   _DatePickerWidgetState createState() => _DatePickerWidgetState();
@@ -18,7 +22,8 @@ class DatePickerWidget extends StatefulWidget {
 
 class _DatePickerWidgetState extends State<DatePickerWidget> {
   DateTime? selectedDate;
-  TextEditingController _dateController = TextEditingController();
+  String? selectedDateToString;
+  TextEditingController textController = TextEditingController();
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime? newDate = await showDatePicker(
@@ -30,14 +35,17 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
     );
     if (newDate != null) {
       selectedDate = newDate;
-      _dateController.text = DateFormat("dd/MM/yyyy").format(selectedDate!);
+
+      widget.controller.date = selectedDate!;
+      textController.text = DateFormat("dd/MM/yyyy").format(selectedDate!);
       setState(() {});
     }
   }
 
   @override
   void initState() {
-    _dateController.text = DateFormat("dd/MM/yyyy").format(DateTime.now());
+    textController.text =
+        DateFormat("dd/MM/yyyy").format(widget.date ?? DateTime.now());
     super.initState();
   }
 
@@ -48,8 +56,9 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
         _selectDate(context);
       },
       child: TextFormField(
-        controller: _dateController,
+        controller: textController,
         enabled: false,
+        focusNode: widget.focusNode,
         keyboardType: TextInputType.datetime,
         style: TextStyles.blue14w500Roboto,
         decoration: InputDecoration(

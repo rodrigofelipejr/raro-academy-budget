@@ -2,7 +2,7 @@ import 'package:mobx/mobx.dart';
 
 import '../../../../shared/stores/stores.dart';
 import '../../errors/errors.dart';
-import '../../repositories/home_repository.dart';
+import '../../repositories/repositories.dart';
 import 'last_transactions_state.dart';
 
 part 'last_transactions_store.g.dart';
@@ -11,8 +11,9 @@ class LastTransactionsStore = _LastTransactionsStoreBase with _$LastTransactions
 
 abstract class _LastTransactionsStoreBase extends BaseStore with Store {
   final HomeRepository repository;
+  final AuthStore authStore;
 
-  _LastTransactionsStoreBase(this.repository);
+  _LastTransactionsStoreBase(this.repository, this.authStore);
 
   @observable
   LastTransactionsState state = LastTransactionsState();
@@ -30,7 +31,7 @@ abstract class _LastTransactionsStoreBase extends BaseStore with Store {
 
   Future<void> handleTransactions() async {
     try {
-      final transactions = await repository.getLastTransactions();
+      final transactions = await repository.getLastTransactionsByUuid(authStore.user!.uuid);
       setOnError(null);
       setState(state.copyWith(transactions: transactions));
     } catch (e) {

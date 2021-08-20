@@ -5,5 +5,5 @@ export 'app_shadows.dart';
 export 'app_images.dart';
 export 'transaction_categories.dart';
 export 'app_routes.dart';
-export 'app_settings.dart';
 export 'app_collections.dart';
+export 'app_strings.dart';

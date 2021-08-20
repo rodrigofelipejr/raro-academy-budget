@@ -53,7 +53,7 @@ class GeneralBalanceStateWidget extends ModularState<GeneralBalanceWidget, Gener
                   blurEnable: !store.visibleBalance,
                   child: SizedBox(
                     width: screenSize.width,
-                    child: _buildText('R\$ ${Formatters.formatMoney(store.state.value)}'),
+                    child: _buildText('${Formatters.formatMoney(store.state.value)}'),
                   ),
                 ),
               ],

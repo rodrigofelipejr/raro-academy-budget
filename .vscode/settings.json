@@ -8,6 +8,8 @@
     "Roboto",
     "Scrollable",
     "codegen",
+    "melrose",
     "mixins"
-  ]
+  ],
+  "dart.lineLength": 120,
 }

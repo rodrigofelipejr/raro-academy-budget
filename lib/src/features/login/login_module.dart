@@ -1,20 +1,19 @@
-import 'package:budget/src/features/login/page/login/login_controller.dart';
-import 'package:budget/src/features/login/page/register/register_controller.dart';
+import 'package:budget/src/features/login/pages/register/register_controller.dart';
+import 'package:budget/src/features/login/pages/register/repositories/register_repositories.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-
 import '../../shared/constants/constants.dart';
-import 'page/login/login_page.dart';
-import 'page/register/register_page.dart';
-import 'page/register/repositories/register_repository.dart';
+import 'login.dart';
+import 'pages/register/register_page.dart'; //TODO - rever
 
 class LoginModule extends Module {
   @override
   List<Bind<Object>> get binds => [
         Bind.singleton((i) => RegisterRepository(i())),
-        Bind.singleton((i) => LoginController()),
         Bind.lazySingleton((i) => RegisterController(i())),
         Bind.singleton((i) => FirebaseFirestore.instance),
+        Bind.singleton((i) => LoginStore(i(), i(), i())),
+        Bind.lazySingleton((i) => LoginRepositoryImpl(i())),
       ];
 
   @override

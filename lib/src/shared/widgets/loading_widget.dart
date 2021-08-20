@@ -11,7 +11,9 @@ class LoadingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConditionalParentWidget(
       condition: fullScreen,
-      child: ProgressIndicatorWidget(),
+      child: ProgressIndicatorWidget(
+        label: 'Carregando...',
+      ),
       conditionalBuilder: (Widget child) => Scaffold(
         body: Container(
           decoration: BoxDecoration(

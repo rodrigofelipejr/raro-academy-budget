@@ -21,3 +21,10 @@ samples, guidance on mobile development, and a full API reference.
 - package:budget
 - //REVIEW - remover
 - //FIXME
+- CircularButtonGradient
+- CustomTextField
+parseMoneyFromFirebase
+TextStyles
+exporte pages de todas as features
+errors em transactions
+try {}

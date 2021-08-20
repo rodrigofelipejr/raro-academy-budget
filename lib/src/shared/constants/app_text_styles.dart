@@ -32,13 +32,6 @@ class AppTextStyles {
     fontFamily: "Roboto",
   );
 
-  static const TextStyle white16w400Roboto = TextStyle(
-    color: AppColors.white,
-    fontWeight: FontWeight.w400,
-    fontSize: 18.0,
-    fontFamily: "Roboto",
-  );
-
   static const TextStyle grey16w400Roboto = TextStyle(
     fontFamily: "Roboto",
     fontSize: 16,
@@ -105,6 +98,14 @@ class AppTextStyles {
     color: AppColors.black87,
     fontWeight: FontWeight.w400,
     fontSize: 16.0,
+    fontFamily: "Roboto",
+    letterSpacing: 0.15,
+  );
+
+  static const TextStyle black18w400Roboto = TextStyle(
+    color: AppColors.black87,
+    fontWeight: FontWeight.w400,
+    fontSize: 18.0,
     fontFamily: "Roboto",
     letterSpacing: 0.15,
   );
@@ -178,6 +179,23 @@ class AppTextStyles {
     color: Colors.white,
     fontFamily: "Montserrat",
     letterSpacing: -0.05,
+  );
+
+  static const TextStyle white13w400Montserrat = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 13,
+    fontWeight: FontWeight.w400,
+    color: AppColors.white,
+    letterSpacing: 1.0,
+  );
+
+  static const TextStyle whiteOpacity13w300Roboto = TextStyle(
+    fontFamily: 'Roboto',
+    fontSize: 13,
+    fontWeight: FontWeight.w300,
+    fontStyle: FontStyle.italic,
+    color: AppColors.white50,
+    letterSpacing: 2.0,
   );
 
   static const TextStyle white13w300Montserrat = TextStyle(

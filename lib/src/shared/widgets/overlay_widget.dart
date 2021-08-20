@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/constants.dart';
@@ -10,8 +9,9 @@ const defaultValue = 56.0;
 
 class OverlayWidget extends StatelessWidget {
   final Widget? _progressIndicator;
+  final String? _label;
 
-  OverlayWidget._(this._progressIndicator);
+  OverlayWidget._(this._progressIndicator, this._label);
 
   static OverlayEntry? _currentOverlay;
   static OverlayState? _overlayState;
@@ -19,13 +19,18 @@ class OverlayWidget extends StatelessWidget {
   static void show(
     BuildContext context, {
     Widget? child,
-    bool safeArea = false,
+    String? label,
+    bool safeArea = true,
   }) {
     _overlayState = Overlay.of(context);
 
     if (_currentOverlay == null) {
       _currentOverlay = OverlayEntry(
-        builder: (context) => _buildLoader(safeArea: safeArea, child: child),
+        builder: (context) => _buildLoader(
+          safeArea: safeArea,
+          child: child,
+          label: label,
+        ),
       );
       try {
         WidgetsBinding.instance?.addPostFrameCallback(
@@ -49,7 +54,7 @@ class OverlayWidget extends StatelessWidget {
     }
   }
 
-  static Widget _buildLoader({required bool safeArea, Widget? child}) {
+  static Widget _buildLoader({required bool safeArea, Widget? child, String? label}) {
     return TweenAnimationBuilder(
       tween: Tween<double>(begin: 0, end: 1),
       duration: const Duration(milliseconds: 400),
@@ -60,18 +65,18 @@ class OverlayWidget extends StatelessWidget {
           children: [
             Opacity(
               opacity: 0.9,
-              child: ConditionalParentWidget(
-                condition: safeArea,
-                conditionalBuilder: (Widget child) => SafeArea(child: child),
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: AppGradients.purpleGradientScaffold,
-                  ),
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: AppGradients.purpleGradientScaffold,
                 ),
               ),
             ),
-            Center(
-              child: OverlayWidget._(child),
+            ConditionalParentWidget(
+              condition: safeArea,
+              conditionalBuilder: (Widget child) => SafeArea(child: child),
+              child: Center(
+                child: OverlayWidget._(child, label),
+              ),
             ),
           ],
         );
@@ -84,7 +89,15 @@ class OverlayWidget extends StatelessWidget {
     return Material(
       color: AppColors.transparent,
       child: Center(
-        child: _progressIndicator ?? CircularProgressIndicator(),
+        child: _progressIndicator ??
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ProgressIndicatorWidget(
+                  label: _label,
+                ),
+              ],
+            ),
       ),
     );
   }
