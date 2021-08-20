@@ -1,13 +1,14 @@
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../shared/constants/constants.dart';
-import 'pages/login/login.dart';
-import 'pages/register/register_page.dart';
+import 'login.dart';
+import 'pages/register/register_page.dart'; //TODO - rever
 
 class LoginModule extends Module {
   @override
   List<Bind<Object>> get binds => [
-        Bind.singleton((i) => LoginStore(i(), i())),
+        Bind.singleton((i) => LoginStore(i(), i(), i())),
+        Bind.lazySingleton((i) => LoginRepositoryImpl(i())),
       ];
 
   @override

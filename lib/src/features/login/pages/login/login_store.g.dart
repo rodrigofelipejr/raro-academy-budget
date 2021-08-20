@@ -16,6 +16,13 @@ mixin _$LoginStore on _LoginStoreBase, Store {
       (_$disabledButtonComputed ??= Computed<bool>(() => super.disabledButton,
               name: '_LoginStoreBase.disabledButton'))
           .value;
+  Computed<bool>? _$showPasswordFieldComputed;
+
+  @override
+  bool get showPasswordField => (_$showPasswordFieldComputed ??= Computed<bool>(
+          () => super.showPasswordField,
+          name: '_LoginStoreBase.showPasswordField'))
+      .value;
 
   final _$stateAtom = Atom(name: '_LoginStoreBase.state');
 
@@ -77,7 +84,8 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     return '''
 state: ${state},
 isLoading: ${isLoading},
-disabledButton: ${disabledButton}
+disabledButton: ${disabledButton},
+showPasswordField: ${showPasswordField}
     ''';
   }
 }

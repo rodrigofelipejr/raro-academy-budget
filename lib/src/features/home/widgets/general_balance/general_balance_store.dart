@@ -2,7 +2,7 @@ import 'package:mobx/mobx.dart';
 
 import '../../../../shared/stores/stores.dart';
 import '../../errors/errors.dart';
-import '../../repositories/home_repository.dart';
+import '../../repositories/repositories.dart';
 import 'general_balance_state.dart';
 
 part 'general_balance_store.g.dart';
@@ -37,7 +37,7 @@ abstract class _GeneralBalanceStoreBase extends BaseStore with Store {
 
   Future<void> handleGeneralBalance() async {
     try {
-      final generalBalance = await repository.getGeneralBalance(uuid: authStore.user!.uuid);
+      final generalBalance = await repository.getGeneralBalance(authStore.user!.uuid);
       setOnError(null);
       setState(state.copyWith(value: generalBalance.balance));
     } catch (e) {
