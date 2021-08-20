@@ -40,6 +40,7 @@ class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
   void initState() {
     super.initState();
     if (widget.data != null) {
+      _dateController.date = widget.data?.createAt ?? DateTime.now();
       _expensesController = TextEditingController(text: widget.data?.value.toString());
       _inputTypeController.value =
           TransactionsItems.expensesItems.firstWhere((item) => item.key == widget.data!.category);
@@ -118,6 +119,7 @@ class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
                             top: 12,
                           ),
                           child: DatePickerWidget(
+                            date: _dateController.date,
                             controller: _dateController,
                             focusNode: _dateFocusNode,
                           ),

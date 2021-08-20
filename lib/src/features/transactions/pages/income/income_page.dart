@@ -43,6 +43,7 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
     super.initState();
     if (widget.data != null) {
       print(widget.data.toString());
+      _dateController.date = widget.data?.createAt ?? DateTime.now();
       _incomeController = TextEditingController(text: widget.data?.value.toString());
       _inputNameController = TextEditingController(text: widget.data?.description);
       _inputTypeController.value =
