@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../../../shared/stores/stores.dart';
-import 'login_state.dart';
-import 'repositories/repositories.dart';
-import 'utils/firebase_errors.dart';
+import '../../../../../shared/stores/stores.dart';
+import '../login_state.dart';
+import '../repositories/repositories.dart';
+import '../utils/firebase_errors.dart';
 
 part 'login_store.g.dart';
 

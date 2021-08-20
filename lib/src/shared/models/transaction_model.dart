@@ -8,7 +8,7 @@ enum TypeTransaction { output, input }
 
 class TransactionModel {
   final String? id;
-  final String? uuid;
+  final String uuid;
   final String category;
   final TypeTransaction type;
   final String? description;
@@ -18,7 +18,7 @@ class TransactionModel {
 
   TransactionModel({
     this.id,
-    this.uuid,
+    required this.uuid,
     required this.category,
     required this.type,
     this.description,
@@ -65,8 +65,6 @@ class TransactionModel {
   factory TransactionModel.fromFirestore(DocumentSnapshot doc) {
     Map map = doc.data() as Map<String, dynamic>;
 
-    print("DOCID: ${doc.id}");
-
     return TransactionModel(
       id: doc.id,
       uuid: map['uuid'] ?? '',
@@ -94,8 +92,7 @@ class TransactionModel {
 
   String toJson() => json.encode(toMap());
 
-  factory TransactionModel.fromJson(String source) =>
-      TransactionModel.fromMap(json.decode(source));
+  factory TransactionModel.fromJson(String source) => TransactionModel.fromMap(json.decode(source));
 
   @override
   String toString() {
