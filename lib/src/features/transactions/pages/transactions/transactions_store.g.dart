@@ -110,11 +110,12 @@ mixin _$TransactionsStore on _TransactionsStoreBase, Store {
       ActionController(name: '_TransactionsStoreBase');
 
   @override
-  void setTransactions(List<TransactionModel> value) {
+  void setTransactions(
+      {List<TransactionModel>? values, TransactionModel? value}) {
     final _$actionInfo = _$_TransactionsStoreBaseActionController.startAction(
         name: '_TransactionsStoreBase.setTransactions');
     try {
-      return super.setTransactions(value);
+      return super.setTransactions(values: values, value: value);
     } finally {
       _$_TransactionsStoreBaseActionController.endAction(_$actionInfo);
     }

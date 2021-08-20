@@ -7,7 +7,7 @@ import 'package:budget/src/features/transactions/widgets/appbar_with_drawer.dart
 import 'package:budget/src/features/transactions/widgets/button_widget.dart';
 import 'package:budget/src/features/transactions/widgets/date_picker_widget.dart';
 import 'package:budget/src/features/transactions/widgets/dialog_widget.dart';
-import 'package:budget/src/features/transactions/widgets/dropdown_buttom_widget.dart';
+import 'package:budget/src/features/transactions/widgets/dropdown_button_widget.dart';
 import 'package:budget/src/features/transactions/widgets/text_styles.dart';
 import 'package:budget/src/shared/constants/constants.dart';
 import 'package:budget/src/shared/models/models.dart';
@@ -28,8 +28,7 @@ class ExpensesPage extends StatefulWidget {
 
 class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
   TextEditingController _expensesController = TextEditingController();
-  DropdownController _inputTypeController =
-      DropdownController(items: TransactionsItems.expensesItems);
+  DropdownController _inputTypeController = DropdownController(items: TransactionsItems.expensesItems);
   DateController _dateController = DateController();
 
   FocusNode _expensesFocusNode = FocusNode();
@@ -40,12 +39,11 @@ class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
 
   void initState() {
     super.initState();
-    if(widget.data != null) {
-    _expensesController =
-        TextEditingController(text: widget.data?.value.toString());
-    _inputTypeController.value = TransactionsItems.expensesItems
-        .firstWhere((item) => item.key == widget.data!.category);
-      }
+    if (widget.data != null) {
+      _expensesController = TextEditingController(text: widget.data?.value.toString());
+      _inputTypeController.value =
+          TransactionsItems.expensesItems.firstWhere((item) => item.key == widget.data!.category);
+    }
   }
 
   late TransactionModel _newData;
@@ -91,8 +89,7 @@ class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
                             keyboardType: TextInputType.number,
                             focusNode: _expensesFocusNode,
                             controller: _expensesController,
-                            validator: (value) =>
-                                Validators().validateNumber(value!),
+                            validator: (value) => Validators().validateNumber(value!),
                           ),
                         ),
                         Padding(
@@ -104,12 +101,11 @@ class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
                                 "Tipo de saída",
                                 style: TextStyles.black12w400RobotoOp54,
                               ),
-                              DropdownButtomWidget(
+                              DropdownButtonWidget(
                                   value: _inputTypeController.value,
                                   items: _inputTypeController.items,
                                   focusNode: _inputTypeFocusNode,
-                                  validator: (value) => Validators()
-                                      .validateTransactionCategory(value),
+                                  validator: (value) => Validators().validateTransactionCategory(value),
                                   onChanged: (newValue) {
                                     _inputTypeController.value = newValue!;
                                     setState(() {});
@@ -141,20 +137,17 @@ class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
                       _newData = TransactionModel(
                         value: double.parse(_expensesController.value.text),
                         type: TypeTransaction.output,
-                        category: TransactionCategories
-                            .output[_inputTypeController.value!.key]!,
+                        category: TransactionCategories.output[_inputTypeController.value!.key]!,
                         createAt: _dateController.date,
                         updateAt: _dateController.date,
                         uuid: '31KaO9IFxTOY3No1kWfoYyHptiw2',
                       );
                       print('DATA ${_newData.toString()}');
 
-                      final bool isSentToDatabase =
-                          await store.createTransaction(transaction: _newData);
+                      final bool isSentToDatabase = await store.createTransaction(_newData);
 
                       if (isSentToDatabase) {
-                        final List<TransactionModel> list =
-                            Modular.get<TransactionsStore>().transactions;
+                        final List<TransactionModel> list = Modular.get<TransactionsStore>().transactions;
                         list.add(_newData);
                         Modular.to.pop();
 
@@ -166,8 +159,6 @@ class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
                         );
                       }
                     }
-                    store.repository.showTransactions();
-                    store.repository.showDocs();
                   },
                 ),
               ),

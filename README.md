@@ -25,3 +25,6 @@ samples, guidance on mobile development, and a full API reference.
 - CustomTextField
 parseMoneyFromFirebase
 TextStyles
+exporte pages de todas as features
+errors em transactions
+try {}

@@ -1,16 +1,14 @@
-import 'package:budget/src/features/transactions/repositories/transactions_repository.dart';
-import 'package:budget/src/shared/models/models.dart';
+import '../../repositories/repositories.dart';
+import '../../../../shared/models/models.dart';
 
 class ExpensesStore {
-  final TransactionsRepository repository;
+  final TransactionsRepository _repository;
 
-  ExpensesStore(this.repository);
+  ExpensesStore(this._repository);
 
-  Future<bool> createTransaction({
-    required TransactionModel transaction,
-  }) async {
+  Future<bool> createTransaction(TransactionModel transaction) async {
     try {
-      await repository.createTransaction(transaction);
+      await _repository.createTransaction(transaction);
       return true;
     } catch (e) {
       return false;

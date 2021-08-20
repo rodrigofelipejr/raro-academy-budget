@@ -1,5 +1,3 @@
-import 'package:budget/src/features/home/widgets/daily/daily_store.dart';
-import 'package:budget/src/features/login/pages/login/login_store.dart';
 import 'package:budget/src/features/transactions/constants/transactions_items.dart';
 import 'package:budget/src/features/transactions/controller/date_controller.dart';
 import 'package:budget/src/features/transactions/controller/dropdown_controller.dart';
@@ -10,16 +8,13 @@ import 'package:budget/src/features/transactions/widgets/appbar_with_drawer.dart
 import 'package:budget/src/features/transactions/widgets/button_widget.dart';
 import 'package:budget/src/features/transactions/widgets/date_picker_widget.dart';
 import 'package:budget/src/features/transactions/widgets/dialog_widget.dart';
-import 'package:budget/src/features/transactions/widgets/dropdown_buttom_widget.dart';
-import 'package:budget/src/features/transactions/widgets/dropdown_item_data.dart';
+import 'package:budget/src/features/transactions/widgets/dropdown_button_widget.dart';
 import 'package:budget/src/features/transactions/widgets/text_styles.dart';
-import 'package:budget/src/shared/constants/app_colors.dart';
 import 'package:budget/src/shared/constants/constants.dart';
 import 'package:budget/src/shared/models/models.dart';
 import 'package:budget/src/shared/stores/stores.dart';
 import 'package:budget/src/shared/widgets/custom_text_field.dart';
 import 'package:budget/src/shared/widgets/drawer/drawer_widget.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -50,12 +45,10 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
     super.initState();
     if (widget.data != null) {
       print(widget.data.toString());
-      _incomeController =
-          TextEditingController(text: widget.data?.value.toString());
-      _inputNameController =
-          TextEditingController(text: widget.data?.description);
-      _inputTypeController.value = TransactionsItems.incomeItems
-          .firstWhere((item) => item.key == widget.data!.category);
+      _incomeController = TextEditingController(text: widget.data?.value.toString());
+      _inputNameController = TextEditingController(text: widget.data?.description);
+      _inputTypeController.value =
+          TransactionsItems.incomeItems.firstWhere((item) => item.key == widget.data!.category);
     }
   }
 
@@ -115,7 +108,7 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                                 "Tipo de entrada",
                                 style: TextStyles.black12w400RobotoOp54,
                               ),
-                              DropdownButtomWidget(
+                              DropdownButtonWidget(
                                 value: _inputTypeController.value,
                                 items: _inputTypeController.items,
                                 focusNode: _inputTypeFocusNode,
@@ -216,8 +209,8 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                         );
                       }
                     }
-                    store.repository.showTransactions();
-                    store.repository.showDocs();
+                    // store.repository.showTransactions();
+                    // store.repository.showDocs();
                     print(store.authStore.firebaseAuth.currentUser!.uid);
                     print("TRANSACTIONS STORE");
                     Modular.get<TransactionsStore>()
