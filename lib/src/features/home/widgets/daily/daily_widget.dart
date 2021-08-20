@@ -9,7 +9,7 @@ import '../../../../shared/utils/utils.dart';
 import '../../../../shared/widgets/widgets.dart';
 
 import '../../home.dart';
-import 'daily_store.dart';
+import 'stores/daily_store.dart';
 import 'widgets/indicators_widget.dart';
 
 class DailyWidget extends StatefulWidget {
@@ -19,14 +19,16 @@ class DailyWidget extends StatefulWidget {
   _DailyStateWidget createState() => _DailyStateWidget();
 }
 
-class _DailyStateWidget extends ModularState<DailyWidget, DailyStore> {
-  bool get resetValues => store.state.inputs == 0.0 && store.state.outputs == 0.0;
+class _DailyStateWidget extends State<DailyWidget> {
+  late final DailyStore _store;
+
+  bool get resetValues => _store.state.inputs == 0.0 && _store.state.outputs == 0.0;
 
   Widget _buildInput() {
     return IndicatorsWidget(
       label: 'Entradas',
-      currentValue: store.state.inputs,
-      referenceValue: max(store.state.inputs, store.state.outputs),
+      currentValue: _store.state.inputs,
+      referenceValue: max(_store.state.inputs, _store.state.outputs),
       color: AppColors.amarelo,
     );
   }
@@ -34,10 +36,16 @@ class _DailyStateWidget extends ModularState<DailyWidget, DailyStore> {
   Widget _buildOutput() {
     return IndicatorsWidget(
       label: 'Saídas',
-      currentValue: store.state.outputs,
-      referenceValue: max(store.state.inputs, store.state.outputs),
+      currentValue: _store.state.outputs,
+      referenceValue: max(_store.state.inputs, _store.state.outputs),
       color: AppColors.ciano,
     );
+  }
+
+  @override
+  void initState() {
+    _store = Modular.get<DailyStore>();
+    super.initState();
   }
 
   @override
@@ -54,9 +62,9 @@ class _DailyStateWidget extends ModularState<DailyWidget, DailyStore> {
             child: Observer(
               builder: (_) {
                 return WrapperWidget(
-                  visible: store.onError != null,
+                  visible: _store.onError != null,
                   overlay: TryAgainButtonWidget(
-                    onPressed: () => store.handleDaily(),
+                    onPressed: () => _store.handleDaily(),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,7 +77,7 @@ class _DailyStateWidget extends ModularState<DailyWidget, DailyStore> {
                             style: AppTextStyles.purple20w500Roboto,
                           ),
                           MonthSelectorWidget(
-                            label: store.selectedMonthDescription,
+                            label: _store.selectedMonthDescription,
                             referenceDate: Modular.get<HomeStore>().dailyStore.state.date,
                             changeSelectedDate: (DateTime date) =>
                                 Modular.get<HomeStore>().dailyStore.handleDaily(date: date),
@@ -78,7 +86,7 @@ class _DailyStateWidget extends ModularState<DailyWidget, DailyStore> {
                       ),
                       SizedBox(height: 6.0),
                       Text(
-                        '${Formatters.formatMoney(store.state.dailyBalance)}',
+                        '${Formatters.formatMoney(_store.state.dailyBalance)}',
                         style: AppTextStyles.black24w400Roboto,
                       ),
                       SizedBox(height: 12.0),

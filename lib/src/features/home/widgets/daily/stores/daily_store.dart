@@ -1,10 +1,10 @@
 import 'package:mobx/mobx.dart';
 
-import '../../../../shared/stores/stores.dart';
-import '../../../../shared/utils/utils.dart';
-import '../../errors/errors.dart';
-import '../../repositories/repositories.dart';
-import 'daily_state.dart';
+import '../../../../../shared/stores/stores.dart';
+import '../../../../../shared/utils/utils.dart';
+import '../../../errors/errors.dart';
+import '../../../repositories/repositories.dart';
+import '../daily_state.dart';
 
 part 'daily_store.g.dart';
 
