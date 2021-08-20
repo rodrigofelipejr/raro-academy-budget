@@ -18,21 +18,6 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState
     extends ModularState<RegisterPage, RegisterController> {
-  FocusNode emailFocusNode = new FocusNode();
-  TextEditingController emailController = TextEditingController();
-  FocusNode nameFocusNode = new FocusNode();
-  TextEditingController nameController = TextEditingController();
-
-  FocusNode phoneFocusNode = new FocusNode();
-  TextEditingController phoneController = TextEditingController();
-  FocusNode cpfFocusNode = new FocusNode();
-  TextEditingController cpfController = TextEditingController();
-
-  FocusNode passwordFocusNode = new FocusNode();
-  TextEditingController passwordController = TextEditingController();
-  FocusNode confirmPasswordFocusNode = new FocusNode();
-  TextEditingController confirmPasswordController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,8 +54,8 @@ class _RegisterPageState
                                 validator: (value) =>
                                     Validators().validateName(value ?? ''),
                                 textInputAction: TextInputAction.next,
-                                controller: nameController,
-                                focusNode: nameFocusNode,
+                                controller: controller.nameController,
+                                focusNode: controller.nameFocusNode,
                                 keyboardType: TextInputType.name,
                               ),
                               SizedBox(height: 8.0),
@@ -80,8 +65,8 @@ class _RegisterPageState
                                 validator: (value) =>
                                     Validators().email(value ?? ''),
                                 textInputAction: TextInputAction.next,
-                                controller: emailController,
-                                focusNode: emailFocusNode,
+                                controller: controller.emailController,
+                                focusNode: controller.emailFocusNode,
                                 keyboardType: TextInputType.emailAddress,
                               ),
                               SizedBox(
@@ -124,7 +109,7 @@ class _RegisterPageState
                                 validator: (value) =>
                                     Validators().phoneValidator(value ?? ''),
                                 textInputAction: TextInputAction.next,
-                                controller: phoneController,
+                                controller: controller.phoneController,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
                                   TextInputMask(mask: [
@@ -140,8 +125,8 @@ class _RegisterPageState
                               CustomTextField(
                                   labelText: "CPF",
                                   textInputAction: TextInputAction.next,
-                                  controller: cpfController,
-                                  focusNode: cpfFocusNode,
+                                  controller: controller.cpfController,
+                                  focusNode: controller.cpfFocusNode,
                                   keyboardType: TextInputType.number,
                                   inputFormatters: [
                                     TextInputMask(mask: ['999.999.999-99'])
@@ -282,8 +267,8 @@ class _RegisterPageState
                                     builder: (_) => CustomTextField(
                                       textInputAction: TextInputAction.next,
                                       labelText: "Senha",
-                                      controller: passwordController,
-                                      focusNode: passwordFocusNode,
+                                      controller: controller.passwordController,
+                                      focusNode: controller.passwordFocusNode,
                                       obscureText: controller.passwordVisible,
                                       suffixIcon: VisibleWidget(
                                         visible: controller.passwordVisible,
@@ -298,12 +283,15 @@ class _RegisterPageState
                                   Observer(
                                     builder: (_) => CustomTextField(
                                       labelText: "Confirmar Senha",
-                                      controller: confirmPasswordController,
-                                      focusNode: confirmPasswordFocusNode,
+                                      controller:
+                                          controller.confirmPasswordController,
+                                      focusNode:
+                                          controller.confirmPasswordFocusNode,
                                       validator: (value) =>
                                           Validators().validatePassword(
                                         value ?? '',
-                                        passwordController.value.text,
+                                        controller
+                                            .passwordController.value.text,
                                       ),
                                       obscureText:
                                           controller.confirmPasswordVisible,
