@@ -20,8 +20,7 @@ class TransactionsPage extends StatefulWidget {
   _TransactionsPageState createState() => _TransactionsPageState();
 }
 
-class _TransactionsPageState
-    extends ModularState<TransactionsPage, TransactionsStore> {
+class _TransactionsPageState extends ModularState<TransactionsPage, TransactionsStore> {
   final PageController _pageController = PageController();
 
   void _navigator({required int index}) {
@@ -34,6 +33,7 @@ class _TransactionsPageState
 
   @override
   void initState() {
+    store.init();
     super.initState();
   }
 
@@ -45,9 +45,7 @@ class _TransactionsPageState
         return Visibility(
           visible: controller.indexPage != 2,
           child: FabWidget(onTap: () {
-            Modular.to.pushNamed(controller.indexPage == 0
-                ? AppRoutes.income
-                : AppRoutes.expenses);
+            Modular.to.pushNamed(controller.indexPage == 0 ? AppRoutes.income : AppRoutes.expenses);
           }),
         );
       }),
@@ -78,8 +76,7 @@ class _TransactionsPageState
                 final homeStore = Modular.get<HomeStore>();
                 return MonthSelectorWidget(
                   flatStyle: true,
-                  label: Dates.descriptionMonth(
-                      homeStore.dailyStore.state.date.month),
+                  label: Dates.descriptionMonth(homeStore.dailyStore.state.date.month),
                   referenceDate: homeStore.dailyStore.state.date,
                   changeSelectedDate: (DateTime date) {
                     homeStore.dailyStore.handleDaily(date: date);
@@ -99,8 +96,7 @@ class _TransactionsPageState
 
         if (controller.onError != null)
           return Center(
-            child: CustomErrorWidget(
-                message: "Error interno", reload: () => controller.init()),
+            child: CustomErrorWidget(message: "Error interno", reload: () => controller.init()),
           );
 
         return PageView(
