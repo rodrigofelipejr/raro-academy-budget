@@ -4,7 +4,7 @@ import 'package:budget/src/shared/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RegisterRepository {
-  final String _collectionPath = AppCollections.transactions;
+  final String _collectionPath = AppCollections.users;
   final FirebaseFirestore firestore;
 
   RegisterRepository(this.firestore);
