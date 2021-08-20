@@ -9,8 +9,7 @@ class OutCard extends StatelessWidget {
   List<TransactionModel> transaction;
   double value;
 
-  OutCard({Key? key, required this.transaction, required this.value})
-      : super(key: key);
+  OutCard({Key? key, required this.transaction, required this.value}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +29,7 @@ class OutCard extends StatelessWidget {
                         children: transaction
                             .map((transaction) => ItemCardWidget(
                                   transaction: transaction,
-                                  onTap: () => Modular.to.pushNamed(
-                                      AppRoutes.expenses,
-                                      arguments: transaction),
+                                  onTap: () => Modular.to.pushNamed(AppRoutes.expenses, arguments: transaction),
                                 ))
                             .toList(),
                       ),
@@ -43,24 +40,14 @@ class OutCard extends StatelessWidget {
                   ),
                   Container(
                       child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 18),
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'Total sáida',
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: Color.fromARGB(255, 52, 48, 144)),
-                        ),
+                        Text('Total sáida', style: AppTextStyles.blue16w500Roboto),
                         Text(
                           '-${Formatters.formatMoney(value)}',
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: Color.fromARGB(255, 244, 67, 54)),
+                          style: AppTextStyles.red14w500Roboto,
                         ),
                       ],
                     ),

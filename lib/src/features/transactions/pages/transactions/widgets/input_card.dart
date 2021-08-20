@@ -9,8 +9,7 @@ class InputCard extends StatelessWidget {
   List<TransactionModel> transaction;
   double value;
 
-  InputCard({Key? key, required this.transaction, required this.value})
-      : super(key: key);
+  InputCard({Key? key, required this.transaction, required this.value}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +29,7 @@ class InputCard extends StatelessWidget {
                         children: transaction
                             .map((transaction) => ItemCardWidget(
                                   transaction: transaction,
-                                  onTap: () => Modular.to.pushNamed(
-                                      AppRoutes.income,
-                                      arguments: transaction),
+                                  onTap: () => Modular.to.pushNamed(AppRoutes.income, arguments: transaction),
                                 ))
                             .toList(),
                       ),
@@ -43,25 +40,12 @@ class InputCard extends StatelessWidget {
                   ),
                   Container(
                       child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 18),
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'Total sáida',
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: Color.fromARGB(255, 52, 48, 144)),
-                        ),
-                        Text(
-                          '+${Formatters.formatMoney(value)}',
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: Color.fromARGB(255, 88, 179, 104)),
-                        ),
+                        Text('Total entradas', style: AppTextStyles.blue16w500Roboto),
+                        Text('+${Formatters.formatMoney(value)}', style: AppTextStyles.green14w500Roboto),
                       ],
                     ),
                   ))

@@ -9,9 +9,7 @@ class ButtonsAppBarDay extends StatelessWidget {
   final VoidCallback? buttonIn;
   final VoidCallback? buttonOut;
   final VoidCallback? buttonAll;
-  const ButtonsAppBarDay(
-      {Key? key, this.buttonIn, this.buttonOut, this.buttonAll})
-      : super(key: key);
+  const ButtonsAppBarDay({Key? key, this.buttonIn, this.buttonOut, this.buttonAll}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +20,10 @@ class ButtonsAppBarDay extends StatelessWidget {
         children: [
           Observer(builder: (_) {
             return Text(
-              '${Formatters.formatMoney(Modular.get<TransactionsStore>().transactionTotal)}',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 26,
-                  fontWeight: FontWeight.w700),
+              Modular.get<TransactionsStore>().transactionTotal >= 0
+                  ? '${Formatters.formatMoney(Modular.get<TransactionsStore>().transactionTotal.abs())}'
+                  : '-${Formatters.formatMoney(Modular.get<TransactionsStore>().transactionTotal.abs())}',
+              style: AppTextStyles.white26w700Roboto,
             );
           }),
           SizedBox(height: 11),
@@ -70,8 +67,7 @@ class ButtonsAppBarDay extends StatelessWidget {
     return Observer(builder: (_) {
       return Expanded(
         child: TextButton(
-          onPressed:
-              Modular.get<TransactionsStore>().onError != null ? null : button,
+          onPressed: Modular.get<TransactionsStore>().onError != null ? null : button,
           child: Text(
             text,
             style: TextStyle(

@@ -36,9 +36,7 @@ class TransactionCategories {
     meal: {
       AppImages.icMeal: Colors.amber,
     },
-    transport: {
-      AppImages.icTransport: AppColors.verde,
-    },
+    transport: {AppImages.icTransport: AppColors.verde},
     trip: {
       AppImages.icTrip: AppColors.rosa,
     },

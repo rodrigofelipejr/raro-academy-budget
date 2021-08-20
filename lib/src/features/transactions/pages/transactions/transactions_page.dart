@@ -33,7 +33,7 @@ class _TransactionsPageState extends ModularState<TransactionsPage, Transactions
 
   @override
   void initState() {
-    store.init();
+    controller.init();
     super.initState();
   }
 
@@ -52,15 +52,20 @@ class _TransactionsPageState extends ModularState<TransactionsPage, Transactions
       appBar: AppBar(
         bottomOpacity: 0.0,
         elevation: 0.0,
-        leading: Align(
-          alignment: Alignment.topLeft,
-          child: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
+        leading: Observer(builder: (_) {
+          return Align(
+            alignment: Alignment.topLeft,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: IconButton(
+                icon: Icon(
+                  Icons.arrow_back,
+                ),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
             ),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-        ),
+          );
+        }),
         flexibleSpace: ButtonsAppBarDay(
           buttonIn: () => _navigator(index: 0),
           buttonOut: () => _navigator(index: 1),
