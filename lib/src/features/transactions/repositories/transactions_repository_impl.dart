@@ -17,11 +17,13 @@ class TransactionsRepositoryImpl implements TransactionsRepository {
   @override
   Future<String?> createTransaction(TransactionModel transaction) async {
     final newTransaction = await _db.add(transaction.toMap());
+    print("CREATE WITH ID: ${newTransaction.id}");
     return newTransaction.id;
   }
 
   @override
   Future<void> updateTransaction(TransactionModel transaction) async {
+    print("UPDATE: ${transaction.id}");
     _db.doc(transaction.id).set(transaction.toMap(), SetOptions(merge: true));
   }
 
@@ -32,19 +34,42 @@ class TransactionsRepositoryImpl implements TransactionsRepository {
 
   @override
   Future<List<TransactionModel>> getTransactionsByUuid(String uuid) async {
-    final snapshot = await _db.where('uuid', isEqualTo: uuid).orderBy('createAt', descending: true).get();
+    final snapshot = await _db
+        .where('uuid', isEqualTo: null)
+        .orderBy('createAt', descending: true)
+        .get();
     return snapshot.docs.map((e) => TransactionModel.fromFirestore(e)).toList();
   }
 
   @override
-  Future<List<TransactionModel>> getAllTransactionsByMonth({required String uuid, required int month}) async {
+  Future<List<TransactionModel>> getAllTransactionsByMonth(
+      {required String uuid, required int month}) async {
     final snapshot = await _db
         .where('uuid', isEqualTo: uuid)
-        .where('createAt', isGreaterThanOrEqualTo: Timestamp.fromDate(Dates.firstDayMonth(month: month)))
-        .where('createAt', isLessThanOrEqualTo: Timestamp.fromDate(Dates.lastDayMonth(month: month)))
+        // .where('uuid', isEqualTo: null)
+        .where('createAt',
+            isGreaterThanOrEqualTo:
+                Timestamp.fromDate(Dates.firstDayMonth(month: month)))
+        .where('createAt',
+            isLessThanOrEqualTo:
+                Timestamp.fromDate(Dates.lastDayMonth(month: month)))
         .orderBy('createAt', descending: true)
         .get();
 
     return snapshot.docs.map((e) => TransactionModel.fromFirestore(e)).toList();
+  }
+
+  // Para testes
+  Future<void> showTransactions() async {
+    final response = await _db.get();
+    print('TRANSACTIONS: ${response.docs.map(((e) => e.data()))}');
+    print(response);
+  }
+
+  // Para testes
+  Future<void> showDocs() async {
+    final response =
+        await _db.get().then((value) => value.docs.map((doc) => doc.id));
+    print('DOCS[${response.length}]: ${response.toList()}');
   }
 }
