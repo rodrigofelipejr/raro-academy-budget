@@ -1,5 +1,6 @@
 import 'package:budget/src/features/login/repositories/register_repository.dart';
 import 'package:budget/src/features/login/utils/firebase_errors.dart';
+import 'package:budget/src/shared/constants/app_colors.dart';
 import 'package:budget/src/shared/models/user_model.dart';
 import 'package:budget/src/shared/stores/stores.dart';
 import 'package:budget/src/shared/widgets/dialog/dialog.dart';
@@ -25,6 +26,9 @@ abstract class _RegisterStoreBase with Store {
   int currentPage = 0;
 
   @observable
+  String? errorMessage;
+
+  @observable
   bool policy = false;
 
   @observable
@@ -35,6 +39,24 @@ abstract class _RegisterStoreBase with Store {
 
   @observable
   bool loading = false;
+
+  @observable
+  bool errorPolicy = false;
+
+  @computed
+  Text? get showErrorPolicy {
+    if (this.errorPolicy) {
+      return Text(
+        'Você deve aceitar o termos e condições.',
+        style: TextStyle(
+          color: AppColors.vermelho,
+          fontFamily: 'roboto',
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
+        ),
+      );
+    }
+  }
 
   @action
   void updateCurrentPage(int index) {
@@ -57,7 +79,13 @@ abstract class _RegisterStoreBase with Store {
   }
 
   @action
+  void updateErrorPolicy(bool value) {
+    this.errorPolicy = value;
+  }
+
+  @action
   Future<void> login(UserModel userModel, String email, String password, BuildContext context) async {
+    errorMessage = null;
     try {
       loading = true;
       final response = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
@@ -68,15 +96,25 @@ abstract class _RegisterStoreBase with Store {
     } on FirebaseAuthException catch (e) {
       showDialog(
         context: context,
-        builder: (_) => DialogWidget(
-          type: DialogTypeEnum.error,
-          title: 'Ops',
-          message: FireBaseErrors.verifyErroCode(e.code),
-          textButtonPrimary: 'ok',
-          // onPressedPrimary: (),
-        ),
+        builder: (_) => DialogWidget.error(
+            type: DialogTypeEnum.error,
+            title: 'Ops',
+            message: FireBaseErrors.verifyErroCode(e.code),
+            textButtonPrimary: 'ok',
+            onPressedPrimary: () => this.verifyError(e)),
       );
       loading = false;
+    }
+  }
+
+  @action
+  Future<void> verifyError(FirebaseAuthException e) async {
+    if (e.code == 'email-already-in-use' ||
+        e.code == 'invalid-email' ||
+        e.code == 'invalid-email-verified' ||
+        e.code == 'email-already-exists') {
+      errorMessage = FireBaseErrors.verifyErroCode(e.code);
+      pageController.jumpToPage(0);
     }
   }
 

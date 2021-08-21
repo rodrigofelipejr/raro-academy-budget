@@ -9,6 +9,14 @@ part of 'register_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$RegisterStore on _RegisterStoreBase, Store {
+  Computed<Text?>? _$showErrorPolicyComputed;
+
+  @override
+  Text? get showErrorPolicy => (_$showErrorPolicyComputed ??= Computed<Text?>(
+          () => super.showErrorPolicy,
+          name: '_RegisterStoreBase.showErrorPolicy'))
+      .value;
+
   final _$currentPageAtom = Atom(name: '_RegisterStoreBase.currentPage');
 
   @override
@@ -21,6 +29,21 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
   set currentPage(int value) {
     _$currentPageAtom.reportWrite(value, super.currentPage, () {
       super.currentPage = value;
+    });
+  }
+
+  final _$errorMessageAtom = Atom(name: '_RegisterStoreBase.errorMessage');
+
+  @override
+  String? get errorMessage {
+    _$errorMessageAtom.reportRead();
+    return super.errorMessage;
+  }
+
+  @override
+  set errorMessage(String? value) {
+    _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
+      super.errorMessage = value;
     });
   }
 
@@ -87,6 +110,21 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
     });
   }
 
+  final _$errorPolicyAtom = Atom(name: '_RegisterStoreBase.errorPolicy');
+
+  @override
+  bool get errorPolicy {
+    _$errorPolicyAtom.reportRead();
+    return super.errorPolicy;
+  }
+
+  @override
+  set errorPolicy(bool value) {
+    _$errorPolicyAtom.reportWrite(value, super.errorPolicy, () {
+      super.errorPolicy = value;
+    });
+  }
+
   final _$loginAsyncAction = AsyncAction('_RegisterStoreBase.login');
 
   @override
@@ -94,6 +132,14 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
       BuildContext context) {
     return _$loginAsyncAction
         .run(() => super.login(userModel, email, password, context));
+  }
+
+  final _$verifyErrorAsyncAction =
+      AsyncAction('_RegisterStoreBase.verifyError');
+
+  @override
+  Future<void> verifyError(FirebaseAuthException e) {
+    return _$verifyErrorAsyncAction.run(() => super.verifyError(e));
   }
 
   final _$_RegisterStoreBaseActionController =
@@ -144,13 +190,27 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
   }
 
   @override
+  void updateErrorPolicy(bool value) {
+    final _$actionInfo = _$_RegisterStoreBaseActionController.startAction(
+        name: '_RegisterStoreBase.updateErrorPolicy');
+    try {
+      return super.updateErrorPolicy(value);
+    } finally {
+      _$_RegisterStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 currentPage: ${currentPage},
+errorMessage: ${errorMessage},
 policy: ${policy},
 passwordVisible: ${passwordVisible},
 confirmPasswordVisible: ${confirmPasswordVisible},
-loading: ${loading}
+loading: ${loading},
+errorPolicy: ${errorPolicy},
+showErrorPolicy: ${showErrorPolicy}
     ''';
   }
 }

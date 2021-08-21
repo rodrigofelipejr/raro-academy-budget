@@ -96,13 +96,16 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterStore> {
                                 keyboardType: TextInputType.name,
                               ),
                               SizedBox(height: 8.0),
-                              CustomTextField(
-                                labelText: "E-mail",
-                                validator: (value) => Validators().email(value ?? ''),
-                                textInputAction: TextInputAction.next,
-                                controller: emailController,
-                                focusNode: emailFocusNode,
-                                keyboardType: TextInputType.emailAddress,
+                              Observer(
+                                builder: (_) => CustomTextField(
+                                  labelText: "E-mail",
+                                  validator: (value) => Validators().email(value ?? ''),
+                                  textInputAction: TextInputAction.next,
+                                  controller: emailController,
+                                  focusNode: emailFocusNode,
+                                  errorMessage: store.errorMessage,
+                                  keyboardType: TextInputType.emailAddress,
+                                ),
                               ),
                               SizedBox(
                                 height: 50,
@@ -212,30 +215,35 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterStore> {
                               SizedBox(
                                 height: 24,
                               ),
-                              ListTile(
-                                  horizontalTitleGap: 0,
-                                  contentPadding: EdgeInsets.only(),
-                                  title: const Text(
-                                    'Eu li e aceito os termos e condições e a Política de privacidade do budget.',
-                                    style: TextStyle(
-                                      fontFamily: "Roboto",
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColors.darkGray,
+                              GestureDetector(
+                                onTap: () => controller.updatePolicy(!controller.policy),
+                                child: Observer(
+                                  builder: (_) => ListTile(
+                                    horizontalTitleGap: 0,
+                                    contentPadding: EdgeInsets.only(),
+                                    title: const Text(
+                                      'Eu li e aceito os termos e condições e a Política de privacidade do budget.',
+                                      style: TextStyle(
+                                        fontFamily: "Roboto",
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.darkGray,
+                                      ),
                                     ),
-                                  ),
-                                  leading: Observer(
-                                    builder: (_) => Checkbox(
+                                    leading: Checkbox(
                                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                       checkColor: Colors.white,
-                                      // fillColor: MaterialStateProperty.resolveWith(Colors.accents),
+                                      fillColor: MaterialStateProperty.all(AppColors.azul),
                                       value: controller.policy,
                                       shape: CircleBorder(),
                                       onChanged: (bool? value) {
                                         controller.updatePolicy(value);
                                       },
                                     ),
-                                  )),
+                                    subtitle: store.showErrorPolicy,
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -344,11 +352,11 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterStore> {
           direction: Axis.horizontal,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Flexible(
-              child: GestureDetector(
-                onTap: () => {
-                  controller.popPage(),
-                },
+            GestureDetector(
+              onTap: () => {
+                controller.popPage(),
+              },
+              child: Flexible(
                 child: Flex(
                   direction: Axis.horizontal,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -403,10 +411,12 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterStore> {
     } else if (store.currentPage == 2) {
       if (store.policy == true) {
         store.pushPage();
+        store.updateErrorPolicy(false);
+      } else {
+        store.updateErrorPolicy(true);
       }
     } else if (store.currentPage == 3) {
       if (formKeyPassword.currentState!.validate()) {
-        store.pushPage();
         store.login(
             UserModel(
                 cpf: this.cpfController.text,
