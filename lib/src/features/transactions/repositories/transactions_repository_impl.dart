@@ -15,19 +15,19 @@ class TransactionsRepositoryImpl implements TransactionsRepository {
   }
 
   @override
-  Future<String?> createTransaction(TransactionModel transaction) async {
-    final newTransaction = await _db.add(transaction.toMap());
-    return newTransaction.id;
+  Future<String> createTransaction(TransactionModel transaction) async {
+    final snapshot = await _db.add(transaction.toMap());
+    return snapshot.id;
   }
 
   @override
   Future<void> updateTransaction(TransactionModel transaction) async {
-    _db.doc(transaction.id).set(transaction.toMap(), SetOptions(merge: true));
+    await _db.doc(transaction.id).set(transaction.toMap(), SetOptions(merge: true));
   }
 
   @override
-  Future<void> deleteTransaction(TransactionModel transaction) async {
-    _db.doc(transaction.id).delete();
+  Future<void> deleteTransaction(String docId) async {
+    await _db.doc(docId).delete();
   }
 
   @override

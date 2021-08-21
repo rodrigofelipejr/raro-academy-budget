@@ -1,6 +1,4 @@
-abstract class Failure implements Exception {
-  String get message;
-}
+import '../../../shared/errors/failure.dart';
 
 class GeneralBalanceError extends Failure {
   final String message;

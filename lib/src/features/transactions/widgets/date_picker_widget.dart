@@ -6,15 +6,16 @@ import '../controller/date_controller.dart';
 import 'text_styles.dart';
 
 class DatePickerWidget extends StatefulWidget {
+  final DateTime? date;
+  final DateController controller;
+  final FocusNode? focusNode;
+
   DatePickerWidget({
     Key? key,
     required this.controller,
     this.focusNode,
     this.date,
   }) : super(key: key);
-  final DateTime? date;
-  final DateController controller;
-  final FocusNode? focusNode;
 
   @override
   _DatePickerWidgetState createState() => _DatePickerWidgetState();
@@ -44,8 +45,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
 
   @override
   void initState() {
-    textController.text =
-        DateFormat("dd/MM/yyyy").format(widget.date ?? DateTime.now());
+    textController.text = DateFormat("dd/MM/yyyy").format(widget.date ?? DateTime.now());
     super.initState();
   }
 
