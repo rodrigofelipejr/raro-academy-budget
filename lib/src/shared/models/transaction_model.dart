@@ -8,7 +8,7 @@ enum TypeTransaction { output, input }
 
 class TransactionModel {
   final String? id;
-  final String uuid;
+  final String? uuid;
   final String category;
   final TypeTransaction type;
   final String? description;
@@ -18,7 +18,7 @@ class TransactionModel {
 
   TransactionModel({
     this.id,
-    required this.uuid,
+    this.uuid,
     required this.category,
     required this.type,
     this.description,
