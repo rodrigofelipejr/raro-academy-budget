@@ -48,6 +48,7 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
       _inputNameController = TextEditingController(text: widget.data?.description);
       _inputTypeController.value =
           TransactionsItems.incomeItems.firstWhere((item) => item.key == widget.data!.category);
+      _dateController.date = widget.data!.createAt;
     }
   }
 

@@ -15,7 +15,7 @@ class TransactionsModule extends Module {
 
   @override
   List<ModularRoute> get routes => [
-        ChildRoute(AppRoutes.initial, child: (_, args) => TransactionsPage()),
+        ChildRoute(AppRoutes.initial, child: (_, args) => TransactionsPage(indexPage: args.data)),
         ChildRoute(AppRoutes.income, child: (_, args) => IncomePage(data: args.data)),
         ChildRoute(AppRoutes.expenses, child: (_, args) => ExpensesPage(data: args.data)),
       ];

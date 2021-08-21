@@ -10,7 +10,8 @@ import 'stores/transactions_store.dart';
 import 'widgets/widgets.dart';
 
 class TransactionsPage extends StatefulWidget {
-  const TransactionsPage({Key? key}) : super(key: key);
+  final int? indexPage;
+  const TransactionsPage({Key? key, this.indexPage}) : super(key: key);
 
   @override
   _TransactionsPageState createState() => _TransactionsPageState();
@@ -19,7 +20,7 @@ class TransactionsPage extends StatefulWidget {
 class _TransactionsPageState extends ModularState<TransactionsPage, TransactionsStore> {
   final PageController _pageController = PageController();
 
-  void _navigator({required int index}) {
+  void _navigatorToPage(int index) {
     _pageController.animateToPage(
       index,
       duration: const Duration(milliseconds: 400),
@@ -30,6 +31,11 @@ class _TransactionsPageState extends ModularState<TransactionsPage, Transactions
   @override
   void initState() {
     store.init();
+
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      await Future.delayed(Duration(milliseconds: 400));
+      if (widget.indexPage != null) _navigatorToPage(widget.indexPage!);
+    });
     super.initState();
   }
 
@@ -58,9 +64,9 @@ class _TransactionsPageState extends ModularState<TransactionsPage, Transactions
           ),
         ),
         flexibleSpace: ButtonsTabBarWidget(
-          buttonInput: () => _navigator(index: 0),
-          buttonOutput: () => _navigator(index: 1),
-          buttonAll: () => _navigator(index: 2),
+          buttonInput: () => _navigatorToPage(0),
+          buttonOutput: () => _navigatorToPage(1),
+          buttonAll: () => _navigatorToPage(2),
         ),
         toolbarHeight: MediaQuery.of(context).size.height * 0.22,
         actions: [
