@@ -21,8 +21,7 @@ abstract class _IncomeStoreBase extends BaseStore with Store {
   Future<String?> createTransaction({
     required TransactionModel transaction,
   }) async {
-      transaction =
-        transaction.copyWith(uuid: authStore.firebaseAuth.currentUser!.uid);
+    transaction = transaction.copyWith(uuid: authStore.firebaseAuth.currentUser!.uid);
     try {
       return await repository.createTransaction(transaction);
     } catch (e) {
@@ -45,7 +44,7 @@ abstract class _IncomeStoreBase extends BaseStore with Store {
     required TransactionModel transaction,
   }) async {
     try {
-      await repository.deleteTransaction(transaction);
+      await repository.deleteTransaction(transaction.id!);
       return true;
     } catch (e) {
       return false;
