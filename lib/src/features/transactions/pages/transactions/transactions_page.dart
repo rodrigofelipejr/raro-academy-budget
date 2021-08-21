@@ -49,6 +49,7 @@ class _TransactionsPageState extends ModularState<TransactionsPage, Transactions
   @override
   void dispose() {
     _disposers.forEach((disposer) => disposer());
+    _pageController.dispose();
     super.dispose();
   }
 

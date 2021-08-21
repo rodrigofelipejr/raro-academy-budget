@@ -24,7 +24,7 @@ abstract class _TransactionsStoreBase extends BaseStore with Store {
   }
 
   @observable
-  List<TransactionModel> transactions = ObservableList<TransactionModel>();
+  ObservableList<TransactionModel> transactions = ObservableList<TransactionModel>();
   @action
   void setTransactions({List<TransactionModel>? values, TransactionModel? value}) {
     if (values != null) {
@@ -86,7 +86,7 @@ abstract class _TransactionsStoreBase extends BaseStore with Store {
       final transactions = await repository.getAllTransactionsByMonth(uuid: authStore.user!.uuid, month: month);
       setOnError(null);
       setTransactions(values: transactions);
-      setIndexPage(0);
+      setIndexPage(0); //REVIEW - verificar
     } catch (e) {
       setOnError(TransactionError(message: e.toString()));
     } finally {
@@ -101,6 +101,7 @@ abstract class _TransactionsStoreBase extends BaseStore with Store {
       await repository.deleteTransaction(docId);
       _deleteLocalTransaction(docId);
       deleteSuccess = true;
+      setIndexPage(0); //REVIEW - verificar
     } catch (e) {
       setOnError(DeleteTransactionError(message: e.toString()));
     } finally {
