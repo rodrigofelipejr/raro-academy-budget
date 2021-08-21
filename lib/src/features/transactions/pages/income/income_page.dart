@@ -11,7 +11,7 @@ import 'package:budget/src/features/transactions/widgets/dropdown_button_widget.
 import 'package:budget/src/features/transactions/widgets/text_styles.dart';
 import 'package:budget/src/shared/constants/constants.dart';
 import 'package:budget/src/shared/models/models.dart';
-import 'package:budget/src/shared/stores/auth/auth_store.dart';
+import 'package:budget/src/shared/stores/stores.dart';
 import 'package:budget/src/shared/validators/validators.dart';
 import 'package:budget/src/shared/widgets/custom_text_field.dart';
 import 'package:budget/src/shared/widgets/drawer/drawer_widget.dart';
@@ -29,7 +29,8 @@ class IncomePage extends StatefulWidget {
 class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
   TextEditingController _incomeController = TextEditingController();
   TextEditingController _inputNameController = TextEditingController();
-  DropdownController _inputTypeController = DropdownController(items: TransactionsItems.incomeItems);
+  DropdownController _inputTypeController =
+      DropdownController(items: TransactionsItems.incomeItems);
   DateController _dateController = DateController();
 
   FocusNode _incomeFocusNode = FocusNode();
@@ -48,7 +49,6 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
       _inputNameController = TextEditingController(text: widget.data?.description);
       _inputTypeController.value =
           TransactionsItems.incomeItems.firstWhere((item) => item.key == widget.data!.category);
-      _dateController.date = widget.data!.createAt;
     }
   }
 
@@ -95,7 +95,8 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                             keyboardType: TextInputType.number,
                             focusNode: _incomeFocusNode,
                             controller: _incomeController,
-                            validator: (value) => Validators().validateNumber(value!),
+                            validator: (value) =>
+                                Validators().validateNumber(value!),
                           ),
                         ),
                         Padding(
@@ -111,7 +112,8 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                                 value: _inputTypeController.value,
                                 items: _inputTypeController.items,
                                 focusNode: _inputTypeFocusNode,
-                                validator: (value) => Validators().validateTransactionCategory(value?.key),
+                                validator: (value) => Validators()
+                                    .validateTransactionCategory(value?.key),
                                 onChanged: (newValue) {
                                   _inputTypeController.value = newValue!;
                                   setState(() {});
@@ -128,7 +130,8 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                             keyboardType: TextInputType.text,
                             focusNode: _inputNameFocusNode,
                             controller: _inputNameController,
-                            validator: (value) => Validators().validateName(value!),
+                            validator: (value) =>
+                                Validators().validateName(value!),
                           ),
                         ),
                         Padding(
@@ -154,10 +157,10 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                     FocusScope.of(context).unfocus();
                     if (_formKey.currentState!.validate()) {
                       _newData = TransactionModel(
-                        uuid: Modular.get<AuthStore>().user!.uuid,
                         value: double.parse(_incomeController.value.text),
                         type: TypeTransaction.input,
-                        category: TransactionCategories.input[_inputTypeController.value!.key]!,
+                        category: TransactionCategories
+                            .input[_inputTypeController.value!.key]!,
                         description: _inputNameController.value.text,
                         createAt: _dateController.date,
                         updateAt: _dateController.date,
@@ -167,15 +170,18 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                       final String? returnedId;
                       bool isUpdated = false;
                       if (widget.data == null) {
-                        returnedId = await store.createTransaction(transaction: _newData);
+                        returnedId = await store.createTransaction(
+                            transaction: _newData);
                       } else {
                         _newData = widget.data!.copyWith(
                           value: double.parse(_incomeController.value.text),
-                          category: TransactionCategories.input[_inputTypeController.value!.key]!,
+                          category: TransactionCategories
+                              .input[_inputTypeController.value!.key]!,
                           description: _inputNameController.value.text,
                           updateAt: _dateController.date,
                         );
-                        final List<TransactionModel> list = Modular.get<TransactionsStore>().transactions;
+                        final List<TransactionModel> list =
+                            Modular.get<TransactionsStore>().transactions;
                         list.remove(widget.data!);
                         list.add(_newData);
                         await store.updateTransaction(transaction: _newData);
@@ -186,7 +192,8 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
 
                       if (returnedId != null) {
                         _newData = _newData.copyWith(id: returnedId);
-                        final List<TransactionModel> list = Modular.get<TransactionsStore>().transactions;
+                        final List<TransactionModel> list =
+                            Modular.get<TransactionsStore>().transactions;
                         list.add(_newData);
                         Modular.to.pop();
                       }
@@ -195,16 +202,22 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                         showDialog(
                           context: context,
                           builder: (_) => DialogWidget(
-                            message: isUpdated ? "Dado atualizado com sucesso" : "Dado enviado com sucesso",
+                            message: isUpdated
+                                ? "Dado atualizado com sucesso"
+                                : "Dado enviado com sucesso",
                           ),
                         );
                       }
                     }
-                    // store.repository.showTransactions();
-                    // store.repository.showDocs();
-                    print(store.authStore.firebaseAuth.currentUser!.uid);
+                    store.repository.showTransactions();
+                    store.repository.showDocs();
+                    print("USER: ${store.authStore.user!.uuid}");
+                    print("CURRENT USER: ${store.authStore.firebaseAuth.currentUser!.uid}");
+                    print('DATA INSERIDA ${_newData.toMap()}');
                     print("TRANSACTIONS STORE");
-                    Modular.get<TransactionsStore>().transactions.forEach((element) => print(element));
+                    Modular.get<TransactionsStore>()
+                        .transactions
+                        .forEach((element) => print(element));
                   },
                 ),
               ),
@@ -212,9 +225,11 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                 onPressed: () async {
                   bool isDeleted = false;
                   if (widget.data != null) {
-                    await store.deleteTransaction(transaction: widget.data!);
+                    await store.deleteTransaction(
+                      transaction: widget.data!);
                   }
-                  final List<TransactionModel> list = Modular.get<TransactionsStore>().transactions;
+                  final List<TransactionModel> list =
+                    Modular.get<TransactionsStore>().transactions;
                   list.remove(widget.data!);
                   isDeleted = true;
                   Modular.to.pop();
@@ -222,7 +237,9 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                   if (isDeleted) {
                     showDialog(
                       context: context,
-                      builder: (_) => DialogWidget(message: "Dado removido com sucesso"),
+                      builder: (_) => DialogWidget(
+                        message: "Dado removido com sucesso"
+                      ),
                     );
                   }
                 },
