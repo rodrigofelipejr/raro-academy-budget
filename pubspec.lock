@@ -314,13 +314,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.2"
-  flutter_staggered_grid_view:
-    dependency: "direct main"
-    description:
-      name: flutter_staggered_grid_view
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -672,13 +665,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  vs_scrollbar:
-    dependency: "direct main"
-    description:
-      name: vs_scrollbar
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.1"
   watcher:
     dependency: transitive
     description:

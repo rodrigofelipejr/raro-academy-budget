@@ -9,6 +9,23 @@ class Validators {
     return value.isEmpty ? "Preencha corretamente o nome!" : null;
   }
 
+  String? validateNumber(String value) {
+    if (value.isEmpty) {
+      return "Preencha corretamente o valor!";
+    }
+
+    try {
+      double.parse(value);
+      return null;
+    } catch (e) {
+      return "Digite um número";
+    }
+  }
+
+  String? validateTransactionCategory(String? value) {
+    return value == null ? 'Campo obrigatório' : null;
+  }
+
   String? validateDate(String value) {
     try {
       initializeDateFormatting('pt_BR', null);
@@ -18,8 +35,7 @@ class Validators {
         return "Data inválida";
       }
       bool has18 = DateTime.now().subtract(Duration(days: 6570)).isAfter(date);
-      bool hasLessThan120 =
-          DateTime.now().subtract(Duration(days: 43800)).isAfter(date);
+      bool hasLessThan120 = DateTime.now().subtract(Duration(days: 43800)).isAfter(date);
 
       if (has18) {
         if (hasLessThan120) {
@@ -71,9 +87,7 @@ class Validators {
   }
 
   String? email(String email) {
-    if (RegExp(
-            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-        .hasMatch(email)) {
+    if (RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email)) {
       return null;
     } else {
       return "Insira um endereço de email";

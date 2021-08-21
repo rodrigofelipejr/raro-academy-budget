@@ -6,7 +6,7 @@ import '../../../../shared/constants/constants.dart';
 import '../../../../shared/utils/utils.dart';
 import '../../../../shared/widgets/widgets.dart';
 
-import 'general_balance_store.dart';
+import 'stores/general_balance_store.dart';
 import '../../../../shared/widgets/button_icon_visible_widget.dart';
 import 'widgets/blur_widget.dart';
 
@@ -17,7 +17,15 @@ class GeneralBalanceWidget extends StatefulWidget {
   GeneralBalanceStateWidget createState() => GeneralBalanceStateWidget();
 }
 
-class GeneralBalanceStateWidget extends ModularState<GeneralBalanceWidget, GeneralBalanceStore> {
+class GeneralBalanceStateWidget extends State<GeneralBalanceWidget> {
+  late final GeneralBalanceStore store;
+
+  @override
+  void initState() {
+    store = Modular.get<GeneralBalanceStore>();
+    super.initState();
+  }
+
   Widget _buildText(String label) => Text(label, style: AppTextStyles.black24w400Roboto);
 
   @override

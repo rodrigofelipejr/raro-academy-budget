@@ -19,4 +19,5 @@ export 'overlay_widget.dart';
 export 'progress_indicator_widget.dart';
 export 'try_again_button_widget.dart';
 export 'wrapper_widget.dart';
+export 'space_bottom_widget.dart';
 export 'text_button_widget.dart';

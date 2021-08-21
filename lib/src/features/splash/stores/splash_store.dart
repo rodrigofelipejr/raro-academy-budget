@@ -1,8 +1,7 @@
 import 'package:mobx/mobx.dart';
 
-import '../../shared/constants/constants.dart';
-import '../../shared/stores/auth/auth_store.dart';
-import '../../shared/stores/stores.dart';
+import '../../../shared/constants/constants.dart';
+import '../../../shared/stores/stores.dart';
 
 part 'splash_store.g.dart';
 

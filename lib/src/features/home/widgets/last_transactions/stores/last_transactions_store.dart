@@ -1,9 +1,9 @@
 import 'package:mobx/mobx.dart';
 
-import '../../../../shared/stores/stores.dart';
-import '../../errors/errors.dart';
-import '../../repositories/repositories.dart';
-import 'last_transactions_state.dart';
+import '../../../../../shared/stores/stores.dart';
+import '../../../errors/errors.dart';
+import '../../../repositories/repositories.dart';
+import '../last_transactions_state.dart';
 
 part 'last_transactions_store.g.dart';
 
