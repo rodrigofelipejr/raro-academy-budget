@@ -178,6 +178,7 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                           category: TransactionCategories
                               .input[_inputTypeController.value!.key]!,
                           description: _inputNameController.value.text,
+                          createAt: _dateController.date,
                           updateAt: _dateController.date,
                         );
                         final List<TransactionModel> list =
