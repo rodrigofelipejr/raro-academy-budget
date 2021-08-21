@@ -65,7 +65,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                     DailyWidget(),
                     SizedBox(height: 18.0),
                     LastTransactionsWidget(),
-                    SizedBox(height: sizeScreen.height * 0.1),
+                    SpaceBottomWidget(height: 0.1),
                   ],
                 ),
               ),
