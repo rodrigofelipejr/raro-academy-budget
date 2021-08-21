@@ -1,7 +1,7 @@
 import 'package:budget/src/features/transactions/constants/transactions_items.dart';
 import 'package:budget/src/features/transactions/controller/date_controller.dart';
 import 'package:budget/src/features/transactions/controller/dropdown_controller.dart';
-import 'package:budget/src/features/transactions/pages/transactions/stores/transactions_store.dart'; 
+import 'package:budget/src/features/transactions/pages/transactions/stores/transactions_store.dart';
 import 'package:budget/src/features/transactions/widgets/appbar_with_drawer.dart';
 import 'package:budget/src/features/transactions/widgets/button_widget.dart';
 import 'package:budget/src/features/transactions/widgets/date_picker_widget.dart';
@@ -43,6 +43,7 @@ class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
       _expensesController = TextEditingController(text: widget.data?.value.toString());
       _inputTypeController.value =
           TransactionsItems.expensesItems.firstWhere((item) => item.key == widget.data!.category);
+      _dateController.date = widget.data!.createAt;
     }
   }
 
@@ -118,6 +119,7 @@ class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
                             top: 12,
                           ),
                           child: DatePickerWidget(
+                            date: _dateController.date,
                             controller: _dateController,
                             focusNode: _dateFocusNode,
                           ),
