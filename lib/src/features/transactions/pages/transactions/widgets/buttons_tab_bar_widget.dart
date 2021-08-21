@@ -1,15 +1,22 @@
-import 'package:budget/src/features/transactions/pages/transactions/stores/transactions_store.dart';
-import 'package:budget/src/shared/constants/constants.dart';
-import 'package:budget/src/shared/utils/formatters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class ButtonsAppBarDay extends StatelessWidget {
-  final VoidCallback? buttonIn;
-  final VoidCallback? buttonOut;
+import '../../../../../shared/constants/constants.dart';
+import '../../../../../shared/utils/utils.dart';
+import '../stores/transactions_store.dart';
+
+class ButtonsTabBarWidget extends StatelessWidget {
+  final VoidCallback? buttonInput;
+  final VoidCallback? buttonOutput;
   final VoidCallback? buttonAll;
-  const ButtonsAppBarDay({Key? key, this.buttonIn, this.buttonOut, this.buttonAll}) : super(key: key);
+
+  const ButtonsTabBarWidget({
+    Key? key,
+    this.buttonInput,
+    this.buttonOutput,
+    this.buttonAll,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +37,7 @@ class ButtonsAppBarDay extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                textbutton("Entradas", buttonIn, 0),
+                _buildTextButtonWidget("Entradas", buttonInput, 0),
                 Container(
                   height: 20,
                   width: 1,
@@ -41,7 +48,7 @@ class ButtonsAppBarDay extends StatelessWidget {
                     ),
                   ),
                 ),
-                textbutton("Saídas", buttonOut, 1),
+                _buildTextButtonWidget("Saídas", buttonOutput, 1),
                 Container(
                   height: 20,
                   width: 1,
@@ -52,7 +59,7 @@ class ButtonsAppBarDay extends StatelessWidget {
                     ),
                   ),
                 ),
-                textbutton("Todos", buttonAll, 2),
+                _buildTextButtonWidget("Todos", buttonAll, 2),
               ],
             ),
           )
@@ -61,23 +68,25 @@ class ButtonsAppBarDay extends StatelessWidget {
     );
   }
 
-  Widget textbutton(String text, VoidCallback? button, int screen) {
-    return Observer(builder: (_) {
-      return Expanded(
-        child: TextButton(
-          onPressed: Modular.get<TransactionsStore>().onError != null ? null : button,
-          child: Text(
-            text,
-            style: TextStyle(
-                fontSize: 16,
-                color: Modular.get<TransactionsStore>().onError != null
-                    ? Color.fromARGB(60, 255, 255, 255)
-                    : Modular.get<TransactionsStore>().indexPage == screen
-                        ? Colors.white
-                        : Color.fromARGB(60, 255, 255, 255)),
+  Widget _buildTextButtonWidget(String text, VoidCallback? onPressed, int screen) {
+    return Observer(
+      builder: (_) {
+        return Expanded(
+          child: TextButton(
+            onPressed: Modular.get<TransactionsStore>().onError != null ? null : onPressed,
+            child: Text(
+              text,
+              style: TextStyle(
+                  fontSize: 16,
+                  color: Modular.get<TransactionsStore>().onError != null
+                      ? Color.fromARGB(60, 255, 255, 255)
+                      : Modular.get<TransactionsStore>().indexPage == screen
+                          ? Colors.white
+                          : Color.fromARGB(60, 255, 255, 255)),
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }
