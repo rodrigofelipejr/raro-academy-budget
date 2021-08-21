@@ -1,8 +1,7 @@
 import 'package:budget/src/features/transactions/constants/transactions_items.dart';
 import 'package:budget/src/features/transactions/controller/date_controller.dart';
 import 'package:budget/src/features/transactions/controller/dropdown_controller.dart';
-import 'package:budget/src/features/transactions/pages/transactions/transactions_store.dart';
-import 'package:budget/src/features/transactions/validators/text_validator.dart';
+import 'package:budget/src/features/transactions/pages/transactions/stores/transactions_store.dart'; 
 import 'package:budget/src/features/transactions/widgets/appbar_with_drawer.dart';
 import 'package:budget/src/features/transactions/widgets/button_widget.dart';
 import 'package:budget/src/features/transactions/widgets/date_picker_widget.dart';
@@ -11,6 +10,7 @@ import 'package:budget/src/features/transactions/widgets/dropdown_button_widget.
 import 'package:budget/src/features/transactions/widgets/text_styles.dart';
 import 'package:budget/src/shared/constants/constants.dart';
 import 'package:budget/src/shared/models/models.dart';
+import 'package:budget/src/shared/validators/validators.dart';
 import 'package:budget/src/shared/widgets/custom_text_field.dart';
 import 'package:budget/src/shared/widgets/drawer/drawer_widget.dart';
 import 'package:flutter/material.dart';
@@ -105,7 +105,7 @@ class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
                                   value: _inputTypeController.value,
                                   items: _inputTypeController.items,
                                   focusNode: _inputTypeFocusNode,
-                                  validator: (value) => Validators().validateTransactionCategory(value),
+                                  validator: (value) => Validators().validateTransactionCategory(value?.key),
                                   onChanged: (newValue) {
                                     _inputTypeController.value = newValue!;
                                     setState(() {});

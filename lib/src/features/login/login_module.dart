@@ -3,9 +3,9 @@ import 'package:budget/src/features/login/repositories/login_repository_impl.dar
 import 'package:budget/src/features/login/repositories/register_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+
 import '../../shared/constants/constants.dart';
-import 'login.dart';
-import 'pages/register/register_page.dart'; //TODO - rever
+import 'pages/pages.dart';
 
 class LoginModule extends Module {
   @override

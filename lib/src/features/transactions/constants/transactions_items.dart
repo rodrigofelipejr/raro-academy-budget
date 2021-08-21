@@ -1,65 +1,65 @@
-import 'package:budget/src/features/transactions/widgets/dropdown_item_data.dart';
-import 'package:budget/src/shared/constants/constants.dart';
+import '../../../shared/constants/constants.dart';
+import '../widgets/widgets.dart';
 
 class TransactionsItems {
   static final List<DropdownItemData> incomeItems = [
     DropdownItemData(
       color: AppColors.azul,
-      value: "Dinheiro",
-      key: "money",
+      value: AppStrings.dinheiro,
+      key: TransactionCategories.money,
     ),
     DropdownItemData(
       color: AppColors.azul,
-      value: "Pix",
-      key: "pix",
+      value: AppStrings.pix,
+      key: TransactionCategories.pix,
     ),
     DropdownItemData(
       color: AppColors.azul,
-      value: "Doc",
-      key: "doc",
+      value: AppStrings.doc,
+      key: TransactionCategories.doc,
     ),
     DropdownItemData(
       color: AppColors.azul,
-      value: "Ted",
-      key: "ted",
+      value: AppStrings.ted,
+      key: TransactionCategories.ted,
     ),
     DropdownItemData(
       color: AppColors.azul,
-      value: "Boleto",
-      key: "ticket",
+      value: AppStrings.boleto,
+      key: TransactionCategories.ticket,
     ),
   ];
 
   static final List<DropdownItemData> expensesItems = [
     DropdownItemData(
       color: AppColors.amarelo,
-      value: "Refeição",
-      key: "meal",
+      value: AppStrings.refeicao,
+      key: TransactionCategories.meal,
     ),
     DropdownItemData(
       color: AppColors.verde,
-      value: "Transporte",
-      key: "transport",
+      value: AppStrings.transporte,
+      key: TransactionCategories.transport,
     ),
     DropdownItemData(
       color: AppColors.rosa,
-      value: "Viagem",
-      key: "trip",
+      value: AppStrings.viagem,
+      key: TransactionCategories.trip,
     ),
     DropdownItemData(
       color: AppColors.ciano,
-      value: "Educação",
-      key: "education",
+      value: AppStrings.educacao,
+      key: TransactionCategories.education,
     ),
     DropdownItemData(
       color: AppColors.roxo,
-      value: "Pagamentos",
-      key: "payments",
+      value: AppStrings.pagamentos,
+      key: TransactionCategories.payments,
     ),
     DropdownItemData(
       color: AppColors.gray,
-      value: "Outros",
-      key: "others",
+      value: AppStrings.outros,
+      key: TransactionCategories.others,
     ),
   ];
 }

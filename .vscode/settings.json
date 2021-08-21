@@ -1,5 +1,6 @@
 {
   "cSpell.words": [
+    "ARGB",
     "Appbar",
     "Firestore",
     "LTRB",
@@ -7,9 +8,12 @@
     "RGBO",
     "Roboto",
     "Scrollable",
+    "alimentacao",
     "codegen",
+    "educacao",
     "melrose",
-    "mixins"
+    "mixins",
+    "refeicao"
   ],
   "dart.lineLength": 120,
 }

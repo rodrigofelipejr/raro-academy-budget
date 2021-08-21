@@ -1,17 +1,13 @@
-import 'package:budget/src/features/transactions/pages/transactions/transactions_store.dart';
-import 'package:budget/src/features/transactions/pages/transactions/widgets/output_card.dart';
-import 'package:budget/src/shared/constants/app_routes.dart';
-import 'package:budget/src/shared/utils/dates.dart';
-import 'package:budget/src/shared/widgets/fab_widget.dart';
-import 'package:budget/src/shared/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../../../shared/constants/constants.dart';
+import '../../../../shared/utils/utils.dart';
+import '../../../../shared/widgets/widgets.dart';
 import '../../../home/home.dart';
-import 'widgets/all_card.dart';
-import 'widgets/buttons_appbar.dart';
-import 'widgets/input_card.dart';
+import 'stores/transactions_store.dart';
+import 'widgets/widgets.dart';
 
 class TransactionsPage extends StatefulWidget {
   const TransactionsPage({Key? key}) : super(key: key);
@@ -43,9 +39,9 @@ class _TransactionsPageState extends ModularState<TransactionsPage, Transactions
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Observer(builder: (_) {
         return Visibility(
-          visible: controller.indexPage != 2,
+          visible: store.indexPage != 2,
           child: FabWidget(onTap: () {
-            Modular.to.pushNamed(controller.indexPage == 0 ? AppRoutes.income : AppRoutes.expenses);
+            Modular.to.pushNamed(store.indexPage == 0 ? AppRoutes.income : AppRoutes.expenses);
           }),
         );
       }),
@@ -61,9 +57,9 @@ class _TransactionsPageState extends ModularState<TransactionsPage, Transactions
             onPressed: () => Navigator.of(context).pop(),
           ),
         ),
-        flexibleSpace: ButtonsAppBarDay(
-          buttonIn: () => _navigator(index: 0),
-          buttonOut: () => _navigator(index: 1),
+        flexibleSpace: ButtonsTabBarWidget(
+          buttonInput: () => _navigator(index: 0),
+          buttonOutput: () => _navigator(index: 1),
           buttonAll: () => _navigator(index: 2),
         ),
         toolbarHeight: MediaQuery.of(context).size.height * 0.22,
@@ -80,7 +76,7 @@ class _TransactionsPageState extends ModularState<TransactionsPage, Transactions
                   referenceDate: homeStore.dailyStore.state.date,
                   changeSelectedDate: (DateTime date) {
                     homeStore.dailyStore.handleDaily(date: date);
-                    controller.handleGetTransaction();
+                    store.handleGetTransaction();
                   },
                 );
               }),
@@ -89,31 +85,34 @@ class _TransactionsPageState extends ModularState<TransactionsPage, Transactions
         ],
       ),
       body: Observer(builder: (_) {
-        if (controller.isLoading)
+        if (store.isLoading)
           return Center(
             child: LoadingWidget(),
           );
 
-        if (controller.onError != null)
+        if (store.onError != null)
           return Center(
-            child: CustomErrorWidget(message: "Error interno", reload: () => controller.init()),
+            child: CustomErrorWidget(
+              message: "Erro ao carregar os dados!",
+              reload: () => store.init(),
+            ),
           );
 
         return PageView(
-          onPageChanged: (value) => controller.setIndexPage(value),
+          onPageChanged: (value) => store.setIndexPage(value),
           controller: _pageController,
           children: [
-            InputCard(
-              value: controller.transactionInputTotal,
-              transaction: controller.transactionInput,
+            InputTransactionsWidget(
+              totalValue: store.transactionInputTotal,
+              transactions: store.transactionInput,
             ),
-            OutCard(
-              value: controller.transactionOutputTotal,
-              transaction: controller.transactionOutput,
+            OutputTransactionsWidget(
+              totalValue: store.transactionOutputTotal,
+              transactions: store.transactionOutput,
             ),
-            AllCard(
-              value: controller.transactionTotal,
-              transaction: controller.transactions,
+            AllTransactionsWidget(
+              transactions: store.transactions,
+              totalValue: store.transactionTotal,
             ),
           ],
         );

@@ -205,4 +205,12 @@ class AppTextStyles {
     fontFamily: "Montserrat",
     letterSpacing: 0.165,
   );
+
+  static const TextStyle blue14w500Roboto = TextStyle(
+    color: AppColors.azul,
+    fontWeight: FontWeight.w500,
+    fontSize: 14.0,
+    fontFamily: "Roboto",
+    letterSpacing: 0.15,
+  );
 }

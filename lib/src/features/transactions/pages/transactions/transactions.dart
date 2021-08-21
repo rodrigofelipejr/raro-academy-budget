@@ -1,2 +1,2 @@
-export 'transactions_page.dart';
-export 'transactions_store.dart';
+export 'transactions_page.dart'; 
+export 'stores/transactions_store.dart';

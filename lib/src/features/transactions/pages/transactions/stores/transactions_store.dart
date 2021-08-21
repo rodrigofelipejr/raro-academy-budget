@@ -1,10 +1,10 @@
 import 'package:mobx/mobx.dart';
 
-import '../../../../shared/models/models.dart';
-import '../../../../shared/stores/stores.dart';
-import '../../../features.dart';
-import '../../repositories/repositories.dart';
-import 'errors/erros.dart';
+import '../../../../../shared/models/models.dart';
+import '../../../../../shared/stores/stores.dart';
+import '../../../../features.dart';
+import '../../../repositories/repositories.dart';
+import '../errors/erros.dart';
 
 part 'transactions_store.g.dart';
 

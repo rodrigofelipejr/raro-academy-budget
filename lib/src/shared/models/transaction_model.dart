@@ -1,31 +1,13 @@
 import 'dart:convert';
 
-import 'package:budget/src/shared/constants/constants.dart';
-import 'package:budget/src/shared/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../utils/utils.dart';
 
 enum TypeTransaction { output, input }
 
-class CategoryTransaction {
-  static const Map<String, String> output = {
-    TransactionCategories.meal: 'Alimentação',
-    TransactionCategories.education: 'Educação',
-    TransactionCategories.others: 'Outros',
-    TransactionCategories.payments: 'Pagamentos',
-    TransactionCategories.transport: 'Transporte',
-    TransactionCategories.trip: 'Viagem',
-  };
-
-  static const Map<String, String> input = {
-    TransactionCategories.pix: 'Pix',
-    TransactionCategories.ticket: 'Boleto',
-    TransactionCategories.ted: 'Ted',
-    TransactionCategories.doc: 'Doc',
-    TransactionCategories.money: 'Dinheiro',
-  };
-}
-
 class TransactionModel {
+  final String? id;
   final String uuid;
   final String category;
   final TypeTransaction type;
@@ -35,6 +17,7 @@ class TransactionModel {
   final DateTime updateAt;
 
   TransactionModel({
+    this.id,
     required this.uuid,
     required this.category,
     required this.type,
@@ -45,6 +28,7 @@ class TransactionModel {
   });
 
   TransactionModel copyWith({
+    String? id,
     String? uuid,
     String? category,
     TypeTransaction? type,
@@ -54,6 +38,7 @@ class TransactionModel {
     DateTime? updateAt,
   }) {
     return TransactionModel(
+      id: id ?? this.id,
       uuid: uuid ?? this.uuid,
       category: category ?? this.category,
       type: type ?? this.type,
@@ -66,6 +51,7 @@ class TransactionModel {
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'uuid': uuid,
       'category': category,
       'type': TypeTransaction.values.indexOf(type),
@@ -80,6 +66,7 @@ class TransactionModel {
     Map map = doc.data() as Map<String, dynamic>;
 
     return TransactionModel(
+      id: doc.id,
       uuid: map['uuid'] ?? '',
       category: map['category'] ?? '',
       type: TypeTransaction.values[map['type'] ?? 0],
@@ -92,6 +79,7 @@ class TransactionModel {
 
   factory TransactionModel.fromMap(Map<String, dynamic> map) {
     return TransactionModel(
+      id: map['id'],
       uuid: map['uuid'],
       category: map['category'],
       type: TypeTransaction.values[map['type']],
@@ -108,7 +96,7 @@ class TransactionModel {
 
   @override
   String toString() {
-    return 'TransactionModel(uuid: $uuid, category: $category, type: $type, description: $description, value: $value, createAt: $createAt, updateAt: $updateAt)';
+    return 'TransactionModel(id: $id, uuid: $uuid, category: $category, type: $type, description: $description, value: $value, createAt: $createAt, updateAt: $updateAt)';
   }
 
   @override
@@ -116,6 +104,7 @@ class TransactionModel {
     if (identical(this, other)) return true;
 
     return other is TransactionModel &&
+        other.id == id &&
         other.uuid == uuid &&
         other.category == category &&
         other.type == type &&
@@ -127,7 +116,8 @@ class TransactionModel {
 
   @override
   int get hashCode {
-    return uuid.hashCode ^
+    return id.hashCode ^
+        uuid.hashCode ^
         category.hashCode ^
         type.hashCode ^
         description.hashCode ^
