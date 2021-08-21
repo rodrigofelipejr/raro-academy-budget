@@ -98,7 +98,6 @@ abstract class _TransactionsStoreBase extends BaseStore with Store {
     bool deleteSuccess = false;
     setIsLoading(true);
     try {
-      await Future.delayed(Duration(seconds: 3));
       await repository.deleteTransaction(docId);
       _deleteLocalTransaction(docId);
       deleteSuccess = true;
