@@ -1,3 +1,4 @@
+import 'package:budget/src/features/login/pages/onboarding/onboarding_page.dart';
 import 'package:budget/src/features/login/pages/register/register_store.dart';
 import 'package:budget/src/features/login/repositories/login_repository_impl.dart';
 import 'package:budget/src/features/login/repositories/register_repository.dart';
@@ -21,5 +22,6 @@ class LoginModule extends Module {
   List<ModularRoute> get routes => [
         ChildRoute(AppRoutes.initial, child: (_, args) => LoginPage()),
         ChildRoute(AppRoutes.register, child: (_, args) => RegisterPage()),
+        ChildRoute(AppRoutes.onboarding, child: (_, args) => OnboardingPage()),
       ];
 }
