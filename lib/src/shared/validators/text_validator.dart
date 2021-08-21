@@ -1,6 +1,6 @@
 import 'dart:developer';
+
 import 'package:cpf_cnpj_validator/cpf_validator.dart';
-import 'package:password_strength/password_strength.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
