@@ -56,7 +56,7 @@ class LatestTransactionsStateWidget extends State<LastTransactionsWidget> {
                               style: AppTextStyles.purple20w500Roboto,
                             ),
                             ButtonIconWidget(
-                              onTap: () => null,
+                              onTap: () => Modular.to.pushNamed(AppRoutes.transactions, arguments: 2),
                               child: Icon(
                                 Icons.navigate_next,
                                 color: AppColors.roxo,
@@ -84,7 +84,12 @@ class LatestTransactionsStateWidget extends State<LastTransactionsWidget> {
                         .map((transaction) => ItemCardWidget(
                               prefixEnable: true,
                               transaction: transaction,
-                              onTap: () => null,
+                              onTap: () {
+                                final route = transaction.type.index == 0
+                                    ? AppRoutes.transactionsExpenses
+                                    : AppRoutes.transactionsIncome;
+                                Modular.to.pushNamed(route, arguments: transaction);
+                              },
                             ))
                         .toList(),
                   )

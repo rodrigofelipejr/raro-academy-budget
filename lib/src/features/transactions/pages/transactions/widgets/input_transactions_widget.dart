@@ -10,13 +10,11 @@ class InputTransactionsWidget extends StatelessWidget {
   final List<TransactionModel> transactions;
   final double totalValue;
 
-  InputTransactionsWidget({
+  const InputTransactionsWidget({
     Key? key,
     required this.transactions,
     required this.totalValue,
   }) : super(key: key);
-
-  bool get positiveValue => totalValue > 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +55,7 @@ class InputTransactionsWidget extends StatelessWidget {
                         Text(
                           '+${Formatters.formatMoney(totalValue)}',
                           style: AppTextStyles.blue14w500Roboto.copyWith(
-                            color: positiveValue ? AppColors.greenLight : AppColors.redLight,
+                            color: AppColors.greenLight,
                           ),
                         ),
                       ],

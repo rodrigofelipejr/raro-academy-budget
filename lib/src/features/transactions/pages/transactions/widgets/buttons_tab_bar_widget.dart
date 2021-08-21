@@ -26,9 +26,11 @@ class ButtonsTabBarWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Observer(builder: (_) {
+            final totalValue = Modular.get<TransactionsStore>().transactionTotal;
+            final bool positiveValue = totalValue >= 0.0;
             return Text(
-              '${Formatters.formatMoney(Modular.get<TransactionsStore>().transactionTotal)}',
-              style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.w700),
+              '${positiveValue ? "" : "-"}${Formatters.formatMoney(totalValue.abs())}',
+              style: AppTextStyles.white26w700Roboto,
             );
           }),
           SizedBox(height: 11),

@@ -72,14 +72,10 @@ class Validators {
       return "A senha deve conter mais que 8 caracteres";
     }
 
-    if (!RegExp(r'^(?=.*?[A-Z])').hasMatch(value))
-      return "Deve conter pelo menos um caracter maiúsculo";
-    if (!RegExp(r'^(?=.*?[a-z])').hasMatch(value))
-      return "Deve conter pelo menos um caracter minúsculo";
-    if (!RegExp(r'^(?=.*?[0-9])').hasMatch(value))
-      return "Deve conter pelo menos um número";
-    if (!RegExp(r'^(?=.*?[!@#\$&*~]).{8,}').hasMatch(value))
-      return "Deve conter pelo menos um caracter especial";
+    if (!RegExp(r'^(?=.*?[A-Z])').hasMatch(value)) return "Deve conter pelo menos um caractere maiúsculo";
+    if (!RegExp(r'^(?=.*?[a-z])').hasMatch(value)) return "Deve conter pelo menos um caractere minúsculo";
+    if (!RegExp(r'^(?=.*?[0-9])').hasMatch(value)) return "Deve conter pelo menos um número";
+    if (!RegExp(r'^(?=.*?[!@#\$&*~]).{8,}').hasMatch(value)) return "Deve conter pelo menos um caractere especial";
 
     if (value != value1) {
       return "As senhas não conferem";
