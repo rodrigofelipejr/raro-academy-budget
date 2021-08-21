@@ -117,7 +117,7 @@ class _TransactionsPageState extends ModularState<TransactionsPage, Transactions
               transactions: store.transactionOutput,
             ),
             AllTransactionsWidget(
-              transactions: store.transactions,
+              transactions: store.transactionsByMonth,
               totalValue: store.transactionTotal,
             ),
           ],
