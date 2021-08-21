@@ -2,6 +2,7 @@ import 'package:budget/src/features/login/repositories/register_repository.dart'
 import 'package:budget/src/features/login/utils/firebase_errors.dart';
 import 'package:budget/src/shared/models/user_model.dart';
 import 'package:budget/src/shared/stores/stores.dart';
+import 'package:budget/src/shared/widgets/dialog/dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -56,16 +57,25 @@ abstract class _RegisterStoreBase with Store {
   }
 
   @action
-  Future<void> login(UserModel userModel, String email, String password) async {
+  Future<void> login(UserModel userModel, String email, String password, BuildContext context) async {
     try {
       loading = true;
       final response = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
-      // AuthController.instance.loginUser(response.user!);
       this.authStore.loginUser(response.user!.uid);
       userModel = userModel.copyWith(uuid: response.user!.uid);
+
       this.createUser(userModel);
     } on FirebaseAuthException catch (e) {
-      print(FireBaseErrors.verifyErroCode(e.code));
+      showDialog(
+        context: context,
+        builder: (_) => DialogWidget(
+          type: DialogTypeEnum.error,
+          title: 'Ops',
+          message: FireBaseErrors.verifyErroCode(e.code),
+          textButtonPrimary: 'ok',
+          // onPressedPrimary: (),
+        ),
+      );
       loading = false;
     }
   }
@@ -85,6 +95,8 @@ abstract class _RegisterStoreBase with Store {
   Future<void> createUser(UserModel userModel) async {
     try {
       await repository.createUser(userModel);
+      this.authStore.addListenAuth();
+      Modular.to.pushNamed(AppRoutes.onboarding);
       this.loading = false;
     } catch (e) {
       this.loading = false;

@@ -48,23 +48,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   ),
                 ),
                 Text(
-                  'Agora sim!',
-                  style: AppTextStyles.cyan34w700Roboto,
-                ),
-                Text(
-                  'Você terá o',
-                  style: AppTextStyles.cyan34w700Roboto,
-                ),
-                Text(
-                  'controle',
-                  style: AppTextStyles.cyan34w700Roboto,
-                ),
-                Text(
-                  'financeiro nas',
-                  style: AppTextStyles.cyan34w700Roboto,
-                ),
-                Text(
-                  'suas mãos!',
+                  'Agora sim! \nVocê terá o\ncontrole\nfinanceiro nas\nsuas mãos!',
                   style: AppTextStyles.cyan34w700Roboto,
                 ),
                 SizedBox(

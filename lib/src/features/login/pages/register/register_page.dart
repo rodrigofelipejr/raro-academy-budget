@@ -10,6 +10,7 @@ import 'package:easy_mask/easy_mask.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mobx/mobx.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -19,6 +20,23 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends ModularState<RegisterPage, RegisterStore> {
+  late ReactionDisposer _disposer;
+  @override
+  void initState() {
+    _disposer = reaction<bool>((_) => store.loading, (bool loading) {
+      (loading)
+          ? OverlayWidget.show(context, label: AppStrings.txtLoginApp)
+          : Future.delayed(Duration(milliseconds: 300)).then((value) => OverlayWidget.hide());
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _disposer();
+    super.dispose();
+  }
+
   final formKeyNameAndEmail = GlobalKey<FormState>();
   final formKeyPhoneAndCpf = GlobalKey<FormState>();
   final formKeyPassword = GlobalKey<FormState>();
@@ -390,16 +408,16 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterStore> {
       if (formKeyPassword.currentState!.validate()) {
         store.pushPage();
         store.login(
-          UserModel(
-              cpf: this.cpfController.text,
-              name: this.nameController.text,
-              phone: this.phoneController.text,
-              termsAndConditions: store.policy,
-              uuid: '',
-              createAt: FieldValue.serverTimestamp()),
-          this.emailController.text,
-          this.passwordController.text,
-        );
+            UserModel(
+                cpf: this.cpfController.text,
+                name: this.nameController.text,
+                phone: this.phoneController.text,
+                termsAndConditions: store.policy,
+                uuid: '',
+                createAt: FieldValue.serverTimestamp()),
+            this.emailController.text,
+            this.passwordController.text,
+            context);
       }
     }
   }

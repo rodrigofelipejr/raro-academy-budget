@@ -39,7 +39,8 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
     });
   }
 
-  final _$passwordVisibleAtom = Atom(name: '_RegisterStoreBase.passwordVisible');
+  final _$passwordVisibleAtom =
+      Atom(name: '_RegisterStoreBase.passwordVisible');
 
   @override
   bool get passwordVisible {
@@ -54,7 +55,8 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
     });
   }
 
-  final _$confirmPasswordVisibleAtom = Atom(name: '_RegisterStoreBase.confirmPasswordVisible');
+  final _$confirmPasswordVisibleAtom =
+      Atom(name: '_RegisterStoreBase.confirmPasswordVisible');
 
   @override
   bool get confirmPasswordVisible {
@@ -64,7 +66,8 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
 
   @override
   set confirmPasswordVisible(bool value) {
-    _$confirmPasswordVisibleAtom.reportWrite(value, super.confirmPasswordVisible, () {
+    _$confirmPasswordVisibleAtom
+        .reportWrite(value, super.confirmPasswordVisible, () {
       super.confirmPasswordVisible = value;
     });
   }
@@ -87,16 +90,19 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
   final _$loginAsyncAction = AsyncAction('_RegisterStoreBase.login');
 
   @override
-  Future<void> login(UserModel userModel, String email, String password) {
-    print(userModel);
-    return _$loginAsyncAction.run(() => super.login(userModel, email, password));
+  Future<void> login(UserModel userModel, String email, String password,
+      BuildContext context) {
+    return _$loginAsyncAction
+        .run(() => super.login(userModel, email, password, context));
   }
 
-  final _$_RegisterStoreBaseActionController = ActionController(name: '_RegisterStoreBase');
+  final _$_RegisterStoreBaseActionController =
+      ActionController(name: '_RegisterStoreBase');
 
   @override
   void updateCurrentPage(int index) {
-    final _$actionInfo = _$_RegisterStoreBaseActionController.startAction(name: '_RegisterStoreBase.updateCurrentPage');
+    final _$actionInfo = _$_RegisterStoreBaseActionController.startAction(
+        name: '_RegisterStoreBase.updateCurrentPage');
     try {
       return super.updateCurrentPage(index);
     } finally {
@@ -106,7 +112,8 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
 
   @override
   void updatePolicy(bool? value) {
-    final _$actionInfo = _$_RegisterStoreBaseActionController.startAction(name: '_RegisterStoreBase.updatePolicy');
+    final _$actionInfo = _$_RegisterStoreBaseActionController.startAction(
+        name: '_RegisterStoreBase.updatePolicy');
     try {
       return super.updatePolicy(value);
     } finally {
@@ -116,8 +123,8 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
 
   @override
   void updateConfirmPasswordVisible(bool value) {
-    final _$actionInfo =
-        _$_RegisterStoreBaseActionController.startAction(name: '_RegisterStoreBase.updateConfirmPasswordVisible');
+    final _$actionInfo = _$_RegisterStoreBaseActionController.startAction(
+        name: '_RegisterStoreBase.updateConfirmPasswordVisible');
     try {
       return super.updateConfirmPasswordVisible(value);
     } finally {
@@ -127,8 +134,8 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
 
   @override
   void updatePasswordVisible(bool value) {
-    final _$actionInfo =
-        _$_RegisterStoreBaseActionController.startAction(name: '_RegisterStoreBase.updatePasswordVisible');
+    final _$actionInfo = _$_RegisterStoreBaseActionController.startAction(
+        name: '_RegisterStoreBase.updatePasswordVisible');
     try {
       return super.updatePasswordVisible(value);
     } finally {
