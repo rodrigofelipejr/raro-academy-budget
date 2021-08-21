@@ -1,42 +1,32 @@
-import 'package:budget/src/features/login/pages/register/repositories/register_repositories.dart';
+import 'package:budget/src/features/login/repositories/register_repository.dart';
+import 'package:budget/src/features/login/utils/firebase_errors.dart';
+import 'package:budget/src/shared/constants/app_colors.dart';
 import 'package:budget/src/shared/models/user_model.dart';
 import 'package:budget/src/shared/stores/stores.dart';
+import 'package:budget/src/shared/widgets/dialog/dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:budget/src/shared/constants/app_routes.dart';
 
-part 'register_controller.g.dart';
+part 'register_store.g.dart';
 
-class RegisterController = _RegisterControllerBase with _$RegisterController;
+class RegisterStore = _RegisterStoreBase with _$RegisterStore;
 
-abstract class _RegisterControllerBase with Store {
-  final PageController pageController = PageController(initialPage: 0);
-  final formKeyNameAndEmail = GlobalKey<FormState>();
-  final formKeyPhoneAndCpf = GlobalKey<FormState>();
-  final formKeyPassword = GlobalKey<FormState>();
-
-  FocusNode emailFocusNode = new FocusNode();
-  TextEditingController emailController = TextEditingController();
-  FocusNode nameFocusNode = new FocusNode();
-  TextEditingController nameController = TextEditingController();
-
-  FocusNode phoneFocusNode = new FocusNode();
-  TextEditingController phoneController = TextEditingController();
-  FocusNode cpfFocusNode = new FocusNode();
-  TextEditingController cpfController = TextEditingController();
-
-  FocusNode passwordFocusNode = new FocusNode();
-  TextEditingController passwordController = TextEditingController();
-  FocusNode confirmPasswordFocusNode = new FocusNode();
-  TextEditingController confirmPasswordController = TextEditingController();
-
+abstract class _RegisterStoreBase with Store {
   final RegisterRepository repository;
   final AuthStore authStore;
 
+  _RegisterStoreBase(this.repository, this.authStore);
+
+  final PageController pageController = PageController(initialPage: 0);
+
   @observable
   int currentPage = 0;
+
+  @observable
+  String? errorMessage;
 
   @observable
   bool policy = false;
@@ -50,7 +40,23 @@ abstract class _RegisterControllerBase with Store {
   @observable
   bool loading = false;
 
-  _RegisterControllerBase(this.repository, this.authStore);
+  @observable
+  bool errorPolicy = false;
+
+  @computed
+  Text? get showErrorPolicy {
+    if (this.errorPolicy) {
+      return Text(
+        'Você deve aceitar o termos e condições.',
+        style: TextStyle(
+          color: AppColors.vermelho,
+          fontFamily: 'roboto',
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
+        ),
+      );
+    }
+  }
 
   @action
   void updateCurrentPage(int index) {
@@ -73,20 +79,42 @@ abstract class _RegisterControllerBase with Store {
   }
 
   @action
-  Future<void> login(
-    String email,
-    String password,
-  ) async {
+  void updateErrorPolicy(bool value) {
+    this.errorPolicy = value;
+  }
+
+  @action
+  Future<void> login(UserModel userModel, String email, String password, BuildContext context) async {
+    errorMessage = null;
     try {
       loading = true;
       final response = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
-      // AuthController.instance.loginUser(response.user!);
       this.authStore.loginUser(response.user!.uid);
-      loading = false;
-      this.createUser(response);
+      userModel = userModel.copyWith(uuid: response.user!.uid);
+
+      this.createUser(userModel);
     } on FirebaseAuthException catch (e) {
+      showDialog(
+        context: context,
+        builder: (_) => DialogWidget.error(
+            type: DialogTypeEnum.error,
+            title: 'Ops',
+            message: FireBaseErrors.verifyErroCode(e.code),
+            textButtonPrimary: 'ok',
+            onPressedPrimary: () => this.verifyError(e)),
+      );
       loading = false;
-      //passwordError = verifyErroCode(e.code);
+    }
+  }
+
+  @action
+  Future<void> verifyError(FirebaseAuthException e) async {
+    if (e.code == 'email-already-in-use' ||
+        e.code == 'invalid-email' ||
+        e.code == 'invalid-email-verified' ||
+        e.code == 'email-already-exists') {
+      errorMessage = FireBaseErrors.verifyErroCode(e.code);
+      pageController.jumpToPage(0);
     }
   }
 
@@ -102,41 +130,15 @@ abstract class _RegisterControllerBase with Store {
     }
   }
 
-  Future<void> createUser(UserCredential user) async {
+  Future<void> createUser(UserModel userModel) async {
     try {
-      this.loading = true;
-      await repository.createUser(UserModel(
-          cpf: this.cpfController.text,
-          name: this.nameController.text,
-          phone: this.phoneController.text,
-          termsAndConditions: policy,
-          uuid: user.user?.uid ?? '',
-          createAt: DateTime.now()));
+      await repository.createUser(userModel);
+      this.authStore.addListenAuth();
+      Modular.to.pushNamed(AppRoutes.onboarding);
       this.loading = false;
     } catch (e) {
       this.loading = false;
       print(e);
-    }
-  }
-
-  void nextPage() {
-    if (currentPage == 0) {
-      if (formKeyNameAndEmail.currentState!.validate()) {
-        pushPage();
-      }
-    } else if (currentPage == 1) {
-      if (formKeyPhoneAndCpf.currentState!.validate()) {
-        pushPage();
-      }
-    } else if (currentPage == 2) {
-      if (this.policy == true) {
-        pushPage();
-      }
-    } else if (currentPage == 3) {
-      if (formKeyPassword.currentState!.validate()) {
-        pushPage();
-        this.login(this.emailController.text, this.passwordController.text);
-      }
     }
   }
 
@@ -149,7 +151,7 @@ abstract class _RegisterControllerBase with Store {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is _RegisterControllerBase &&
+    return other is _RegisterStoreBase &&
         other.repository == repository &&
         other.currentPage == currentPage &&
         other.policy == policy &&
