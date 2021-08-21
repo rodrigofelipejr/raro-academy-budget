@@ -48,8 +48,8 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
           if (store.onError != null)
             return AnimatedSwitcherWidget(
               child: CustomErrorWidget(
-                reload: () => store.init(),
-                message: 'Erro interno',
+                message: AppStrings.txtErroCarregamentoHome,
+                onTap: () => store.init(),
               ),
             );
 
@@ -65,7 +65,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                     DailyWidget(),
                     SizedBox(height: 18.0),
                     LastTransactionsWidget(),
-                    SizedBox(height: sizeScreen.height * 0.1),
+                    SpaceBottomWidget(height: 0.1),
                   ],
                 ),
               ),
