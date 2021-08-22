@@ -354,25 +354,23 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterStore> {
               onTap: () => {
                 controller.popPage(),
               },
-              child: Flexible(
-                child: Flex(
-                  direction: Axis.horizontal,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Icon(
-                      Icons.arrow_back,
-                      size: 18,
-                      color: AppColors.darkGray,
-                    ),
-                    SizedBox(
-                      width: 11,
-                    ),
-                    Text(
-                      'VOLTAR',
-                      style: AppTextStyles.darkGray14w500Roboto,
-                    ),
-                  ],
-                ),
+              child: Flex(
+                direction: Axis.horizontal,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Icon(
+                    Icons.arrow_back,
+                    size: 18,
+                    color: AppColors.darkGray,
+                  ),
+                  SizedBox(
+                    width: 11,
+                  ),
+                  Text(
+                    'VOLTAR',
+                    style: AppTextStyles.darkGray14w500Roboto,
+                  ),
+                ],
               ),
             ),
             Observer(
