@@ -21,12 +21,6 @@ abstract class _AuthStoreBase with Store implements Disposable {
 
   StreamSubscription<User?>? listen;
 
-  void addListenAuth() async {
-    listen = firebaseAuth.authStateChanges().listen((User? user) {
-      if (user == null) Modular.to.pushReplacementNamed(AppRoutes.login);
-    });
-  }
-
   @override
   void dispose() {
     listen?.cancel();
@@ -58,6 +52,7 @@ abstract class _AuthStoreBase with Store implements Disposable {
 
   Future<void> logoffUser() async {
     await firebaseAuth.signOut();
+    Modular.to.pushReplacementNamed(AppRoutes.login);
     setUser(null);
   }
 }

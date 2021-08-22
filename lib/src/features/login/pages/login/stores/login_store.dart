@@ -50,7 +50,6 @@ abstract class _LoginStoreBase with Store {
       final userCredential = await _repository.signInWithEmailAndPassword(email: state.email, password: state.password);
       await authStore.loginUser(userCredential.user!.uid);
       loginSuccess = true;
-      authStore.addListenAuth();
     } on FirebaseAuthException catch (e) {
       final errorMessage = FireBaseErrors.verifyErroCode(e.code);
       setState(state.copyWith(passwordError: errorMessage));

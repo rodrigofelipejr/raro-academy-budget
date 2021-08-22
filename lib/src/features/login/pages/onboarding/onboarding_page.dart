@@ -19,9 +19,12 @@ class _OnboardingPageState extends State<OnboardingPage> {
     return Scaffold(
       body: Stack(
         children: [
-          Image.asset(
-            "assets/images/background_onboard.png",
-            fit: BoxFit.fill,
+          ConstrainedBox(
+            constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height),
+            child: Image.asset(
+              "assets/images/background_onboard.png",
+              fit: BoxFit.fill,
+            ),
           ),
           Container(
             decoration: BoxDecoration(
@@ -31,39 +34,45 @@ class _OnboardingPageState extends State<OnboardingPage> {
           SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 45),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: Container(
-                      width: 190,
-                      height: 125,
-                      child: Image.asset(
-                        "assets/images/ic_budget_no_margin.png",
-                        fit: BoxFit.fitWidth,
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height),
+                child: Container(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: Container(
+                          width: 190,
+                          height: 125,
+                          child: Image.asset(
+                            "assets/images/ic_budget_no_margin.png",
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ),
                       ),
-                    ),
+                      Text(
+                        'Agora sim! \nVocê terá o\ncontrole\nfinanceiro nas\nsuas mãos!',
+                        style: AppTextStyles.cyan34w700Roboto,
+                      ),
+                      SizedBox(
+                        height: 24,
+                      ),
+                      CircularButtonGradientWithColor(
+                        text: 'VAMOS LÁ!',
+                        color: AppColors.ciano,
+                        onTap: () => Modular.to.pushReplacementNamed(AppRoutes.home),
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                    ],
                   ),
-                  Text(
-                    'Agora sim! \nVocê terá o\ncontrole\nfinanceiro nas\nsuas mãos!',
-                    style: AppTextStyles.cyan34w700Roboto,
-                  ),
-                  SizedBox(
-                    height: 24,
-                  ),
-                  CircularButtonGradientWithColor(
-                    text: 'VAMOS LÁ!',
-                    color: AppColors.ciano,
-                    onTap: () => Modular.to.pushNamed(AppRoutes.home),
-                  ),
-                  SizedBox(
-                    height: 40,
-                  ),
-                ],
+                ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

@@ -77,7 +77,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> with KeyboardM
                           Flexible(
                             child: GestureDetector(
                               onTap: () => {
-                                Modular.to.pushNamed(AppRoutes.register),
+                                Modular.to.pushReplacementNamed(AppRoutes.register),
                               },
                               child: Text(
                                 'Crie uma conta',

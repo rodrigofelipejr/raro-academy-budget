@@ -58,6 +58,7 @@ class CircularButtonGradientWithIcon extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Flexible(
+                        flex: 6,
                         child: Text(
                           text,
                           maxLines: 1,

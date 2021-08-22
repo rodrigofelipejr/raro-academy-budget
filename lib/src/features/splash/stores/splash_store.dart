@@ -30,7 +30,6 @@ abstract class _SplashStoreBase extends BaseStore with Store {
 
   Future<void> handleUserData() async {
     await authStore.loginUser(authStore.firebaseAuth.currentUser!.uid);
-    authStore.addListenAuth();
   }
 
   Future<void> handleAuthenticatedUser() async {
