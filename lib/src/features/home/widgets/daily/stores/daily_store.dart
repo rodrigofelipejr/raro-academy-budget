@@ -1,5 +1,6 @@
 import 'package:mobx/mobx.dart';
 
+import '../../../../../shared/errors/failure.dart';
 import '../../../../../shared/stores/stores.dart';
 import '../../../../../shared/utils/utils.dart';
 import '../../../errors/errors.dart';

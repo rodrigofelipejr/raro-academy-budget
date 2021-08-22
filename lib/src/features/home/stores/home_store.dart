@@ -1,8 +1,8 @@
 import 'package:mobx/mobx.dart';
 
+import '../../../shared/errors/failure.dart';
 import '../../../shared/stores/auth/auth_store.dart';
 import '../../../shared/stores/stores.dart';
-import '../errors/errors.dart';
 import '../widgets/widgets.dart';
 
 part 'home_store.g.dart';

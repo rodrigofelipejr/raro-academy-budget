@@ -1,10 +1,11 @@
 import 'package:mobx/mobx.dart';
 
+import '../../../../../shared/errors/failure.dart';
 import '../../../../../shared/models/models.dart';
 import '../../../../../shared/stores/stores.dart';
 import '../../../../features.dart';
+import '../../../errors/erros.dart';
 import '../../../repositories/repositories.dart';
-import '../errors/erros.dart';
 
 part 'transactions_store.g.dart';
 
@@ -98,9 +99,29 @@ abstract class _TransactionsStoreBase extends BaseStore with Store {
       setTransactions(values: transactions);
       setIndexPage(0);
     } catch (e) {
-      setOnError(TransActionError(message: e.toString()));
+      setOnError(TransactionError(message: e.toString()));
     } finally {
       setIsLoading(false);
     }
+  }
+
+  Future<bool> deleteTransaction(String docId) async {
+    bool deleteSuccess = false;
+    setIsLoading(true);
+    try {
+      await repository.deleteTransaction(docId);
+      _deleteLocalTransaction(docId);
+      deleteSuccess = true;
+    } catch (e) {
+      setOnError(DeleteTransactionError(message: e.toString()));
+    } finally {
+      setIsLoading(false);
+    }
+    return deleteSuccess;
+  }
+
+  void _deleteLocalTransaction(String docId) {
+    final updated = transactions.where((transaction) => transaction.id != docId).toList();
+    setTransactions(values: updated);
   }
 }

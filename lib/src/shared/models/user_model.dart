@@ -9,8 +9,8 @@ class UserModel {
   final String name;
   final String phone;
   final bool termsAndConditions;
-  final DateTime createAt;
-  final DateTime? updateAt;
+  final FieldValue? createAt;
+  final FieldValue? updateAt;
 
   UserModel({
     required this.uuid,
@@ -28,8 +28,8 @@ class UserModel {
     String? name,
     String? phone,
     bool? termsAndConditions,
-    DateTime? createAt,
-    DateTime? updateAt,
+    FieldValue? createAt,
+    FieldValue? updateAt,
   }) {
     return UserModel(
       uuid: uuid ?? this.uuid,
@@ -49,8 +49,8 @@ class UserModel {
       'name': name,
       'phone': phone,
       'termsAndConditions': termsAndConditions,
-      'createAt': createAt.millisecondsSinceEpoch,
-      if (updateAt != null) 'updateAt': updateAt!.millisecondsSinceEpoch,
+      if (createAt != null) 'createAt': createAt!,
+      if (updateAt != null) 'updateAt': updateAt!,
     };
   }
 
@@ -61,8 +61,8 @@ class UserModel {
       name: map['name'],
       phone: map['phone'],
       termsAndConditions: map['termsAndConditions'],
-      createAt: DateTime.fromMillisecondsSinceEpoch(map['createAt']),
-      updateAt: DateTime.fromMillisecondsSinceEpoch(map['updateAt']),
+      createAt: map['createAt'],
+      updateAt: map['updateAt'],
     );
   }
 
@@ -79,8 +79,8 @@ class UserModel {
       name: map['name'] ?? '',
       phone: map['phone'] ?? '',
       termsAndConditions: map['termsAndConditions'] ?? false,
-      createAt: Dates.parseTimestampDateTime(map['createAt']) ?? DateTime.now(),
-      updateAt: Dates.parseTimestampDateTime(map['updateAt']) ?? DateTime.now(),
+      createAt: map['createAt'],
+      updateAt: map['updateAt'],
     );
   }
 

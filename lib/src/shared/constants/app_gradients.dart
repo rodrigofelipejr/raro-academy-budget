@@ -19,6 +19,18 @@ class AppGradients {
     transform: GradientRotation((-34 * pi) / 180),
   );
 
+  static const blueGradientOnboard = RadialGradient(
+    colors: <Color>[
+      AppColors.blueOpacity,
+      AppColors.purpleOpacity09,
+    ],
+    stops: [
+      0.3,
+      0.8,
+    ],
+    center: Alignment(0, -0.20),
+  );
+
   static const blueGradientAppBar = LinearGradient(
     colors: <Color>[
       AppColors.ciano,
