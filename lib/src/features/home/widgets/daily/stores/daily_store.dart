@@ -1,6 +1,7 @@
 import 'package:mobx/mobx.dart';
 
 import '../../../../../shared/errors/failure.dart';
+import '../../../../../shared/models/models.dart';
 import '../../../../../shared/stores/stores.dart';
 import '../../../../../shared/utils/utils.dart';
 import '../../../errors/errors.dart';
@@ -41,13 +42,27 @@ abstract class _DailyStoreBase extends BaseStore with Store {
     }
 
     try {
-      final dailyModel = await repository.getDaily(uuid: authStore.user!.uuid, month: state.date.month);
+      final List<TransactionModel> transactions = await repository.getDaily(
+        uuid: authStore.user!.uuid,
+        month: state.date.month,
+      );
+
+      final input = transactions
+          .where((transaction) => transaction.type == TypeTransaction.input)
+          .map((e) => e.value)
+          .reduce((p, c) => p + c);
+
+      final output = transactions
+          .where((transaction) => transaction.type == TypeTransaction.output)
+          .map((e) => e.value)
+          .reduce((p, c) => p + c);
+
       setOnError(null);
       setState(
         state.copyWith(
-          dailyBalance: (dailyModel.input - dailyModel.output),
-          inputs: dailyModel.input,
-          outputs: dailyModel.output,
+          dailyBalance: (input - output),
+          inputs: input,
+          outputs: output,
         ),
       );
     } catch (e) {

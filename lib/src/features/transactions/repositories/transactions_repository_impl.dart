@@ -30,14 +30,7 @@ class TransactionsRepositoryImpl implements TransactionsRepository {
     await _db.doc(docId).delete();
   }
 
-  @override
-  Future<List<TransactionModel>> getTransactionsByUuid(String uuid) async {
-    final snapshot = await _db
-        .where('uuid', isEqualTo: uuid)
-        .orderBy('createAt', descending: true)
-        .get();
-    return snapshot.docs.map((e) => TransactionModel.fromFirestore(e)).toList();
-  }
+ 
 
   @override
   Future<List<TransactionModel>> getAllTransactionsByMonth(
