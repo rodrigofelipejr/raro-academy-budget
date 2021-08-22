@@ -8,20 +8,39 @@ class DialogOptionsItem {
   final String label;
   final Future<void> Function() onTap;
 
-  DialogOptionsItem({required this.label, required this.onTap});
+  DialogOptionsItem({
+    required this.label,
+    required this.onTap,
+  });
 }
 
 class DialogOptionsWidget extends StatelessWidget {
   final String title;
   final String message;
   final List<DialogOptionsItem> options;
+  final Axis axis;
 
   const DialogOptionsWidget({
     Key? key,
     required this.title,
     required this.message,
     required this.options,
+    this.axis = Axis.vertical,
   }) : super(key: key);
+
+  List<Widget> _buildOptions(BuildContext context) {
+    return options
+        .map(
+          (e) => TextButtonWidget(
+            label: e.label,
+            onPressed: () async {
+              Navigator.pop(context);
+              await e.onTap();
+            },
+          ),
+        )
+        .toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,20 +76,15 @@ class DialogOptionsWidget extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 18.0),
-                  Column(
-                    children: options
-                        .map(
-                          (e) => TextButtonWidget(
-                            label: e.label,
-                            border: true,
-                            onPressed: () async {
-                              Navigator.pop(context);
-                              await e.onTap();
-                            },
-                          ),
-                        )
-                        .toList(),
-                  )
+                  if (axis == Axis.horizontal)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: _buildOptions(context),
+                    ),
+                  if (axis == Axis.vertical)
+                    Column(
+                      children: _buildOptions(context),
+                    ),
                 ],
               ),
             ),
