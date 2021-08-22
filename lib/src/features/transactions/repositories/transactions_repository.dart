@@ -6,4 +6,6 @@ abstract class TransactionsRepository {
   Future<void> deleteTransaction(String docId);
   Future<List<TransactionModel>> getTransactionsByUuid(String uuid);
   Future<List<TransactionModel>> getAllTransactionsByMonth({required String uuid, required int month});
+  Future<void> showTransactions();
+  Future<void> showDocs();
 }

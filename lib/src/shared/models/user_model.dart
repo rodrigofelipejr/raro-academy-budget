@@ -2,14 +2,16 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'package:budget/src/shared/utils/utils.dart';
+
 class UserModel {
   final String uuid;
   final String cpf;
   final String name;
   final String phone;
   final bool termsAndConditions;
-  final FieldValue? createAt;
-  final FieldValue? updateAt;
+  final DateTime? createAt;
+  final DateTime? updateAt;
 
   UserModel({
     required this.uuid,
@@ -17,7 +19,7 @@ class UserModel {
     required this.name,
     required this.phone,
     required this.termsAndConditions,
-    required this.createAt,
+    this.createAt,
     this.updateAt,
   });
 
@@ -27,8 +29,8 @@ class UserModel {
     String? name,
     String? phone,
     bool? termsAndConditions,
-    FieldValue? createAt,
-    FieldValue? updateAt,
+    DateTime? createAt,
+    DateTime? updateAt,
   }) {
     return UserModel(
       uuid: uuid ?? this.uuid,
@@ -48,8 +50,8 @@ class UserModel {
       'name': name,
       'phone': phone,
       'termsAndConditions': termsAndConditions,
-      if (createAt != null) 'createAt': createAt!,
-      if (updateAt != null) 'updateAt': updateAt!,
+      'createAt': createAt?.millisecondsSinceEpoch,
+      'updateAt': updateAt?.millisecondsSinceEpoch,
     };
   }
 
@@ -60,8 +62,8 @@ class UserModel {
       name: map['name'],
       phone: map['phone'],
       termsAndConditions: map['termsAndConditions'],
-      createAt: map['createAt'],
-      updateAt: map['updateAt'],
+      createAt: DateTime.fromMillisecondsSinceEpoch(map['createAt']),
+      updateAt: DateTime.fromMillisecondsSinceEpoch(map['updateAt']),
     );
   }
 
@@ -78,8 +80,8 @@ class UserModel {
       name: map['name'] ?? '',
       phone: map['phone'] ?? '',
       termsAndConditions: map['termsAndConditions'] ?? false,
-      createAt: map['createAt'],
-      updateAt: map['updateAt'],
+      createAt: Dates.parseTimestampDateTime(map['createAt']),
+      updateAt: Dates.parseTimestampDateTime(map['updateAt']),
     );
   }
 

@@ -57,14 +57,21 @@ class CircularButtonGradientWithIcon extends StatelessWidget {
                     direction: Axis.horizontal,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        text,
-                        style: AppTextStyles.white14w500Roboto,
+                      Flexible(
+                        flex: 6,
+                        child: Text(
+                          text,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.white14w500Roboto,
+                        ),
                       ),
-                      Icon(
-                        Icons.arrow_forward,
-                        size: 18,
-                        color: AppColors.white,
+                      Flexible(
+                        child: Icon(
+                          Icons.arrow_forward,
+                          size: 18,
+                          color: AppColors.white,
+                        ),
                       )
                     ],
                   ),

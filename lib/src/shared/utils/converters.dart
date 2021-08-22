@@ -5,8 +5,8 @@ class Converters {
 
   static int parseDoubleToIntWithDecimals(double? value) {
     if (value != null) {
-      String number = value.toString().split('.')[0];
-      String decimals = value.toString().split('.')[1];
+      String number = value.toStringAsFixed(2).split('.')[0];
+      String decimals = value.toStringAsFixed(2).split('.')[1];
       String intNumber = "$number$decimals";
       return int.parse(intNumber);
     }

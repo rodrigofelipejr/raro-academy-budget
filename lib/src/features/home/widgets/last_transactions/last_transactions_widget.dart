@@ -51,9 +51,11 @@ class LatestTransactionsStateWidget extends State<LastTransactionsWidget> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              'Últimas transações',
-                              style: AppTextStyles.purple20w500Roboto,
+                            Flexible(
+                              child: Text(
+                                'Últimas transações',
+                                style: AppTextStyles.purple20w500Roboto,
+                              ),
                             ),
                             ButtonIconWidget(
                               onTap: () => Modular.to.pushNamed(AppRoutes.transactions, arguments: 2),

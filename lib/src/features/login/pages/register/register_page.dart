@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:budget/src/shared/utils/utils.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -59,14 +60,15 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterStore> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
-        scrollDirection: Axis.horizontal,
-        controller: controller.pageController,
-        physics: NeverScrollableScrollPhysics(),
-        onPageChanged: controller.updateCurrentPage,
-        children: [
-          Scaffold(
-            body: BodyPageWidget(
+      body: BodyPageWidget(
+        contentPadding: const EdgeInsets.only(),
+        child: PageView(
+          scrollDirection: Axis.horizontal,
+          controller: controller.pageController,
+          physics: NeverScrollableScrollPhysics(),
+          onPageChanged: controller.updateCurrentPage,
+          children: [
+            BodyPageScrollableWidget(
               contentPadding: const EdgeInsets.symmetric(horizontal: 48.0),
               child: Container(
                 height: MediaQuery.of(context).size.height - 70,
@@ -119,9 +121,7 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterStore> {
                 ),
               ),
             ),
-          ),
-          Scaffold(
-            body: BodyPageWidget(
+            BodyPageScrollableWidget(
               contentPadding: const EdgeInsets.symmetric(horizontal: 48.0),
               child: Container(
                 height: MediaQuery.of(context).size.height - 70,
@@ -179,83 +179,81 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterStore> {
                 ),
               ),
             ),
-          ),
-          Scaffold(
-            body: SingleChildScrollView(
-              child: Container(
-                height: MediaQuery.of(context).size.height - 70,
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 48),
-                      child: HeaderWidget(
-                        title: 'Bem-vindo!',
-                        subtitle: 'Leia com atenção e aceite.',
+            BodyPageScrollableWidget(
+              child: SingleChildScrollView(
+                child: Container(
+                  height: MediaQuery.of(context).size.height - 70,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 48),
+                        child: HeaderWidget(
+                          title: 'Bem-vindo!',
+                          subtitle: 'Leia com atenção e aceite.',
+                        ),
                       ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 27),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                ' Lorem Ipsum neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit. Ipsum neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit. Nque porro  est qui dolorem ipsum quia dolor sit amet, , adipisci velit. Quisquam est qui dolorem ipsum.',
-                                style: TextStyle(
-                                  fontFamily: "Roboto",
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColors.darkGray,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 24,
-                              ),
-                              GestureDetector(
-                                onTap: () => controller.updatePolicy(!controller.policy),
-                                child: Observer(
-                                  builder: (_) => ListTile(
-                                    horizontalTitleGap: 0,
-                                    contentPadding: EdgeInsets.only(),
-                                    title: const Text(
-                                      'Eu li e aceito os termos e condições e a Política de privacidade do budget.',
-                                      style: TextStyle(
-                                        fontFamily: "Roboto",
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColors.darkGray,
-                                      ),
-                                    ),
-                                    leading: Checkbox(
-                                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                      checkColor: Colors.white,
-                                      fillColor: MaterialStateProperty.all(AppColors.azul),
-                                      value: controller.policy,
-                                      shape: CircleBorder(),
-                                      onChanged: (bool? value) {
-                                        controller.updatePolicy(value);
-                                      },
-                                    ),
-                                    subtitle: store.showErrorPolicy,
+                      Expanded(
+                        child: Container(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 27),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  ' Lorem Ipsum neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit. Ipsum neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit. Nque porro  est qui dolorem ipsum quia dolor sit amet, , adipisci velit. Quisquam est qui dolorem ipsum.',
+                                  style: TextStyle(
+                                    fontFamily: "Roboto",
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.darkGray,
                                   ),
                                 ),
-                              ),
-                            ],
+                                SizedBox(
+                                  height: 24,
+                                ),
+                                GestureDetector(
+                                  onTap: () => controller.updatePolicy(!controller.policy),
+                                  child: Observer(
+                                    builder: (_) => ListTile(
+                                      horizontalTitleGap: 0,
+                                      contentPadding: EdgeInsets.only(),
+                                      title: const Text(
+                                        'Eu li e aceito os termos e condições e a Política de privacidade do budget.',
+                                        style: TextStyle(
+                                          fontFamily: "Roboto",
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w400,
+                                          color: AppColors.darkGray,
+                                        ),
+                                      ),
+                                      leading: Checkbox(
+                                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                        checkColor: Colors.white,
+                                        fillColor: MaterialStateProperty.all(AppColors.azul),
+                                        value: controller.policy,
+                                        shape: CircleBorder(),
+                                        onChanged: (bool? value) {
+                                          controller.updatePolicy(value);
+                                        },
+                                      ),
+                                      subtitle: store.showErrorPolicy,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          Scaffold(
-            body: BodyPageWidget(
+            BodyPageScrollableWidget(
               contentPadding: const EdgeInsets.symmetric(horizontal: 48.0),
               child: SingleChildScrollView(
                 child: Container(
@@ -343,8 +341,8 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterStore> {
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -356,25 +354,23 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterStore> {
               onTap: () => {
                 controller.popPage(),
               },
-              child: Flexible(
-                child: Flex(
-                  direction: Axis.horizontal,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Icon(
-                      Icons.arrow_back,
-                      size: 18,
-                      color: AppColors.darkGray,
-                    ),
-                    SizedBox(
-                      width: 11,
-                    ),
-                    Text(
-                      'VOLTAR',
-                      style: AppTextStyles.darkGray14w500Roboto,
-                    ),
-                  ],
-                ),
+              child: Flex(
+                direction: Axis.horizontal,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Icon(
+                    Icons.arrow_back,
+                    size: 18,
+                    color: AppColors.darkGray,
+                  ),
+                  SizedBox(
+                    width: 11,
+                  ),
+                  Text(
+                    'VOLTAR',
+                    style: AppTextStyles.darkGray14w500Roboto,
+                  ),
+                ],
               ),
             ),
             Observer(
@@ -419,12 +415,12 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterStore> {
       if (formKeyPassword.currentState!.validate()) {
         store.login(
             UserModel(
-                cpf: this.cpfController.text,
-                name: this.nameController.text,
-                phone: this.phoneController.text,
-                termsAndConditions: store.policy,
-                uuid: '',
-                createAt: FieldValue.serverTimestamp()),
+              cpf: this.cpfController.text.onlyNumbers(),
+              name: this.nameController.text,
+              phone: this.phoneController.text.onlyNumbers(),
+              termsAndConditions: store.policy,
+              uuid: '',
+            ),
             this.emailController.text,
             this.passwordController.text,
             context);

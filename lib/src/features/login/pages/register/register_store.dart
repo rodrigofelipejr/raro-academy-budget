@@ -44,10 +44,20 @@ abstract class _RegisterStoreBase with Store {
   bool errorPolicy = false;
 
   @computed
-  Text? get showErrorPolicy {
+  Text get showErrorPolicy {
     if (this.errorPolicy) {
       return Text(
         'Você deve aceitar o termos e condições.',
+        style: TextStyle(
+          color: AppColors.vermelho,
+          fontFamily: 'roboto',
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
+        ),
+      );
+    } else {
+      return Text(
+        '',
         style: TextStyle(
           color: AppColors.vermelho,
           fontFamily: 'roboto',
@@ -133,8 +143,7 @@ abstract class _RegisterStoreBase with Store {
   Future<void> createUser(UserModel userModel) async {
     try {
       await repository.createUser(userModel);
-      this.authStore.addListenAuth();
-      Modular.to.pushNamed(AppRoutes.onboarding);
+      Modular.to.pushReplacementNamed(AppRoutes.onboarding);
       this.loading = false;
     } catch (e) {
       this.loading = false;

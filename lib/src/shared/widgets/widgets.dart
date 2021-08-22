@@ -22,3 +22,4 @@ export 'wrapper_widget.dart';
 export 'space_bottom_widget.dart';
 export 'text_button_widget.dart';
 export 'button_circular_gradient_widget.dart';
+export 'body_page_scrollable_widget.dart';
