@@ -24,7 +24,7 @@ abstract class _TransactionsStoreBase extends BaseStore with Store {
   }
 
   @observable
-  List<TransactionModel> transactions = ObservableList<TransactionModel>();
+  ObservableList<TransactionModel> transactions = ObservableList<TransactionModel>();
   @action
   void setTransactions(
       {List<TransactionModel>? values, TransactionModel? value}) {
@@ -97,7 +97,7 @@ abstract class _TransactionsStoreBase extends BaseStore with Store {
           .getTransactionsByUuid(authStore.firebaseAuth.currentUser!.uid);
       setOnError(null);
       setTransactions(values: transactions);
-      setIndexPage(0);
+      setIndexPage(0); //REVIEW - verificar
     } catch (e) {
       setOnError(TransactionError(message: e.toString()));
     } finally {
@@ -112,6 +112,7 @@ abstract class _TransactionsStoreBase extends BaseStore with Store {
       await repository.deleteTransaction(docId);
       _deleteLocalTransaction(docId);
       deleteSuccess = true;
+      setIndexPage(0); //REVIEW - verificar
     } catch (e) {
       setOnError(DeleteTransactionError(message: e.toString()));
     } finally {

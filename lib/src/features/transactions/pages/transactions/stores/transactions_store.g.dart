@@ -57,13 +57,13 @@ mixin _$TransactionsStore on _TransactionsStoreBase, Store {
   final _$transactionsAtom = Atom(name: '_TransactionsStoreBase.transactions');
 
   @override
-  List<TransactionModel> get transactions {
+  ObservableList<TransactionModel> get transactions {
     _$transactionsAtom.reportRead();
     return super.transactions;
   }
 
   @override
-  set transactions(List<TransactionModel> value) {
+  set transactions(ObservableList<TransactionModel> value) {
     _$transactionsAtom.reportWrite(value, super.transactions, () {
       super.transactions = value;
     });
