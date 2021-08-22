@@ -44,7 +44,7 @@ class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
       _expensesController = TextEditingController(text: widget.data?.value.toString());
       _outputTypeController.value =
           TransactionsItems.expensesItems.firstWhere((item) => item.key == widget.data!.category);
-      _dateController.date = widget.data!.createAt;
+      _dateController.date = widget.data!.date;
     }
   }
 
@@ -126,31 +126,27 @@ class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
                           ),
                         ),
                         widget.data != null
-                        ? DeleteButtonWidget(
-                          label: 'Remove',
-                          onPressed: () async {
-                            bool isDeleted = false;
-                            if (widget.data != null) {
-                              await store.deleteTransaction(
-                                transaction: widget.data!);
-                            }
-                            final List<TransactionModel> list =
-                            Modular.get<TransactionsStore>()
-                            .transactions;
-                            list.remove(widget.data!);
-                            isDeleted = true;
-                            Modular.to.pop();
+                            ? DeleteButtonWidget(
+                                label: 'Remove',
+                                onPressed: () async {
+                                  bool isDeleted = false;
+                                  if (widget.data != null) {
+                                    await store.deleteTransaction(transaction: widget.data!);
+                                  }
+                                  final List<TransactionModel> list = Modular.get<TransactionsStore>().transactions;
+                                  list.remove(widget.data!);
+                                  isDeleted = true;
+                                  Modular.to.pop();
 
-                            if (isDeleted) {
-                              showDialog(
-                                context: context,
-                                builder: (_) => DialogWidget(
-                                  message: "Dado removido com sucesso"),
-                              );
-                            }
-                          },
-                        )
-                        : SizedBox(),
+                                  if (isDeleted) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (_) => DialogWidget(message: "Dado removido com sucesso"),
+                                    );
+                                  }
+                                },
+                              )
+                            : SizedBox(),
                       ],
                     ),
                   ),
@@ -167,25 +163,21 @@ class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
                         value: double.parse(_expensesController.value.text),
                         type: TypeTransaction.output,
                         category: TransactionCategories.output[_outputTypeController.value!.key]!,
-                        createAt: _dateController.date,
-                        updateAt: _dateController.date,
+                        date: _dateController.date,
                       );
 
                       final String? returnedId;
                       bool isUpdated = false;
                       if (widget.data == null) {
-                        returnedId = await store.createTransaction(
-                            transaction: _newData);
+                        returnedId = await store.createTransaction(transaction: _newData);
                       } else {
                         _newData = widget.data!.copyWith(
                           value: double.parse(_expensesController.value.text),
-                          category: TransactionCategories
-                              .input[_outputTypeController.value!.key]!,
+                          category: TransactionCategories.input[_outputTypeController.value!.key]!,
                           createAt: _dateController.date,
                           updateAt: _dateController.date,
                         );
-                        final List<TransactionModel> list =
-                            Modular.get<TransactionsStore>().transactions;
+                        final List<TransactionModel> list = Modular.get<TransactionsStore>().transactions;
                         list.remove(widget.data!);
                         list.add(_newData);
                         await store.updateTransaction(transaction: _newData);
@@ -196,8 +188,7 @@ class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
 
                       if (returnedId != null) {
                         _newData = _newData.copyWith(id: returnedId);
-                        final List<TransactionModel> list =
-                            Modular.get<TransactionsStore>().transactions;
+                        final List<TransactionModel> list = Modular.get<TransactionsStore>().transactions;
                         list.add(_newData);
                         Modular.to.pop();
                       }
@@ -206,9 +197,7 @@ class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
                         showDialog(
                           context: context,
                           builder: (_) => DialogWidget(
-                            message: isUpdated
-                                ? "Dado atualizado com sucesso"
-                                : "Dado enviado com sucesso",
+                            message: isUpdated ? "Dado atualizado com sucesso" : "Dado enviado com sucesso",
                           ),
                         );
                       }

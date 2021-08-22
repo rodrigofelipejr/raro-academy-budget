@@ -13,8 +13,9 @@ class TransactionModel {
   final TypeTransaction type;
   final String? description;
   final double value;
-  final DateTime createAt;
-  final DateTime updateAt;
+  final DateTime date;
+  final DateTime? createAt;
+  final DateTime? updateAt;
 
   TransactionModel({
     this.id,
@@ -23,8 +24,9 @@ class TransactionModel {
     required this.type,
     this.description,
     required this.value,
-    required this.createAt,
-    required this.updateAt,
+    required this.date,
+    this.createAt,
+    this.updateAt,
   });
 
   TransactionModel copyWith({
@@ -34,6 +36,7 @@ class TransactionModel {
     TypeTransaction? type,
     String? description,
     double? value,
+    DateTime? date,
     DateTime? createAt,
     DateTime? updateAt,
   }) {
@@ -44,6 +47,7 @@ class TransactionModel {
       type: type ?? this.type,
       description: description ?? this.description,
       value: value ?? this.value,
+      date: date ?? this.date,
       createAt: createAt ?? this.createAt,
       updateAt: updateAt ?? this.updateAt,
     );
@@ -56,11 +60,30 @@ class TransactionModel {
       'category': category,
       'type': TypeTransaction.values.indexOf(type),
       'description': description,
-      'value': Converters.parseDoubleToIntWithDecimals(value),
+      'value': value,
+      'date': date,
       'createAt': createAt,
       'updateAt': updateAt,
     };
   }
+
+  factory TransactionModel.fromMap(Map<String, dynamic> map) {
+    return TransactionModel(
+      id: map['id'],
+      uuid: map['uuid'],
+      category: map['category'],
+      type: TypeTransaction.values[map['type']],
+      description: map['description'],
+      value: map['value'],
+      date: DateTime.fromMillisecondsSinceEpoch(map['date']),
+      createAt: DateTime.fromMillisecondsSinceEpoch(map['createAt']),
+      updateAt: DateTime.fromMillisecondsSinceEpoch(map['updateAt']),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory TransactionModel.fromJson(String source) => TransactionModel.fromMap(json.decode(source));
 
   factory TransactionModel.fromFirestore(DocumentSnapshot doc) {
     Map map = doc.data() as Map<String, dynamic>;
@@ -74,29 +97,13 @@ class TransactionModel {
       value: Converters.parseMoneyFromFirebase(map['value']),
       createAt: Dates.parseTimestampDateTime(map['createAt']) ?? DateTime.now(),
       updateAt: Dates.parseTimestampDateTime(map['updateAt']) ?? DateTime.now(),
+      date: Dates.parseTimestampDateTime(map['date']) ?? DateTime.now(),
     );
   }
-
-  factory TransactionModel.fromMap(Map<String, dynamic> map) {
-    return TransactionModel(
-      id: map['id'],
-      uuid: map['uuid'],
-      category: map['category'],
-      type: TypeTransaction.values[map['type']],
-      description: map['description'],
-      value: map['value'],
-      createAt: DateTime(map['createAt']),
-      updateAt: DateTime(map['updateAt']),
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory TransactionModel.fromJson(String source) => TransactionModel.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'TransactionModel(id: $id, uuid: $uuid, category: $category, type: $type, description: $description, value: $value, createAt: $createAt, updateAt: $updateAt)';
+    return 'TransactionModel(id: $id, uuid: $uuid, category: $category, type: $type, description: $description, value: $value, date: $date, createAt: $createAt, updateAt: $updateAt)';
   }
 
   @override
@@ -110,6 +117,7 @@ class TransactionModel {
         other.type == type &&
         other.description == description &&
         other.value == value &&
+        other.date == date &&
         other.createAt == createAt &&
         other.updateAt == updateAt;
   }
@@ -122,6 +130,7 @@ class TransactionModel {
         type.hashCode ^
         description.hashCode ^
         value.hashCode ^
+        date.hashCode ^
         createAt.hashCode ^
         updateAt.hashCode;
   }

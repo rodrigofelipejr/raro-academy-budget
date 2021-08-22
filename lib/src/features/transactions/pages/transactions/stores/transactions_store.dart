@@ -40,12 +40,12 @@ abstract class _TransactionsStoreBase extends BaseStore with Store {
   @computed
   List<TransactionModel> get transactionOutput => transactions
       .where((transaction) => transaction.type.index == 0)
-      .where((transaction) => transaction.updateAt.month == homeStore.dailyStore.state.date.month)
+      .where((transaction) => transaction.date.month == homeStore.dailyStore.state.date.month)
       .toList();
   @computed
   List<TransactionModel> get transactionInput => transactions
       .where((transaction) => transaction.type.index == 1)
-      .where((transaction) => transaction.updateAt.month == homeStore.dailyStore.state.date.month)
+      .where((transaction) => transaction.date.month == homeStore.dailyStore.state.date.month)
       .toList();
   @computed
   List<TransactionModel> get transactionsByMonth => transactionInput + transactionOutput;
