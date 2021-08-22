@@ -1,8 +1,8 @@
-import 'package:budget/src/shared/utils/screen_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../../shared/utils/utils.dart';
 import '../../../shared/constants/constants.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../home.dart';

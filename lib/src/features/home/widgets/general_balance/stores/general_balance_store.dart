@@ -1,3 +1,4 @@
+import 'package:budget/src/shared/models/models.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../../shared/errors/failure.dart';
@@ -37,10 +38,30 @@ abstract class _GeneralBalanceStoreBase extends BaseStore with Store {
   }
 
   Future<void> handleGeneralBalance() async {
+    double generalBalance = 0.0;
+
     try {
-      final generalBalance = await repository.getGeneralBalance(authStore.user!.uuid);
+      final List<TransactionModel> transactions = await repository.getTransactionsByUuid(authStore.user!.uuid);
+
+      if (transactions.isNotEmpty) {
+        final input = transactions
+            .where((transaction) => transaction.type == TypeTransaction.input)
+            .map((e) => e.value)
+            .reduce((p, c) => p + c);
+
+        final output = transactions
+            .where((transaction) => transaction.type == TypeTransaction.output)
+            .map((e) => e.value)
+            .reduce((p, c) => p + c);
+
+        generalBalance = input - output;
+      }
+
       setOnError(null);
-      setState(state.copyWith(value: generalBalance.balance));
+      if (state.value != generalBalance)
+        setState(
+          state.copyWith(value: generalBalance),
+        );
     } catch (e) {
       setOnError(GeneralBalanceError(message: e.toString()));
     }
