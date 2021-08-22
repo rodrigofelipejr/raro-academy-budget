@@ -6,6 +6,7 @@ import 'package:budget/src/features/transactions/pages/transactions/stores/trans
 import 'package:budget/src/features/transactions/widgets/appbar_with_drawer.dart';
 import 'package:budget/src/features/transactions/widgets/button_widget.dart';
 import 'package:budget/src/features/transactions/widgets/date_picker_widget.dart';
+import 'package:budget/src/features/transactions/widgets/delete_button_widget.dart';
 import 'package:budget/src/features/transactions/widgets/dialog_widget.dart';
 import 'package:budget/src/features/transactions/widgets/dropdown_button_widget.dart';
 import 'package:budget/src/features/transactions/widgets/text_styles.dart';
@@ -144,6 +145,32 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                             focusNode: _datePickerFocusNode,
                           ),
                         ),
+                        widget.data != null
+                        ? DeleteButtonWidget(
+                          label: 'Remove',
+                          onPressed: () async {
+                            bool isDeleted = false;
+                            if (widget.data != null) {
+                              await store.deleteTransaction(
+                                transaction: widget.data!);
+                            }
+                            final List<TransactionModel> list =
+                            Modular.get<TransactionsStore>()
+                            .transactions;
+                            list.remove(widget.data!);
+                            isDeleted = true;
+                            Modular.to.pop();
+
+                            if (isDeleted) {
+                              showDialog(
+                                context: context,
+                                builder: (_) => DialogWidget(
+                                  message: "Dado removido com sucesso"),
+                              );
+                            }
+                          },
+                        )
+                        : SizedBox(),
                       ],
                     ),
                   ),
@@ -152,7 +179,7 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
               Positioned(
                 bottom: 0,
                 child: ButtonWidget(
-                  label: "INSERIR",
+                  label: widget.data == null ? "INSERIR" : "ATUALIZA",
                   onPressed: () async {
                     FocusScope.of(context).unfocus();
                     if (_formKey.currentState!.validate()) {
@@ -165,7 +192,6 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                         createAt: _dateController.date,
                         updateAt: _dateController.date,
                       );
-                      print('DATA ${_newData.toMap()}');
 
                       final String? returnedId;
                       bool isUpdated = false;
@@ -210,41 +236,8 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                         );
                       }
                     }
-                    store.repository.showTransactions();
-                    store.repository.showDocs();
-                    print("USER: ${store.authStore.user!.uuid}");
-                    print("CURRENT USER: ${store.authStore.firebaseAuth.currentUser!.uid}");
-                    print('DATA INSERIDA ${_newData.toMap()}');
-                    print("TRANSACTIONS STORE");
-                    Modular.get<TransactionsStore>()
-                        .transactions
-                        .forEach((element) => print(element));
                   },
                 ),
-              ),
-              ButtonWidget(
-                onPressed: () async {
-                  bool isDeleted = false;
-                  if (widget.data != null) {
-                    await store.deleteTransaction(
-                      transaction: widget.data!);
-                  }
-                  final List<TransactionModel> list =
-                    Modular.get<TransactionsStore>().transactions;
-                  list.remove(widget.data!);
-                  isDeleted = true;
-                  Modular.to.pop();
-
-                  if (isDeleted) {
-                    showDialog(
-                      context: context,
-                      builder: (_) => DialogWidget(
-                        message: "Dado removido com sucesso"
-                      ),
-                    );
-                  }
-                },
-                label: "DEL",
               ),
             ],
           ),
