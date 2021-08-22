@@ -3,7 +3,7 @@ import 'package:budget/src/features/login/utils/firebase_errors.dart';
 import 'package:budget/src/shared/constants/app_colors.dart';
 import 'package:budget/src/shared/models/user_model.dart';
 import 'package:budget/src/shared/stores/stores.dart';
-import 'package:budget/src/shared/widgets/dialog/dialog.dart';
+import 'package:budget/src/shared/widgets/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -108,9 +108,9 @@ abstract class _RegisterStoreBase with Store {
         context: context,
         builder: (_) => DialogWidget.error(
             type: DialogTypeEnum.error,
-            title: 'Ops',
+            title: 'Oops',
             message: FireBaseErrors.verifyErroCode(e.code),
-            textButtonPrimary: 'ok',
+            textButtonPrimary: 'Voltar',
             onPressedPrimary: () => this.verifyError(e)),
       );
       loading = false;

@@ -31,9 +31,14 @@ abstract class _TransactionsStoreBase extends BaseStore with Store {
       transactions.clear();
       transactions.addAll(values);
     }
-
+ 
     if (value != null) {
-      transactions.add(value);
+      if (transactions.contains(value)) {
+        final idx = transactions.indexOf(value);
+        transactions[idx] = value;
+      } else {
+        transactions.add(value);
+      }
     }
   }
 

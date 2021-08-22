@@ -8,7 +8,7 @@ export 'circular_button_gradient.dart';
 export 'conditional_parent_widget.dart';
 export 'custom_error_widget.dart';
 export 'custom_text_field.dart';
-export 'dialog/dialog.dart';
+export 'dialogs/dialogs.dart';
 export 'drawer/drawer_widget.dart';
 export 'fab_widget.dart';
 export 'item_card_widget.dart';
