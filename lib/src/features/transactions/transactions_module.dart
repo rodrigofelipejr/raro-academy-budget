@@ -10,7 +10,7 @@ class TransactionsModule extends Module {
         Bind.singleton((i) => TransactionsRepositoryImpl(i())),
         Bind.singleton((i) => TransactionsStore(i(), i(), i())),
         Bind.singleton((i) => IncomeStore(i(), i())),
-        Bind.singleton((i) => ExpensesStore(i())),
+        Bind.singleton((i) => ExpensesStore(i(), i())),
       ];
 
   @override

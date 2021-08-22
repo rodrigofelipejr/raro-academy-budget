@@ -158,7 +158,6 @@ class _TransactionsPageState extends ModularState<TransactionsPage, Transactions
               onTap: () => store.init(),
             ),
           );
-
         if (!store.isLoading)
           return PageView(
             onPageChanged: (value) => store.setIndexPage(value),

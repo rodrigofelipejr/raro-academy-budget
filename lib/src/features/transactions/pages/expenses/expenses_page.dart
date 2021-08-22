@@ -5,6 +5,7 @@ import 'package:budget/src/features/transactions/pages/transactions/stores/trans
 import 'package:budget/src/features/transactions/widgets/appbar_with_drawer.dart';
 import 'package:budget/src/features/transactions/widgets/button_widget.dart';
 import 'package:budget/src/features/transactions/widgets/date_picker_widget.dart';
+import 'package:budget/src/features/transactions/widgets/delete_button_widget.dart';
 import 'package:budget/src/features/transactions/widgets/dialog_widget.dart';
 import 'package:budget/src/features/transactions/widgets/dropdown_button_widget.dart';
 import 'package:budget/src/features/transactions/widgets/text_styles.dart';
@@ -28,7 +29,7 @@ class ExpensesPage extends StatefulWidget {
 
 class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
   TextEditingController _expensesController = TextEditingController();
-  DropdownController _inputTypeController = DropdownController(items: TransactionsItems.expensesItems);
+  DropdownController _outputTypeController = DropdownController(items: TransactionsItems.expensesItems);
   DateController _dateController = DateController();
 
   FocusNode _expensesFocusNode = FocusNode();
@@ -41,7 +42,7 @@ class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
     super.initState();
     if (widget.data != null) {
       _expensesController = TextEditingController(text: widget.data?.value.toString());
-      _inputTypeController.value =
+      _outputTypeController.value =
           TransactionsItems.expensesItems.firstWhere((item) => item.key == widget.data!.category);
       _dateController.date = widget.data!.createAt;
     }
@@ -103,12 +104,12 @@ class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
                                 style: TextStyles.black12w400RobotoOp54,
                               ),
                               DropdownButtonWidget(
-                                  value: _inputTypeController.value,
-                                  items: _inputTypeController.items,
+                                  value: _outputTypeController.value,
+                                  items: _outputTypeController.items,
                                   focusNode: _inputTypeFocusNode,
                                   validator: (value) => Validators().validateTransactionCategory(value?.key),
                                   onChanged: (newValue) {
-                                    _inputTypeController.value = newValue!;
+                                    _outputTypeController.value = newValue!;
                                     setState(() {});
                                   }),
                             ],
@@ -124,6 +125,32 @@ class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
                             focusNode: _dateFocusNode,
                           ),
                         ),
+                        widget.data != null
+                        ? DeleteButtonWidget(
+                          label: 'Remove',
+                          onPressed: () async {
+                            bool isDeleted = false;
+                            if (widget.data != null) {
+                              await store.deleteTransaction(
+                                transaction: widget.data!);
+                            }
+                            final List<TransactionModel> list =
+                            Modular.get<TransactionsStore>()
+                            .transactions;
+                            list.remove(widget.data!);
+                            isDeleted = true;
+                            Modular.to.pop();
+
+                            if (isDeleted) {
+                              showDialog(
+                                context: context,
+                                builder: (_) => DialogWidget(
+                                  message: "Dado removido com sucesso"),
+                              );
+                            }
+                          },
+                        )
+                        : SizedBox(),
                       ],
                     ),
                   ),
@@ -132,31 +159,56 @@ class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
               Positioned(
                 bottom: 0,
                 child: ButtonWidget(
-                  label: "INSERIR",
+                  label: widget.data == null ? "INSERIR" : "ATUALIZA",
                   onPressed: () async {
                     FocusScope.of(context).unfocus();
                     if (_formKey.currentState!.validate()) {
                       _newData = TransactionModel(
                         value: double.parse(_expensesController.value.text),
                         type: TypeTransaction.output,
-                        category: TransactionCategories.output[_inputTypeController.value!.key]!,
+                        category: TransactionCategories.output[_outputTypeController.value!.key]!,
                         createAt: _dateController.date,
                         updateAt: _dateController.date,
-                        uuid: '31KaO9IFxTOY3No1kWfoYyHptiw2',
                       );
-                      print('DATA ${_newData.toString()}');
 
-                      final bool isSentToDatabase = await store.createTransaction(_newData);
+                      final String? returnedId;
+                      bool isUpdated = false;
+                      if (widget.data == null) {
+                        returnedId = await store.createTransaction(
+                            transaction: _newData);
+                      } else {
+                        _newData = widget.data!.copyWith(
+                          value: double.parse(_expensesController.value.text),
+                          category: TransactionCategories
+                              .input[_outputTypeController.value!.key]!,
+                          createAt: _dateController.date,
+                          updateAt: _dateController.date,
+                        );
+                        final List<TransactionModel> list =
+                            Modular.get<TransactionsStore>().transactions;
+                        list.remove(widget.data!);
+                        list.add(_newData);
+                        await store.updateTransaction(transaction: _newData);
+                        returnedId = null;
+                        isUpdated = true;
+                        Modular.to.pop();
+                      }
 
-                      if (isSentToDatabase) {
-                        final List<TransactionModel> list = Modular.get<TransactionsStore>().transactions;
+                      if (returnedId != null) {
+                        _newData = _newData.copyWith(id: returnedId);
+                        final List<TransactionModel> list =
+                            Modular.get<TransactionsStore>().transactions;
                         list.add(_newData);
                         Modular.to.pop();
+                      }
 
+                      if (returnedId != null || isUpdated) {
                         showDialog(
                           context: context,
                           builder: (_) => DialogWidget(
-                            message: "Dado enviado com sucesso",
+                            message: isUpdated
+                                ? "Dado atualizado com sucesso"
+                                : "Dado enviado com sucesso",
                           ),
                         );
                       }
