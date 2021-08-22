@@ -5,7 +5,6 @@ import 'package:budget/src/shared/models/user_model.dart';
 import 'package:budget/src/shared/validators/text_validator.dart';
 import 'package:budget/src/shared/widgets/circular_button_gradient_with_icon.dart';
 import 'package:budget/src/shared/widgets/widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_mask/easy_mask.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
