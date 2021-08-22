@@ -32,6 +32,7 @@ abstract class _IncomeStoreBase extends BaseStore with Store {
   Future<bool> updateTransaction({
     required TransactionModel transaction,
   }) async {
+    transaction = transaction.copyWith(uuid: authStore.firebaseAuth.currentUser!.uid);
     try {
       await repository.updateTransaction(transaction);
       return true;
