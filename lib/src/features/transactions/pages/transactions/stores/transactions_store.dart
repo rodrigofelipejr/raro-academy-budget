@@ -26,7 +26,8 @@ abstract class _TransactionsStoreBase extends BaseStore with Store {
   @observable
   List<TransactionModel> transactions = ObservableList<TransactionModel>();
   @action
-  void setTransactions({List<TransactionModel>? values, TransactionModel? value}) {
+  void setTransactions(
+      {List<TransactionModel>? values, TransactionModel? value}) {
     if (values != null) {
       transactions.clear();
       transactions.addAll(values);
@@ -38,11 +39,20 @@ abstract class _TransactionsStoreBase extends BaseStore with Store {
   }
 
   @computed
-  List<TransactionModel> get transactionOutput =>
-      transactions.where((transaction) => transaction.type.index == 0).toList();
+  List<TransactionModel> get transactionOutput => transactions
+      .where((transaction) => transaction.type.index == 0)
+      .where((transaction) =>
+          transaction.updateAt.month == homeStore.dailyStore.state.date.month)
+      .toList();
   @computed
-  List<TransactionModel> get transactionInput =>
-      transactions.where((transaction) => transaction.type.index == 1).toList();
+  List<TransactionModel> get transactionInput => transactions
+      .where((transaction) => transaction.type.index == 1)
+      .where((transaction) =>
+          transaction.updateAt.month == homeStore.dailyStore.state.date.month)
+      .toList();
+  @computed
+  List<TransactionModel> get transactionsByMonth =>
+      transactionInput + transactionOutput;
   @computed
   double get transactionOutputTotal {
     double sum = 0.0;
@@ -82,8 +92,9 @@ abstract class _TransactionsStoreBase extends BaseStore with Store {
   Future<void> handleGetTransaction() async {
     setIsLoading(true);
     try {
-      final month = homeStore.dailyStore.state.date.month;
-      final transactions = await repository.getAllTransactionsByMonth(uuid: authStore.user!.uuid, month: month);
+      // final month = homeStore.dailyStore.state.date.month;
+      final transactions = await repository
+          .getTransactionsByUuid(authStore.firebaseAuth.currentUser!.uid);
       setOnError(null);
       setTransactions(values: transactions);
       setIndexPage(0);

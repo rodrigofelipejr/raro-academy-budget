@@ -24,6 +24,14 @@ mixin _$TransactionsStore on _TransactionsStoreBase, Store {
           Computed<List<TransactionModel>>(() => super.transactionInput,
               name: '_TransactionsStoreBase.transactionInput'))
       .value;
+  Computed<List<TransactionModel>>? _$transactionsByMonthComputed;
+
+  @override
+  List<TransactionModel> get transactionsByMonth =>
+      (_$transactionsByMonthComputed ??= Computed<List<TransactionModel>>(
+              () => super.transactionsByMonth,
+              name: '_TransactionsStoreBase.transactionsByMonth'))
+          .value;
   Computed<double>? _$transactionOutputTotalComputed;
 
   @override
@@ -163,6 +171,7 @@ isLoading: ${isLoading},
 onError: ${onError},
 transactionOutput: ${transactionOutput},
 transactionInput: ${transactionInput},
+transactionsByMonth: ${transactionsByMonth},
 transactionOutputTotal: ${transactionOutputTotal},
 transactionInputTotal: ${transactionInputTotal},
 transactionTotal: ${transactionTotal}

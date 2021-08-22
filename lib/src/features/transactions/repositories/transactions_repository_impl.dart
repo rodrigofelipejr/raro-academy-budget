@@ -32,19 +32,42 @@ class TransactionsRepositoryImpl implements TransactionsRepository {
 
   @override
   Future<List<TransactionModel>> getTransactionsByUuid(String uuid) async {
-    final snapshot = await _db.where('uuid', isEqualTo: uuid).orderBy('createAt', descending: true).get();
+    final snapshot = await _db
+        .where('uuid', isEqualTo: uuid)
+        .orderBy('createAt', descending: true)
+        .get();
     return snapshot.docs.map((e) => TransactionModel.fromFirestore(e)).toList();
   }
 
   @override
-  Future<List<TransactionModel>> getAllTransactionsByMonth({required String uuid, required int month}) async {
+  Future<List<TransactionModel>> getAllTransactionsByMonth(
+      {required String uuid, required int month}) async {
     final snapshot = await _db
         .where('uuid', isEqualTo: uuid)
-        .where('createAt', isGreaterThanOrEqualTo: Timestamp.fromDate(Dates.firstDayMonth(month: month)))
-        .where('createAt', isLessThanOrEqualTo: Timestamp.fromDate(Dates.lastDayMonth(month: month)))
+        // .where('uuid', isEqualTo: null)
+        .where('createAt',
+            isGreaterThanOrEqualTo:
+                Timestamp.fromDate(Dates.firstDayMonth(month: month)))
+        .where('createAt',
+            isLessThanOrEqualTo:
+                Timestamp.fromDate(Dates.lastDayMonth(month: month)))
         .orderBy('createAt', descending: true)
         .get();
 
     return snapshot.docs.map((e) => TransactionModel.fromFirestore(e)).toList();
+  }
+
+  // Para testes
+  Future<void> showTransactions() async {
+    final response = await _db.get();
+    print('TRANSACTIONS: ${response.docs.map(((e) => e.data()))}');
+    print(response);
+  }
+
+  // Para testes
+  Future<void> showDocs() async {
+    final response =
+        await _db.get().then((value) => value.docs.map((doc) => doc.id));
+    print('DOCS[${response.length}]: ${response.toList()}');
   }
 }
