@@ -143,7 +143,6 @@ abstract class _RegisterStoreBase with Store {
   Future<void> createUser(UserModel userModel) async {
     try {
       await repository.createUser(userModel);
-      this.authStore.addListenAuth();
       Modular.to.pushReplacementNamed(AppRoutes.onboarding);
       this.loading = false;
     } catch (e) {

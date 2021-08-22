@@ -80,8 +80,8 @@ class UserModel {
       name: map['name'] ?? '',
       phone: map['phone'] ?? '',
       termsAndConditions: map['termsAndConditions'] ?? false,
-      createAt: map['createAt'],
-      updateAt: map['updateAt'],
+      createAt: Dates.parseTimestampDateTime(map['createAt']),
+      updateAt: Dates.parseTimestampDateTime(map['updateAt']),
     );
   }
 
