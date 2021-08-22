@@ -21,7 +21,8 @@ class FabWidget extends StatelessWidget {
 
   bool get withDescription => label != null;
   double get size => withDescription ? 44 : 56;
-  BorderRadius? get borderRadius => withDescription ? BorderRadius.circular(size) : null;
+  BorderRadius? get borderRadiusGradient => withDescription ? BorderRadius.circular(size) : null;
+  BorderRadius? get borderRadius => BorderRadius.circular(size);
   BoxShape get shape => withDescription ? BoxShape.rectangle : BoxShape.circle;
   double get widthSizedBox => withDescription ? 4.0 : 0;
   double? get widthContainer => withDescription ? null : size;
@@ -38,7 +39,7 @@ class FabWidget extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: AppGradients.blueGradientButtons,
               shape: shape,
-              borderRadius: borderRadius,
+              borderRadius: borderRadiusGradient,
               boxShadow: AppShadows.shadowsFab,
             ),
             child: Material(
