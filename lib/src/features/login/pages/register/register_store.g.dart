@@ -9,13 +9,13 @@ part of 'register_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$RegisterStore on _RegisterStoreBase, Store {
-  Computed<Text?>? _$showErrorPolicyComputed;
+  Computed<Text>? _$showErrorPolicyComputed;
 
   @override
-  Text? get showErrorPolicy => (_$showErrorPolicyComputed ??= Computed<Text?>(
-          () => super.showErrorPolicy,
-          name: '_RegisterStoreBase.showErrorPolicy'))
-      .value;
+  Text get showErrorPolicy =>
+      (_$showErrorPolicyComputed ??= Computed<Text>(() => super.showErrorPolicy,
+              name: '_RegisterStoreBase.showErrorPolicy'))
+          .value;
 
   final _$currentPageAtom = Atom(name: '_RegisterStoreBase.currentPage');
 
