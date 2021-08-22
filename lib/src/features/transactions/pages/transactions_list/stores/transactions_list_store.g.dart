@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'transactions_store.dart';
+part of 'transactions_list_store.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,45 +8,46 @@ part of 'transactions_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$TransactionsStore on _TransactionsStoreBase, Store {
+mixin _$TransactionsListStore on _TransactionsListStoreBase, Store {
   Computed<List<TransactionModel>>? _$transactionOutputComputed;
 
   @override
   List<TransactionModel> get transactionOutput =>
       (_$transactionOutputComputed ??= Computed<List<TransactionModel>>(
               () => super.transactionOutput,
-              name: '_TransactionsStoreBase.transactionOutput'))
+              name: '_TransactionsListStoreBase.transactionOutput'))
           .value;
   Computed<List<TransactionModel>>? _$transactionInputComputed;
 
   @override
   List<TransactionModel> get transactionInput => (_$transactionInputComputed ??=
           Computed<List<TransactionModel>>(() => super.transactionInput,
-              name: '_TransactionsStoreBase.transactionInput'))
+              name: '_TransactionsListStoreBase.transactionInput'))
       .value;
   Computed<double>? _$transactionOutputTotalComputed;
 
   @override
   double get transactionOutputTotal => (_$transactionOutputTotalComputed ??=
           Computed<double>(() => super.transactionOutputTotal,
-              name: '_TransactionsStoreBase.transactionOutputTotal'))
+              name: '_TransactionsListStoreBase.transactionOutputTotal'))
       .value;
   Computed<double>? _$transactionInputTotalComputed;
 
   @override
   double get transactionInputTotal => (_$transactionInputTotalComputed ??=
           Computed<double>(() => super.transactionInputTotal,
-              name: '_TransactionsStoreBase.transactionInputTotal'))
+              name: '_TransactionsListStoreBase.transactionInputTotal'))
       .value;
   Computed<double>? _$transactionTotalComputed;
 
   @override
   double get transactionTotal => (_$transactionTotalComputed ??=
           Computed<double>(() => super.transactionTotal,
-              name: '_TransactionsStoreBase.transactionTotal'))
+              name: '_TransactionsListStoreBase.transactionTotal'))
       .value;
 
-  final _$transactionsAtom = Atom(name: '_TransactionsStoreBase.transactions');
+  final _$transactionsAtom =
+      Atom(name: '_TransactionsListStoreBase.transactions');
 
   @override
   ObservableList<TransactionModel> get transactions {
@@ -61,7 +62,7 @@ mixin _$TransactionsStore on _TransactionsStoreBase, Store {
     });
   }
 
-  final _$indexPageAtom = Atom(name: '_TransactionsStoreBase.indexPage');
+  final _$indexPageAtom = Atom(name: '_TransactionsListStoreBase.indexPage');
 
   @override
   int get indexPage {
@@ -76,7 +77,7 @@ mixin _$TransactionsStore on _TransactionsStoreBase, Store {
     });
   }
 
-  final _$isLoadingAtom = Atom(name: '_TransactionsStoreBase.isLoading');
+  final _$isLoadingAtom = Atom(name: '_TransactionsListStoreBase.isLoading');
 
   @override
   bool get isLoading {
@@ -91,7 +92,7 @@ mixin _$TransactionsStore on _TransactionsStoreBase, Store {
     });
   }
 
-  final _$onErrorAtom = Atom(name: '_TransactionsStoreBase.onError');
+  final _$onErrorAtom = Atom(name: '_TransactionsListStoreBase.onError');
 
   @override
   Failure? get onError {
@@ -106,51 +107,51 @@ mixin _$TransactionsStore on _TransactionsStoreBase, Store {
     });
   }
 
-  final _$_TransactionsStoreBaseActionController =
-      ActionController(name: '_TransactionsStoreBase');
+  final _$_TransactionsListStoreBaseActionController =
+      ActionController(name: '_TransactionsListStoreBase');
 
   @override
   void setTransactions(
       {List<TransactionModel>? values, TransactionModel? value}) {
-    final _$actionInfo = _$_TransactionsStoreBaseActionController.startAction(
-        name: '_TransactionsStoreBase.setTransactions');
+    final _$actionInfo = _$_TransactionsListStoreBaseActionController
+        .startAction(name: '_TransactionsListStoreBase.setTransactions');
     try {
       return super.setTransactions(values: values, value: value);
     } finally {
-      _$_TransactionsStoreBaseActionController.endAction(_$actionInfo);
+      _$_TransactionsListStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setIndexPage(int value) {
-    final _$actionInfo = _$_TransactionsStoreBaseActionController.startAction(
-        name: '_TransactionsStoreBase.setIndexPage');
+    final _$actionInfo = _$_TransactionsListStoreBaseActionController
+        .startAction(name: '_TransactionsListStoreBase.setIndexPage');
     try {
       return super.setIndexPage(value);
     } finally {
-      _$_TransactionsStoreBaseActionController.endAction(_$actionInfo);
+      _$_TransactionsListStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setIsLoading(bool value) {
-    final _$actionInfo = _$_TransactionsStoreBaseActionController.startAction(
-        name: '_TransactionsStoreBase.setIsLoading');
+    final _$actionInfo = _$_TransactionsListStoreBaseActionController
+        .startAction(name: '_TransactionsListStoreBase.setIsLoading');
     try {
       return super.setIsLoading(value);
     } finally {
-      _$_TransactionsStoreBaseActionController.endAction(_$actionInfo);
+      _$_TransactionsListStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setOnError(Failure? value) {
-    final _$actionInfo = _$_TransactionsStoreBaseActionController.startAction(
-        name: '_TransactionsStoreBase.setOnError');
+    final _$actionInfo = _$_TransactionsListStoreBaseActionController
+        .startAction(name: '_TransactionsListStoreBase.setOnError');
     try {
       return super.setOnError(value);
     } finally {
-      _$_TransactionsStoreBaseActionController.endAction(_$actionInfo);
+      _$_TransactionsListStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 

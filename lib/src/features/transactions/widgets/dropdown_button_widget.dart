@@ -1,10 +1,15 @@
-import 'package:budget/src/shared/constants/constants.dart';
 import 'package:flutter/material.dart';
 
+import '../../../shared/constants/constants.dart';
 import 'dropdown_item_data.dart';
-import 'text_styles.dart';
 
 class DropdownButtonWidget extends StatelessWidget {
+  final DropdownItemData? value;
+  final List<DropdownItemData>? items;
+  final FocusNode? focusNode;
+  final ValueChanged<DropdownItemData?>? onChanged;
+  final String? Function(DropdownItemData?)? validator;
+
   const DropdownButtonWidget({
     Key? key,
     this.value,
@@ -14,12 +19,6 @@ class DropdownButtonWidget extends StatelessWidget {
     this.validator,
   }) : super(key: key);
 
-  final DropdownItemData? value;
-  final List<DropdownItemData>? items;
-  final FocusNode? focusNode;
-  final ValueChanged<DropdownItemData?>? onChanged;
-  final String? Function(DropdownItemData?)? validator;
-
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<DropdownItemData>(
@@ -27,14 +26,14 @@ class DropdownButtonWidget extends StatelessWidget {
       hint: Container(
         child: Text(
           "Escolha",
-          style: TextStyles.black16w400RobotoOp54,
+          style: AppTextStyles.black16w400Roboto,
         ),
       ),
       value: value,
       icon: const Icon(Icons.arrow_drop_down),
       iconSize: 24,
       elevation: 8,
-      style: TextStyles.black16w400RobotoOp54,
+      style: AppTextStyles.black16w400Roboto,
       decoration: InputDecoration(
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(
@@ -64,7 +63,7 @@ class DropdownButtonWidget extends StatelessWidget {
             value: item,
             child: Text(
               item.value,
-              style: TextStyles.black16w400RobotoOp87,
+              style: AppTextStyles.black16w400Roboto,
             ),
           );
         }).toList();
@@ -86,7 +85,7 @@ class DropdownButtonWidget extends StatelessWidget {
               ),
               Text(
                 item.value,
-                style: TextStyles.black16w400RobotoOp87,
+                style: AppTextStyles.black16w400Roboto,
               ),
             ],
           ),

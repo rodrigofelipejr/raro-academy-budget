@@ -7,16 +7,16 @@ import '../../../../features.dart';
 import '../../../errors/erros.dart';
 import '../../../repositories/repositories.dart';
 
-part 'transactions_store.g.dart';
+part 'transactions_list_store.g.dart';
 
-class TransactionsStore = _TransactionsStoreBase with _$TransactionsStore;
+class TransactionsListStore = _TransactionsListStoreBase with _$TransactionsListStore;
 
-abstract class _TransactionsStoreBase extends BaseStore with Store {
+abstract class _TransactionsListStoreBase extends BaseStore with Store {
   final TransactionsRepository repository;
   final HomeStore homeStore;
   final AuthStore authStore;
 
-  _TransactionsStoreBase(this.repository, this.homeStore, this.authStore);
+  _TransactionsListStoreBase(this.repository, this.homeStore, this.authStore);
 
   @override
   Future<void> init() async {
@@ -33,7 +33,12 @@ abstract class _TransactionsStoreBase extends BaseStore with Store {
     }
 
     if (value != null) {
-      transactions.add(value);
+      if (transactions.contains(value)) {
+        final idx = transactions.indexOf(value);
+        transactions[idx] = value;
+      } else {
+        transactions.add(value);
+      }
     }
   }
 
@@ -100,6 +105,7 @@ abstract class _TransactionsStoreBase extends BaseStore with Store {
     try {
       await repository.deleteTransaction(docId);
       _deleteLocalTransaction(docId);
+      setOnError(null);
       deleteSuccess = true;
       setIndexPage(0); //REVIEW - verificar
     } catch (e) {

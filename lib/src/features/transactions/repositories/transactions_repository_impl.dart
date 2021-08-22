@@ -16,13 +16,13 @@ class TransactionsRepositoryImpl implements TransactionsRepository {
 
   @override
   Future<String> createTransaction(TransactionModel transaction) async {
-    final snapshot = await _db.add(transaction.toMap());
+    final snapshot = await _db.add(transaction.toMapFirestore());
     return snapshot.id;
   }
 
   @override
   Future<void> updateTransaction(TransactionModel transaction) async {
-    await _db.doc(transaction.id).set(transaction.toMap(), SetOptions(merge: true));
+    await _db.doc(transaction.id).set(transaction.toMapFirestore(), SetOptions(merge: true));
   }
 
   @override
@@ -34,6 +34,16 @@ class TransactionsRepositoryImpl implements TransactionsRepository {
   Future<List<TransactionModel>> getTransactionsByUuid(String uuid) async {
     final snapshot = await _db.where('uuid', isEqualTo: uuid).orderBy('createAt', descending: true).get();
     return snapshot.docs.map((e) => TransactionModel.fromFirestore(e)).toList();
+  }
+
+  @override
+  Future<void> getTransactionById(String docId) async {
+    final documentReference = await _db.doc(docId).get();
+
+    print(documentReference);
+    // final doc = snapshot.size > 0 ? snapshot.docs.first : null;
+    // return DailyModel.fromFirestore(doc);
+    // return snapshot.docs.map((e) => TransactionModel.fromFirestore(e)).toList();
   }
 
   @override

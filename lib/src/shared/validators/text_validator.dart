@@ -5,11 +5,11 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 class Validators {
-  String? validateName(String value) {
+  static String? validateName(String value) {
     return value.isEmpty ? "Preencha corretamente o nome!" : null;
   }
 
-  String? validateNumber(String value) {
+  static String? validateNumber(String value) {
     if (value.isEmpty) {
       return "Preencha corretamente o valor!";
     }
@@ -22,11 +22,11 @@ class Validators {
     }
   }
 
-  String? validateTransactionCategory(String? value) {
+  static String? validateTransactionCategory(String? value) {
     return value == null ? 'Campo obrigatório' : null;
   }
 
-  String? validateDate(String value) {
+  static String? validateDate(String value) {
     try {
       initializeDateFormatting('pt_BR', null);
       DateFormat locateFormat = new DateFormat("dd/MM/yyyy");
@@ -51,7 +51,7 @@ class Validators {
     }
   }
 
-  String? cpfValidator(String value) {
+  static String? cpfValidator(String value) {
     if (CPFValidator.isValid(value)) {
       return null;
     } else {
@@ -59,7 +59,7 @@ class Validators {
     }
   }
 
-  String? phoneValidator(String value) {
+  static String? phoneValidator(String value) {
     if (value.length >= 14) {
       return null;
     } else {
@@ -67,7 +67,7 @@ class Validators {
     }
   }
 
-  String? validatePassword(String value, String value1) {
+  static String? validatePassword(String value, String value1) {
     if (value.length < 8) {
       return "A senha deve conter mais que 8 caracteres";
     }
@@ -82,11 +82,15 @@ class Validators {
     }
   }
 
-  String? email(String email) {
+  static String? email(String email) {
     if (RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email)) {
       return null;
     } else {
       return "Insira um endereço de email";
     }
+  }
+
+  static String? validateDescription(String? value) {
+    return value?.isEmpty == true ? "Informe uma descrição válida" : null;
   }
 }

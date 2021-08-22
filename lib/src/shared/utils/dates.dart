@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 import 'utils.dart';
 
@@ -28,5 +29,9 @@ class Dates {
 
   static String descriptionMonth(int monthNumber) {
     return months.entries.toList().elementAt(--monthNumber).key;
+  }
+
+  static String parseDateTimeToString(DateTime date) {
+    return DateFormat("dd/MM/yyyy").format(date);
   }
 }

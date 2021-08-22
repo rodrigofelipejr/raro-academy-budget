@@ -59,7 +59,7 @@ class ItemCardWidget extends StatelessWidget {
         style: AppTextStyles.purple16w500Roboto,
       ),
       subtitle: Text(
-        Formatters.dateParsing(transaction.createAt),
+        Formatters.dateParsing(transaction.createAt ?? DateTime.now()),
         style: AppTextStyles.gray14w400Roboto,
       ),
       trailing: trailing,

@@ -21,6 +21,7 @@ class AppStrings {
   static const txtRecarregar = 'Recarregar';
   static const txtErroCarregamentoTransacoes = 'Algo deu errado ao carregar as transações.';
   static const txtErroCarregamentoHome = 'Algo deu errado ao carregar os dados.';
+  static const txtInserir = 'Inserir';
 
   // categories
   static const String refeicao = 'Refeição';

@@ -13,8 +13,8 @@ class TransactionModel {
   final TypeTransaction type;
   final String? description;
   final double value;
-  final DateTime createAt;
-  final DateTime updateAt;
+  final DateTime? createAt;
+  final DateTime? updateAt;
 
   TransactionModel({
     this.id,
@@ -23,8 +23,8 @@ class TransactionModel {
     required this.type,
     this.description,
     required this.value,
-    required this.createAt,
-    required this.updateAt,
+     this.createAt,
+     this.updateAt,
   });
 
   TransactionModel copyWith({
@@ -52,6 +52,18 @@ class TransactionModel {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
+      'uuid': uuid,
+      'category': category,
+      'type': TypeTransaction.values.indexOf(type),
+      'description': description,
+      'value': Converters.parseDoubleToIntWithDecimals(value),
+      'createAt': createAt,
+      'updateAt': updateAt,
+    };
+  }
+
+  Map<String, dynamic> toMapFirestore() {
+    return {
       'uuid': uuid,
       'category': category,
       'type': TypeTransaction.values.indexOf(type),

@@ -4,6 +4,7 @@ abstract class TransactionsRepository {
   Future<String> createTransaction(TransactionModel transaction);
   Future<void> updateTransaction(TransactionModel transaction);
   Future<void> deleteTransaction(String docId);
+  Future<void> getTransactionById(String docId); //STUB - deve retornar um model
   Future<List<TransactionModel>> getTransactionsByUuid(String uuid);
   Future<List<TransactionModel>> getAllTransactionsByMonth({required String uuid, required int month});
 }

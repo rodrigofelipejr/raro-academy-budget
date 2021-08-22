@@ -103,7 +103,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> with KeyboardM
                             labelText: "E-mail",
                             hintText: "Insira seu e-mail",
                             onChanged: (value) => store.onChange(email: value),
-                            validator: (value) => Validators().email(value ?? ''),
+                            validator: (value) => Validators.email(value ?? ''),
                             textInputAction: TextInputAction.next,
                             controller: emailController,
                             focusNode: emailFocusNode,

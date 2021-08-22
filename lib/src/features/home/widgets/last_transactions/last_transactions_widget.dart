@@ -84,12 +84,8 @@ class LatestTransactionsStateWidget extends State<LastTransactionsWidget> {
                         .map((transaction) => ItemCardWidget(
                               prefixEnable: true,
                               transaction: transaction,
-                              onTap: () {
-                                final route = transaction.type.index == 0
-                                    ? AppRoutes.transactionsExpenses
-                                    : AppRoutes.transactionsIncome;
-                                Modular.to.pushNamed(route, arguments: transaction);
-                              },
+                              onTap: () =>
+                                  Modular.to.pushNamed(AppRoutes.extTransactionsDetails, arguments: transaction),
                             ))
                         .toList(),
                   )

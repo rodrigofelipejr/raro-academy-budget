@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
+import 'package:budget/src/shared/constants/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../controller/date_controller.dart';
-import 'text_styles.dart';
+import '../transactions.dart';
 
 class DatePickerWidget extends StatefulWidget {
   final DateTime? date;
@@ -52,15 +51,13 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        _selectDate(context);
-      },
+      onTap: () => _selectDate(context),
       child: TextFormField(
         controller: textController,
         enabled: false,
         focusNode: widget.focusNode,
         keyboardType: TextInputType.datetime,
-        style: TextStyles.blue14w500Roboto,
+        style: AppTextStyles.blue14w500Roboto,
         decoration: InputDecoration(
           disabledBorder: UnderlineInputBorder(
             borderSide: BorderSide.none,

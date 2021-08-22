@@ -141,6 +141,13 @@ class AppTextStyles {
     fontFamily: "Roboto",
   );
 
+  static const TextStyle black12w400Roboto = TextStyle(
+    color: AppColors.black54,
+    fontWeight: FontWeight.w400,
+    fontSize: 12.0,
+    fontFamily: "Roboto",
+  );
+
   static const TextStyle gray14w500Roboto = TextStyle(
     color: AppColors.black38,
     fontWeight: FontWeight.w500,

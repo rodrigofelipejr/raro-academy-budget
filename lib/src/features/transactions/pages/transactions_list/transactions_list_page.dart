@@ -9,18 +9,18 @@ import '../../../../shared/utils/utils.dart';
 import '../../../../shared/widgets/widgets.dart';
 import '../../../home/home.dart';
 import '../../errors/erros.dart';
-import 'stores/transactions_store.dart';
+import 'stores/transactions_list_store.dart';
 import 'widgets/widgets.dart';
 
-class TransactionsPage extends StatefulWidget {
-  final int? indexPage;
-  const TransactionsPage({Key? key, this.indexPage}) : super(key: key);
+class TransactionsListPage extends StatefulWidget {
+  final int? tabIndex;
+  const TransactionsListPage({Key? key, this.tabIndex}) : super(key: key);
 
   @override
-  _TransactionsPageState createState() => _TransactionsPageState();
+  _TransactionsListPageState createState() => _TransactionsListPageState();
 }
 
-class _TransactionsPageState extends ModularState<TransactionsPage, TransactionsStore> with Delays {
+class _TransactionsListPageState extends ModularState<TransactionsListPage, TransactionsListStore> with Delays {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final List<ReactionDisposer> _disposers = [];
   final PageController _pageController = PageController();
@@ -42,7 +42,7 @@ class _TransactionsPageState extends ModularState<TransactionsPage, Transactions
     store.init();
 
     _disposers.add(when((_) => store.isLoading == false, () {
-      if (widget.indexPage != null) delayDefault((_) => _navigatorToPage(widget.indexPage!));
+      if (widget.tabIndex != null) delayDefault((_) => _navigatorToPage(widget.tabIndex!));
     }));
   }
 
@@ -94,8 +94,7 @@ class _TransactionsPageState extends ModularState<TransactionsPage, Transactions
   }
 
   void _navigateToDetails(TransactionModel transaction) {
-    final route = transaction.type.index == 0 ? AppRoutes.expenses : AppRoutes.income;
-    Modular.to.pushNamed(route, arguments: transaction);
+    Modular.to.pushNamed(AppRoutes.transactionsDetails, arguments: transaction);
   }
 
   @override
@@ -103,14 +102,18 @@ class _TransactionsPageState extends ModularState<TransactionsPage, Transactions
     return Scaffold(
       key: _scaffoldKey,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Observer(builder: (_) {
-        return Visibility(
-          visible: store.onError == null && store.indexPage != 2,
-          child: FabWidget(onTap: () {
-            Modular.to.pushNamed(store.indexPage == 0 ? AppRoutes.income : AppRoutes.expenses);
-          }),
-        );
-      }),
+      floatingActionButton: Observer(
+        builder: (_) {
+          return Visibility(
+            visible: store.onError == null && store.indexPage != 2,
+            child: FabWidget(
+              onTap: () {
+                Modular.to.pushNamed(AppRoutes.transactionsDetails);
+              },
+            ),
+          );
+        },
+      ),
       appBar: AppBar(
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -123,7 +126,7 @@ class _TransactionsPageState extends ModularState<TransactionsPage, Transactions
             onPressed: () => Modular.to.pop(),
           ),
         ),
-        flexibleSpace: ButtonsTabBarWidget(
+        flexibleSpace: TabBarButtonsWidget(
           buttonInput: () => _navigatorToPage(0),
           buttonOutput: () => _navigatorToPage(1),
           buttonAll: () => _navigatorToPage(2),

@@ -4,14 +4,14 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../../shared/constants/constants.dart';
 import '../../../../../shared/utils/utils.dart';
-import '../stores/transactions_store.dart';
+import '../stores/transactions_list_store.dart';
 
-class ButtonsTabBarWidget extends StatelessWidget {
+class TabBarButtonsWidget extends StatelessWidget {
   final VoidCallback? buttonInput;
   final VoidCallback? buttonOutput;
   final VoidCallback? buttonAll;
 
-  const ButtonsTabBarWidget({
+  const TabBarButtonsWidget({
     Key? key,
     this.buttonInput,
     this.buttonOutput,
@@ -26,14 +26,14 @@ class ButtonsTabBarWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Observer(builder: (_) {
-            final totalValue = Modular.get<TransactionsStore>().transactionTotal;
+            final totalValue = Modular.get<TransactionsListStore>().transactionTotal;
             final bool positiveValue = totalValue >= 0.0;
             return Text(
               '${positiveValue ? "" : "-"}${Formatters.formatMoney(totalValue.abs())}',
               style: AppTextStyles.white26w700Roboto,
             );
           }),
-          SizedBox(height: 11),
+          SizedBox(height: 8.0),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Row(
@@ -75,14 +75,14 @@ class ButtonsTabBarWidget extends StatelessWidget {
       builder: (_) {
         return Expanded(
           child: TextButton(
-            onPressed: Modular.get<TransactionsStore>().onError != null ? null : onPressed,
+            onPressed: Modular.get<TransactionsListStore>().onError != null ? null : onPressed,
             child: Text(
               text,
               style: TextStyle(
                   fontSize: 16,
-                  color: Modular.get<TransactionsStore>().onError != null
+                  color: Modular.get<TransactionsListStore>().onError != null
                       ? Color.fromARGB(60, 255, 255, 255)
-                      : Modular.get<TransactionsStore>().indexPage == screen
+                      : Modular.get<TransactionsListStore>().indexPage == screen
                           ? Colors.white
                           : Color.fromARGB(60, 255, 255, 255)),
             ),

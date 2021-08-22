@@ -50,7 +50,7 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterController> 
                               CustomTextField(
                                 labelText: "Nome",
                                 //onChanged: controller.setEmail,
-                                validator: (value) => Validators().validateName(value ?? ''),
+                                validator: (value) => Validators.validateName(value ?? ''),
                                 textInputAction: TextInputAction.next,
                                 controller: controller.nameController,
                                 focusNode: controller.nameFocusNode,
@@ -60,7 +60,7 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterController> 
                               CustomTextField(
                                 labelText: "E-mail",
                                 //onChanged: controller.setEmail,
-                                validator: (value) => Validators().email(value ?? ''),
+                                validator: (value) => Validators.email(value ?? ''),
                                 textInputAction: TextInputAction.next,
                                 controller: controller.emailController,
                                 focusNode: controller.emailFocusNode,
@@ -103,7 +103,7 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterController> 
                               CustomTextField(
                                 labelText: "Telefone",
                                 //onChanged: controller.setEmail,
-                                validator: (value) => Validators().phoneValidator(value ?? ''),
+                                validator: (value) => Validators.phoneValidator(value ?? ''),
                                 textInputAction: TextInputAction.next,
                                 controller: controller.phoneController,
                                 keyboardType: TextInputType.number,
@@ -124,7 +124,7 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterController> 
                                   inputFormatters: [
                                     TextInputMask(mask: ['999.999.999-99'])
                                   ],
-                                  validator: (cpf) => Validators().cpfValidator(cpf ?? ''),
+                                  validator: (cpf) => Validators.cpfValidator(cpf ?? ''),
                                   helperText: "O CPF é necessário para conectar suas contas."),
                               SizedBox(
                                 height: 50,
@@ -273,7 +273,7 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterController> 
                                       labelText: "Confirmar Senha",
                                       controller: controller.confirmPasswordController,
                                       focusNode: controller.confirmPasswordFocusNode,
-                                      validator: (value) => Validators().validatePassword(
+                                      validator: (value) => Validators.validatePassword(
                                         value ?? '',
                                         controller.passwordController.value.text,
                                       ),
