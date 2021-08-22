@@ -58,6 +58,7 @@ class CircularButtonGradientWithIcon extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Flexible(
+                        flex: 6,
                         child: Text(
                           text,
                           maxLines: 1,
@@ -66,6 +67,7 @@ class CircularButtonGradientWithIcon extends StatelessWidget {
                         ),
                       ),
                       Flexible(
+                        flex: 1,
                         child: Icon(
                           Icons.arrow_forward,
                           size: 18,
