@@ -23,6 +23,12 @@ class AppColors {
   static const Color purpleLight = Color.fromRGBO(241, 240, 254, 1);
   static const Color melrose = Color.fromRGBO(162, 158, 255, 1);
   static const Color red = Color.fromRGBO(244, 67, 54, 1);
+
+  static const Color blueOpacity = Color.fromRGBO(0, 12, 88, 0.5);
+  static const Color purpleOpacity03 = Color.fromRGBO(52, 48, 144, 0.3);
+
+  static const Color purpleOpacity09 = Color.fromRGBO(0, 12, 88, 0.6);
+
   static const MaterialColor primaryMaterialColor = MaterialColor(0XFF4850b0, {
     50: Color.fromRGBO(72, 80, 176, 0.05),
     100: Color.fromRGBO(72, 80, 176, 0.1),
@@ -38,7 +44,7 @@ class AppColors {
 
 //TODO - colors dialog
   static const Color redLight = Color.fromRGBO(255, 97, 109, 1);
-  
+
   static const Color greenLight = Color.fromARGB(255, 88, 179, 104);
   static const Color blueLight = Color.fromRGBO(119, 172, 241, 1);
   static const Color orangeLight = Color.fromRGBO(255, 183, 64, 1);

@@ -1,13 +1,16 @@
-import 'package:budget/src/features/login/pages/register/register_controller.dart';
+import 'package:budget/src/features/login/pages/register/register_store.dart';
 import 'package:budget/src/features/login/widgets/header_widget.dart';
 import 'package:budget/src/shared/constants/constants.dart';
+import 'package:budget/src/shared/models/user_model.dart';
 import 'package:budget/src/shared/validators/text_validator.dart';
 import 'package:budget/src/shared/widgets/circular_button_gradient_with_icon.dart';
 import 'package:budget/src/shared/widgets/widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_mask/easy_mask.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mobx/mobx.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -16,7 +19,43 @@ class RegisterPage extends StatefulWidget {
   _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _RegisterPageState extends ModularState<RegisterPage, RegisterController> {
+class _RegisterPageState extends ModularState<RegisterPage, RegisterStore> {
+  late ReactionDisposer _disposer;
+  @override
+  void initState() {
+    _disposer = reaction<bool>((_) => store.loading, (bool loading) {
+      (loading)
+          ? OverlayWidget.show(context, label: AppStrings.txtLoginApp)
+          : Future.delayed(Duration(milliseconds: 300)).then((value) => OverlayWidget.hide());
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _disposer();
+    super.dispose();
+  }
+
+  final formKeyNameAndEmail = GlobalKey<FormState>();
+  final formKeyPhoneAndCpf = GlobalKey<FormState>();
+  final formKeyPassword = GlobalKey<FormState>();
+
+  FocusNode emailFocusNode = new FocusNode();
+  TextEditingController emailController = TextEditingController();
+  FocusNode nameFocusNode = new FocusNode();
+  TextEditingController nameController = TextEditingController();
+
+  FocusNode phoneFocusNode = new FocusNode();
+  TextEditingController phoneController = TextEditingController();
+  FocusNode cpfFocusNode = new FocusNode();
+  TextEditingController cpfController = TextEditingController();
+
+  FocusNode passwordFocusNode = new FocusNode();
+  TextEditingController passwordController = TextEditingController();
+  FocusNode confirmPasswordFocusNode = new FocusNode();
+  TextEditingController confirmPasswordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,8 +66,8 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterController> 
         onPageChanged: controller.updateCurrentPage,
         children: [
           Scaffold(
-            body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 48),
+            body: BodyPageWidget(
+              contentPadding: const EdgeInsets.symmetric(horizontal: 48.0),
               child: Container(
                 height: MediaQuery.of(context).size.height - 70,
                 child: Column(
@@ -43,7 +82,7 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterController> 
                     Expanded(
                       child: Center(
                         child: Form(
-                          key: controller.formKeyNameAndEmail,
+                          key: formKeyNameAndEmail,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -52,19 +91,21 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterController> 
                                 //onChanged: controller.setEmail,
                                 validator: (value) => Validators().validateName(value ?? ''),
                                 textInputAction: TextInputAction.next,
-                                controller: controller.nameController,
-                                focusNode: controller.nameFocusNode,
+                                controller: nameController,
+                                focusNode: nameFocusNode,
                                 keyboardType: TextInputType.name,
                               ),
                               SizedBox(height: 8.0),
-                              CustomTextField(
-                                labelText: "E-mail",
-                                //onChanged: controller.setEmail,
-                                validator: (value) => Validators().email(value ?? ''),
-                                textInputAction: TextInputAction.next,
-                                controller: controller.emailController,
-                                focusNode: controller.emailFocusNode,
-                                keyboardType: TextInputType.emailAddress,
+                              Observer(
+                                builder: (_) => CustomTextField(
+                                  labelText: "E-mail",
+                                  validator: (value) => Validators().email(value ?? ''),
+                                  textInputAction: TextInputAction.next,
+                                  controller: emailController,
+                                  focusNode: emailFocusNode,
+                                  errorMessage: store.errorMessage,
+                                  keyboardType: TextInputType.emailAddress,
+                                ),
                               ),
                               SizedBox(
                                 height: 50,
@@ -80,8 +121,8 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterController> 
             ),
           ),
           Scaffold(
-            body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 48),
+            body: BodyPageWidget(
+              contentPadding: const EdgeInsets.symmetric(horizontal: 48.0),
               child: Container(
                 height: MediaQuery.of(context).size.height - 70,
                 child: Column(
@@ -96,7 +137,7 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterController> 
                     Expanded(
                       child: Center(
                         child: Form(
-                          key: controller.formKeyPhoneAndCpf,
+                          key: formKeyPhoneAndCpf,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -105,7 +146,7 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterController> 
                                 //onChanged: controller.setEmail,
                                 validator: (value) => Validators().phoneValidator(value ?? ''),
                                 textInputAction: TextInputAction.next,
-                                controller: controller.phoneController,
+                                controller: phoneController,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
                                   TextInputMask(mask: ['(99) 9999-9999', '(99) 99999-9999'])
@@ -118,8 +159,8 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterController> 
                               CustomTextField(
                                   labelText: "CPF",
                                   textInputAction: TextInputAction.next,
-                                  controller: controller.cpfController,
-                                  focusNode: controller.cpfFocusNode,
+                                  controller: cpfController,
+                                  focusNode: cpfFocusNode,
                                   keyboardType: TextInputType.number,
                                   inputFormatters: [
                                     TextInputMask(mask: ['999.999.999-99'])
@@ -174,30 +215,35 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterController> 
                               SizedBox(
                                 height: 24,
                               ),
-                              ListTile(
-                                  horizontalTitleGap: 0,
-                                  contentPadding: EdgeInsets.only(),
-                                  title: const Text(
-                                    'Eu li e aceito os termos e condições e a Política de privacidade do budget.',
-                                    style: TextStyle(
-                                      fontFamily: "Roboto",
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColors.darkGray,
+                              GestureDetector(
+                                onTap: () => controller.updatePolicy(!controller.policy),
+                                child: Observer(
+                                  builder: (_) => ListTile(
+                                    horizontalTitleGap: 0,
+                                    contentPadding: EdgeInsets.only(),
+                                    title: const Text(
+                                      'Eu li e aceito os termos e condições e a Política de privacidade do budget.',
+                                      style: TextStyle(
+                                        fontFamily: "Roboto",
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.darkGray,
+                                      ),
                                     ),
-                                  ),
-                                  leading: Observer(
-                                    builder: (_) => Checkbox(
+                                    leading: Checkbox(
                                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                       checkColor: Colors.white,
-                                      // fillColor: MaterialStateProperty.resolveWith(Colors.accents),
+                                      fillColor: MaterialStateProperty.all(AppColors.azul),
                                       value: controller.policy,
                                       shape: CircleBorder(),
                                       onChanged: (bool? value) {
                                         controller.updatePolicy(value);
                                       },
                                     ),
-                                  )),
+                                    subtitle: store.showErrorPolicy,
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -209,8 +255,8 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterController> 
             ),
           ),
           Scaffold(
-            body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 48),
+            body: BodyPageWidget(
+              contentPadding: const EdgeInsets.symmetric(horizontal: 48.0),
               child: SingleChildScrollView(
                 child: Container(
                   height: MediaQuery.of(context).size.height - 70,
@@ -250,15 +296,15 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterController> 
                               height: 50,
                             ),
                             Form(
-                              key: controller.formKeyPassword,
+                              key: formKeyPassword,
                               child: Column(
                                 children: [
                                   Observer(
                                     builder: (_) => CustomTextField(
                                       textInputAction: TextInputAction.next,
                                       labelText: "Senha",
-                                      controller: controller.passwordController,
-                                      focusNode: controller.passwordFocusNode,
+                                      controller: passwordController,
+                                      focusNode: passwordFocusNode,
                                       obscureText: controller.passwordVisible,
                                       suffixIcon: ButtonIconVisibleWidget(
                                         colorIcon: AppColors.black54,
@@ -271,11 +317,11 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterController> 
                                   Observer(
                                     builder: (_) => CustomTextField(
                                       labelText: "Confirmar Senha",
-                                      controller: controller.confirmPasswordController,
-                                      focusNode: controller.confirmPasswordFocusNode,
+                                      controller: confirmPasswordController,
+                                      focusNode: confirmPasswordFocusNode,
                                       validator: (value) => Validators().validatePassword(
                                         value ?? '',
-                                        controller.passwordController.value.text,
+                                        passwordController.value.text,
                                       ),
                                       obscureText: controller.confirmPasswordVisible,
                                       suffixIcon: ButtonIconVisibleWidget(
@@ -306,11 +352,11 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterController> 
           direction: Axis.horizontal,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Flexible(
-              child: GestureDetector(
-                onTap: () => {
-                  controller.popPage(),
-                },
+            GestureDetector(
+              onTap: () => {
+                controller.popPage(),
+              },
+              child: Flexible(
                 child: Flex(
                   direction: Axis.horizontal,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -344,12 +390,45 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterController> 
             Flexible(
               child: CircularButtonGradientWithIcon(
                 text: 'Continuar'.toUpperCase(),
-                onTap: () => {controller.nextPage()},
+                onTap: () => {nextPage()},
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  void nextPage() {
+    if (store.currentPage == 0) {
+      if (formKeyNameAndEmail.currentState!.validate()) {
+        store.pushPage();
+      }
+    } else if (store.currentPage == 1) {
+      if (formKeyPhoneAndCpf.currentState!.validate()) {
+        store.pushPage();
+      }
+    } else if (store.currentPage == 2) {
+      if (store.policy == true) {
+        store.pushPage();
+        store.updateErrorPolicy(false);
+      } else {
+        store.updateErrorPolicy(true);
+      }
+    } else if (store.currentPage == 3) {
+      if (formKeyPassword.currentState!.validate()) {
+        store.login(
+            UserModel(
+                cpf: this.cpfController.text,
+                name: this.nameController.text,
+                phone: this.phoneController.text,
+                termsAndConditions: store.policy,
+                uuid: '',
+                createAt: FieldValue.serverTimestamp()),
+            this.emailController.text,
+            this.passwordController.text,
+            context);
+      }
+    }
   }
 }

@@ -14,7 +14,7 @@ class FireBaseErrors {
       case 'weak-password':
         return 'A senha é muito fraca.';
       case 'email-already-in-use':
-        return 'Já existi uma conta com o endereço de email fornecido.';
+        return 'Já existe uma conta com o endereço de email fornecido.';
       case 'invalid-email':
         return 'O endereço de e-mail não é válido.';
       case 'operation-not-allowed':
