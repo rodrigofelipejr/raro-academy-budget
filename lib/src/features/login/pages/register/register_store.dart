@@ -144,7 +144,7 @@ abstract class _RegisterStoreBase with Store {
     try {
       await repository.createUser(userModel);
       this.authStore.addListenAuth();
-      Modular.to.pushNamed(AppRoutes.onboarding);
+      Modular.to.pushReplacementNamed(AppRoutes.onboarding);
       this.loading = false;
     } catch (e) {
       this.loading = false;
