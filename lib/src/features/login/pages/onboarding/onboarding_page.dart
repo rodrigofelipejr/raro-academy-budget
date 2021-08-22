@@ -62,7 +62,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       CircularButtonGradientWithColor(
                         text: 'VAMOS LÁ!',
                         color: AppColors.ciano,
-                        onTap: () => Modular.to.pushNamed(AppRoutes.home),
+                        onTap: () => Modular.to.pushReplacementNamed(AppRoutes.home),
                       ),
                       SizedBox(
                         height: 40,
