@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:budget/src/shared/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {

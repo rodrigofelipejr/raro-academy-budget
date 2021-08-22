@@ -21,16 +21,38 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
     store.init();
   }
 
+  void _insertTransaction() {
+    final options = [
+      DialogOptionsItem(
+        label: 'Entrada',
+        onTap: () => Modular.to.pushNamed(AppRoutes.income),
+      ),
+      DialogOptionsItem(
+        label: 'Saída',
+        onTap: () => Modular.to.pushNamed(AppRoutes.expenses),
+      ),
+    ];
+
+    showDialog(
+      context: context,
+      builder: (_) {
+        return DialogOptionsWidget(
+          title: 'Novo registro',
+          message: 'Escolha um tipo de transação:',
+          options: options,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final sizeScreen = MediaQuery.of(context).size;
-
     return Scaffold(
       appBar: AppBarWidget(title: store.authStore.welcomeMessage),
       floatingActionButton: Observer(
         builder: (_) => Visibility(
           visible: store.isLoading == false && store.onError == null,
-          child: FabWidget(label: 'Inserir', onTap: () {}),
+          child: FabWidget(label: 'Inserir', onTap: _insertTransaction),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
