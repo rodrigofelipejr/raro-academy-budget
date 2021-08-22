@@ -53,7 +53,9 @@ class ItemCardWidget extends StatelessWidget {
         ),
       ),
       title: Text(
-        transaction.description ?? transaction.category,
+        transaction.description != null
+            ? '${TransactionCategories.translate[transaction.category]} - ${transaction.description}'
+            : transaction.category,
         overflow: TextOverflow.ellipsis,
         maxLines: 1,
         style: AppTextStyles.purple16w500Roboto,
