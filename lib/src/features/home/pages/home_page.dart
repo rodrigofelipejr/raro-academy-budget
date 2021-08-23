@@ -60,6 +60,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       drawer: DrawerWidget(),
       body: Container(
+        alignment: Alignment.topCenter,
         constraints: BoxConstraints(
           minHeight: screenHeight(context),
         ),
@@ -68,10 +69,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
         ),
         child: Observer(
           builder: (_) {
-            if (store.isLoading)
-              return AnimatedSwitcherWidget(
-                child: LoadingWidget(),
-              );
+            if (store.isLoading) return LoadingWidget();
 
             if (store.onError != null)
               return AnimatedSwitcherWidget(
@@ -85,8 +83,10 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
               child: RefreshIndicator(
                 onRefresh: () async => await store.init(),
                 child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
                   child: Column(
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
                     children: [
                       GeneralBalanceWidget(),
                       SizedBox(height: 18.0),
