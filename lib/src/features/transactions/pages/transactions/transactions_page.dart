@@ -111,44 +111,11 @@ class _TransactionsPageState extends ModularState<TransactionsPage, Transactions
           }),
         );
       }),
-      appBar: AppBar(
-        bottomOpacity: 0.0,
-        elevation: 0.0,
-        leading: Align(
-          alignment: Alignment.topLeft,
-          child: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-            ),
-            onPressed: () => Modular.to.pop(),
-          ),
-        ),
-        flexibleSpace: ButtonsTabBarWidget(
-          buttonInput: () => _navigatorToPage(0),
-          buttonOutput: () => _navigatorToPage(1),
-          buttonAll: () => _navigatorToPage(2),
-        ),
-        toolbarHeight: screenHeightPercentage(context) * 0.25, //TODO - limitar tamanho máximo
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Align(
-              alignment: Alignment.topRight,
-              child: Observer(builder: (_) {
-                final homeStore = Modular.get<HomeStore>();
-                return MonthSelectorWidget(
-                  flatStyle: true,
-                  label: Dates.descriptionMonth(homeStore.dailyStore.state.date.month),
-                  referenceDate: homeStore.dailyStore.state.date,
-                  changeSelectedDate: (DateTime date) {
-                    homeStore.dailyStore.handleDaily(date: date);
-                    store.handleGetTransaction();
-                  },
-                );
-              }),
-            ),
-          ),
-        ],
+      appBar: AppBarTransactionWidget(
+        store: store,
+        buttonInput: () => _navigatorToPage(0),
+        buttonOutput: () => _navigatorToPage(1),
+        buttonAll: () => _navigatorToPage(2),
       ),
       body: Observer(builder: (_) {
         if (store.onError != null && store.onError is TransactionError)

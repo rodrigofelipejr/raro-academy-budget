@@ -40,16 +40,16 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
   FocusNode _datePickerFocusNode = FocusNode();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  final MagicMask mask = MagicMask.buildMask('9+,999,99');
   @override
   void initState() {
     super.initState();
     if (widget.data != null) {
-      print(widget.data.toString());
-      _incomeController = TextEditingController(text: widget.data?.value.toString());
+      _incomeController = TextEditingController(text: mask.getMaskedString(widget.data!.value.toString()));
       _inputNameController = TextEditingController(text: widget.data?.description);
       _inputTypeController.value =
           TransactionsItems.incomeItems.firstWhere((item) => item.key == widget.data!.category);
+      _dateController.date = widget.data!.createAt;
     }
   }
 
@@ -60,6 +60,63 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
     return Scaffold(
       appBar: AppBarWithDrawer(title: "Entrada"),
       drawer: DrawerWidget(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Visibility(
+        visible: MediaQuery.of(context).viewInsets.bottom == 0,
+        child: ButtonWidget(
+          label: widget.data == null ? "INSERIR" : "ATUALIZA",
+          onPressed: () async {
+            FocusScope.of(context).unfocus();
+            if (_formKey.currentState!.validate()) {
+              _newData = TransactionModel(
+                value: double.parse(_incomeController.value.text.replaceAll('.', '').replaceAll(',', '.')),
+                type: TypeTransaction.input,
+                category: TransactionCategories.input[_inputTypeController.value!.key]!,
+                description: _inputNameController.value.text,
+                createAt: _dateController.date,
+                updateAt: _dateController.date,
+              );
+
+              final String? returnedId;
+              bool isUpdated = false;
+              if (widget.data == null) {
+                returnedId = await store.createTransaction(transaction: _newData);
+              } else {
+                _newData = widget.data!.copyWith(
+                  value: double.parse(_incomeController.value.text.replaceAll('.', '').replaceAll(',', '.')),
+                  category: TransactionCategories.input[_inputTypeController.value!.key]!,
+                  description: _inputNameController.value.text,
+                  createAt: _dateController.date,
+                  updateAt: _dateController.date,
+                );
+                final List<TransactionModel> list = Modular.get<TransactionsStore>().transactions;
+                list.remove(widget.data!);
+                list.add(_newData);
+                await store.updateTransaction(transaction: _newData);
+                returnedId = null;
+                isUpdated = true;
+                Modular.to.pop();
+              }
+
+              if (returnedId != null) {
+                _newData = _newData.copyWith(id: returnedId);
+                final List<TransactionModel> list = Modular.get<TransactionsStore>().transactions;
+                list.add(_newData);
+                Modular.to.pop();
+              }
+
+              if (returnedId != null || isUpdated) {
+                showDialog(
+                  context: context,
+                  builder: (_) => DialogWidget(
+                    message: isUpdated ? "Dado atualizado com sucesso" : "Dado enviado com sucesso",
+                  ),
+                );
+              }
+            }
+          },
+        ),
+      ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
         child: Container(
@@ -151,87 +208,9 @@ class _IncomePageState extends ModularState<IncomePage, IncomeStore> {
                             focusNode: _datePickerFocusNode,
                           ),
                         ),
-                        widget.data != null
-                            ? DeleteButtonWidget(
-                                label: 'Remove',
-                                onPressed: () async {
-                                  bool isDeleted = false;
-                                  if (widget.data != null) {
-                                    await store.deleteTransaction(transaction: widget.data!);
-                                  }
-                                  final List<TransactionModel> list = Modular.get<TransactionsStore>().transactions;
-                                  list.remove(widget.data!);
-                                  isDeleted = true;
-                                  Modular.to.pop();
-
-                                  if (isDeleted) {
-                                    showDialog(
-                                      context: context,
-                                      builder: (_) => DialogWidget(message: "Dado removido com sucesso"),
-                                    );
-                                  }
-                                },
-                              )
-                            : SizedBox(),
                       ],
                     ),
                   ),
-                ),
-              ),
-              Positioned(
-                bottom: 0,
-                child: ButtonWidget(
-                  label: widget.data == null ? "INSERIR" : "ATUALIZA",
-                  onPressed: () async {
-                    FocusScope.of(context).unfocus();
-                    if (_formKey.currentState!.validate()) {
-                      _newData = TransactionModel(
-                        value: double.parse(_incomeController.value.text.replaceAll('.', '').replaceAll(',', '.')),
-                        type: TypeTransaction.input,
-                        category: TransactionCategories.input[_inputTypeController.value!.key]!,
-                        description: _inputNameController.value.text,
-                        createAt: _dateController.date,
-                        updateAt: _dateController.date,
-                      );
-
-                      final String? returnedId;
-                      bool isUpdated = false;
-                      if (widget.data == null) {
-                        returnedId = await store.createTransaction(transaction: _newData);
-                      } else {
-                        _newData = widget.data!.copyWith(
-                          value: double.parse(_incomeController.value.text),
-                          category: TransactionCategories.input[_inputTypeController.value!.key]!,
-                          description: _inputNameController.value.text,
-                          createAt: _dateController.date,
-                          updateAt: _dateController.date,
-                        );
-                        final List<TransactionModel> list = Modular.get<TransactionsStore>().transactions;
-                        list.remove(widget.data!);
-                        list.add(_newData);
-                        await store.updateTransaction(transaction: _newData);
-                        returnedId = null;
-                        isUpdated = true;
-                        Modular.to.pop();
-                      }
-
-                      if (returnedId != null) {
-                        _newData = _newData.copyWith(id: returnedId);
-                        final List<TransactionModel> list = Modular.get<TransactionsStore>().transactions;
-                        list.add(_newData);
-                        Modular.to.pop();
-                      }
-
-                      if (returnedId != null || isUpdated) {
-                        showDialog(
-                          context: context,
-                          builder: (_) => DialogWidget(
-                            message: isUpdated ? "Dado atualizado com sucesso" : "Dado enviado com sucesso",
-                          ),
-                        );
-                      }
-                    }
-                  },
                 ),
               ),
             ],

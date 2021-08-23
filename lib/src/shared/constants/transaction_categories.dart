@@ -24,6 +24,20 @@ class TransactionCategories {
     TransactionCategories.trip: 'trip',
   };
 
+  static const Map<String, String> translate = {
+    TransactionCategories.pix: AppStrings.pix,
+    TransactionCategories.ticket: AppStrings.boleto,
+    TransactionCategories.ted: AppStrings.ted,
+    TransactionCategories.doc: AppStrings.doc,
+    TransactionCategories.money: AppStrings.dinheiro,
+    TransactionCategories.meal: AppStrings.refeicao,
+    TransactionCategories.education: AppStrings.educacao,
+    TransactionCategories.others: AppStrings.outros,
+    TransactionCategories.payments: AppStrings.pagamentos,
+    TransactionCategories.transport: AppStrings.transporte,
+    TransactionCategories.trip: AppStrings.viagem,
+  };
+
   static const Map<String, String> input = {
     TransactionCategories.pix: 'pix',
     TransactionCategories.ticket: 'ticket',

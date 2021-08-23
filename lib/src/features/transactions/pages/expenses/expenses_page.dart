@@ -5,7 +5,7 @@ import 'package:budget/src/features/transactions/pages/transactions/stores/trans
 import 'package:budget/src/features/transactions/widgets/appbar_with_drawer.dart';
 import 'package:budget/src/features/transactions/widgets/button_widget.dart';
 import 'package:budget/src/features/transactions/widgets/date_picker_widget.dart';
-import 'package:budget/src/features/transactions/widgets/delete_button_widget.dart';
+
 import 'package:budget/src/features/transactions/widgets/dialog_widget.dart';
 import 'package:budget/src/features/transactions/widgets/dropdown_button_widget.dart';
 import 'package:budget/src/features/transactions/widgets/text_styles.dart';
@@ -14,6 +14,7 @@ import 'package:budget/src/shared/models/models.dart';
 import 'package:budget/src/shared/validators/validators.dart';
 import 'package:budget/src/shared/widgets/custom_text_field.dart';
 import 'package:budget/src/shared/widgets/drawer/drawer_widget.dart';
+import 'package:easy_mask/easy_mask.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -37,11 +38,15 @@ class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
   FocusNode _dateFocusNode = FocusNode();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  final MagicMask mask = MagicMask.buildMask('9+,999,99');
+  @override
   void initState() {
     super.initState();
     if (widget.data != null) {
-      _expensesController = TextEditingController(text: widget.data?.value.toString());
+      print(123);
+      print(mask.getMaskedString(widget.data!.value.toString()));
+      _expensesController = TextEditingController(text: mask.getMaskedString(widget.data!.value.toString()));
+
       _outputTypeController.value =
           TransactionsItems.expensesItems.firstWhere((item) => item.key == widget.data!.category);
       _dateController.date = widget.data!.createAt;
@@ -55,168 +60,141 @@ class _ExpensesPageState extends ModularState<ExpensesPage, ExpensesStore> {
     return Scaffold(
       appBar: AppBarWithDrawer(title: "Saída"),
       drawer: DrawerWidget(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Visibility(
+        visible: MediaQuery.of(context).viewInsets.bottom == 0,
+        child: ButtonWidget(
+          label: widget.data == null ? "INSERIR" : "ATUALIZA",
+          onPressed: () async {
+            FocusScope.of(context).unfocus();
+            if (_formKey.currentState!.validate()) {
+              _newData = TransactionModel(
+                value: double.parse(_expensesController.value.text.replaceAll('.', '').replaceAll(',', '.')),
+                type: TypeTransaction.output,
+                category: TransactionCategories.output[_outputTypeController.value!.key]!,
+                createAt: _dateController.date,
+                updateAt: _dateController.date,
+              );
+
+              final String? returnedId;
+              bool isUpdated = false;
+              if (widget.data == null) {
+                returnedId = await store.createTransaction(transaction: _newData);
+              } else {
+                _newData = widget.data!.copyWith(
+                  value: double.parse(_expensesController.value.text.replaceAll('.', '').replaceAll(',', '.')),
+                  category: TransactionCategories.output[_outputTypeController.value!.key]!,
+                  createAt: _dateController.date,
+                  updateAt: _dateController.date,
+                );
+                final List<TransactionModel> list = Modular.get<TransactionsStore>().transactions;
+                list.remove(widget.data!);
+                list.add(_newData);
+                await store.updateTransaction(transaction: _newData);
+                returnedId = null;
+                isUpdated = true;
+                Modular.to.pop();
+              }
+
+              if (returnedId != null) {
+                _newData = _newData.copyWith(id: returnedId);
+                final List<TransactionModel> list = Modular.get<TransactionsStore>().transactions;
+                list.add(_newData);
+                Modular.to.pop();
+              }
+
+              if (returnedId != null || isUpdated) {
+                showDialog(
+                  context: context,
+                  builder: (_) => DialogWidget(
+                    message: isUpdated ? "Dado atualizado com sucesso" : "Dado enviado com sucesso",
+                  ),
+                );
+              }
+            }
+          },
+        ),
+      ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
         child: Container(
           height: 400,
-          child: Stack(
-            alignment: Alignment.topCenter,
-            children: [
-              Card(
-                color: Colors.white,
-                elevation: 3.0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(7.0),
-                  ),
-                ),
-                child: Container(
-                  height: 370,
-                  padding: const EdgeInsets.symmetric(horizontal: 54),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 55,
-                            bottom: 12,
-                          ),
-                          child: CustomTextField(
-                            hintText: "Valor",
-                            labelText: "Valor em R\$",
-                            keyboardType: TextInputType.number,
-                            focusNode: _expensesFocusNode,
-                            controller: _expensesController,
-                            validator: (value) => Validators().validateNumber(value!),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Tipo de saída",
-                                style: TextStyles.black12w400RobotoOp54,
-                              ),
-                              DropdownButtonWidget(
-                                  value: _outputTypeController.value,
-                                  items: _outputTypeController.items,
-                                  focusNode: _inputTypeFocusNode,
-                                  validator: (value) => Validators().validateTransactionCategory(value?.key),
-                                  onChanged: (newValue) {
-                                    _outputTypeController.value = newValue!;
-                                    setState(() {});
-                                  }),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 12,
-                          ),
-                          child: DatePickerWidget(
-                            date: _dateController.date,
-                            controller: _dateController,
-                            focusNode: _dateFocusNode,
-                          ),
-                        ),
-                        widget.data != null
-                        ? DeleteButtonWidget(
-                          label: 'Remove',
-                          onPressed: () async {
-                            bool isDeleted = false;
-                            if (widget.data != null) {
-                              await store.deleteTransaction(
-                                transaction: widget.data!);
-                            }
-                            final List<TransactionModel> list =
-                            Modular.get<TransactionsStore>()
-                            .transactions;
-                            list.remove(widget.data!);
-                            isDeleted = true;
-                            Modular.to.pop();
-
-                            if (isDeleted) {
-                              showDialog(
-                                context: context,
-                                builder: (_) => DialogWidget(
-                                  message: "Dado removido com sucesso"),
-                              );
-                            }
-                          },
-                        )
-                        : SizedBox(),
-                      ],
+          child: Card(
+            color: Colors.white,
+            elevation: 3.0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(7.0),
+              ),
+            ),
+            child: Container(
+              height: 370,
+              padding: const EdgeInsets.symmetric(horizontal: 54),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 55,
+                        bottom: 12,
+                      ),
+                      child: CustomTextField(
+                          hintText: "Valor",
+                          labelText: "Valor em R\$",
+                          keyboardType: TextInputType.number,
+                          focusNode: _expensesFocusNode,
+                          controller: _expensesController,
+                          inputFormatters: [
+                            TextInputMask(
+                              mask: '999.999.999.999.999.999,99',
+                              placeholder: '0',
+                              maxPlaceHolders: 3,
+                              reverse: true,
+                            )
+                          ],
+                          validator: (value) {
+                            Validators().validateNumber(value!.replaceAll('.', '').replaceAll(',', '.'));
+                          }),
                     ),
-                  ),
-                ),
-              ),
-              Positioned(
-                bottom: 0,
-                child: ButtonWidget(
-                  label: widget.data == null ? "INSERIR" : "ATUALIZA",
-                  onPressed: () async {
-                    FocusScope.of(context).unfocus();
-                    if (_formKey.currentState!.validate()) {
-                      _newData = TransactionModel(
-                        value: double.parse(_expensesController.value.text),
-                        type: TypeTransaction.output,
-                        category: TransactionCategories.output[_outputTypeController.value!.key]!,
-                        createAt: _dateController.date,
-                        updateAt: _dateController.date,
-                      );
-
-                      final String? returnedId;
-                      bool isUpdated = false;
-                      if (widget.data == null) {
-                        returnedId = await store.createTransaction(
-                            transaction: _newData);
-                      } else {
-                        _newData = widget.data!.copyWith(
-                          value: double.parse(_expensesController.value.text),
-                          category: TransactionCategories
-                              .input[_outputTypeController.value!.key]!,
-                          createAt: _dateController.date,
-                          updateAt: _dateController.date,
-                        );
-                        final List<TransactionModel> list =
-                            Modular.get<TransactionsStore>().transactions;
-                        list.remove(widget.data!);
-                        list.add(_newData);
-                        await store.updateTransaction(transaction: _newData);
-                        returnedId = null;
-                        isUpdated = true;
-                        Modular.to.pop();
-                      }
-
-                      if (returnedId != null) {
-                        _newData = _newData.copyWith(id: returnedId);
-                        final List<TransactionModel> list =
-                            Modular.get<TransactionsStore>().transactions;
-                        list.add(_newData);
-                        Modular.to.pop();
-                      }
-
-                      if (returnedId != null || isUpdated) {
-                        showDialog(
-                          context: context,
-                          builder: (_) => DialogWidget(
-                            message: isUpdated
-                                ? "Dado atualizado com sucesso"
-                                : "Dado enviado com sucesso",
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Tipo de saída",
+                            style: TextStyles.black12w400RobotoOp54,
                           ),
-                        );
-                      }
-                    }
-                  },
+                          DropdownButtonWidget(
+                              value: _outputTypeController.value,
+                              items: _outputTypeController.items,
+                              focusNode: _inputTypeFocusNode,
+                              validator: (value) => Validators().validateTransactionCategory(value?.key),
+                              onChanged: (newValue) {
+                                _outputTypeController.value = newValue!;
+                                setState(() {});
+                              }),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 12,
+                      ),
+                      child: DatePickerWidget(
+                        date: _dateController.date,
+                        controller: _dateController,
+                        focusNode: _dateFocusNode,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
+            ),
           ),
         ),
       ),
