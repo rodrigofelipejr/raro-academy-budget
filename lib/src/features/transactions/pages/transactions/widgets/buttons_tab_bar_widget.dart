@@ -8,7 +8,7 @@ import '../../../../../shared/constants/constants.dart';
 import '../../../../../shared/utils/utils.dart';
 import '../stores/transactions_store.dart';
 
-class ButtonsTabBarWidget extends StatelessWidget with PreferredSizeWidget {
+class AppBarTransactionWidget extends StatelessWidget with PreferredSizeWidget {
   final Size preferredSize;
   final TransactionsStore store;
 
@@ -16,7 +16,7 @@ class ButtonsTabBarWidget extends StatelessWidget with PreferredSizeWidget {
   final VoidCallback? buttonOutput;
   final VoidCallback? buttonAll;
 
-  ButtonsTabBarWidget({
+  AppBarTransactionWidget({
     Key? key,
     this.buttonInput,
     this.buttonOutput,

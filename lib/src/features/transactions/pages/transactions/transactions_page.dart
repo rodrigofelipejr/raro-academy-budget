@@ -111,7 +111,7 @@ class _TransactionsPageState extends ModularState<TransactionsPage, Transactions
           }),
         );
       }),
-      appBar: ButtonsTabBarWidget(
+      appBar: AppBarTransactionWidget(
         store: store,
         buttonInput: () => _navigatorToPage(0),
         buttonOutput: () => _navigatorToPage(1),
