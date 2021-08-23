@@ -8,14 +8,13 @@ class DropdownButtonWidget extends StatelessWidget {
   const DropdownButtonWidget({
     Key? key,
     this.value,
-    this.items,
+    required this.items,
     this.focusNode,
     this.onChanged,
     this.validator,
   }) : super(key: key);
-
   final DropdownItemData? value;
-  final List<DropdownItemData>? items;
+  final List<DropdownItemData> items;
   final FocusNode? focusNode;
   final ValueChanged<DropdownItemData?>? onChanged;
   final String? Function(DropdownItemData?)? validator;
@@ -59,7 +58,7 @@ class DropdownButtonWidget extends StatelessWidget {
       onChanged: onChanged,
       focusNode: focusNode,
       selectedItemBuilder: (BuildContext context) {
-        return items!.map<DropdownMenuItem<DropdownItemData>>((DropdownItemData item) {
+        return items.map<DropdownMenuItem<DropdownItemData>>((DropdownItemData item) {
           return DropdownMenuItem<DropdownItemData>(
             value: item,
             child: Text(
@@ -69,7 +68,7 @@ class DropdownButtonWidget extends StatelessWidget {
           );
         }).toList();
       },
-      items: items!.map<DropdownMenuItem<DropdownItemData>>((DropdownItemData item) {
+      items: items.map<DropdownMenuItem<DropdownItemData>>((DropdownItemData item) {
         return DropdownMenuItem<DropdownItemData>(
           value: item,
           child: Row(
@@ -79,6 +78,10 @@ class DropdownButtonWidget extends StatelessWidget {
                 margin: EdgeInsets.only(right: 12.0),
                 height: 24.0,
                 width: 24.0,
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Image(fit: BoxFit.fill, image: AssetImage(item.image)),
+                ),
                 decoration: BoxDecoration(
                   color: item.color,
                   shape: BoxShape.circle,
