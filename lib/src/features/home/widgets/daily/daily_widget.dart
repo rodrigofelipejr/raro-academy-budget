@@ -81,7 +81,7 @@ class _DailyStateWidget extends State<DailyWidget> {
                             referenceDate: Modular.get<HomeStore>().dailyStore.state.date,
                             changeSelectedDate: (DateTime date) =>
                                 Modular.get<HomeStore>().dailyStore.handleDaily(date: date),
-                          )
+                          ),
                         ],
                       ),
                       SizedBox(height: 6.0),

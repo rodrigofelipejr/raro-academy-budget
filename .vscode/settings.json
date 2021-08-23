@@ -17,7 +17,8 @@
     "educacao",
     "melrose",
     "mixins",
-    "refeicao"
+    "refeicao",
+    "unfocus"
   ],
   "dart.lineLength": 120,
 }

@@ -52,15 +52,11 @@ abstract class _DailyStoreBase extends BaseStore with Store {
       );
 
       if (transactions.isNotEmpty) {
-        input = transactions
-            .where((transaction) => transaction.type == TypeTransaction.input)
-            .map((e) => e.value)
-            .reduce((p, c) => p + c);
+        final inputsFiltered = transactions.where((transaction) => transaction.type == TypeTransaction.input);
+        if (inputsFiltered.isNotEmpty) input = inputsFiltered.map((e) => e.value).reduce((p, c) => p + c);
 
-        output = transactions
-            .where((transaction) => transaction.type == TypeTransaction.output)
-            .map((e) => e.value)
-            .reduce((p, c) => p + c);
+        final outputsFiltered = transactions.where((transaction) => transaction.type == TypeTransaction.output);
+        if (outputsFiltered.isNotEmpty) output = outputsFiltered.map((e) => e.value).reduce((p, c) => p + c);
 
         dailyBalance = input - output;
       }
