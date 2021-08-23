@@ -38,21 +38,30 @@ abstract class _GeneralBalanceStoreBase extends BaseStore with Store {
   }
 
   Future<void> handleGeneralBalance() async {
+    double generalBalance = 0.0;
+
     try {
       final List<TransactionModel> transactions = await repository.getTransactionsByUuid(authStore.user!.uuid);
 
-      final input = transactions
-          .where((transaction) => transaction.type == TypeTransaction.input)
-          .map((e) => e.value)
-          .reduce((p, c) => p + c);
+      if (transactions.isNotEmpty) {
+        final input = transactions
+            .where((transaction) => transaction.type == TypeTransaction.input)
+            .map((e) => e.value)
+            .reduce((p, c) => p + c);
 
-      final output = transactions
-          .where((transaction) => transaction.type == TypeTransaction.output)
-          .map((e) => e.value)
-          .reduce((p, c) => p + c);
+        final output = transactions
+            .where((transaction) => transaction.type == TypeTransaction.output)
+            .map((e) => e.value)
+            .reduce((p, c) => p + c);
+
+        generalBalance = input - output;
+      }
 
       setOnError(null);
-      setState(state.copyWith(value: input - output));
+      if (state.value != generalBalance)
+        setState(
+          state.copyWith(value: generalBalance),
+        );
     } catch (e) {
       setOnError(GeneralBalanceError(message: e.toString()));
     }

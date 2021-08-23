@@ -37,6 +37,10 @@ abstract class _DailyStoreBase extends BaseStore with Store {
   }
 
   Future<void> handleDaily({DateTime? date}) async {
+    double input = 0.0;
+    double output = 0.0;
+    double dailyBalance = 0.0;
+
     if (date != null) {
       setState(state.copyWith(date: date));
     }
@@ -47,24 +51,29 @@ abstract class _DailyStoreBase extends BaseStore with Store {
         month: state.date.month,
       );
 
-      final input = transactions
-          .where((transaction) => transaction.type == TypeTransaction.input)
-          .map((e) => e.value)
-          .reduce((p, c) => p + c);
+      if (transactions.isNotEmpty) {
+        input = transactions
+            .where((transaction) => transaction.type == TypeTransaction.input)
+            .map((e) => e.value)
+            .reduce((p, c) => p + c);
 
-      final output = transactions
-          .where((transaction) => transaction.type == TypeTransaction.output)
-          .map((e) => e.value)
-          .reduce((p, c) => p + c);
+        output = transactions
+            .where((transaction) => transaction.type == TypeTransaction.output)
+            .map((e) => e.value)
+            .reduce((p, c) => p + c);
+
+        dailyBalance = input - output;
+      }
 
       setOnError(null);
-      setState(
-        state.copyWith(
-          dailyBalance: (input - output),
-          inputs: input,
-          outputs: output,
-        ),
-      );
+      if (state.dailyBalance != dailyBalance || state.inputs != input || state.inputs != output)
+        setState(
+          state.copyWith(
+            dailyBalance: dailyBalance,
+            inputs: input,
+            outputs: output,
+          ),
+        );
     } catch (e) {
       setOnError(DailyError(message: e.toString()));
     }
