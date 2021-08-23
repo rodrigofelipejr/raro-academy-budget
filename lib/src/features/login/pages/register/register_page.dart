@@ -69,219 +69,131 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterStore> {
           children: [
             BodyPageScrollableWidget(
               contentPadding: const EdgeInsets.symmetric(horizontal: 48.0),
-              child: Container(
-                height: MediaQuery.of(context).size.height - 70,
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    HeaderWidget(
-                      title: 'Bem-vindo!',
-                      subtitle: 'Por favor insira seus dados no campos abaixo.',
-                    ),
-                    Expanded(
-                      child: Center(
-                        child: Form(
-                          key: formKeyNameAndEmail,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CustomTextField(
-                                labelText: "Nome",
-                                //onChanged: controller.setEmail,
-                                validator: (value) => Validators().validateName(value ?? ''),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  HeaderWidget(
+                    title: 'Bem-vindo!',
+                    subtitle: 'Por favor insira seus dados no campos abaixo.',
+                  ),
+                  Expanded(
+                    child: Center(
+                      child: Form(
+                        key: formKeyNameAndEmail,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CustomTextField(
+                              labelText: "Nome",
+                              //onChanged: controller.setEmail,
+                              validator: (value) => Validators().validateName(value ?? ''),
+                              textInputAction: TextInputAction.next,
+                              controller: nameController,
+                              focusNode: nameFocusNode,
+                              keyboardType: TextInputType.name,
+                            ),
+                            SizedBox(height: 8.0),
+                            Observer(
+                              builder: (_) => CustomTextField(
+                                labelText: "E-mail",
+                                validator: (value) => Validators().email(value ?? ''),
                                 textInputAction: TextInputAction.next,
-                                controller: nameController,
-                                focusNode: nameFocusNode,
-                                keyboardType: TextInputType.name,
+                                controller: emailController,
+                                focusNode: emailFocusNode,
+                                errorMessage: store.errorMessage,
+                                keyboardType: TextInputType.emailAddress,
                               ),
-                              SizedBox(height: 8.0),
-                              Observer(
-                                builder: (_) => CustomTextField(
-                                  labelText: "E-mail",
-                                  validator: (value) => Validators().email(value ?? ''),
-                                  textInputAction: TextInputAction.next,
-                                  controller: emailController,
-                                  focusNode: emailFocusNode,
-                                  errorMessage: store.errorMessage,
-                                  keyboardType: TextInputType.emailAddress,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 50,
-                              ),
-                            ],
-                          ),
+                            ),
+                            SizedBox(
+                              height: 50,
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             BodyPageScrollableWidget(
               contentPadding: const EdgeInsets.symmetric(horizontal: 48.0),
-              child: Container(
-                height: MediaQuery.of(context).size.height - 70,
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    HeaderWidget(
-                      title: 'Bem-vindo!',
-                      subtitle: 'Mais alguns dados.',
-                    ),
-                    Expanded(
-                      child: Center(
-                        child: Form(
-                          key: formKeyPhoneAndCpf,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CustomTextField(
-                                labelText: "Telefone",
-                                //onChanged: controller.setEmail,
-                                validator: (value) => Validators().phoneValidator(value ?? ''),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  HeaderWidget(
+                    title: 'Bem-vindo!',
+                    subtitle: 'Mais alguns dados.',
+                  ),
+                  Expanded(
+                    child: Center(
+                      child: Form(
+                        key: formKeyPhoneAndCpf,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CustomTextField(
+                              labelText: "Telefone",
+                              //onChanged: controller.setEmail,
+                              validator: (value) => Validators().phoneValidator(value ?? ''),
+                              textInputAction: TextInputAction.next,
+                              controller: phoneController,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                TextInputMask(mask: ['(99) 9999-9999', '(99) 99999-9999'])
+                              ],
+                              onEditingComplete: () {
+                                FocusScope.of(context).nextFocus();
+                              },
+                            ),
+                            SizedBox(height: 8.0),
+                            CustomTextField(
+                                labelText: "CPF",
                                 textInputAction: TextInputAction.next,
-                                controller: phoneController,
+                                controller: cpfController,
+                                focusNode: cpfFocusNode,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
-                                  TextInputMask(mask: ['(99) 9999-9999', '(99) 99999-9999'])
+                                  TextInputMask(mask: ['999.999.999-99'])
                                 ],
-                                onEditingComplete: () {
-                                  FocusScope.of(context).nextFocus();
-                                },
-                              ),
-                              SizedBox(height: 8.0),
-                              CustomTextField(
-                                  labelText: "CPF",
-                                  textInputAction: TextInputAction.next,
-                                  controller: cpfController,
-                                  focusNode: cpfFocusNode,
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: [
-                                    TextInputMask(mask: ['999.999.999-99'])
-                                  ],
-                                  validator: (cpf) => Validators().cpfValidator(cpf ?? ''),
-                                  helperText: "O CPF é necessário para conectar suas contas."),
-                              SizedBox(
-                                height: 50,
-                              ),
-                            ],
-                          ),
+                                validator: (cpf) => Validators().cpfValidator(cpf ?? ''),
+                                helperText: "O CPF é necessário para conectar suas contas."),
+                            SizedBox(
+                              height: 50,
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ],
-                ),
-              ),
-            ),
-            BodyPageScrollableWidget(
-              child: SingleChildScrollView(
-                child: Container(
-                  height: MediaQuery.of(context).size.height - 70,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 48),
-                        child: HeaderWidget(
-                          title: 'Bem-vindo!',
-                          subtitle: 'Leia com atenção e aceite.',
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 27),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  ' Lorem Ipsum neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit. Ipsum neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit. Nque porro  est qui dolorem ipsum quia dolor sit amet, , adipisci velit. Quisquam est qui dolorem ipsum.',
-                                  style: TextStyle(
-                                    fontFamily: "Roboto",
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                    color: AppColors.darkGray,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 24,
-                                ),
-                                GestureDetector(
-                                  onTap: () => controller.updatePolicy(!controller.policy),
-                                  child: Observer(
-                                    builder: (_) => ListTile(
-                                      horizontalTitleGap: 0,
-                                      contentPadding: EdgeInsets.only(),
-                                      title: const Text(
-                                        'Eu li e aceito os termos e condições e a Política de privacidade do budget.',
-                                        style: TextStyle(
-                                          fontFamily: "Roboto",
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w400,
-                                          color: AppColors.darkGray,
-                                        ),
-                                      ),
-                                      leading: Checkbox(
-                                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                        checkColor: Colors.white,
-                                        fillColor: MaterialStateProperty.all(AppColors.azul),
-                                        value: controller.policy,
-                                        shape: CircleBorder(),
-                                        onChanged: (bool? value) {
-                                          controller.updatePolicy(value);
-                                        },
-                                      ),
-                                      subtitle: store.showErrorPolicy,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
                   ),
-                ),
+                ],
               ),
             ),
             BodyPageScrollableWidget(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 48.0),
-              child: SingleChildScrollView(
-                child: Container(
-                  height: MediaQuery.of(context).size.height - 70,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      HeaderWidget(
-                        title: 'Bem-vindo!',
-                        subtitle: 'Agora crie seu senha contendo:',
-                      ),
-                      Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 48),
+                    child: HeaderWidget(
+                      title: 'Bem-vindo!',
+                      subtitle: 'Leia com atenção e aceite.',
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 27),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              ' • Pelo menos oito caracteres. ',
-                              style: TextStyle(
-                                fontFamily: "Roboto",
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.darkGray,
-                              ),
-                            ),
-                            Text(
-                              ' • Letras maiúsculas, letras minúsculas, números e símbolos.',
+                              ' Lorem Ipsum neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit. Ipsum neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit. Nque porro  est qui dolorem ipsum quia dolor sit amet, , adipisci velit. Quisquam est qui dolorem ipsum.',
                               style: TextStyle(
                                 fontFamily: "Roboto",
                                 fontSize: 16,
@@ -290,54 +202,126 @@ class _RegisterPageState extends ModularState<RegisterPage, RegisterStore> {
                               ),
                             ),
                             SizedBox(
-                              height: 50,
+                              height: 24,
                             ),
-                            Form(
-                              key: formKeyPassword,
-                              child: Column(
-                                children: [
-                                  Observer(
-                                    builder: (_) => CustomTextField(
-                                      textInputAction: TextInputAction.next,
-                                      labelText: "Senha",
-                                      controller: passwordController,
-                                      focusNode: passwordFocusNode,
-                                      obscureText: controller.passwordVisible,
-                                      suffixIcon: ButtonIconVisibleWidget(
-                                        colorIcon: AppColors.black54,
-                                        showing: controller.passwordVisible,
-                                        onTap: () => controller.updatePasswordVisible(!controller.passwordVisible),
-                                      ),
+                            GestureDetector(
+                              onTap: () => controller.updatePolicy(!controller.policy),
+                              child: Observer(
+                                builder: (_) => ListTile(
+                                  horizontalTitleGap: 0,
+                                  contentPadding: EdgeInsets.only(),
+                                  title: const Text(
+                                    'Eu li e aceito os termos e condições e a Política de privacidade do budget.',
+                                    style: TextStyle(
+                                      fontFamily: "Roboto",
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColors.darkGray,
                                     ),
                                   ),
-                                  SizedBox(height: 8.0),
-                                  Observer(
-                                    builder: (_) => CustomTextField(
-                                      labelText: "Confirmar Senha",
-                                      controller: confirmPasswordController,
-                                      focusNode: confirmPasswordFocusNode,
-                                      validator: (value) => Validators().validatePassword(
-                                        value ?? '',
-                                        passwordController.value.text,
-                                      ),
-                                      obscureText: controller.confirmPasswordVisible,
-                                      suffixIcon: ButtonIconVisibleWidget(
-                                        colorIcon: AppColors.black54,
-                                        showing: controller.confirmPasswordVisible,
-                                        onTap: () =>
-                                            controller.updateConfirmPasswordVisible(!controller.confirmPasswordVisible),
-                                      ),
-                                    ),
+                                  leading: Checkbox(
+                                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                    checkColor: Colors.white,
+                                    fillColor: MaterialStateProperty.all(AppColors.azul),
+                                    value: controller.policy,
+                                    shape: CircleBorder(),
+                                    onChanged: (bool? value) {
+                                      controller.updatePolicy(value);
+                                    },
                                   ),
-                                ],
+                                  subtitle: store.showErrorPolicy,
+                                ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
+              ),
+            ),
+            BodyPageScrollableWidget(
+              contentPadding: const EdgeInsets.symmetric(horizontal: 48.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  HeaderWidget(
+                    title: 'Bem-vindo!',
+                    subtitle: 'Agora crie seu senha contendo:',
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          ' • Pelo menos oito caracteres. ',
+                          style: TextStyle(
+                            fontFamily: "Roboto",
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.darkGray,
+                          ),
+                        ),
+                        Text(
+                          ' • Letras maiúsculas, letras minúsculas, números e símbolos.',
+                          style: TextStyle(
+                            fontFamily: "Roboto",
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.darkGray,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 50,
+                        ),
+                        Form(
+                          key: formKeyPassword,
+                          child: Column(
+                            children: [
+                              Observer(
+                                builder: (_) => CustomTextField(
+                                  textInputAction: TextInputAction.next,
+                                  labelText: "Senha",
+                                  controller: passwordController,
+                                  focusNode: passwordFocusNode,
+                                  obscureText: controller.passwordVisible,
+                                  suffixIcon: ButtonIconVisibleWidget(
+                                    colorIcon: AppColors.black54,
+                                    showing: controller.passwordVisible,
+                                    onTap: () => controller.updatePasswordVisible(!controller.passwordVisible),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 8.0),
+                              Observer(
+                                builder: (_) => CustomTextField(
+                                  labelText: "Confirmar Senha",
+                                  controller: confirmPasswordController,
+                                  focusNode: confirmPasswordFocusNode,
+                                  validator: (value) => Validators().validatePassword(
+                                    value ?? '',
+                                    passwordController.value.text,
+                                  ),
+                                  obscureText: controller.confirmPasswordVisible,
+                                  suffixIcon: ButtonIconVisibleWidget(
+                                    colorIcon: AppColors.black54,
+                                    showing: controller.confirmPasswordVisible,
+                                    onTap: () =>
+                                        controller.updateConfirmPasswordVisible(!controller.confirmPasswordVisible),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
