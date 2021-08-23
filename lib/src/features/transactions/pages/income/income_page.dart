@@ -6,13 +6,11 @@ import 'package:budget/src/features/transactions/pages/transactions/stores/trans
 import 'package:budget/src/features/transactions/widgets/appbar_with_drawer.dart';
 import 'package:budget/src/features/transactions/widgets/button_widget.dart';
 import 'package:budget/src/features/transactions/widgets/date_picker_widget.dart';
-import 'package:budget/src/features/transactions/widgets/delete_button_widget.dart';
 import 'package:budget/src/features/transactions/widgets/dialog_widget.dart';
 import 'package:budget/src/features/transactions/widgets/dropdown_button_widget.dart';
 import 'package:budget/src/features/transactions/widgets/text_styles.dart';
 import 'package:budget/src/shared/constants/constants.dart';
 import 'package:budget/src/shared/models/models.dart';
-import 'package:budget/src/shared/stores/stores.dart';
 import 'package:budget/src/shared/validators/validators.dart';
 import 'package:budget/src/shared/widgets/custom_text_field.dart';
 import 'package:budget/src/shared/widgets/drawer/drawer_widget.dart';

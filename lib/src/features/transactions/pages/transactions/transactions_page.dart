@@ -7,7 +7,6 @@ import '../../../../shared/constants/constants.dart';
 import '../../../../shared/models/models.dart';
 import '../../../../shared/utils/utils.dart';
 import '../../../../shared/widgets/widgets.dart';
-import '../../../home/home.dart';
 import '../../errors/erros.dart';
 import 'stores/transactions_store.dart';
 import 'widgets/widgets.dart';
