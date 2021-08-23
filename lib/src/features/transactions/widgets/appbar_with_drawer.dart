@@ -16,7 +16,7 @@ class AppBarWithDrawer extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final double sizedBoxHeight = MediaQuery.of(context).size.height * 0.06;
-    final double containerHeight = MediaQuery.of(context).size.height * 0.32;
+    final double containerHeight = MediaQuery.of(context).size.height * 0.35;
     return Container(
       constraints: BoxConstraints(
         minHeight: 150,

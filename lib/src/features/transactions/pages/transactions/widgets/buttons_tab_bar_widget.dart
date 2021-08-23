@@ -27,7 +27,7 @@ class AppBarTransactionWidget extends StatelessWidget with PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double containerHeight = MediaQuery.of(context).size.height * 0.32;
+    final double containerHeight = MediaQuery.of(context).size.height * 0.35;
 
     return Container(
       constraints: BoxConstraints(
